@@ -1,0 +1,17 @@
+{
+  "name": "showcase_api",
+  "version": "1.0.0",
+  "description": "API diseñada para acceder a la informacion de la base de datos de SHOWCASE, permitiendo vincular el sitio web con los servidores de la empresa",
+  "main": "index.js",
+  "scripts": {
+    "start": "node --watch index.js"
+  },
+  "keywords": [],
+  "author": "tu vieja",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "express": "^5.2.1",
+    "mysql2": "^3.22.3"
+  }
+}
