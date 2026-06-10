@@ -4,7 +4,7 @@ const sequelize = new Sequelize('test' /* nombre DB */, 'root' /* nombre de mi u
     host: 'localhost',
     dialect: 'mysql',
     root: 3307,
-    logging: false // NO muestra todo lo que se hace en la base de datos
+    logging: false // NO muestra todo lo que se hace en la base de dato
 });
 
-module.exports = { sequelize };
+module.exports = { sequelize }; asd
