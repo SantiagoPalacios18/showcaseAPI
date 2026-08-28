@@ -1,7 +1,7 @@
 
 // Sacados del ejemplo que dio el prof
 
-const { Hobby, User } = require('../models/index.js');
+const { Hobby, User } = require('../../models/index.js');
 
 const getHobbies = async (req, res) => {
     try {

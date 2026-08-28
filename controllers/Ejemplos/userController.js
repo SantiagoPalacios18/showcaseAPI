@@ -1,4 +1,4 @@
-const { User, Hobby } = require('../models/index.js');
+const { User, Hobby } = require('../../models/index.js');
 
 
 // Obtener todos los usuarios
