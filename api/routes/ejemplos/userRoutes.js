@@ -8,7 +8,7 @@ const {
     putUserbyId,
     modifyUsersById,
     deleteUserById, 
-} = require('../controllers/userController');
+} = require('../../controllers/Ejemplos/userController');
 
 const router = Router();
 router.get('/', getUsers);

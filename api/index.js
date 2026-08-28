@@ -1,8 +1,8 @@
 const express = require("express"); // Framework para hacer servidores web y administrar peticiones
 const { sequelize } = require('./config/db.js'); // Importamos el sequelize, el cual ya fue importado dentro de config/db.js
 require('./models/index.js'); // Se importan todas las estructuras de las tablas
-const userRoutes = require('./routes/userRoutes.js'); // Se importan todas las rutas de user
-const hobbyRoutes = require('./routes/hobbyRoutes.js'); // Se importan todas las rutas de hobby
+const userRoutes = require('./routes/ejemplos/userRoutes.js'); // Se importan todas las rutas de user
+const hobbyRoutes = require('./routes/ejemplos/hobbyRoutes.js'); // Se importan todas las rutas de hobby
 
 const server = express();
 server.use(express.json()); // Lenguaje utilizado para enviar y recibir la información
