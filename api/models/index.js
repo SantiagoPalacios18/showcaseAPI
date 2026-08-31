@@ -1,18 +1,24 @@
-/*
-const { User } = require('./userModel');
-const { Hobby } = require('./hobbyModel');
+const {Actor} = require('./actor__Model.js') 
+const {Actor_Pelicula } = require('./actor_Pelicula__Model.js')
+const { AdministradorBD } = require('./administradorBD__Model.js') 
+const { Asiento } = require('./asiento__Model.js') 
+const { Cine } = require('./cine__Model.js') 
+const { AdministradorBD } = require('./clienteLogueado__Model.js') 
+const { CompraCandy } = require('./compraCandy__Model.js') 
+const {Funcion_Asiento} = require('./funcion_asiento__Model.js') 
+const {Operador_Candy} = require('./operadorCandy__Model.js') 
+const {Patente} = require('./patente__Model.js') 
+const {Patente_Rol} = require('./patente_rol__Model.js') 
+const {Pelicula} = require('./pelicula__Model.js') 
+const {ProductoCandy} = require('./productoCandy__Model.js') 
+const {Proyeccion} = require('./proyeccion__Model.js') 
+const {Rol} = require('./rol__Model.js') 
+const {Sala} = require('./sala__Model.js') 
 
-Relación muchos a muchos
-User.belongsToMany(Hobby, { through: 'user_hobbies', foreignKey: 'user_id', timestamps: false });
-Hobby.belongsToMany(User, { through: 'user_hobbies', foreignKey: 'hobby_id', timestamps: false });
-
-Dato piola: Antes yo lo había hecho poniendo foreignKey y ADEMAS un otherKey, pensando de que así se iba a armar correctamente la clave compuesta
-Pero al parecer, al armar el puente de cada lado (Del user al hobby y del hobby al user), sequelize identifica de que tiene que armar una clave compuesta
 
 
-module.exports = { User, Hobby };
 
-A lo mejor te preguntas "por qué no importamos la tabla intermedia" y la respuesta es que
-la tabla intermedia ya está establecida dentro de Users y Hobby, si te fijas arriba, el belongsToMany es un metodo para ambos, por ende ya está dentro de ellas
-*/
+
+
+
 
