@@ -1,18 +1,26 @@
 const { sequelize } = require('../config/db.js');
 const { DataTypes } = require('sequelize');
 
-const ProductoCandy = sequelize.define(
-    'ProductoCandy',
+const Actor = sequelize.define(
+    'Actor',
     {
-        id_ProductoCandy: {
+        id_Actor: {
             type: DataTypes.SMALLINT.UNSIGNED,
             primaryKey: true,
             autoIncrement: true
         },
-        stock: DataTypes.MEDIUMINT.UNSIGNED,
-        nombre: DataTypes.STRING(15),
-        categoria: DataTypes.STRING(15),
-        precio: DataTypes.INTEGER.UNSIGNED,
+        nombre: {
+            type: DataTypes.STRING(15),
+            validate: {
+                isAlpha: true
+            }
+        },
+        apellido: {
+            type: DataTypes.STRING(15),
+            validate: {
+                isAlpha: true
+            }
+        },
         DVH: {
             type: DataTypes.STRING(6),
             allowNull: false,
@@ -23,4 +31,4 @@ const ProductoCandy = sequelize.define(
     }
 )
 
-module.exports = { ProductoCandy }
+module.exports = { Actor }

@@ -1,18 +1,14 @@
 const { sequelize } = require('../config/db.js');
 const { DataTypes } = require('sequelize');
 
-const ProductoCandy = sequelize.define(
-    'ProductoCandy',
+const CompraCandy = sequelize.define(
+    'CompraCandy',
     {
-        id_ProductoCandy: {
+        id_CompraCandy: {
             type: DataTypes.SMALLINT.UNSIGNED,
             primaryKey: true,
-            autoIncrement: true
+            autoIncrement:true
         },
-        stock: DataTypes.MEDIUMINT.UNSIGNED,
-        nombre: DataTypes.STRING(15),
-        categoria: DataTypes.STRING(15),
-        precio: DataTypes.INTEGER.UNSIGNED,
         DVH: {
             type: DataTypes.STRING(6),
             allowNull: false,
@@ -23,4 +19,4 @@ const ProductoCandy = sequelize.define(
     }
 )
 
-module.exports = { ProductoCandy }
+module.exports = { CompraCandy }    
