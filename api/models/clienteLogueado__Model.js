@@ -61,6 +61,9 @@ const ClienteLogueado = sequelize.define(
                 isAlphanumeric: true
             }
         }
+    },
+    {
+        timestamps: false,
     }
 )
 

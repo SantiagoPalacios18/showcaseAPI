@@ -25,6 +25,10 @@ const Sala = sequelize.define(
                 isAlphanumeric: true
             }
         }
+    },
+    {
+        timestamps: false,
+        tableName: ''
     }
 )
 

@@ -29,6 +29,9 @@ const CompraEvento = sequelize.define(
                 isAlphanumeric: true
             }
         }
+    },
+    {
+        timestamps: false,
     }
 )
 

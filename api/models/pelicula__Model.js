@@ -39,6 +39,9 @@ const Pelicula = sequelize.define(
                 isAlphanumeric: true
             }
         }
+    },
+    {
+        timestamps: false,
     }
 )
 

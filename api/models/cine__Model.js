@@ -27,6 +27,9 @@ const Cine = sequelize.define(
                 isAlphanumeric: true
             }
         }
+    },
+    {
+        timestamps: false,
     }
 )
 

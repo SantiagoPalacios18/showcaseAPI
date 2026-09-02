@@ -19,6 +19,9 @@ const Patente_Rol = sequelize.define(
                 isAlphanumeric: true
             }
         }
+    },
+    {
+        timestamps: false,
     }
 )
 

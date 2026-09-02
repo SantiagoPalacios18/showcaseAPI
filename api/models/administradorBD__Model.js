@@ -53,6 +53,10 @@ const AdministradorBD = sequelize.define(
                 isAlphanumeric: true
             }
         }
+    },
+    {
+        timestamps: false,
+        tableName: ''
     }
 )
 

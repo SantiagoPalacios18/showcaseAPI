@@ -52,6 +52,9 @@ const Operador_Candy = sequelize.define(
                 isAlphanumeric: true
             }
         }
+    },
+    {
+        timestamps: false,
     }
 )
 

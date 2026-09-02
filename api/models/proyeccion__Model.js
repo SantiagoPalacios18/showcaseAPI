@@ -20,6 +20,9 @@ const Proyeccion = sequelize.define(
                 isAlphanumeric: true
             }
         }
+    },
+    {
+        timestamps: false,
     }
 )
 

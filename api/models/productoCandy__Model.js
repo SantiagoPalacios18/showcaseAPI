@@ -23,6 +23,9 @@ const ProductoCandy = sequelize.define(
                 isAlphanumeric: true
             }
         }
+    },
+    {
+        timestamps: false,
     }
 )
 

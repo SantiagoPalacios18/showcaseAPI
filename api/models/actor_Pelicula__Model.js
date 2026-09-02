@@ -19,6 +19,10 @@ const Actor_Pelicula = sequelize.define(
                 isAlphanumeric: true
             }
         }
+    },
+    {
+        timestamps: false,
+        tableName: 'actor_pelicula'
     }
 )
 

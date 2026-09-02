@@ -34,6 +34,9 @@ const CompraCandy = sequelize.define(
                 isAlphanumeric: true
             }
         }
+    },
+    {
+        timestamps: false,
     }
 )
 

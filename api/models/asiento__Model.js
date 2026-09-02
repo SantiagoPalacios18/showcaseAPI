@@ -31,6 +31,10 @@ const Asiento = sequelize.define(
                 isAlphanumeric: true
             }
         }
+    },
+    {
+        timestamps: false,
+        tableName: ''
     }
 )
 

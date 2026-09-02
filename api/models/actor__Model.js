@@ -28,6 +28,10 @@ const Actor = sequelize.define(
                 isAlphanumeric: true
             }
         }
+    },
+    {
+        timestamps: false,
+        tableName: 'actores'
     }
 )
 
