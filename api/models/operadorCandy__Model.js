@@ -5,11 +5,11 @@ const Operador_Candy = sequelize.define(
     'Operador_Candy',
     {
         id_OperadorCandy: {
-            type: DataTypes.MEDIUMINT.UNSIGNED,
+            type: DataTypes.TINYINT.UNSIGNED,
             primaryKey: true,
             autoIncrement:true
         },
-        id_Rol: DataTypes.MEDIUMINT.UNSIGNED,
+        id_Rol: DataTypes.TINYINT.UNSIGNED,
         nombre: {
             type: DataTypes.STRING(15),
             validate: {

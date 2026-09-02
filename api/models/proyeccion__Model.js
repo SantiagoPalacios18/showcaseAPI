@@ -5,7 +5,7 @@ const Proyeccion = sequelize.define(
     'Proyeccion',
     {
         id_Proyeccion: {
-            type: DataTypes.MEDIUMINT.UNSIGNED,
+            type: DataTypes.TINYINT.UNSIGNED,
             primaryKey: true,
             autoIncrement:true
         },

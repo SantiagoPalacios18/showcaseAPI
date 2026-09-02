@@ -5,12 +5,18 @@ const Asiento = sequelize.define(
     'Asiento',
     {
         id_Asiento: {
-            type: DataTypes.MEDIUMINT.UNSIGNED,
+            type: DataTypes.SMALLINT.UNSIGNED,
             primaryKey: true,
             autoIncrement:true
         },
-        numero: DataTypes.SMALLINT.UNSIGNED,
-        fila: DataTypes.SMALLINT.UNSIGNED,
+        id_Funcion: DataTypes.MEDIUMINT.UNSIGNED,
+        numero: DataTypes.TINYINT.UNSIGNED,
+        fila: {
+            type: DataTypes.STRING(1),
+            validate: {
+                isAlpha: true
+            }
+        },
         DVH: {
             type: DataTypes.STRING(6),
             allowNull: false,

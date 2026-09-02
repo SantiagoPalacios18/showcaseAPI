@@ -1,15 +1,15 @@
 const { sequelize } = require('../config/db.js');
 const { DataTypes } = require('sequelize');
 
-const AdministradorBD = sequelize.define(
-    'AdministradorBD',
+const ClienteLogueado = sequelize.define(
+    'ClienteLogueado',
     {
-        id_Administador: {
-            type: DataTypes.SMALLINT.UNSIGNED,
+        id_ClienteLogueado: {
+            type: DataTypes.INTEGER.UNSIGNED,
             primaryKey: true,
             autoIncrement: true
         },
-        id_Rol: DataTypes.MEDIUMINT.UNSIGNED,
+        id_Rol: DataTypes.TINYINT.UNSIGNED,
         nombre: {
             type: DataTypes.STRING(15),
             validate: {
@@ -28,6 +28,7 @@ const AdministradorBD = sequelize.define(
                 isNumeric: true
             }
         },
+        edad: DataTypes.TINYINT.UNSIGNED,
         telefono: {
             type: DataTypes.STRING(15),
             validate: {
@@ -54,4 +55,4 @@ const AdministradorBD = sequelize.define(
     }
 )
 
-module.exports = { AdministradorBD }
+module.exports = { ClienteLogueado }

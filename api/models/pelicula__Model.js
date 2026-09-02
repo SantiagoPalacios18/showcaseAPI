@@ -5,7 +5,7 @@ const Pelicula = sequelize.define(
     'Pelicula',
     {
         id_Pelicula: {
-            type: DataTypes.SMALLINT.UNSIGNED,
+            type: DataTypes.TINYINT.UNSIGNED,
             primaryKey: true,
             autoIncrement: true
         },
@@ -24,7 +24,7 @@ const Pelicula = sequelize.define(
             },
         },
         calificacion: {
-            type: DataTypes.TINYINT.UNSIGNED(2),
+            type: DataTypes.TINYINT(2).UNSIGNED,
             validate: {
                 max: 10,
                 min: 0

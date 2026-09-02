@@ -5,12 +5,12 @@ const CompraCandy = sequelize.define(
     'CompraCandy',
     {
         id_CompraCandy: {
-            type: DataTypes.SMALLINT.UNSIGNED,
+            type: DataTypes.MEDIUMINT.UNSIGNED,
             primaryKey: true,
             autoIncrement: true
         },
-        id_ClienteLogueado: DataTypes.SMALLINT.UNSIGNED,
-        total: DataTypes.SMALLINT.UNSIGNED,
+        id_ClienteLogueado: DataTypes.INTEGER.UNSIGNED,
+        total: DataTypes.MEDIUMINT.UNSIGNED,
         fechaEmision: DataTypes.NOW,
         fechaVencimiento: {
             type: DataTypes.DATE,

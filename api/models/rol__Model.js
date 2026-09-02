@@ -5,7 +5,7 @@ const Rol = sequelize.define(
     'Rol',
     {
         id_Rol: {
-            type: DataTypes.MEDIUMINT.UNSIGNED,
+            type: DataTypes.TINYINT.UNSIGNED,
             primaryKey: true,
             autoIncrement:true
         },

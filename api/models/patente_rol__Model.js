@@ -5,11 +5,11 @@ const Patente_Rol = sequelize.define(
     'Patente_Rol',
     {
         id_PatenteRol: {
-            type: DataTypes.MEDIUMINT.UNSIGNED,
+            type: DataTypes.TINYINT.UNSIGNED,
             primaryKey: true,
         },
         id_Patente: {
-            type: DataTypes.SMALLINT.UNSIGNED,
+            type: DataTypes.TINYINT.UNSIGNED,
             primaryKey: true,
         },
         DVH: {

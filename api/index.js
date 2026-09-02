@@ -1,30 +1,30 @@
-
+const mysql = require('mysql2/promise');
+async function inicializarBaseDeDatos() {
+  const connection = await mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: ''
+  });
+  await connection.query(`CREATE DATABASE IF NOT EXISTS Showcase;`);
+}
+inicializarBaseDeDatos();
 
 const express = require("express"); // Framework para hacer servidores web y administrar peticiones
 const { sequelize } = require('./config/db.js'); // Importamos el sequelize, el cual ya fue importado dentro de config/db.js
 require('./models/index.js'); // Se importan todas las estructuras de las tablas
+const cors = require ("cors")
 
 const server = express();
 server.use(express.json()); // Lenguaje utilizado para enviar y recibir la información
 server.use(cors());
-
-// const mysql = require('mysql2/promise');
-// async function inicializarBaseDeDatos() {
-//   const connection = await mysql.createConnection({
-//     host: 'localhost',
-//     user: 'root',
-//     password: ''
-//   });
-//   await connection.query(`CREATE DATABASE IF NOT EXISTS Showcase;`);
-// }
 
 server.get('/', (req, res) => {
     res.status(200).json({ message: "🔥🔥🔥 HOLAAAAA 🔥🔥🔥" });
 });
 
 
-server.use('/users', userRoutes);
-server.use('/hobbies', hobbyRoutes);
+//server.use('/users', userRoutes);
+//server.use('/hobbies', hobbyRoutes);
 
 
 

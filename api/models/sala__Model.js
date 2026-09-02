@@ -10,7 +10,8 @@ const Sala = sequelize.define(
             autoIncrement:true
         },
         id_Cine: DataTypes.TINYINT.UNSIGNED,
-        cant_Asientos: DataTypes.SMALLINT.UNSIGNED,
+        numero: DataTypes.TINYINT.UNSIGNED,
+        cant_Asientos: DataTypes.TINYINT.UNSIGNED,
         DVH: {
             type: DataTypes.STRING(6),
             allowNull: false,
