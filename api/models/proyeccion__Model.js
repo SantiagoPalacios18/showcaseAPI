@@ -9,8 +9,11 @@ const Proyeccion = sequelize.define(
             primaryKey: true,
             autoIncrement:true
         },
-        formato: DataTypes.STRING(10),
-        DVH: {
+        formato: {
+            type: DataTypes.STRING(10),
+            unique: true
+        },
+            DVH: {
             type: DataTypes.STRING(6),
             allowNull: false,
             validate: {

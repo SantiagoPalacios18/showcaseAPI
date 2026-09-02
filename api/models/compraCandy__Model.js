@@ -23,7 +23,10 @@ const CompraCandy = sequelize.define(
             }
         },
         metodoPago: DataTypes.STRING(10),
-        estado: DataTypes.BOOLEAN,
+        estado: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: 0
+        },
         DVH: {
             type: DataTypes.STRING(6),
             allowNull: false,

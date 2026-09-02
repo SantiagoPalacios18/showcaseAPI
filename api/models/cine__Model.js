@@ -9,8 +9,17 @@ const Cine = sequelize.define(
             primaryKey: true,
             autoIncrement:true
         },
-        nombre: DataTypes.STRING(15),
-        ubicacion: DataTypes.STRING(20),
+        nombre: {
+            type: DataTypes.STRING(15),
+            unique: true
+        },
+        ubicacion: {
+            type: DataTypes.STRING(20),
+            unique: true,
+            validate: {
+                contains: ' ' 
+            }
+        },
         DVH: {
             type: DataTypes.STRING(6),
             allowNull: false,

@@ -1,28 +1,26 @@
 const { sequelize } = require('../config/db.js');
 const { DataTypes } = require('sequelize');
 
-const Asiento = sequelize.define(
-    'Asiento',
+const CompraEvento = sequelize.define(
+    'CompraEvento',
     {
-        id_Asiento: {
+        id_CompraEvento: {
             type: DataTypes.SMALLINT.UNSIGNED,
             primaryKey: true,
             autoIncrement:true
         },
+        id_ClienteLogueado: {
+            type: DataTypes.INTEGER.UNSIGNED,
+            unique: 'noFuncionesYCliente'
+        },
         id_Funcion: {
             type: DataTypes.MEDIUMINT.UNSIGNED,
-            unique: 'asientoPorFuncion'
+            unique: 'noFuncionesYCliente'
         },
-        numero: {
-            type: DataTypes.TINYINT.UNSIGNED,
-            unique: 'asientoPorFuncion'
-        },
-        fila: {
-            type: DataTypes.STRING(1),
-            unique: 'asientoPorFuncion',
-            validate: {
-                isAlpha: true
-            }
+        tipo: DataTypes.STRING(10),
+        pendiente: {
+            type: DataTypes.BOOLEAN,
+            default: 1
         },
         DVH: {
             type: DataTypes.STRING(6),
@@ -34,4 +32,4 @@ const Asiento = sequelize.define(
     }
 )
 
-module.exports = { Asiento }
+module.exports = { CompraEvento }    

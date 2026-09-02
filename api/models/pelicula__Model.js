@@ -16,7 +16,7 @@ const Pelicula = sequelize.define(
                 isAlpha: true
             },
         },
-        director: {
+        id_Director: {
             type: DataTypes.STRING(20),
             validate: {
                 isAlpha: true,
@@ -25,6 +25,7 @@ const Pelicula = sequelize.define(
         },
         calificacion: {
             type: DataTypes.TINYINT(2).UNSIGNED,
+            default: 0,
             validate: {
                 max: 10,
                 min: 0

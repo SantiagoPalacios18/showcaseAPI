@@ -9,8 +9,14 @@ const Sala = sequelize.define(
             primaryKey: true,
             autoIncrement:true
         },
-        id_Cine: DataTypes.TINYINT.UNSIGNED,
-        numero: DataTypes.TINYINT.UNSIGNED,
+        id_Cine: {
+            type: DataTypes.TINYINT.UNSIGNED,
+            unique: 'salaPorCine'
+        },
+        numero: {
+            type: DataTypes.TINYINT.UNSIGNED,
+            unique: 'salaPorCine'
+        },
         cant_Asientos: DataTypes.TINYINT.UNSIGNED,
         DVH: {
             type: DataTypes.STRING(6),

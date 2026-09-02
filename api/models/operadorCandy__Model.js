@@ -9,7 +9,10 @@ const Operador_Candy = sequelize.define(
             primaryKey: true,
             autoIncrement:true
         },
-        id_Rol: DataTypes.TINYINT.UNSIGNED,
+        id_Rol: {
+            type: DataTypes.TINYINT.UNSIGNED,
+            defaultValue: 'OperadorCandy'
+        },
         nombre: {
             type: DataTypes.STRING(15),
             validate: {
@@ -24,6 +27,7 @@ const Operador_Candy = sequelize.define(
         },
         DNI: {
             type: DataTypes.STRING(10),
+            unique: true,
             validate: {
                 isNumeric: true
             }
@@ -31,13 +35,12 @@ const Operador_Candy = sequelize.define(
         telefono: {
             type: DataTypes.STRING(15),
             validate: {
-                contains: '+',
-                contains: '-',
-                len: [15,15]
+                isNumeric: true
             }
         },
         email: {
             type: DataTypes.STRING(20),
+            unique: true,
             validate: {
                 isEmail: true
             }

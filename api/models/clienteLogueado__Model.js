@@ -9,7 +9,10 @@ const ClienteLogueado = sequelize.define(
             primaryKey: true,
             autoIncrement: true
         },
-        id_Rol: DataTypes.TINYINT.UNSIGNED,
+        id_Rol: {
+            type: DataTypes.TINYINT.UNSIGNED,
+            default: 'Usuario'
+        },
         nombre: {
             type: DataTypes.STRING(15),
             validate: {
@@ -22,29 +25,35 @@ const ClienteLogueado = sequelize.define(
                 isAlpha: true
             }
         },
+        edad: DataTypes.TINYINT.UNSIGNED,
         DNI: {
             type: DataTypes.STRING(10),
+            unique: true,
             validate: {
                 isNumeric: true
             }
         },
-        edad: DataTypes.TINYINT.UNSIGNED,
         telefono: {
-            type: DataTypes.STRING(15),
+            type: DataTypes.STRING(13),
             validate: {
-                contains: '+',
-                contains: '-',
-                len: [15,15]
+                isNumeric: true
             }
         },
         email: {
             type: DataTypes.STRING(20),
+            unique: true,
             validate: {
                 isEmail: true
             }
         },
-        isActive: DataTypes.BOOLEAN,
-        isLogged: DataTypes.BOOLEAN,
+        isActive: {
+            type: DataTypes.BOOLEAN,
+            default: 1
+        },
+        isLogged: {
+            type: DataTypes.BOOLEAN,
+            default: 1
+        },
         DVH: {
             type: DataTypes.STRING(6),
             allowNull: false,

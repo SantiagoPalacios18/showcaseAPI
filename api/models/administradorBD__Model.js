@@ -9,8 +9,11 @@ const AdministradorBD = sequelize.define(
             primaryKey: true,
             autoIncrement: true
         },
-        id_Rol: DataTypes.TINYINT.UNSIGNED,
-        nombre: {
+        id_Rol: {
+            type: DataTypes.TINYINT.UNSIGNED,
+            defaultValue: 'Admin'
+        },
+            nombre: {
             type: DataTypes.STRING(15),
             validate: {
                 isAlpha: true
@@ -24,6 +27,7 @@ const AdministradorBD = sequelize.define(
         },
         DNI: {
             type: DataTypes.STRING(10),
+            unique: true,
             validate: {
                 isNumeric: true
             }
@@ -31,13 +35,13 @@ const AdministradorBD = sequelize.define(
         telefono: {
             type: DataTypes.STRING(15),
             validate: {
-                contains: '+',
-                contains: '-',
-                len: [15,15]
+                len: [13,13],
+                isNumeric: true
             }
         },
         email: {
             type: DataTypes.STRING(20),
+            unique: true,
             validate: {
                 isEmail: true
             }

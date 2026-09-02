@@ -10,7 +10,10 @@ const ProductoCandy = sequelize.define(
             autoIncrement: true
         },
         stock: DataTypes.MEDIUMINT.UNSIGNED,
-        nombre: DataTypes.STRING(15),
+        nombre: {
+            type: DataTypes.STRING(15),
+            unique: true
+        },
         categoria: DataTypes.STRING(15),
         precio: DataTypes.MEDIUMINT.UNSIGNED,
         DVH: {

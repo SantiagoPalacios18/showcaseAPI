@@ -9,7 +9,10 @@ const Patente = sequelize.define(
             primaryKey: true,
             autoIncrement:true
         },
-        nombre: DataTypes.STRING(15),
+        nombre: {
+            type: DataTypes.STRING(15),
+            unique: true
+        },
         descripcion: DataTypes.TEXT,
         DVH: {
             type: DataTypes.STRING(6),
