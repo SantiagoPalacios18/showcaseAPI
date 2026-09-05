@@ -7,4 +7,5 @@ const sequelize = new Sequelize('Showcase' /* nombre DB */, 'root' /* nombre de 
     logging: false // NO muestra todo lo que se hace en la base de datos
 });
 
-module.exports = { sequelize };
+
+module.exports = { sequelize, SECRET_KEY };

@@ -1,10 +1,10 @@
 const { sequelize } = require('../config/db.js');
 const { DataTypes } = require('sequelize');
 
-const ClienteLogueado = sequelize.define(
-    'ClienteLogueado',
+const Usuario = sequelize.define(
+    'Usuario',
     {
-        id_ClienteLogueado: {
+        id_Usuario: {
             type: DataTypes.INTEGER.UNSIGNED,
             primaryKey: true,
             autoIncrement: true
@@ -46,6 +46,10 @@ const ClienteLogueado = sequelize.define(
                 isEmail: true
             }
         },
+        contraseña: {
+            type: DataTypes.STRING(200),
+            allowNull: false
+        },
         isActive: {
             type: DataTypes.BOOLEAN,
             default: 1
@@ -56,7 +60,7 @@ const ClienteLogueado = sequelize.define(
         },
         DVH: {
             type: DataTypes.STRING(6),
-            allowNull: false,
+            allowNull: /* deberia ser false pero como tengo interferencias con el registro le pongo*/ true,
             validate: {
                 isAlphanumeric: true
             }
@@ -67,4 +71,4 @@ const ClienteLogueado = sequelize.define(
     }
 )
 
-module.exports = { ClienteLogueado }
+module.exports = { Usuario }

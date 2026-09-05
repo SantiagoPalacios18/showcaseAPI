@@ -1,14 +1,85 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+
+/*
 import heroImg from './assets/hero.png'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
+*/
 import './App.css'
+import { Routes, Route, useNavigate } from 'react-router-dom'
+import Home from './components/Home'
+import Login from './components/Login'
+import Register from './components/Register'
+import axios from 'axios'
 
 function App() {
-  const [count, setCount] = useState(0)
+  
+  const [user, setUser] = useState(null)
+  const [token, setToken] = useState("")
+  const navigate = useNavigate()
+
+
+  const fetchMe = async () => {
+    const storedToken = localStorage.getItem("TOKEN")
+    if (!storedToken) return
+
+    try {
+        const response = await axios.get('http://localhost:3000/me', {
+            headers: { Authorization: storedToken }
+        })
+        setUser(response.data)
+        setToken(storedToken)
+    } catch (error) {
+        console.log("Token inválido, eliminandolo del localStorage")
+        localStorage.removeItem("TOKEN")
+        localStorage.removeItem("REFRESH_TOKEN")
+        setUser(null)
+        setToken("")
+    }
+  }
+
+  useEffect(() => {
+      fetchMe()
+  }, [])
+
+  // Funcion que va a utilizar Login.jsx para guardar el usuario y los tokens
+  const handleLogin = (userData, accessToken, refreshToken) => {
+      localStorage.setItem("TOKEN", accessToken)
+      localStorage.setItem("REFRESH_TOKEN", refreshToken) // Sujeto a cambios, se debe guardar como cookie httpOnly
+      setUser(userData)
+      setToken(accessToken)
+  }
+
+
+  // Funcione que se va a usar en un boton de cerrar sesión, limpia el token y el usuario
+  const handleLogout = () => {
+      localStorage.removeItem("TOKEN")
+      localStorage.removeItem("REFRESH_TOKEN")
+      setUser(null)
+      setToken("")
+      navigate("/login")
+  }
+
+
 
   return (
     <>
+      <div>
+        <Routes>
+            <Route path="/" element={<Home user={user} />} />
+            <Route path="/login" element={<Login onLogin={handleLogin} />} />
+            <Route path="/register" element={<Register onLogin={handleLogin} />} /> {/* Tmb se le pone el handleLogin para loggeo automático */}
+        </Routes>
+
+        
+      </div>
+    </>
+
+
+
+
+
+    /*<>
       <section id="center">
         <div className="hero">
           <img src={heroImg} className="base" width="170" height="179" alt="" />
@@ -115,7 +186,7 @@ function App() {
 
       <div className="ticks"></div>
       <section id="spacer"></section>
-    </>
+    </>*/
   )
 }
 
