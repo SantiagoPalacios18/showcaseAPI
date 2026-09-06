@@ -2,6 +2,10 @@ import { useState } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 
+// El axios configurado que vamos a usar
+import api from "../api"
+
+
 function Register(props) {
     // Variables del formulario
     const [nombre, setNombre] = useState("")
@@ -34,19 +38,23 @@ function Register(props) {
         
 
         try {
-            await axios.post('http://localhost:3000/register', {
+            await api.post('/register', {
                 nombre,
                 apellido,
                 email,
                 contraseña,
                 confirmarContraseña
+            },{
+                withCredentials: true // Necesario para que se envien las cookies al backend
             })
 
-            const response = await axios.post('http://localhost:3000/login', {
+            const response = await api.post('/login', {
                 email,
                 contraseña
+            },{
+                withCredentials: true // Necesario para que se envien las cookies al backend
             })
-            props.onLogin(response.data.user, response.data.accessToken, response.data.refreshToken)
+            props.onLogin(response.data.user, response.data.accessToken /*, response.data.refreshToken*/)
 
             await timeout(1000);
             setLoading(false)

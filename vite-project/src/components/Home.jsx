@@ -2,12 +2,15 @@ import { Link } from "react-router-dom"
 import {useState , useEffect } from "react"
 import axios from "axios"
 
+// El axios configurado que vamos a usar
+import api from "../api"
+
 
 function Home(props) {
     const [message, setMessage] = useState("")
     const getMessage = async () => {
         try {
-            const response = await axios.get("http://localhost:3000/")
+            const response = await api.get("/")
             setMessage(response.data.message)
         } catch (error) {
             setMessage("upsis")

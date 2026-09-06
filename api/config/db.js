@@ -8,4 +8,4 @@ const sequelize = new Sequelize('Showcase' /* nombre DB */, 'root' /* nombre de 
 });
 
 
-module.exports = { sequelize, SECRET_KEY };
+module.exports = { sequelize};

@@ -10,7 +10,7 @@ import { Routes, Route, useNavigate } from 'react-router-dom'
 import Home from './components/Home'
 import Login from './components/Login'
 import Register from './components/Register'
-import axios from 'axios'
+import api from './api'
 
 function App() {
   
@@ -21,18 +21,20 @@ function App() {
 
   const fetchMe = async () => {
     const storedToken = localStorage.getItem("TOKEN")
-    if (!storedToken) return
+    if (!storedToken){
+      setToken("")
+    }
 
     try {
-        const response = await axios.get('http://localhost:3000/me', {
+        const response = await api.get('/me', {
             headers: { Authorization: storedToken }
         })
         setUser(response.data)
         setToken(storedToken)
-    } catch (error) {
+    } catch (error) { 
         console.log("Token inválido, eliminandolo del localStorage")
         localStorage.removeItem("TOKEN")
-        localStorage.removeItem("REFRESH_TOKEN")
+        // localStorage.removeItem("REFRESH_TOKEN")
         setUser(null)
         setToken("")
     }
@@ -43,21 +45,24 @@ function App() {
   }, [])
 
   // Funcion que va a utilizar Login.jsx para guardar el usuario y los tokens
-  const handleLogin = (userData, accessToken, refreshToken) => {
+  const handleLogin = (userData, accessToken /*, refreshToken*/ ) => {
       localStorage.setItem("TOKEN", accessToken)
-      localStorage.setItem("REFRESH_TOKEN", refreshToken) // Sujeto a cambios, se debe guardar como cookie httpOnly
+      // localStorage.setItem("REFRESH_TOKEN", refreshToken) // Sujeto a cambios, se debe guardar como cookie httpOnly
       setUser(userData)
       setToken(accessToken)
   }
 
 
   // Funcione que se va a usar en un boton de cerrar sesión, limpia el token y el usuario
-  const handleLogout = () => {
-      localStorage.removeItem("TOKEN")
-      localStorage.removeItem("REFRESH_TOKEN")
-      setUser(null)
-      setToken("")
-      navigate("/login")
+  const handleLogout = async () => {
+    try {
+      await api.post("/logout")
+    } catch (error) {
+      console.log(error)
+    }
+    localStorage.removeItem("TOKEN")
+    setUser(null)
+    setToken("")
   }
 
 

@@ -2,6 +2,9 @@ import {useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+// El axios configurado que vamos a usar
+import api from "../api"
+
 
 function Login(props) {
     const [email, setEmail] = useState("");
@@ -27,12 +30,14 @@ function Login(props) {
         setLoading(true) // Nos sirve para meter un efecto o elemento mientras se procesa
 
         try {
-            const response = await axios.post('http://localhost:3000/login', {
+            const response = await api.post('/login', {
                 email,
                 contraseña
+            },{
+                withCredentials: true // Necesario para que se envien las cookies al backend
             })
 
-            props.onLogin(response.data.user, response.data.accessToken, response.data.refreshToken)
+            props.onLogin(response.data.user, response.data.accessToken /* , response.data.refreshToken  */)
 
             await timeout(1000);
             setLoading(false)

@@ -6,12 +6,18 @@ const { sequelize } = require('./config/db.js'); // Importamos el sequelize, el 
 require('./models/index.js');
 // CORS
 const cors = require ("cors")
-
 const bcrypt = require("bcrypt")
-
+const cookieParser = require("cookie-parser")
 
 const server = express();
+
+// ==========================================
+// MIDDLEWARES : express.json, cookies, cors
+// ==========================================
+
 server.use(express.json()); // Lenguaje utilizado para enviar y recibir la información
+server.use(cookieParser())
+
 
 //server.use(cors());
 // Config del cors (copiado y pegado de un ejercicio del profe)
