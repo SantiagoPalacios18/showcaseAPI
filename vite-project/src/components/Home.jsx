@@ -25,8 +25,19 @@ function Home(props) {
         <div >
             <h1>SHOWCASE</h1>
             <div style={{ position: "absolute", top: 0, right: 0, padding: "10px" }}>
-                <Link to="/login" style={{ marginRight: "10px" }}>Login</Link>
-                <Link to="/register">Register</Link>
+
+                { !props.user ? (
+                    <>
+                        <Link to="/login" style={{ marginRight: "10px" }}>Login</Link>
+                        <Link to="/register">Register</Link>
+                    
+                    </>
+                ):(
+                    <>
+                        <button onClick={props.onLogout} >Cerrar Sesion</button>
+                        
+                    </>
+                )}
             </div>
             <div>
                 <h2>Mensaje dado por el back-end</h2>
@@ -37,7 +48,7 @@ function Home(props) {
                 {props.user ? (<>
                         <p>Bienvenido: {props.user.nombre} {props.user.apellido}</p>
                         <p>Tu email es: {props.user.email}</p>
-                        {console.log(props.user)}
+                        {/*console.log(props.user)*/}
                     </> 
             ) : (<p>Kien so bo </p>)}
             </div>

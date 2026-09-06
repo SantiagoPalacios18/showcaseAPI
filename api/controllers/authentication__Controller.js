@@ -19,7 +19,7 @@ const login = async (req, res) => {
         if (!user) {
             return res.status(400).json({ message: "Datos invalidos: EMAIL" })
         }
-        console.log("Usuario encontrado:", user.toJSON()) // Muestra el usuario encontrado en la consola
+        // console.log("Usuario encontrado:", user.toJSON())
         const validPassword = await bcrypt.compare(contraseña, user.contraseña)
         if (!validPassword) {
             return res.status(400).json({ message: "Datos invalidos: CONTRASEÑA" })
@@ -77,11 +77,12 @@ const login = async (req, res) => {
       }
 
       res.clearCookie("refreshToken", {
+        path: "/", 
         httpOnly: true,
         secure: false,
         sameSite: "lax"
       })
-
+      // AGREGAR SI NO ANDA: SACAR EL ACCESS EN EL LOCALSTORAGE
       res.status(200).json({ message: "Sesión cerrada" })
     } catch (error) {
       console.log(error)
@@ -141,7 +142,7 @@ const me = async (req, res) => {
         }
 
         res.status(200).json(user)
-        console.log("Usuario encontrado EN /ME:", user.toJSON()) // Muestra el usuario encontrado en la consola
+        // console.log("Usuario encontrado EN /ME:", user.toJSON()) // Muestra el usuario encontrado en la consola
     } catch (error) {
         console.log(error)
         res.status(500).json({ message: "Error del servidor" })

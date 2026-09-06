@@ -23,6 +23,17 @@ function App() {
     const storedToken = localStorage.getItem("TOKEN")
     if (!storedToken){
       setToken("")
+      return // EL MALVADO RETURN, ME VIOLA EL ANO
+      // SIN ESTE SE HACE UN CICLO INFINITO:
+      // 1. llega al /me de abajo
+      // 2. el /me ejecuta su middleware antes
+      // 3. el middleware ve de que está el token undefined, lanza error 401
+      // 4. el interceptor api.js hace un post a /refresh al ver de que hubo un error 401
+      // 5. como TAMPOCO TENGO LA COOKIE, me lanza OTRO error 401
+      // 6. se ejecuta el window.location.href = "/login"
+      // 7. el redireccionamiento a /login hace de que se vuelva a recargar el app.jsx ☠️
+      // 8. El app.jsx ejecuta el fetchMe denuevo y me viola el ano denuevo ☠️☠️☠️☠️☠️☠️☠️
+      // NUNCA MAS NO QUIERO MÁS DEJAMEEEEEE
     }
 
     try {
@@ -71,7 +82,7 @@ function App() {
     <>
       <div>
         <Routes>
-            <Route path="/" element={<Home user={user} />} />
+            <Route path="/" element={<Home user={user} onLogout={handleLogout} />} />
             <Route path="/login" element={<Login onLogin={handleLogin} />} />
             <Route path="/register" element={<Register onLogin={handleLogin} />} /> {/* Tmb se le pone el handleLogin para loggeo automático */}
         </Routes>
