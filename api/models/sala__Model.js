@@ -28,7 +28,6 @@ const Sala = sequelize.define(
     },
     {
         timestamps: false,
-        tableName: ''
     }
 )
 

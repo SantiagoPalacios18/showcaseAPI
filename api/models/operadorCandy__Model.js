@@ -11,7 +11,7 @@ const Operador_Candy = sequelize.define(
         },
         id_Rol: {
             type: DataTypes.TINYINT.UNSIGNED,
-            defaultValue: 'OperadorCandy'
+            // defaultValue: 'OperadorCandy'
         },
         nombre: {
             type: DataTypes.STRING(15),

@@ -10,8 +10,8 @@ const AdministradorBD = sequelize.define(
             autoIncrement: true
         },
         id_Rol: {
-            type: DataTypes.TINYINT.UNSIGNED,
-            defaultValue: 'Admin'
+            type: DataTypes.TINYINT.UNSIGNED
+            
         },
             nombre: {
             type: DataTypes.STRING(15),

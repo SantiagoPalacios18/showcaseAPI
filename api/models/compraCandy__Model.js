@@ -11,7 +11,10 @@ const CompraCandy = sequelize.define(
         },
         id_ClienteLogueado: DataTypes.INTEGER.UNSIGNED,
         total: DataTypes.MEDIUMINT.UNSIGNED,
-        fechaEmision: DataTypes.NOW,
+        fechaEmision:{
+            type: DataTypes.DATE,
+            defaultValue: DataTypes.NOW
+        },
         fechaVencimiento: {
             type: DataTypes.DATE,
             validate: {

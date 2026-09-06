@@ -1,14 +1,101 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+
+/*
 import heroImg from './assets/hero.png'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
+*/
 import './App.css'
+import { Routes, Route, useNavigate } from 'react-router-dom'
+import Home from './components/Home'
+import Login from './components/Login'
+import Register from './components/Register'
+import api from './api'
 
 function App() {
-  const [count, setCount] = useState(0)
+  
+  const [user, setUser] = useState(null)
+  const [token, setToken] = useState("")
+  const navigate = useNavigate()
+
+
+  const fetchMe = async () => {
+    const storedToken = localStorage.getItem("TOKEN")
+    if (!storedToken){
+      setToken("")
+      return // EL MALVADO RETURN, ME VIOLA EL ANO
+      // SIN ESTE SE HACE UN CICLO INFINITO:
+      // 1. llega al /me de abajo
+      // 2. el /me ejecuta su middleware antes
+      // 3. el middleware ve de que está el token undefined, lanza error 401
+      // 4. el interceptor api.js hace un post a /refresh al ver de que hubo un error 401
+      // 5. como TAMPOCO TENGO LA COOKIE, me lanza OTRO error 401
+      // 6. se ejecuta el window.location.href = "/login"
+      // 7. el redireccionamiento a /login hace de que se vuelva a recargar el app.jsx ☠️
+      // 8. El app.jsx ejecuta el fetchMe denuevo y me viola el ano denuevo ☠️☠️☠️☠️☠️☠️☠️
+      // NUNCA MAS NO QUIERO MÁS DEJAMEEEEEE
+    }
+
+    try {
+        const response = await api.get('/me', {
+            headers: { Authorization: storedToken }
+        })
+        setUser(response.data)
+        setToken(storedToken)
+    } catch (error) { 
+        console.log("Token inválido, eliminandolo del localStorage")
+        localStorage.removeItem("TOKEN")
+        // localStorage.removeItem("REFRESH_TOKEN")
+        setUser(null)
+        setToken("")
+    }
+  }
+
+  useEffect(() => {
+      fetchMe()
+  }, [])
+
+  // Funcion que va a utilizar Login.jsx para guardar el usuario y los tokens
+  const handleLogin = (userData, accessToken /*, refreshToken*/ ) => {
+      localStorage.setItem("TOKEN", accessToken)
+      // localStorage.setItem("REFRESH_TOKEN", refreshToken) // Sujeto a cambios, se debe guardar como cookie httpOnly
+      setUser(userData)
+      setToken(accessToken)
+  }
+
+
+  // Funcione que se va a usar en un boton de cerrar sesión, limpia el token y el usuario
+  const handleLogout = async () => {
+    try {
+      await api.post("/logout")
+    } catch (error) {
+      console.log(error)
+    }
+    localStorage.removeItem("TOKEN")
+    setUser(null)
+    setToken("")
+  }
+
+
 
   return (
     <>
+      <div>
+        <Routes>
+            <Route path="/" element={<Home user={user} onLogout={handleLogout} />} />
+            <Route path="/login" element={<Login onLogin={handleLogin} />} />
+            <Route path="/register" element={<Register onLogin={handleLogin} />} /> {/* Tmb se le pone el handleLogin para loggeo automático */}
+        </Routes>
+
+        
+      </div>
+    </>
+
+
+
+
+
+    /*<>
       <section id="center">
         <div className="hero">
           <img src={heroImg} className="base" width="170" height="179" alt="" />
@@ -115,7 +202,7 @@ function App() {
 
       <div className="ticks"></div>
       <section id="spacer"></section>
-    </>
+    </>*/
   )
 }
 
