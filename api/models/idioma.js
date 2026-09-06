@@ -6,9 +6,7 @@ const idioma = sequelize.define(
     'idioma',
     {
         id_idioma: {
-            type: DataTypes.MEDIUMINT.UNSIGNED,
-            primaryKey: true,
-            autoIncrement:true
+            type: DataTypes.STRING(10)
         },
         DVH: {
             type: DataTypes.STRING(6),
@@ -17,6 +15,9 @@ const idioma = sequelize.define(
                 isAlphanumeric: true
             }
         }
+    },
+    {
+        timestamps: false,
     }
 )
 

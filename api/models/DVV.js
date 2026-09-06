@@ -2,15 +2,16 @@ const { sequelize } = require('../config/db.js');
 const { DataTypes } = require('sequelize');
 
 
-const Funcion_Asiento = sequelize.define(
-    'Funcion_Asiento',
+const DVV = sequelize.define(
+    'DVV',
     {
         tabla: {
-            type: DataTypes.MEDIUMINT.UNSIGNED,
-            primaryKey: true,
-            autoIncrement:true
+            type: DataTypes.STRING(15)
         },
         // falta la tabla del dvv que dsp la hago
+    },
+    {
+        timestamps: false,
     }
 )
 

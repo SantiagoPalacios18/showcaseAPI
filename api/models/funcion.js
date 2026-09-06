@@ -11,15 +11,15 @@ const funcion = sequelize.define(
             autoIncrement:true
         },
         id_sala: {
-            type: DataTypes.MEDIUMINT.UNSIGNED,
+            type: DataTypes.TINYINT.UNSIGNED,
             primaryKey: true,
         },
         id_pelicula: {
-            type: DataTypes.MEDIUMINT.UNSIGNED,
+            type: DataTypes.TINYINT.UNSIGNED,
             primaryKey: true,
         },
         id_tecnologia: {
-            type: DataTypes.MEDIUMINT.UNSIGNED,
+            type: DataTypes.TINYINT.UNSIGNED,
             primaryKey: true,
         },
         idioma: DataTypes.STRING(10),
@@ -32,6 +32,9 @@ const funcion = sequelize.define(
                 isAlphanumeric: true
             }
         }
+    },
+    {
+        timestamps: false,
     }
 )
 

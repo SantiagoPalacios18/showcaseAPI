@@ -6,15 +6,19 @@ const transaccion = sequelize.define(
     'transaccion',
     {
         id_transaccion: {
-            type: DataTypes.MEDIUMINT.UNSIGNED,
+            type: DataTypes.INT.UNSIGNED,
             primaryKey: true,
             autoIncrement:true
+        },
+        id_ClienteLogueado: {
+            type: DataTypes.INT.UNSIGNED,
+            primaryKey: true,
+            autoIncrement: true
         },
         total:DataTypes.int(8),
         fechaDeEmision: DataTypes.DATE,
         fechaVencimiento: DataTypes.DATE,
         metodoDePago: DataTypes.STRING(15),
-        estado: DataTypes.BOOLEAN,
         DVH: {
             type: DataTypes.STRING(6),
             allowNull: false,
@@ -22,6 +26,9 @@ const transaccion = sequelize.define(
                 isAlphanumeric: true
             }
         }
+    },
+    {
+        timestamps: false,
     }
 )
 

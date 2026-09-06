@@ -6,14 +6,12 @@ const idioma_pelicula = sequelize.define(
     'idioma_pelicula',
     {
         id_pelicula: {
-            type: DataTypes.MEDIUMINT.UNSIGNED,
+            type: DataTypes.TINYINT.UNSIGNED,
             primaryKey: true,
             autoIncrement:true
         },
         id_idioma: {
-            type: DataTypes.MEDIUMINT.UNSIGNED,
-            primaryKey: true,
-            autoIncrement:true
+            type: DataTypes.STRING(10),
         },
         DVH: {
             type: DataTypes.STRING(6),
@@ -22,6 +20,9 @@ const idioma_pelicula = sequelize.define(
                 isAlphanumeric: true
             }
         }
+    },
+    {
+        timestamps: false,
     }
 )
 

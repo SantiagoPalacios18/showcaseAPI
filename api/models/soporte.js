@@ -6,7 +6,7 @@ const sorteo = sequelize.define(
     'sorteo',
     {
         id_sorteo: {
-            type: DataTypes.MEDIUMINT.UNSIGNED,
+            type: DataTypes.SMALLINT.UNSIGNED,
             primaryKey: true,
             autoIncrement:true
         },
@@ -18,6 +18,9 @@ const sorteo = sequelize.define(
                 isAlphanumeric: true
             }
         }
+    },
+    {
+        timestamps: false,
     }
 )
 

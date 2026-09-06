@@ -6,7 +6,7 @@ const tecnologia = sequelize.define(
     'tecnologia',
     {
         id_tecnologia: {
-            type: DataTypes.MEDIUMINT.UNSIGNED,
+            type: DataTypes.TINYINT.UNSIGNED,
             primaryKey: true,
             autoIncrement:true
         },
@@ -19,6 +19,9 @@ const tecnologia = sequelize.define(
                 isAlphanumeric: true
             }
         }
+    },
+    {
+        timestamps: false,
     }
 )
 

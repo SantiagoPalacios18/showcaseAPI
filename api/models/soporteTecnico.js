@@ -6,7 +6,7 @@ const soporteTecnico = sequelize.define(
     'soporteTecnico',
     {
         id_soporteTecnico: {
-            type: DataTypes.MEDIUMINT.UNSIGNED,
+            type: DataTypes.TINYINT.UNSIGNED,
             primaryKey: true,
             autoIncrement:true
         },
@@ -22,6 +22,9 @@ const soporteTecnico = sequelize.define(
                 isAlphanumeric: true
             }
         }
+    },
+    {
+        timestamps: false,
     }
 )
 

@@ -6,12 +6,12 @@ const cliente_sorteo = sequelize.define(
     'cliente_sorteo',
     {
         id_sorteo: {
-            type: DataTypes.MEDIUMINT.UNSIGNED,
+            type: DataTypes.INT.UNSIGNED,
             primaryKey: true,
             autoIncrement:true
         },
         id_cliente: {
-            type: DataTypes.MEDIUMINT.UNSIGNED,
+            type: DataTypes.SMALLINT.UNSIGNED,
             primaryKey: true,
             autoIncrement:true
         },
@@ -22,6 +22,9 @@ const cliente_sorteo = sequelize.define(
                 isAlphanumeric: true
             }
         }
+    },
+    {
+        timestamps: false,
     }
 )
 

@@ -6,12 +6,12 @@ const proyeccion_pelicula = sequelize.define(
     'proyeccion_pelicula',
     {
         id_proyeccion: {
-            type: DataTypes.MEDIUMINT.UNSIGNED,
+            type: DataTypes.TINYINT.UNSIGNED,
             primaryKey: true,
             autoIncrement:true
         },
         id_pelicula: {
-            type: DataTypes.MEDIUMINT.UNSIGNED,
+            type: DataTypes.TINYINT.UNSIGNED,
             primaryKey: true,
             autoIncrement:true
         },
@@ -22,6 +22,9 @@ const proyeccion_pelicula = sequelize.define(
                 isAlphanumeric: true
             }
         }
+    },
+    {
+        timestamps: false,
     }
 )
 

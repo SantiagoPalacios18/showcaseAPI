@@ -6,19 +6,19 @@ const compraTicket = sequelize.define(
     'compraTicket',
     {
         id_compraTicket: {
-            type: DataTypes.MEDIUMINT.UNSIGNED,
+            type: DataTypes.INT.UNSIGNED,
             primaryKey: true,
             autoIncrement:true
         },
         id_transaccion: {
-            type: DataTypes.MEDIUMINT.UNSIGNED,
+            type: DataTypes.INT.UNSIGNED,
             primaryKey: true,
         },
         id_FuncionAsiento: {
-            type: DataTypes.MEDIUMINT.UNSIGNED,
+            type: DataTypes.SMALLINT.UNSIGNED,
             primaryKey: true,
         },
-        precio: DataTypes.Int(8),
+        precio: DataTypes.smallInt(5),
         DVH: {
             type: DataTypes.STRING(6),
             allowNull: false,
@@ -27,6 +27,9 @@ const compraTicket = sequelize.define(
             }
         }
        
+    },
+    {
+        timestamps: false,
     }
 )
 
