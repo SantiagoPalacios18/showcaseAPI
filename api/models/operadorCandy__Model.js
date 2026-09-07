@@ -1,3 +1,6 @@
+
+// sacar a la mierda, unificar con rol
+
 const { sequelize } = require('../config/db.js');
 const { DataTypes } = require('sequelize');
 
