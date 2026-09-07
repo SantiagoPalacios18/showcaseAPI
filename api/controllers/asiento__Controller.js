@@ -119,6 +119,4 @@ module.exports = {
     deleteAsientoById,
 }
 
-module.exports = {
 
-};
