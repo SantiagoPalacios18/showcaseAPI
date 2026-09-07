@@ -2,7 +2,7 @@ import axios from "axios"
 
 // QUE VERGA ES ESTE ARCHIVO????
 
-// Es una instancia de axios a la cual vamos a configurar
+// Es una instancia de axios a la cual vamos a configurar, pensalo como un axios con mods
 
 // Con nuestro sistema de acces_token y refresh_token, debemos tener una forma de identificar cuándo nos quedamos sin el access_token, y debemos hacer una llamada
 // al api/refresh para refrescar el access_token ¿Cómo conchita hacemos eso, cómo sabemos cuándo nos quedamos sin access_token, sin tener que verificar su caducidad en cada endpoint?
@@ -15,7 +15,7 @@ import axios from "axios"
 // Esto de abajo nos permite:
 const api = axios.create({
   baseURL: "/api", //  1. no tener que poner "api/login", "api/refresh" "api/me", todas van a empezar con "api/", para mayor comodidad
-  withCredentials: true // 2. no tener que meter lo de credentials: true en cada petición que hacemos
+  withCredentials: true // 2. no tener que meter lo de credentials: true (para incluir las cookies) en cada petición que hacemos
   // esto nos ahorra espacio y hace todo más cómodo
 })
 

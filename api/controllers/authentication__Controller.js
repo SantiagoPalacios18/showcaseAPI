@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const {Usuario} = require("../models/usuario__Model")
 const {Sesion} = require("../models/sesion__Model")
-const { authMiddleware, SECRET_KEY } = require("../middlewares/auth__Middleware")
+const { SECRET_KEY } = require("../middlewares/auth__Middleware")
 
 
 
