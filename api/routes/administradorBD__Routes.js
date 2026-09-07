@@ -1,9 +1,18 @@
 const { Router } = require('express');
-const { } = require('../controllers/');
+const {
+    getAdministradores,
+    getAdministradorById,
+    createAdministrador,
+    modifyAdministradorById,
+    deleteAdministradorById
+} = require('../controllers/administradorBDController.js');
 
 const router = Router();
 
-router.get('/', );
-router.post('/', );
+router.get('/', getAdministradores);
+router.get('/:id', getAdministradorById);
+router.post('/', createAdministrador);
+router.patch('/:id', modifyAdministradorById);
+router.delete('/:id', deleteAdministradorById);
 
 module.exports = router;
