@@ -49,6 +49,7 @@ api.interceptors.response.use(
       } catch (refreshError) {
         localStorage.removeItem("TOKEN")
         window.location.href = "/login" // Un navigate pero para js (este archivo no es jsx ya que no contiene XLM, o sea componentes """HTML""" )
+        // 
         return Promise.reject(refreshError)
       }
     }
