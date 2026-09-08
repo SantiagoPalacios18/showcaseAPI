@@ -4,6 +4,7 @@ import {useState , useEffect } from "react"
 // El axios configurado que vamos a usar
 import api from "../api"
 
+import './styles/Home.css'
 
 function Home(props) {
     const [message, setMessage] = useState("")
@@ -20,10 +21,9 @@ function Home(props) {
         getMessage()
     }, [])
 
-            return(
+return(
         <div >
-            <h1>SHOWCASE</h1>
-            <div style={{ position: "absolute", top: 0, right: 0, padding: "10px" }}>
+            <div class="session-management" style={{ position: "absolute", top: 0, right: 0, padding: "10px" }}>
 
                 { !props.user ? (
                     <>
@@ -51,7 +51,8 @@ function Home(props) {
                     </> 
             ) : (<p>Kien so bo </p>)}
             </div>
-        </div>
+            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+        </div>  
     )
 }
 

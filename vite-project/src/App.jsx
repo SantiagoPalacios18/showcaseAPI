@@ -11,13 +11,14 @@ import Home from './components/Home'
 import Login from './components/Login'
 import Register from './components/Register'
 import api from './api'
-
+import NavBar from './components/NavBar'
+import Footer from './components/Footer'
 function App() {
   
   const [user, setUser] = useState(null)
   const [token, setToken] = useState("")
   const navigate = useNavigate()
-
+  
 
   const fetchMe = async () => {
     const storedToken = localStorage.getItem("TOKEN")
@@ -81,12 +82,13 @@ function App() {
   return (
     <>
       <div>
+        <NavBar></NavBar>
         <Routes>
             <Route path="/" element={<Home user={user} onLogout={handleLogout} />} />
             <Route path="/login" element={<Login onLogin={handleLogin} />} />
             <Route path="/register" element={<Register onLogin={handleLogin} />} /> {/* Tmb se le pone el handleLogin para loggeo automático */}
         </Routes>
-
+        <Footer></Footer>
         
       </div>
     </>

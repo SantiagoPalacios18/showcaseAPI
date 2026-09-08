@@ -12,6 +12,7 @@ const {
 const { authMiddleware } = require('../middlewares/auth__Middleware.js');
 
 
+
 const router = Router();
 router.post('/login', login);
 router.post('/register',register); 

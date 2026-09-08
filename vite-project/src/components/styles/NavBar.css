@@ -1,0 +1,27 @@
+#title{
+    color: #cb6ce6;
+    font-weight: 800 ;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+
+ul{
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #3a3a3a;
+    padding: 0.5rem 2rem;
+    color: white;
+    font-weight: 500;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Sombra ligera */
+}
+
+li{
+    margin:0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+
+}
