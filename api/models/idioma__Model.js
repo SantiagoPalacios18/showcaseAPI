@@ -2,7 +2,7 @@ const { sequelize } = require('../config/db.js');
 const { DataTypes } = require('sequelize');
 
 
-const idioma = sequelize.define(
+const Idioma = sequelize.define(
     'idioma',
     {
         id_idioma: {
@@ -22,4 +22,4 @@ const idioma = sequelize.define(
 )
 
 
-module.exports = { idioma }
+module.exports = { Idioma }

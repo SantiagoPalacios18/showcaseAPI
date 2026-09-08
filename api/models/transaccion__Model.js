@@ -2,19 +2,22 @@ const { sequelize } = require('../config/db.js');
 const { DataTypes } = require('sequelize');
 
 
-const proyeccion_pelicula = sequelize.define(
-    'proyeccion_pelicula',
+const Transaccion = sequelize.define(
+    'transaccion',
     {
-        id_proyeccion: {
-            type: DataTypes.TINYINT.UNSIGNED,
+        id_transaccion: {
+            type: DataTypes.INTEGER.UNSIGNED,
             primaryKey: true,
             autoIncrement:true
         },
-        id_pelicula: {
-            type: DataTypes.TINYINT.UNSIGNED,
+        id_ClienteLogueado: {
+            type: DataTypes.INTEGER.UNSIGNED,
             primaryKey: true,
-            autoIncrement:true
         },
+        total:DataTypes.INTEGER(8),
+        fechaDeEmision: DataTypes.DATE,
+        fechaVencimiento: DataTypes.DATE,
+        metodoDePago: DataTypes.STRING(15),
         DVH: {
             type: DataTypes.STRING(6),
             allowNull: false,
@@ -29,4 +32,4 @@ const proyeccion_pelicula = sequelize.define(
 )
 
 
-module.exports = { proyeccion_pelicula }
+module.exports = { Transaccion }

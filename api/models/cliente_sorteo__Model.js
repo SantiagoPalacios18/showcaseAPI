@@ -2,16 +2,16 @@ const { sequelize } = require('../config/db.js');
 const { DataTypes } = require('sequelize');
 
 
-const Idioma_pelicula = sequelize.define(
-    'idioma_pelicula',
+const Cliente_sorteo = sequelize.define(
+    'cliente_sorteo',
     {
-        id_pelicula: {
-            type: DataTypes.TINYINT.UNSIGNED,
+        id_sorteo: {
+            type: DataTypes.INTEGER.UNSIGNED,
             primaryKey: true,
-            autoIncrement:true
         },
-        id_idioma: {
-            type: DataTypes.STRING(10),
+        id_cliente: {
+            type: DataTypes.SMALLINT.UNSIGNED,
+            primaryKey: true,
         },
         DVH: {
             type: DataTypes.STRING(6),
@@ -27,4 +27,4 @@ const Idioma_pelicula = sequelize.define(
 )
 
 
-module.exports = { Idioma_pelicula }
+module.exports = { Cliente_sorteo }

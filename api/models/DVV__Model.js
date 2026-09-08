@@ -16,4 +16,4 @@ const DVV = sequelize.define(
 )
 
 
-module.exports = { Funcion_Asiento }
+module.exports = { DVV }

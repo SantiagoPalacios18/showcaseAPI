@@ -37,6 +37,13 @@ const CompraCandy = sequelize.define(
                 isAlphanumeric: true
             }
         }
+        /*validate : {
+            noNulos(e)  {
+                if(!this.metodoPago) {
+                    msg: "TTT"
+                }
+            }
+        }*/
     },
     {
         timestamps: false,

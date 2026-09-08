@@ -2,29 +2,23 @@ const { sequelize } = require('../config/db.js');
 const { DataTypes } = require('sequelize');
 
 
-const funcion = sequelize.define(
-    'funcion',
+const CompraTicket = sequelize.define(
+    'compraTicket',
     {
         id_compraTicket: {
-            type: DataTypes.MEDIUMINT.UNSIGNED,
+            type: DataTypes.INTEGER.UNSIGNED,
             primaryKey: true,
             autoIncrement:true
         },
-        id_sala: {
-            type: DataTypes.TINYINT.UNSIGNED,
+        id_transaccion: {
+            type: DataTypes.INTEGER.UNSIGNED,
             primaryKey: true,
         },
-        id_pelicula: {
-            type: DataTypes.TINYINT.UNSIGNED,
+        id_FuncionAsiento: {
+            type: DataTypes.SMALLINT.UNSIGNED,
             primaryKey: true,
         },
-        id_tecnologia: {
-            type: DataTypes.TINYINT.UNSIGNED,
-            primaryKey: true,
-        },
-        idioma: DataTypes.STRING(10),
-        proyeccion: DataTypes.STRING(10),
-        horarioInicio: DataTypes.DATETIME,
+        precio: DataTypes.SMALLINT(5),
         DVH: {
             type: DataTypes.STRING(6),
             allowNull: false,
@@ -32,6 +26,7 @@ const funcion = sequelize.define(
                 isAlphanumeric: true
             }
         }
+       
     },
     {
         timestamps: false,
@@ -39,4 +34,4 @@ const funcion = sequelize.define(
 )
 
 
-module.exports = { funcion }
+module.exports = { CompraTicket }

@@ -8,12 +8,10 @@ const ProductoCandy_ComprasCandy = sequelize.define(
         id_ComprasCandy: {
             type: DataTypes.MEDIUMINT.UNSIGNED,
             primaryKey: true,
-            autoIncrement:true
         },
         id_ProductoCandy: {
             type: DataTypes.MEDIUMINT.UNSIGNED,
             primaryKey: true,
-            autoIncrement:true
         },
         DVH: {
             type: DataTypes.STRING(6),

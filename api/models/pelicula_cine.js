@@ -2,18 +2,16 @@ const { sequelize } = require('../config/db.js');
 const { DataTypes } = require('sequelize');
 
 
-const pelicula_cine = sequelize.define(
+const Pelicula_cine = sequelize.define(
     'pelicula_cine',
     {
         id_cine: {
             type: DataTypes.TINYINT.UNSIGNED,
             primaryKey: true,
-            autoIncrement:true
         },
         id_pelicula: {
             type: DataTypes.TINYINT.UNSIGNED,
             primaryKey: true,
-            autoIncrement:true
         },
         DVH: {
             type: DataTypes.STRING(6),
@@ -29,4 +27,4 @@ const pelicula_cine = sequelize.define(
 )
 
 
-module.exports = { pelicula_cine }
+module.exports = { Pelicula_cine }

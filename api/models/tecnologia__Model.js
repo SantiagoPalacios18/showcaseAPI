@@ -2,15 +2,16 @@ const { sequelize } = require('../config/db.js');
 const { DataTypes } = require('sequelize');
 
 
-const sorteo = sequelize.define(
-    'sorteo',
+const Tecnologia = sequelize.define(
+    'tecnologia',
     {
-        id_sorteo: {
-            type: DataTypes.SMALLINT.UNSIGNED,
+        id_tecnologia: {
+            type: DataTypes.TINYINT.UNSIGNED,
             primaryKey: true,
             autoIncrement:true
         },
-        premio: DataTypes.STRING(30),
+        nombre: DataTypes.STRING(15),
+        descripcion: DataTypes.STRING(20),
         DVH: {
             type: DataTypes.STRING(6),
             allowNull: false,
@@ -25,4 +26,4 @@ const sorteo = sequelize.define(
 )
 
 
-module.exports = { sorteo }
+module.exports = { Tecnologia }

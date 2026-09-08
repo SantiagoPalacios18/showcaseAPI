@@ -1,6 +1,6 @@
-const { Cine } = require('../../models/index.js');
+const { Cine } = require('../models/index.js');
 
-// Obtener todos los cines
+// GET: Obtener todos los cines
 const getCines = async (req, res) => {
     try {
         const cines = await Cine.findAll();
@@ -10,7 +10,7 @@ const getCines = async (req, res) => {
     }
 }
 
-// Obtener un cine por ID
+// GET: Obtener un cine por ID
 const getCineById = async (req, res) => {
     try {
         const { id } = req.params;
@@ -26,7 +26,7 @@ const getCineById = async (req, res) => {
     }
 }
 
-// Crear un nuevo cine
+// POST: Crear un nuevo cine
 const createCine = async (req, res) => {
     try {
         const data = req.body;
@@ -54,7 +54,7 @@ const createCine = async (req, res) => {
     }
 }
 
-// Modificar parcialmente un cine en base a su ID
+// PATCH: Modificar parcialmente un cine en base a su ID
 const modifyCineById = async (req, res) => {
     try {
         const { id } = req.params;
@@ -87,7 +87,7 @@ const modifyCineById = async (req, res) => {
     }
 }
 
-// Eliminar el registro de un cine en base a su ID
+// DELETE: Eliminar el registro de un cine en base a su ID
 const deleteCineById = async (req, res) => {
     try {
         const { id } = req.params;
@@ -102,6 +102,8 @@ const deleteCineById = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 }
+
+
 
 module.exports = {
     getCines,

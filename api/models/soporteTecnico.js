@@ -5,7 +5,7 @@ const { sequelize } = require('../config/db.js');
 const { DataTypes } = require('sequelize');
 
 
-const soporteTecnico = sequelize.define(
+const SoporteTecnico = sequelize.define(
     'soporteTecnico',
     {
         id_soporteTecnico: {
@@ -15,8 +15,8 @@ const soporteTecnico = sequelize.define(
         },
         nombre: DataTypes.STRING(15),
         apellido: DataTypes.STRING(15),
-        dni: DataTypes.int(10),
-        telefono: DataTypes.int(17),
+        dni: DataTypes.INTEGER(10),
+        telefono: DataTypes.INTEGER(17),
         mail: DataTypes.STRING(20),
         DVH: {
             type: DataTypes.STRING(6),
@@ -32,4 +32,4 @@ const soporteTecnico = sequelize.define(
 )
 
 
-module.exports = { soporteTecnico }
+module.exports = { SoporteTecnico }

@@ -1,9 +1,6 @@
-const { } = require('../models/index.js');
+const { Asiento } = require('../models/index.js');
 
-
-const { Asiento } = require('../../models/index.js');
-
-// Obtener todos los asientos
+// GET: Obtener todos los asientos
 const getAsientos = async (req, res) => {
     try {
         const asientos = await Asiento.findAll();
@@ -13,7 +10,7 @@ const getAsientos = async (req, res) => {
     }
 }
 
-// Obtener un asiento por ID
+// GET: Obtener un asiento por ID
 const getAsientoById = async (req, res) => {
     try {
         const { id } = req.params;
@@ -29,7 +26,7 @@ const getAsientoById = async (req, res) => {
     }
 }
 
-// Crear un nuevo asiento
+// POST: Crear un nuevo asiento
 const createAsiento = async (req, res) => {
     try {
         const data = req.body;
@@ -58,7 +55,7 @@ const createAsiento = async (req, res) => {
     }
 }
 
-// Modificar parcialmente un asiento en base a su ID
+// PATCH: Modificar parcialmente un asiento en base a su ID
 const modifyAsientoById = async (req, res) => {
     try {
         const { id } = req.params;
@@ -95,7 +92,7 @@ const modifyAsientoById = async (req, res) => {
     }
 }
 
-// Eliminar el registro de un asiento en base a su ID
+// DELETE: Eliminar el registro de un asiento en base a su ID
 const deleteAsientoById = async (req, res) => {
     try {
         const { id } = req.params;
@@ -110,6 +107,7 @@ const deleteAsientoById = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 }
+
 
 module.exports = {
     getAsientos,

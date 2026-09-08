@@ -6,8 +6,9 @@ const {Sesion} = require("../models/sesion__Model")
 const { SECRET_KEY } = require("../middlewares/auth__Middleware")
 
 
-
+// POST: Crear una sesión
 const login = async (req, res) => {
+
     try {
         const { email, contraseña } = req.body
 
@@ -67,8 +68,9 @@ const login = async (req, res) => {
     }
 }
 
-  // Funcione que se va a usar en un boton de cerrar sesión, limpia el token (tanto de las cookies como de la BDs) y el usuario
-  const logout = async (req, res) => {
+// DELETE: Borrar una sesión
+// Funcione que se va a usar en un boton de cerrar sesión, limpia el token (tanto de las cookies como de la BDs) y el usuario
+const logout = async (req, res) => {
     try {
       const refreshToken = req.cookies.refreshToken
 
@@ -90,6 +92,7 @@ const login = async (req, res) => {
     }
   }
 
+// POST: Crear un usuario
 const register = async (req, res) => {
     try {
         const {
@@ -129,7 +132,7 @@ const register = async (req, res) => {
     }
 }
 
-// GET /me: Devuelve la información del usuario basado en el token del localStorage (SE USA MIDDLEWARE, fijarse authetication__Routes.js)
+// GET: Devuelve la información del usuario basado en el token del localStorage (SE USA MIDDLEWARE, fijarse authetication__Routes.js)
 // Esto se hace porque cuando se recarga la pagina, se pierde al estado del usuario
 const me = async (req, res) => {
     try {
@@ -149,6 +152,7 @@ const me = async (req, res) => {
     }
 }
 
+// GET: Obtener accessToken en base al refreshToken
 const refresh = async (req, res) => {
     try{
         const refreshToken = req.cookies.refreshToken
@@ -188,6 +192,9 @@ const refresh = async (req, res) => {
     }
 
 }
+
+
+
 
 module.exports = {
     login,

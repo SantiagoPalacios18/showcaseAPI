@@ -1,5 +1,5 @@
 
-const { AdministradorBD } = require('../../models/index.js');
+const { AdministradorBD } = require('../models/index.js');
 
 // Obtener todos los administradores
 const getAdministradores = async (req, res) => {
