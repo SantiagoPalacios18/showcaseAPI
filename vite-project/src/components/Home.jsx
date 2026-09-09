@@ -39,7 +39,8 @@ return(
                 )}
             </div>
             <div>
-                <h2>Mensaje dado por el back-end</h2>
+                <h2>Viví la magia del cine en pantalla gigante</h2>
+                <h3>Mensaje dado por el back-end</h3    >
 
                 <p>{message}</p>
             </div>

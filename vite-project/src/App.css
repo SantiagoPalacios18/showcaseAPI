@@ -187,3 +187,18 @@
     border-right-color: var(--border);
   }
 }
+
+
+p{
+  color: white
+}
+
+.main-title{
+  color: white;
+  font-weight: 500;
+}
+
+.submit-form{
+  margin: 40px;
+  padding: 30px;
+}

@@ -59,9 +59,9 @@ function Login(props) {
     }
 
     return(
-        <div>
-            <h1>Login</h1>
-            <form onSubmit={handleSubmit}>
+        <>
+            <h1 class="main-title">Login</h1>
+            <form class="submit-form" onSubmit={handleSubmit}>
                 <input 
                     type="text"
                     name="email"
@@ -79,7 +79,8 @@ function Login(props) {
             {loading && <p>Cargando...</p>}
             {error && <p style={{ color: "red" }}>{error}</p>}
             {message && <p style={{ color: "green" }}>{message}</p>}
-        </div>
+            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+        </>
     )
 
 }
