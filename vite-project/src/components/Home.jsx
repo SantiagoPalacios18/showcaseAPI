@@ -6,6 +6,8 @@ import api from "../api"
 
 import './styles/Home.css'
 
+import perfil from '../assets/perfil-default.png'
+
 function Home(props) {
     const [message, setMessage] = useState("")
     const getMessage = async () => {
@@ -22,22 +24,7 @@ function Home(props) {
     }, [])
 
 return(
-        <div >
-            <div class="session-management" style={{ position: "absolute", top: 0, right: 0, padding: "10px" }}>
-
-                { !props.user ? (
-                    <>
-                        <Link to="/login" style={{ marginRight: "10px" }}>Login</Link>
-                        <Link to="/register">Register</Link>
-                    
-                    </>
-                ):(
-                    <>
-                        <button onClick={props.onLogout} >Cerrar Sesion</button>
-                        
-                    </>
-                )}
-            </div>
+        <div>
             <div>
                 <h2>Viví la magia del cine en pantalla gigante</h2>
                 <h3>Mensaje dado por el back-end</h3    >

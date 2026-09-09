@@ -1,5 +1,4 @@
 import {useState, useEffect } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 // El axios configurado que vamos a usar
@@ -39,10 +38,10 @@ function Login(props) {
 
             props.onLogin(response.data.user, response.data.accessToken /* , response.data.refreshToken  */)
 
-            await timeout(1000);
+            await timeout(300);
             setLoading(false)
             setMessage("Login exitoso, redireccionando...")
-            await timeout(1000);
+            await timeout(300);
 
 
             navigate("/")
@@ -60,25 +59,28 @@ function Login(props) {
 
     return(
         <>
-            <h1 class="main-title">Login</h1>
-            <form class="submit-form" onSubmit={handleSubmit}>
-                <input 
-                    type="text"
-                    name="email"
-                    placeholder="Correo Electrónico"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)} />
-                <input 
-                    type="password"
-                    name="password"
-                    placeholder="Contraseña"
-                    value={contraseña}
-                    onChange={(e) => setContraseña(e.target.value)} />
-                <button type="submit">Login</button>
-            </form>
-            {loading && <p>Cargando...</p>}
-            {error && <p style={{ color: "red" }}>{error}</p>}
-            {message && <p style={{ color: "green" }}>{message}</p>}
+            <h1 className="main-title">Login</h1>
+            <div className="form-container">
+                <div className="status-message-container">
+                    {loading && <p>Cargando...</p>}
+                    {error ? (<p style={{ color: "red" }}>{error}</p>):(<p style={{ color: "green" }}>{message}</p>)}
+                </div>
+                <form className="submit-form" onSubmit={handleSubmit}>
+                    <input 
+                        type="text"
+                        name="email"
+                        placeholder="Correo Electrónico"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)} />
+                    <input 
+                        type="password"
+                        name="password"
+                        placeholder="Contraseña"
+                        value={contraseña}
+                        onChange={(e) => setContraseña(e.target.value)} />
+                    <button type="submit">Login</button>
+                </form>
+            </div>
             <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
         </>
     )

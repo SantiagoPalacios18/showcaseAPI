@@ -1,0 +1,85 @@
+
+
+.profile-container{
+    display: flex;
+    align-items: center;
+    background-color: #2e0d70;
+    height: 600px;
+    gap: 40px;
+    margin: 30px;
+    padding: 20px;
+    margin-bottom: 300px;
+    border-radius: 10px;
+}
+
+.photo{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 400px;
+}
+
+
+.photo img{
+    width: 350px;
+    object-fit: cover;
+}
+
+.profile-data-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.profile-data-section span {
+  font-size: 16px;
+  color: #ffffff;
+  padding-bottom: 6px;
+}
+
+
+.overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.confirm-panel{
+    background-color: #381285;
+    padding: 25px;
+    border-radius: 8px;
+    text-align: center;
+
+}
+
+.confirm-panel h3{
+
+}
+
+.confirm-panel button{
+    width: 200px;
+    padding: 3px;
+    margin: 10px;
+    background-color: #8d8c91;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.confirm-panel button:hover{
+    background-color: #c7c1d3;
+}
+
+#btn-confirm:hover{
+    background-color: #eb626d;
+}

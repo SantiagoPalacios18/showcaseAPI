@@ -56,10 +56,10 @@ function Register(props) {
             })
             props.onLogin(response.data.user, response.data.accessToken /*, response.data.refreshToken*/)
 
-            await timeout(1000);
+            await timeout(300);
             setLoading(false)
             setMessage("Login exitoso, redireccionando...")
-            await timeout(1000);
+            await timeout(300);
 
             navigate("/")
         } catch (err) {

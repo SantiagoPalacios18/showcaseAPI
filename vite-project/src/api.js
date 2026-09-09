@@ -5,17 +5,17 @@ import axios from "axios"
 // Es una instancia de axios a la cual vamos a configurar, pensalo como un axios con mods
 
 // Con nuestro sistema de acces_token y refresh_token, debemos tener una forma de identificar cuándo nos quedamos sin el access_token, y debemos hacer una llamada
-// al api/refresh para refrescar el access_token ¿Cómo conchita hacemos eso, cómo sabemos cuándo nos quedamos sin access_token, sin tener que verificar su caducidad en cada endpoint?
+// al api/refresh para refrescar el access_token ¿Cómo conchita hacemos eso?, ¿cómo sabemos cuándo nos quedamos sin access_token, sin tener que verificar su caducidad en cada endpoint?
 
 // Lo que vamos a hacer es lo siguiente: vamos a identificar, mediante el "status" de las respuestas del back-end, cuándo es un error del sistema (500) y CUANDO ES UN ERROR DE AUTORIZACIÓN (401)
-// ESA va a ser SOLO cuando sea un problema de caducidad de token, 
-
+// ESA va a ser SOLO cuando sea un problema de caducidad de token
+// En este archivo logramos configurar un "interceptor" que se va a meter en medio de la ejecución, y va a realizar lo que tenga programado
 
 
 // Esto de abajo nos permite:
 const api = axios.create({
   baseURL: "/api", //  1. no tener que poner "api/login", "api/refresh" "api/me", todas van a empezar con "api/", para mayor comodidad
-  withCredentials: true // 2. no tener que meter lo de credentials: true (para incluir las cookies) en cada petición que hacemos
+  withCredentials: true // 2. no tener que meter lo de credentials: true en cada petición que hacemos
   // esto nos ahorra espacio y hace todo más cómodo
 })
 
@@ -27,6 +27,7 @@ api.interceptors.request.use((config) => {
   }
   return config
 })
+
 api.interceptors.response.use(
   (response) => response, // si hay un response, lo dejamos pasar sin hacer nada (no hubo error)
   async (error) => {
@@ -49,7 +50,6 @@ api.interceptors.response.use(
       } catch (refreshError) {
         localStorage.removeItem("TOKEN")
         window.location.href = "/login" // Un navigate pero para js (este archivo no es jsx ya que no contiene XLM, o sea componentes """HTML""" )
-        // 
         return Promise.reject(refreshError)
       }
     }

@@ -1,0 +1,19 @@
+.session-management{
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 20px;
+}
+
+.session-management a{
+    background-color: rgb(51, 47, 73);
+    text-decoration: none;
+    color: rgb(214, 214, 214);
+    padding: 5px;
+    padding-inline: 10px;
+    border-radius: 5px;
+}
+
+.session-management a:hover{
+    background-color: rgb(177, 177, 177);
+    color: black
+}
