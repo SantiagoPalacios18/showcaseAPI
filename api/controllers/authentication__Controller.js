@@ -99,11 +99,13 @@ const register = async (req, res) => {
             nombre,
             apellido,
             email,
+            dni,
+            telefono,
             contraseña,
             confirmarContraseña
         } = req.body
 
-        if (!nombre || !apellido || !email || !contraseña || !confirmarContraseña) {
+        if (!nombre || !apellido || !email || !dni || !telefono|| !contraseña || !confirmarContraseña) {
             return res.status(400).json({ message: "Falta ingresar datos" })
         }
 

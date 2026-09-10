@@ -10,7 +10,11 @@ function Register(props) {
     // Variables del formulario
     const [nombre, setNombre] = useState("")
     const [apellido, setApellido] = useState("")
+    const [dni, setDni] = useState("");
     const [email, setEmail] = useState("")
+    const [telefono, setTelefono] = useState("");
+
+
     const [contraseña, setContraseña] = useState("")
     const [confirmarContraseña, setConfirmPassword] = useState("")
 
@@ -76,43 +80,60 @@ function Register(props) {
     
     return(
         <div>
-            <h1>Register</h1>
-            <form onSubmit={handleSubmit}>
-                <input 
-                    type="text"
-                    name="nombre"
-                    placeholder="Nombre"
-                    value={nombre}
-                    onChange={(e) => setNombre(e.target.value)} />
-                <input 
-                    type="text"
-                    name="apellido"
-                    placeholder="Apellido"
-                    value={apellido}
-                    onChange={(e) => setApellido(e.target.value)} />
-                <input 
-                    type="text"
-                    name="email"
-                    placeholder="Correo Electrónico"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)} />
-                <input 
-                    type="password"
-                    name="password"
-                    placeholder="Contraseña"
-                    value={contraseña}
-                    onChange={(e) => setContraseña(e.target.value)} />
-                <input 
-                    type="password"
-                    name="confirmPassword"
-                    placeholder="Confirmar Contraseña"
-                    value={confirmarContraseña}
-                    onChange={(e) => setConfirmPassword(e.target.value)} />
-                <button type="submit">Register</button>
-            </form>
-            {loading && <p>Cargando...</p>}
-            {error && <p style={{ color: "red" }}>{error}</p>}
-            {message && <p style={{ color: "green" }}>{message}</p>}
+            <h1 className="main-title">Register</h1>
+            <div className="form-container">
+                <div className="status-message-container">
+                    {loading && <p>Cargando...</p>}
+                    {error && <p style={{ color: "red" }}>{error}</p>}
+                    {message && <p style={{ color: "green" }}>{message}</p>}
+                </div>
+                <form className="submit-form" onSubmit={handleSubmit}>
+                    <input 
+                        type="text"
+                        name="nombre"
+                        placeholder="Nombre"
+                        value={nombre}
+                        onChange={(e) => setNombre(e.target.value)} />
+                    <input 
+                        type="text"
+                        name="apellido"
+                        placeholder="Apellido"
+                        value={apellido}
+                        onChange={(e) => setApellido(e.target.value)} />
+                    <input 
+                        type="text"
+                        name="dni"
+                        placeholder="Número de documento (DNI)"
+                        value={dni}
+                        onChange={(e) => setDni(e.target.value)} />
+                    <input 
+                        type="text"
+                        name="email"
+                        placeholder="Correo Electrónico"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)} />
+                    <input 
+                        type="text"
+                        name="teléfono"
+                        placeholder="Número de teléfono"
+                        value={telefono}
+                        onChange={(e) => setTelefono(e.target.value)} />
+                    <input 
+                        type="password"
+                        name="password"
+                        placeholder="Contraseña"
+                        value={contraseña}
+                        onChange={(e) => setContraseña(e.target.value)} />
+                    <input 
+                        type="password"
+                        name="confirmPassword"
+                        placeholder="Confirmar Contraseña"
+                        value={confirmarContraseña}
+                        onChange={(e) => setConfirmPassword(e.target.value)} />
+                    <button type="submit">Register</button>
+                </form>
+            </div>
+            
         </div>
     )
 

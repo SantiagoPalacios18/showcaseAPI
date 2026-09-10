@@ -40,7 +40,7 @@ const Usuario = sequelize.define(
             }
         },
         email: {
-            type: DataTypes.STRING(20),
+            type: DataTypes.STRING(50),
             unique: true,
             validate: {
                 isEmail: true
