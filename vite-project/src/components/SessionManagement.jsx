@@ -24,7 +24,7 @@ function SessionManagement(props){
                     </>
                 ):(
                     <>
-                        <Link id='profile-pic' to="/profile"><img src={perfil} alt="Perfil" /></Link>
+                        <Link id='profile-pic' to={`/profile/${props.user.id_Usuario}`} ><img src={perfil} alt="Perfil" /></Link>
                         
                     </>
                 )}

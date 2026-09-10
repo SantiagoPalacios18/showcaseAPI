@@ -1,40 +1,39 @@
-
-const { AdministradorBD } = require('../models/index.js');
-
-
-const adminHomeMessage = async (req ,res) =>{
-    res.status(200).json({message:"Hola ADMIN :vv.vVvVv"})
-}
+const { Usuario } = require('../models/index.js');
 
 
-// Obtener todos los administradores
-const getAdministradores = async (req, res) => {
+
+// Obtener todos los useres
+const getUsers = async (req, res) => {
     try {
-        const administradores = await AdministradorBD.findAll();
-        res.status(200).json(administradores);
+        const users = await Usuario.findAll();
+        res.status(200).json(users);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 }
 
-// Obtener un administrador por ID
-const getAdministradorById = async (req, res) => {
+// Obtener un usuario por ID
+const getUserById = async (req, res) => {
     try {
         const { id } = req.params;
-        const administrador = await AdministradorBD.findByPk(id);
+        const user = await Usuario.findByPk(id, {
+            attributes:{
+                exclude: ["contraseña"]
+            }
+        });
 
-        if (!administrador) {
-            return res.status(404).json({ message: `Administrador con el id: ${id} no encontrado` });
+        if (!user) {
+            return res.status(404).json({ message: `usuario con el id: ${id} no encontrado` });
         }
 
-        res.status(200).json(administrador);
+        res.status(200).json(user);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 }
-
-// Crear un nuevo administrador
-const createAdministrador = async (req, res) => {
+/*
+// Crear un nuevo usuario
+const createUser = async (req, res) => {
     try {
         const data = req.body;
 
@@ -49,7 +48,7 @@ const createAdministrador = async (req, res) => {
             extra = " Alerta: El campo id_Administador no es modificable, se estableció otro";
         }
 
-        const nuevoAdministrador = await AdministradorBD.create({
+        const nuevouser = await userBD.create({
             id_Rol: data.id_Rol,
             nombre: data.nombre,
             apellido: data.apellido,
@@ -59,14 +58,14 @@ const createAdministrador = async (req, res) => {
             DVH: data.DVH
         });
 
-        res.status(200).json({ message: "Se ha creado el administrador correctamente." + extra, administrador: nuevoAdministrador });
+        res.status(200).json({ message: "Se ha creado el user correctamente." + extra, user: nuevouser });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 }
 
-// Modificar parcialmente un administrador en base a su ID
-const modifyAdministradorById = async (req, res) => {
+// Modificar parcialmente un user en base a su ID
+const modifyuserById = async (req, res) => {
     try {
         const { id } = req.params;
         const data = req.body;
@@ -98,40 +97,39 @@ const modifyAdministradorById = async (req, res) => {
             return res.status(400).json({ message: "No se ha encontrado ningún dato para modificar" });
         }
 
-        const [filasModificadas] = await AdministradorBD.update(datosCambiar, { where: { id_Administador: id } });
+        const [filasModificadas] = await userBD.update(datosCambiar, { where: { id_Administador: id } });
 
         if (filasModificadas === 0) {
-            return res.status(404).json({ message: `Administrador con el id: ${id} no encontrado` });
+            return res.status(404).json({ message: `user con el id: ${id} no encontrado` });
         }
 
-        res.status(200).json({ message: "El administrador ha sido modificado correctamente, datos modificados: " + Object.keys(datosCambiar) });
+        res.status(200).json({ message: "El user ha sido modificado correctamente, datos modificados: " + Object.keys(datosCambiar) });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 }
 
-// Eliminar el registro de un administrador en base a su ID
-const deleteAdministradorById = async (req, res) => {
+// Eliminar el registro de un user en base a su ID
+const deleteuserById = async (req, res) => {
     try {
         const { id } = req.params;
-        const administradoresEliminados = await AdministradorBD.destroy({ where: { id_Administador: id } });
+        const useresEliminados = await userBD.destroy({ where: { id_Usuario: id } });
 
-        if (administradoresEliminados === 0) {
-            return res.status(400).json({ message: "No se ha encontrado el administrador, 0 eliminaciones realizadas" });
+        if (useresEliminados === 0) {
+            return res.status(400).json({ message: "No se ha encontrado el usuario, 0 eliminaciones realizadas" });
         }
 
-        res.status(200).json({ message: "Se ha eliminado correctamente el administrador de ID: " + id });
+        res.status(200).json({ message: "Se ha eliminado correctamente el user de ID: " + id });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 }
-
+*/
 module.exports = {
-    adminHomeMessage,
-    getAdministradores,
-    getAdministradorById,
-    createAdministrador,
-    modifyAdministradorById,
-    deleteAdministradorById,
+    getUsers,
+    getUserById,
+    //createUser,
+    //modifyuserById,
+    //deleteuserById,
 }
 

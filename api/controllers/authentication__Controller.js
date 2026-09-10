@@ -2,6 +2,8 @@ const express = require("express")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const {Usuario} = require("../models/usuario__Model")
+const {Rol} = require("../models/rol__Model")
+const {Patente} = require("../models/patente__Model")
 const {Sesion} = require("../models/sesion__Model")
 const { SECRET_KEY } = require("../middlewares/auth__Middleware")
 
@@ -98,14 +100,14 @@ const register = async (req, res) => {
         const {
             nombre,
             apellido,
-            email,
             dni,
             telefono,
+            email,
             contraseña,
             confirmarContraseña
         } = req.body
 
-        if (!nombre || !apellido || !email || !dni || !telefono|| !contraseña || !confirmarContraseña) {
+        if (!nombre || !apellido ||  !dni || !telefono || !email || !contraseña || !confirmarContraseña) {
             return res.status(400).json({ message: "Falta ingresar datos" })
         }
 
@@ -119,11 +121,14 @@ const register = async (req, res) => {
         }
 
         const hashedPassword = await bcrypt.hash(contraseña, 10)
-
+        const fecchaNac = 0
         const user = await Usuario.create({
-            nombre,
-            apellido,
-            email,
+            nombre: nombre,
+            apellido: apellido,
+            edad: fecchaNac,
+            DNI: dni,
+            telefono: telefono,
+            email: email,
             contraseña: hashedPassword
         })
 
@@ -139,7 +144,16 @@ const register = async (req, res) => {
 const me = async (req, res) => {
     try {
         const user = await Usuario.findByPk(req.user.id_Usuario, {
-            attributes: { exclude: ["contraseña"] }
+            attributes: { exclude: ["contraseña"] },
+            include:{
+                model: Rol,
+                include:[
+                    {
+                        model: Patente,
+                        through: { attributes: []}
+                    }
+                ]
+            }
         })
 
         if (!user) {

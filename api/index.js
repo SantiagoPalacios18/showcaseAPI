@@ -43,6 +43,7 @@ server.get('/', (req, res) => {
 });
 
 const routes = require("./routes/index.js");
+const { Usuario } = require('./models/usuario__Model.js');
 server.use(routes);
 //server.use('/users', userRoutes);
 //server.use('/hobbies', hobbyRoutes);
@@ -71,5 +72,23 @@ server.listen(3000, async () => {
     console.error('No se pudo conectar a la base de datos:', error);
   }
 });
+
+ (async(req,res) => {
+  let Benito = await Usuario.findOne({where:{email: 'asd@a.com'}})
+  if (!Benito){
+    const hash = await bcrypt.hash('123456', 10)
+    Benito = await Usuario.create({
+      nombre: 'Benito',
+      apellido: 'Camela',
+      edad: '999',
+      DNI: null,
+      telefono: null,
+      email: 'asd@a.com',
+      contraseña: hash
+    })
+  }
+
+})()
+
 
 //documentacion: https://sequelize.org/

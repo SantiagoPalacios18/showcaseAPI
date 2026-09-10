@@ -11,10 +11,8 @@ function Register(props) {
     const [nombre, setNombre] = useState("")
     const [apellido, setApellido] = useState("")
     const [dni, setDni] = useState("");
-    const [email, setEmail] = useState("")
     const [telefono, setTelefono] = useState("");
-
-
+    const [email, setEmail] = useState("")
     const [contraseña, setContraseña] = useState("")
     const [confirmarContraseña, setConfirmPassword] = useState("")
 
@@ -45,22 +43,24 @@ function Register(props) {
             await api.post('/register', {
                 nombre,
                 apellido,
+                // fechaNacimiento,
+                dni,
+                telefono,
                 email,
                 contraseña,
-                confirmarContraseña
-            },{
+                confirmarContraseña,
+            }) /* YA NO ES NECESARIO LO SIGUIENTE: ,{
                 withCredentials: true // Necesario para que se envien las cookies al backend
-            })
+            })*/
 
             const response = await api.post('/login', {
                 email,
                 contraseña
-            },{
-                withCredentials: true // Necesario para que se envien las cookies al backend
             })
+            
             props.onLogin(response.data.user, response.data.accessToken /*, response.data.refreshToken*/)
 
-            await timeout(300);
+            //await timeout(300);
             setLoading(false)
             setMessage("Login exitoso, redireccionando...")
             await timeout(300);
@@ -68,9 +68,9 @@ function Register(props) {
             navigate("/")
         } catch (err) {
             if (err.response) {
-                setError(err.response.data.message)
+                setError(err.response.data.message) // Si hay un mensaje de error del backend (conexión establecida pero se dió un mensaje de error)
             } else {
-                setError("Error de conexión con el servidor")
+                setError("Error de conexión con el servidor") // Si hay un error con la conexión en si (conexión no establecida)
                 console.log(err)
             }
         } finally {
@@ -108,16 +108,17 @@ function Register(props) {
                         onChange={(e) => setDni(e.target.value)} />
                     <input 
                         type="text"
-                        name="email"
-                        placeholder="Correo Electrónico"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)} />
-                    <input 
-                        type="text"
                         name="teléfono"
                         placeholder="Número de teléfono"
                         value={telefono}
                         onChange={(e) => setTelefono(e.target.value)} />
+                    <input 
+                        type="text"
+                        name="email"
+                        placeholder="Correo Electrónico"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)} />
+
                     <input 
                         type="password"
                         name="password"

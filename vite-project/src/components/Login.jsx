@@ -38,7 +38,7 @@ function Login(props) {
 
             props.onLogin(response.data.user, response.data.accessToken /* , response.data.refreshToken  */)
 
-            await timeout(300);
+            //await timeout(300);
             setLoading(false)
             setMessage("Login exitoso, redireccionando...")
             await timeout(300);

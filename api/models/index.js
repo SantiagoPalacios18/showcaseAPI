@@ -73,6 +73,11 @@ module.exports = {
     Usuario
 }
 
+Usuario.belongsTo(Rol, {foreignKey: "id_Rol"})
+Rol.hasMany(Usuario, {foreignKey: "id_Rol"})
+
+Rol.belongsToMany(Patente, {through: Patente_Rol, foreignKey: "id_Rol"})
+Patente.belongsToMany(Rol, {through: Patente_Rol, foreignKey: "id_Patente"})
 
 
 

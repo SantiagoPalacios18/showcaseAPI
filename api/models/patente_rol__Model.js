@@ -4,7 +4,7 @@ const { DataTypes } = require('sequelize');
 const Patente_Rol = sequelize.define(
     'Patente_Rol',
     {
-        id_PatenteRol: {
+        id_Rol: {
             type: DataTypes.TINYINT.UNSIGNED,
             primaryKey: true,
         },
@@ -21,6 +21,7 @@ const Patente_Rol = sequelize.define(
         }
     },
     {
+        tableName: "patente_rol",
         timestamps: false,
     }
 )

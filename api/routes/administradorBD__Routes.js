@@ -4,15 +4,17 @@ const {
     getAdministradorById,
     createAdministrador,
     modifyAdministradorById,
-    deleteAdministradorById
-} = require('../controllers/administradorBDController.js');
+    deleteAdministradorById,
+    adminHomeMessage,
+} = require('../controllers/administradorBD__Controller');
 
 const router = Router();
 
-router.get('/', getAdministradores);
-router.get('/:id', getAdministradorById);
-router.post('/', createAdministrador);
-router.patch('/:id', modifyAdministradorById);
-router.delete('/:id', deleteAdministradorById);
+router.get('/', adminHomeMessage);
+router.get('/getall', getAdministradores);
+router.get('/getById/:id', getAdministradorById);
+router.post('/create', createAdministrador);
+router.patch('/modify/:id', modifyAdministradorById);
+router.delete('/delete:id', deleteAdministradorById);
 
 module.exports = router;

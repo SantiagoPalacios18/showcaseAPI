@@ -7,7 +7,10 @@ function NavBar(props) {
     return(
 
         <>
-        <h1 id="title">SHOWCASE</h1>
+        <div className="title-container">
+            <Link to="/"><h1 id="title">SHOWCASE</h1></Link>
+
+        </div>
         <ul>
             <li><Link to="/" style={{textDecoration: 'none', color: 'inherit'}}>Home</Link></li>
             <li>Cartelera</li>

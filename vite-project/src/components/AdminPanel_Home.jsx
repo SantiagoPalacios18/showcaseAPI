@@ -6,12 +6,11 @@ import api from "../api"
 
 import './styles/Home.css'
 
-
-function Home(props) {
+function AdminHome(props) {
     const [message, setMessage] = useState("")
     const getMessage = async () => {
         try {
-            const response = await api.get("/")
+            const response = await api.get("/admin/")
             setMessage(response.data.message)
         } catch (error) {
             setMessage("upsis")
@@ -25,8 +24,8 @@ function Home(props) {
 return(
         <div>
             <div>
-                <h2>Viví la magia del cine en pantalla gigante</h2>
-                <h3>Mensaje dado por el back-end</h3    >
+                <h1>PANEL ADMINISTRADOR :Vvv:V</h1>
+                <h3>Mensaje dado por el back-end</h3>
 
                 <p>{message}</p>
             </div>
@@ -38,9 +37,8 @@ return(
                     </> 
             ) : (<p>Kien so bo </p>)}
             </div>
-            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
         </div>  
     )
 }
 
-export default Home
+export default AdminHome

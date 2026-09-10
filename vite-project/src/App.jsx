@@ -14,6 +14,10 @@ import NavBar from './components/NavBar'
 import Footer from './components/Footer'
 import Profile from './components/Profile'
 import SessionManagement from './components/SessionManagement'
+import AdminHome from './components/AdminPanel_Home'
+
+
+
 
 //import {Home, Login, Register, NavBar, Footer, Profile} from './components/index.js'
  
@@ -47,6 +51,7 @@ function App() {
             headers: { Authorization: storedToken }
         })
         setUser(response.data)
+        console.log(response.data)
         setToken(storedToken)
     } catch (error) { 
         console.log("Token inválido, eliminandolo del localStorage")
@@ -72,16 +77,21 @@ function App() {
 
   // Funcione que se va a usar en un boton de cerrar sesión, limpia el token y el usuario
   const handleLogout = async () => {
+    localStorage.removeItem("TOKEN")
+    setUser(null)
+    setToken("")
+    navigate('/login')
     try {
       await api.post("/logout")
     } catch (error) {
       console.log(error)
     }
-    localStorage.removeItem("TOKEN")
-    setUser(null)
-    setToken("")
-    navigate('/login')
+
   }
+
+  // 1. Checkeo si tiene el rol de admin
+  // 2. Si tiene, dejo de verificar en cada cosa que hace para no tener que hacer una llamada a la BDs cada que el usuario haga otra accion
+  // 3. Si NO TIENE, reviso si tiene una patente que le permita el ver el panel, y para cada acción que tome, verifico si tiene el panel correspondiente a ESA NUEVA ACCIÓN
 
 
 
@@ -95,7 +105,9 @@ function App() {
             <Route path="/" element={<Home user={user} />} />
             <Route path="/login" element={<Login onLogin={handleLogin} />} />
             <Route path="/register" element={<Register onLogin={handleLogin} />} /> {/* Tmb se le pone el handleLogin para loggeo automático */}
-            <Route path='/profile' element={<Profile user={user} onLogout={handleLogout}/>}></Route>
+            <Route path='/profile/:id' element={<Profile user={user} onLogout={handleLogout}/>}></Route>
+
+            <Route path='/admin/' element={<AdminHome></AdminHome>}></Route>
         </Routes>
         <Footer></Footer>
         
