@@ -60,7 +60,7 @@ server.use(routes);
 server.listen(3000, async () => {
   try {
     await sequelize.authenticate(); // Prueba para verificar que haya conexión exitosa y ver si el motor de la BD está encendido
-    await sequelize.sync({ force: false }); // Verifica las estructuras de la BD, comparando lo ingresado en el JS con lo que está en la BD
+    await sequelize.sync({ alter: true }); // Verifica las estructuras de la BD, comparando lo ingresado en el JS con lo que está en la BD
     /* INTERACCIÓN CON LAS TABLAS: (SE: Si Existe, SNE: Si No Existe)
         sync() : Crea tablas (SNE), no modifica ni borra
         sync(force: true): Recrea absolutamente toda la BD, creando, modificando o borrando tablas
@@ -72,7 +72,7 @@ server.listen(3000, async () => {
     console.error('No se pudo conectar a la base de datos:', error);
   }
 });
-
+/*
  (async(req,res) => {
   let Benito = await Usuario.findOne({where:{email: 'asd@a.com'}})
   if (!Benito){
@@ -89,6 +89,6 @@ server.listen(3000, async () => {
   }
 
 })()
-
+*/
 
 //documentacion: https://sequelize.org/

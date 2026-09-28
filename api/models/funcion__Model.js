@@ -2,10 +2,10 @@ const { sequelize } = require('../config/db.js');
 const { DataTypes } = require('sequelize');
 
 
-const Funcion = sequelize.define(
+const funcion = sequelize.define(
     'funcion',
     {
-        id_compraTicket: {
+        id_Funcion: {
             type: DataTypes.MEDIUMINT.UNSIGNED,
             primaryKey: true,
             autoIncrement:true
@@ -39,4 +39,4 @@ const Funcion = sequelize.define(
 )
 
 
-module.exports = { Funcion }
+module.exports = { funcion }

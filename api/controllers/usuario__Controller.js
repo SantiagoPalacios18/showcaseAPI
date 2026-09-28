@@ -12,6 +12,8 @@ const getUsers = async (req, res) => {
     }
 }
 
+
+
 // Obtener un usuario por ID
 const getUserById = async (req, res) => {
     try {

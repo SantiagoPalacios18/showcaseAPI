@@ -2,7 +2,7 @@ const { sequelize } = require('../config/db.js');
 const { DataTypes } = require('sequelize');
 
 
-const Cliente_sorteo = sequelize.define(
+const Usuario_sorteo = sequelize.define(
     'Usuario_sorteo',
     {
         id_sorteo: {

@@ -1,56 +1,56 @@
 
 
-const { Actor } = require('./actor.model.js');
-const { Actor_Pelicula } = require('./actor_pelicula.model.js');
+const { Actor } = require('./actor__Model.js');
+const { Actor_Pelicula } = require('./actor_pelicula__Model.js');
 
-const { Asiento } = require('./asiento.model.js');
-const { Cine } = require('./cine.model.js');
+const { Asiento } = require('./asiento__Model.js');
+const { Cine } = require('./cine__Model.js');
 
-const { CompraEvento } = require('./CompraEvento.js');
-
-
-const { Patente } = require('./patente.model.js');
-const { Patente_Rol } = require('./patente_rol.model.js');
-const { Patente_Usuario} = require('./patente_Usuario_model.js');
+const { CompraEvento } = require('./CompraEvento__Model.js');
 
 
-const { Pelicula } = require('./pelicula.model.js');
-const { Proyeccion } = require('./proyeccion.model.js');
+const { Patente } = require('./patente__Model.js');
+const { Patente_Rol } = require('./patente_rol__Model.js');
+const { Patente_Usuario} = require('./patente_Usuario__Model.js');
+
+
+const { Pelicula } = require('./pelicula__Model.js');
+const { Proyeccion } = require('./proyeccion__Model.js');
 
 const { Rol } = require('./rol__Model.js');
 const { Sala } = require('./sala__Model.js');
 
 const { Usuario_sorteo } = require('./usuario_sorteo__Model.js');
-const { compraTicket } = require('./compraTicket.js');
+const { compraTicket } = require('./compraTicket__Model.js');
 
-const { funcion } = require('./funcion.js');
-const { Funcion_Asiento } = require('./DVV.js');
+const { funcion } = require('./funcion__Model.js');
+const { Funcion_Asiento } = require('./DVV__Model.js');
 
-const { idioma } = require('./idioma.js');
-const { idioma_pelicula } = require('./idioma_pelicula.js');
+const { idioma } = require('./idioma__Model.js');
+const { idioma_pelicula } = require('./idioma_pelicula__Model.js');
 
-const { pelicula_cine } = require('./pelicula_cine.model.js');
-
-
-
-const { proyeccion_pelicula } = require('./proyeccion_pelicula.model.js');
-
-
-const { sorteo } = require('./soporte.js');
+const { pelicula_cine } = require('./pelicula_cine__Model.js');
 
 
 
-const { tecnologia } = require('./tecnologia.js');
+const { proyeccion_pelicula } = require('./proyeccion_pelicula__Model.js');
 
-const { transaccion } = require('./transaccion.js');
+
+const { soporte } = require('./soporteTecnico__Model.js');
+
+
+
+const { tecnologia } = require('./tecnologia__Model.js');
+
+const { transaccion } = require('./transaccion__Model.js');
 
 const { Usuario } = require('./usuario__Model.js');
-const { Patente_Usuario } = require('./patente_usuario__Model.js');
+//const { Patente_Usuario } = require('./patente_usuario__Model.js');
 
 // ==========================================
 // 1. RELACIONES 1 A N (HASMANY / BELONGSTO)
 // ==========================================
-
+/*
 // Cine <-> Sala
 Cine.hasMany(Sala, { foreignKey: 'id_Cine' });
 Sala.belongsTo(Cine, { foreignKey: 'id_Cine' });
@@ -153,7 +153,7 @@ Proyeccion.hasMany(proyeccion_pelicula, { foreignKey: 'id_proyeccion' });
 proyeccion_pelicula.belongsTo(Proyeccion, { foreignKey: 'id_proyeccion' });
 
 
-
+*/
 
 module.exports = {
     Actor,
@@ -168,7 +168,7 @@ module.exports = {
     Rol,
     Sala,
     Usuario_sorteo,
-    compraTicket,
+    /*compraTicket,
     funcion,
     idioma,
     idioma_pelicula,
@@ -177,7 +177,7 @@ module.exports = {
     sorteo,
     soporteTecnico,
     tecnologia,
-    transaccion,
+    transaccion,*/
     Usuario,
     Patente_Usuario
 };
