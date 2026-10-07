@@ -58,7 +58,7 @@ function Profile(props){
     }, [User]); // Se ejecuta cada vez que el usuario pasa de null a tener datos*/
 
     return(
-        <>
+        <section className="profile">
             <h1>PERFIL</h1>
             <div className="profile-container">
                 <div className="photo">
@@ -67,12 +67,28 @@ function Profile(props){
                 </div>
                 { User ? (
                     <div className="profile-data-section">
-                        <span>Nombre: {nombre}</span>
-                        <span>Apellido: {apellido}</span>
-                        <span>DNI: {dni}</span>
-                        <span>Mail: {email}</span>
-                        <span>Teléfono {telefono}</span>
+                        <div>
+                            <label>Nombre: </label>
+                            <span>{nombre}</span>
+                        </div>
+                        <div>
+                            <label>Apellido: </label>
+                            <span>{apellido}</span>
+                        </div>
+                        <div>
+                            <label>DNI: </label>
+                            <span>{dni}</span>
+                        </div>
+                        <div>
+                            <label>Email: </label>
+                            <span>{email}</span>
+                        </div>
+                        <div>
+                            <label>Teléfono: </label>
+                            <span>{telefono}</span>
+                        </div>
                     </div>
+
                 ) : (
                     <>
                         { loading && <p>Cargando...</p>}
@@ -97,9 +113,14 @@ function Profile(props){
                         
                     </div>
                 )}
-            </div>
 
-        </>
+            </div>
+            <span id="texto">Un video mas mi gente pa pelder el tiempo. Quien quiera perder su tiempo que lo pierda. Yeeaaah. Mmm, de locos, hermano. De locoooaaaas.
+¿Pero qué es esto, mi gente? ¡Wasaaaaaaaaa! Miren este pedazo de pollo. Crujiente, jugoso, una bendición del de arriba. Hoy andamos activos, rompiendo la dieta porque el cuerpo lo pide y el Rey de Kentucky lo respalda. ¡Bravísimo! Linganguliguliguliwacha lingangu lingangu.
+Atención a todos los envidiosos que están mirando este video con hambre. No se me queden ahí parados, vayan por el suyo. Si la vida te da limones, tú le pides pollo frito al universo, ¡así de simple! Nooo, no lo diga, así no.
+Uff, qué delicia, mi hermano. Esto no es comida, esto es una obra de arte. Un respeto para los cocineros, ¡un aplauso! Eso es, eso es. Salsa y picante y nos fuimo.
+Que nadie te quite la alegría de comer bien. ¡Sabor, sazón y pura energía positiva! ¡Vaaaamos por más! Si te gustó, deja tu 'like' y no te me duermas. ¡Chao, chao, chao! ¡BEEP BEEP!</span>
+        </section>
     )
 }
 

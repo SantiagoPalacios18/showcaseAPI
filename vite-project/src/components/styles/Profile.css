@@ -1,16 +1,25 @@
 
+.profile{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
 
 .profile-container{
     display: flex;
     align-items: center;
+    flex-direction: row;
     background-color: #2e0d70;
     height: 600px;
+    width: 70%;
     gap: 40px;
     margin: 30px;
-    padding: 20px;
-    margin-bottom: 300px;
+    padding: 100px;
+    margin-bottom: 0px;
     border-radius: 10px;
 }
+
+
 
 .photo{
   display: flex;
@@ -25,16 +34,34 @@
     object-fit: cover;
 }
 
-.profile-data-section {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 15px;
+.photo button{
+    background-color: #585057;
+    border-radius: 3px;
+    border: 0;
+    width: 50%;
+    height: 30px;
+    font-size:medium;
 }
 
+.profile-data-section {
+    background-color: #3c1291;
+    padding: 50px;
+    padding-top: 100px;
+    padding-bottom: 100px;
+    border-radius: 10px;
+    /*height: 80%;*/
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+
+
 .profile-data-section span {
-  font-size: 16px;
+  font-size: 20px;
   color: #ffffff;
   padding-bottom: 6px;
 }
@@ -82,4 +109,12 @@
 
 #btn-confirm:hover{
     background-color: #eb626d;
+}
+
+#texto{
+    font: 1;
+    margin: 120px;
+    margin-top: 0;
+    margin-bottom: 300px;
+
 }
