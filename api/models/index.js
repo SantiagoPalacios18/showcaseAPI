@@ -180,4 +180,4 @@ module.exports = {
     Transaccion,
     Usuario,
     Patente_Usuario
-};
+}; // d
