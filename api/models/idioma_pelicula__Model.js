@@ -8,10 +8,10 @@ const Idioma_pelicula = sequelize.define(
         id_pelicula: {
             type: DataTypes.TINYINT.UNSIGNED,
             primaryKey: true,
-            autoIncrement:true
         },
         id_idioma: {
             type: DataTypes.STRING(10),
+            primaryKey: true
         },
         DVH: {
             type: DataTypes.STRING(6),

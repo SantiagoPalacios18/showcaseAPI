@@ -6,7 +6,8 @@ const Idioma = sequelize.define(
     'idioma',
     {
         id_idioma: {
-            type: DataTypes.STRING(10)
+            type: DataTypes.STRING(10),
+            primaryKey: true
         },
         DVH: {
             type: DataTypes.STRING(6),

@@ -9,7 +9,7 @@ const CompraCandy = sequelize.define(
             primaryKey: true,
             autoIncrement: true
         },
-        id_ClienteLogueado: DataTypes.INTEGER.UNSIGNED,
+        id_Usuario: DataTypes.INTEGER.UNSIGNED,
         total: DataTypes.MEDIUMINT.UNSIGNED,
         fechaEmision:{
             type: DataTypes.DATE,

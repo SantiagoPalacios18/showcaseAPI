@@ -2,74 +2,73 @@
 
 const { Actor } = require('./actor__Model.js');
 const { Actor_Pelicula } = require('./actor_pelicula__Model.js');
-
 const { Asiento } = require('./asiento__Model.js');
 const { Cine } = require('./cine__Model.js');
-
+const { CompraCandy } = require('./compraCandy__Model.js')
 const { CompraEvento } = require('./CompraEvento__Model.js');
-
+const { CompraTicket } = require('./compraTicket__Model.js');
+const { Funcion } = require('./funcion__Model.js');
+const { Idioma } = require('./idioma__Model.js');
+const { Idioma_pelicula } = require('./idioma_pelicula__Model.js');
+const { OperadorCandy } = require('./operadorCandy__Model.js')
 
 const { Patente } = require('./patente__Model.js');
 const { Patente_Rol } = require('./patente_rol__Model.js');
 const { Patente_Usuario} = require('./patente_Usuario__Model.js');
 
-
 const { Pelicula } = require('./pelicula__Model.js');
+const { Pelicula_cine } = require('./pelicula_cine__Model.js');
+const { ProductoCandy } = require('./productoCandy__Model.js')
+const { ProductoCandy_ComprasCandy } = require('./ProductoCandy_ComprasCandy__Model.js')
+
 const { Proyeccion } = require('./proyeccion__Model.js');
+const { Proyeccion_pelicula } = require('./proyeccion_pelicula__Model.js');
 
 const { Rol } = require('./rol__Model.js');
 const { Sala } = require('./sala__Model.js');
 
-const { Usuario_sorteo } = require('./usuario_sorteo__Model.js');
-const { compraTicket } = require('./compraTicket__Model.js');
+const { Sesion } = require('./sesion__Model.js')
+const { SoporteTecnico } = require('./soporteTecnico__Model.js');
+const { Sorteo } = require('./sorteo__Model.js');
+const { Tecnologia } = require('./tecnologia__Model.js');
 
-const { funcion } = require('./funcion__Model.js');
-const { Funcion_Asiento } = require('./DVV__Model.js');
-
-const { idioma } = require('./idioma__Model.js');
-const { idioma_pelicula } = require('./idioma_pelicula__Model.js');
-
-const { pelicula_cine } = require('./pelicula_cine__Model.js');
-
-
-
-const { proyeccion_pelicula } = require('./proyeccion_pelicula__Model.js');
-
-
-const { soporte } = require('./soporteTecnico__Model.js');
-
-
-
-const { tecnologia } = require('./tecnologia__Model.js');
-
-const { transaccion } = require('./transaccion__Model.js');
+const { Transaccion } = require('./transaccion__Model.js');
 
 const { Usuario } = require('./usuario__Model.js');
+
+const { Usuario_sorteo } = require('./usuario_sorteo__Model.js');
+
+
+const { DVV } = require('./DVV__Model.js');
+
+
+
 //const { Patente_Usuario } = require('./patente_usuario__Model.js');
 
 // ==========================================
-// 1. RELACIONES 1 A N (HASMANY / BELONGSTO)
+// RELACIONES 1 A N (HASMANY / BELONGSTO)
 // ==========================================
-/*
+
+
 // Cine <-> Sala
 Cine.hasMany(Sala, { foreignKey: 'id_Cine' });
 Sala.belongsTo(Cine, { foreignKey: 'id_Cine' });
 
 // Sala <-> Funcion
-Sala.hasMany(funcion, { foreignKey: 'id_sala' });
-funcion.belongsTo(Sala, { foreignKey: 'id_sala' });
+Sala.hasMany(Funcion, { foreignKey: 'id_sala' });
+Funcion.belongsTo(Sala, { foreignKey: 'id_sala' });
 
 // Pelicula <-> Funcion (Sin relación directa Cine-Pelicula)
-Pelicula.hasMany(funcion, { foreignKey: 'id_pelicula' });
-funcion.belongsTo(Pelicula, { foreignKey: 'id_pelicula' });
+Pelicula.hasMany(Funcion, { foreignKey: 'id_pelicula' });
+Funcion.belongsTo(Pelicula, { foreignKey: 'id_pelicula' });
 
 // Tecnologia <-> Funcion
-tecnologia.hasMany(funcion, { foreignKey: 'id_tecnologia' });
-funcion.belongsTo(tecnologia, { foreignKey: 'id_tecnologia' });
+Tecnologia.hasMany(Funcion, { foreignKey: 'id_tecnologia' });
+Funcion.belongsTo(Tecnologia, { foreignKey: 'id_tecnologia' });
 
 // Funcion <-> Asiento
-funcion.hasMany(Asiento, { foreignKey: 'id_Funcion' });
-Asiento.belongsTo(funcion, { foreignKey: 'id_Funcion' });
+Funcion.hasMany(Asiento, { foreignKey: 'id_Funcion' });
+Asiento.belongsTo(Funcion, { foreignKey: 'id_Funcion' });
 
 // Rol <-> Usuario 
 Rol.hasMany(Usuario, { foreignKey: 'id_Rol' });
@@ -77,30 +76,31 @@ Usuario.belongsTo(Rol, { foreignKey: 'id_Rol' });
 
 
 // Usuario <-> Transaccion
-Usuario.hasMany(transaccion, { foreignKey: 'id_Usuario' });
-transaccion.belongsTo(Usuario, { foreignKey: 'id_Usuario' });
+Usuario.hasMany(Transaccion, { foreignKey: 'id_Usuario' });
+Transaccion.belongsTo(Usuario, { foreignKey: 'id_Usuario' });
 
 // Transaccion <-> CompraTicket
-transaccion.hasMany(compraTicket, { foreignKey: 'id_transaccion' });
-compraTicket.belongsTo(transaccion, { foreignKey: 'id_transaccion' });
+Transaccion.hasMany(CompraTicket, { foreignKey: 'id_transaccion' });
+CompraTicket.belongsTo(Transaccion, { foreignKey: 'id_transaccion' });
 
 // Asiento <-> CompraTicket
-Asiento.hasMany(compraTicket, { foreignKey: 'id_Asiento' });
-compraTicket.belongsTo(Asiento, { foreignKey: 'id_Asiento' });
+Asiento.hasMany(CompraTicket, { foreignKey: 'id_Asiento' });
+CompraTicket.belongsTo(Asiento, { foreignKey: 'id_Asiento' });
 
 // Usuario <-> CompraEvento
 Usuario.hasMany(CompraEvento, { foreignKey: 'id_Usuario' });
 CompraEvento.belongsTo(Usuario, { foreignKey: 'id_Usuario' });
 
 // Funcion <-> CompraEvento
-funcion.hasMany(CompraEvento, { foreignKey: 'id_Funcion' });
-CompraEvento.belongsTo(funcion, { foreignKey: 'id_Funcion' });
+Funcion.hasMany(CompraEvento, { foreignKey: 'id_Funcion' });
+CompraEvento.belongsTo(Funcion, { foreignKey: 'id_Funcion' });
+
+// ==========================================
+// RELACIONES M a M (BELONGSTOMANY / HASMANY / BELONGSTO)
+// ==========================================
 
 
-// 2. RELACIONES MUCHOS A MUCHOS 
-
-
-// Rol MASS Patente (a través de Patente_Rol)
+// Rol + Patente (a través de Patente_Rol)
 Rol.belongsToMany(Patente, { through: Patente_Rol, foreignKey: 'id_Rol' });
 Patente.belongsToMany(Rol, { through: Patente_Rol, foreignKey: 'id_Patente' });
 Rol.hasMany(Patente_Rol, { foreignKey: 'id_Rol' });
@@ -121,12 +121,12 @@ Patente_Usuario.belongsTo(Patente, { foreignKey: 'id_Patente' });
 
 
 // Usuario M,ASS  Sorteo (a través de cliente_sorteo)
-Usuario.belongsToMany(sorteo, { through: cliente_sorteo, foreignKey: 'id_Usuario' });
-sorteo.belongsToMany(Usuario, { through: cliente_sorteo, foreignKey: 'id_sorteo' });
-Usuario.hasMany(cliente_sorteo, { foreignKey: 'id_Usuario' });
-cliente_sorteo.belongsTo(Usuario, { foreignKey: 'id_Usuario' });
-sorteo.hasMany(cliente_sorteo, { foreignKey: 'id_sorteo' });
-cliente_sorteo.belongsTo(sorteo, { foreignKey: 'id_sorteo' });
+Usuario.belongsToMany(Sorteo, { through: Usuario_sorteo, foreignKey: 'id_Usuario' });
+Sorteo.belongsToMany(Usuario, { through: Usuario_sorteo, foreignKey: 'id_sorteo' });
+Usuario.hasMany(Usuario_sorteo, { foreignKey: 'id_Usuario' });
+Usuario_sorteo.belongsTo(Usuario, { foreignKey: 'id_Usuario' });
+Sorteo.hasMany(Usuario_sorteo, { foreignKey: 'id_sorteo' });
+Usuario_sorteo.belongsTo(Sorteo, { foreignKey: 'id_sorteo' });
 
 // Actor MASS Pelicula (a través de Actor_Pelicula)
 Actor.belongsToMany(Pelicula, { through: Actor_Pelicula, foreignKey: 'id_Actor' });
@@ -137,23 +137,23 @@ Pelicula.hasMany(Actor_Pelicula, { foreignKey: 'id_Pelicula' });
 Actor_Pelicula.belongsTo(Pelicula, { foreignKey: 'id_Pelicula' });
 
 // Pelicula MASS Idioma (a través de idioma_pelicula)
-Pelicula.belongsToMany(idioma, { through: idioma_pelicula, foreignKey: 'id_pelicula' });
-idioma.belongsToMany(Pelicula, { through: idioma_pelicula, foreignKey: 'id_idioma' });
-Pelicula.hasMany(idioma_pelicula, { foreignKey: 'id_pelicula' });
-idioma_pelicula.belongsTo(Pelicula, { foreignKey: 'id_pelicula' });
-idioma.hasMany(idioma_pelicula, { foreignKey: 'id_idioma' });
-idioma_pelicula.belongsTo(idioma, { foreignKey: 'id_idioma' });
+Pelicula.belongsToMany(Idioma, { through: Idioma_pelicula, foreignKey: 'id_pelicula' });
+Idioma.belongsToMany(Pelicula, { through: Idioma_pelicula, foreignKey: 'id_idioma' });
+Pelicula.hasMany(Idioma_pelicula, { foreignKey: 'id_pelicula' });
+Idioma_pelicula.belongsTo(Pelicula, { foreignKey: 'id_pelicula' });
+Idioma.hasMany(Idioma_pelicula, { foreignKey: 'id_idioma' });
+Idioma_pelicula.belongsTo(Idioma, { foreignKey: 'id_idioma' });
 
 // Pelicula MASS Proyeccion (a través de proyeccion_pelicula)
-Pelicula.belongsToMany(Proyeccion, { through: proyeccion_pelicula, foreignKey: 'id_pelicula' });
-Proyeccion.belongsToMany(Pelicula, { through: proyeccion_pelicula, foreignKey: 'id_proyeccion' });
-Pelicula.hasMany(proyeccion_pelicula, { foreignKey: 'id_pelicula' });
-proyeccion_pelicula.belongsTo(Pelicula, { foreignKey: 'id_pelicula' });
-Proyeccion.hasMany(proyeccion_pelicula, { foreignKey: 'id_proyeccion' });
-proyeccion_pelicula.belongsTo(Proyeccion, { foreignKey: 'id_proyeccion' });
+Pelicula.belongsToMany(Proyeccion, { through: Proyeccion_pelicula, foreignKey: 'id_pelicula' });
+Proyeccion.belongsToMany(Pelicula, { through: Proyeccion_pelicula, foreignKey: 'id_proyeccion' });
+Pelicula.hasMany(Proyeccion_pelicula, { foreignKey: 'id_pelicula' });
+Proyeccion_pelicula.belongsTo(Pelicula, { foreignKey: 'id_pelicula' });
+Proyeccion.hasMany(Proyeccion_pelicula, { foreignKey: 'id_proyeccion' });
+Proyeccion_pelicula.belongsTo(Proyeccion, { foreignKey: 'id_proyeccion' });
 
 
-*/
+
 
 module.exports = {
     Actor,
@@ -168,16 +168,16 @@ module.exports = {
     Rol,
     Sala,
     Usuario_sorteo,
-    /*compraTicket,
-    funcion,
-    idioma,
-    idioma_pelicula,
-    pelicula_cine,
-    proyeccion_pelicula,
-    sorteo,
-    soporteTecnico,
-    tecnologia,
-    transaccion,*/
+    CompraTicket,
+    Funcion,
+    Idioma,
+    Idioma_pelicula,
+    Pelicula_cine,
+    Proyeccion_pelicula,
+    Sorteo,
+    SoporteTecnico,
+    Tecnologia,
+    Transaccion,
     Usuario,
     Patente_Usuario
 };

@@ -2,7 +2,7 @@ const { sequelize } = require('../config/db.js');
 const { DataTypes } = require('sequelize');
 
 
-const funcion = sequelize.define(
+const Funcion = sequelize.define(
     'funcion',
     {
         id_Funcion: {
@@ -39,4 +39,4 @@ const funcion = sequelize.define(
 )
 
 
-module.exports = { funcion }
+module.exports = { Funcion }

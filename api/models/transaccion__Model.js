@@ -10,7 +10,7 @@ const Transaccion = sequelize.define(
             primaryKey: true,
             autoIncrement:true
         },
-        id_ClienteLogueado: {
+        id_Usuario: {
             type: DataTypes.INTEGER.UNSIGNED,
             primaryKey: true,
         },

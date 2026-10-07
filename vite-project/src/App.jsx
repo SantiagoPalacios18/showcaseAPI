@@ -15,8 +15,10 @@ import Footer from './components/Footer'
 import Profile from './components/Profile'
 import SessionManagement from './components/SessionManagement'
 import AdminHome from './components/AdminPanel_Home'
-
-
+import Cartelera from './components/Cartelera'
+import Eventos from './components/Eventos'
+import Sorteos from './components/Sorteos'
+import Confiteria from './components/Confiteria'
 
 
 //import {Home, Login, Register, NavBar, Footer, Profile} from './components/index.js'
@@ -108,6 +110,12 @@ function App() {
             <Route path='/profile/:id' element={<Profile user={user} onLogout={handleLogout}/>}></Route>
 
             <Route path='/admin/' element={<AdminHome></AdminHome>}></Route>
+
+            <Route path='/cartelera' element={<Cartelera></Cartelera>}></Route>
+            <Route path='/eventos' element={<Eventos></Eventos>}></Route>
+            <Route path='/sorteos' element={<Sorteos></Sorteos>}></Route>
+            <Route path='/confiteria' element={<Confiteria></Confiteria>}></Route>
+
         </Routes>
         <Footer></Footer>
         
