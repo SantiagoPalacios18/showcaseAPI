@@ -77,7 +77,7 @@ function Home(props) {
                 </Swiper>
                 
             </div>
-        </div>  
+        </div>  /** */
         
     )
     
