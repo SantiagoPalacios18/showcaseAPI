@@ -71,11 +71,16 @@ function App() {
   }, [])
 
   // Funcion que va a utilizar Login.jsx para guardar el usuario y los tokens
-  const handleLogin = (userData, accessToken /*, refreshToken*/ ) => {
+  const handleLogin = async (userData, accessToken /*, refreshToken*/ ) => {
       localStorage.setItem("TOKEN", accessToken)
       // localStorage.setItem("REFRESH_TOKEN", refreshToken) // Sujeto a cambios, se debe guardar como cookie httpOnly
       setUser(userData)
       setToken(accessToken)
+      // El login no manda las patentes, llamamos a /me para tenerlas
+      const { data } = await api.get("/me", {
+        headers: { Authorization: accessToken }
+      });
+      setUser(data);
   }
 
 
