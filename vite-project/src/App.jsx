@@ -19,7 +19,7 @@ import Cartelera from './components/Cartelera'
 import Eventos from './components/Eventos'
 import Sorteos from './components/Sorteos'
 import Confiteria from './components/Confiteria'
-
+import EditProfile from './components/EditProfile'
 
 //import {Home, Login, Register, NavBar, Footer, Profile} from './components/index.js'
  
@@ -108,6 +108,7 @@ function App() {
             <Route path="/login" element={<Login onLogin={handleLogin} />} />
             <Route path="/register" element={<Register onLogin={handleLogin} />} /> {/* Tmb se le pone el handleLogin para loggeo automático */}
             <Route path='/profile/:id' element={<Profile user={user} onLogout={handleLogout}/>}></Route>
+            <Route path='/edit-profile/:id' element={<EditProfile user={user}/>}></Route>
 
             <Route path='/admin/' element={<AdminHome></AdminHome>}></Route>
 

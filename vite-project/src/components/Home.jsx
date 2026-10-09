@@ -74,6 +74,15 @@ function Home(props) {
                     <SwiperSlide>
                         <img className="img-carrusel-cine" src={imagenTest} alt="Slide 3" />
                     </SwiperSlide>
+                    <SwiperSlide>
+                        <img className="img-carrusel-cine" src={imagenTest} alt="Slide 4" />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <img className="img-carrusel-cine" src={imagenTest} alt="Slide 5" />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <img className="img-carrusel-cine" src={imagenTest} alt="Slide 6" />
+                    </SwiperSlide>
                 </Swiper>
                 
             </div>

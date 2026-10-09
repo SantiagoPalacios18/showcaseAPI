@@ -1,5 +1,5 @@
 import {useState, useEffect } from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import api from '../api'
 import perfil from '../assets/perfil-default.png'
@@ -8,7 +8,7 @@ import perfil from '../assets/perfil-default.png'
 import './styles/Profile.css'
 
 
-function Profile(props){
+function EditProfile(props){
     const {id} = useParams();
 
     // Variables del formulario
@@ -25,18 +25,15 @@ function Profile(props){
 
     // Variable booleana param ostrar la ventana emergente
     const [showConfirm, setShowConfirm] = useState("")
-    const [showEdit, setShowEdit] = useState("")
 
     const [User, setUser] = useState("")
-    const navigate = useNavigate()
-
     const obtainUser = async(req, res) =>{
         try{
             setLoading(true)
             setError("")
             const response = await api.get('/users/getById/' + id)
             setUser(response.data) // Datos del usuario
-            console.log(response)
+            //console.log(response)
             setLoading(false)
         }catch(error){
             console.log(error)
@@ -61,38 +58,106 @@ function Profile(props){
         }
     }, [User]); // Se ejecuta cada vez que el usuario pasa de null a tener datos*/
 
+    const handleSubmit = async (event) => {
+        event.preventDefault() // Evita que se recargue la página, eso hace que las variables se reseteen
+        setError("")
+        setLoading(true) // Nos sirve para meter un efecto o elemento mientras se procesa
+
+        try {
+            const response = await api.patch('/edit-profile', {
+                nombre,
+                apellido,
+                dni,
+                email,
+                telefono,
+
+            })
+
+            //await timeout(300);
+            setLoading(false)
+            setMessage("Se ha modificado los datos con exito")
+            await timeout(300);
+            setMessage("")
+
+            //navigate("/")
+        } catch (err) {
+            if (err.response) {
+                setError(err.response.data.message)
+            } else {
+                setError("Error AL HACER LA PETICION (login.jsx)")
+                console.log(err)
+            }
+        } finally {
+            setLoading(false) // Tanto si falla o no, igualmente se deja de mostrar el efecto de carga
+        }
+    }
+
     return(
         <section className="profile">
-            <h1>PERFIL</h1>
+            <h1>EDITAR PERFIL</h1>
             <div className="profile-container">
                 <div className="photo">
                     <img src={perfil} alt="Perfil" />
                     {User.email == props.user?.email && <button onClick={() => setShowConfirm(true)}>Cerrar Sesión</button> }
-                    {User.email == props.user?.email && <button onClick={() => navigate('/edit-profile/'+id)}>Editar Usuario</button> }
+                    {User.email == props.user?.email && <button onClick={() => setShowEdit(true)}>Editar Usuario</button> }
                 </div>
                 { User ? (
-                    <div className="profile-data-section">
+                    <form className="profile-data-section" onSubmit={handleSubmit}>
                         <div>
-                            <label>Nombre: </label>
-                            <span>{nombre}</span>
+                            <label htmlFor="nombre">Nombre: </label>
+                            <input 
+                                type="text" 
+                                id="nombre"
+                                name="nombre" 
+                                value={nombre} 
+                                onChange={(e) => setNombre(e.target.value)} 
+                            />
                         </div>
                         <div>
-                            <label>Apellido: </label>
-                            <span>{apellido}</span>
+                            <label htmlFor="apellido">Apellido: </label>
+                            <input 
+                                type="text" 
+                                id="apellido"
+                                name="apellido" 
+                                value={apellido} 
+                                onChange={(e) => setApellido(e.target.value)} 
+                            />
                         </div>
                         <div>
-                            <label>DNI: </label>
-                            <span>{dni}</span>
+                            <label htmlFor="dni">DNI: </label>
+                            <input 
+                                type="text" 
+                                id="dni"
+                                name="dni" 
+                                value={dni} 
+                                onChange={(e) => setDni(e.target.value)} 
+                            />
                         </div>
                         <div>
-                            <label>Email: </label>
-                            <span>{email}</span>
+                            <label htmlFor="email">Email: </label>
+                            <input 
+                                type="email" 
+                                id="email"
+                                name="email" 
+                                value={email} 
+                                onChange={(e) => setEmail(e.target.value)} 
+                            />
                         </div>
                         <div>
-                            <label>Teléfono: </label>
-                            <span>{telefono}</span>
+                            <label htmlFor="telefono">Teléfono: </label>
+                            <input 
+                                type="tel" 
+                                id="telefono"
+                                name="telefono" 
+                                value={telefono} 
+                                onChange={(e) => setTelefono(e.target.value)} 
+                            />
                         </div>
-                    </div>
+                        <button type="submit">Guardar Perfil</button>
+
+                    </form>
+                
+                
 
                 ) : (
                     <>
@@ -131,4 +196,4 @@ Que nadie te quite la alegría de comer bien. ¡Sabor, sazón y pura energía po
 
 
 
-export default Profile
+export default EditProfile

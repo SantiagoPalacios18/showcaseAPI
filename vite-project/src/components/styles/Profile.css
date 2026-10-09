@@ -8,6 +8,7 @@
 section h1{
     font-weight: 1000;
     color: #4c1da8;
+    letter-spacing: 5px;
 }
 
 .profile-container{
@@ -22,6 +23,7 @@ section h1{
     padding: 100px;
     margin-bottom: 0px;
     border-radius: 10px;
+    
 }
 
 
@@ -47,11 +49,12 @@ section h1{
     width: 50%;
     height: 30px;
     font-size:medium;
+    margin: 10px;
 }
 
 .photo button:hover{
     background-color: #2e2a2d ;
-}
+}   
 
 .profile-data-section {
     background-color: #3c1291;
@@ -66,6 +69,7 @@ section h1{
     justify-content: center;
     align-items: flex-start;
     gap: 15px;
+    
 }
 
 
@@ -74,7 +78,14 @@ section h1{
   font-size: 20px;
   color: #ffffff;
   padding-bottom: 6px;
+  padding-left: 10px;
 }
+
+.profile-data-section label{
+    color: rgb(156, 156, 156);
+    font-weight: 500;
+}
+
 
 
 .overlay{
@@ -93,15 +104,12 @@ section h1{
 .confirm-panel{
     background-color: #381285;
     color: white;
-    padding: 25px;
+    padding: 55px;
     border-radius: 8px;
     text-align: center;
 
 }
 
-.confirm-panel h3{
-
-}
 
 .confirm-panel button{
     width: 200px;
