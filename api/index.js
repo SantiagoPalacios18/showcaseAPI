@@ -3,7 +3,8 @@ const express = require("express"); // Framework para hacer servidores web y adm
 const { sequelize } = require('./config/db.js'); // Importamos el sequelize, el cual ya fue importado dentro de config/db.js
 
 // TABLAS
-require('./models/index.js');
+const { Usuario, Rol, Patente } = require('./models/index.js');
+
 // CORS
 const cors = require ("cors")
 const bcrypt = require("bcrypt")
@@ -43,7 +44,6 @@ server.get('/', (req, res) => {
 });
 
 const routes = require("./routes/index.js");
-const { Usuario } = require('./models/usuario__Model.js');
 server.use(routes);
 //server.use('/users', userRoutes);
 //server.use('/hobbies', hobbyRoutes);
@@ -60,7 +60,7 @@ server.use(routes);
 server.listen(3000, async () => {
   try {
     await sequelize.authenticate(); // Prueba para verificar que haya conexión exitosa y ver si el motor de la BD está encendido
-    await sequelize.sync({ alter: true }); // Verifica las estructuras de la BD, comparando lo ingresado en el JS con lo que está en la BD
+    await sequelize.sync({ force: true }); // Verifica las estructuras de la BD, comparando lo ingresado en el JS con lo que está en la BD
     /* INTERACCIÓN CON LAS TABLAS: (SE: Si Existe, SNE: Si No Existe)
         sync() : Crea tablas (SNE), no modifica ni borra
         sync(force: true): Recrea absolutamente toda la BD, creando, modificando o borrando tablas
@@ -68,6 +68,52 @@ server.listen(3000, async () => {
     */
     console.log("El servidor está ON en el puerto 3000 y la BD lista");
     console.log("hash de prueba:", await bcrypt.hash("123", 10));
+
+    // EL MEGA ADMIN: BENITO CAMELA
+    const [Benito] = await Usuario.findOrCreate({
+      where: { email: 'asd@a.com' },
+      defaults: {
+        nombre: 'Benito',
+        apellido: 'Camela',
+        edad: '999',
+        DNI: 1,
+        telefono: 666,
+        email: 'asd@a.com',
+        contraseña: await bcrypt.hash('123', 10)
+      }
+      
+    });
+
+    // Creación de roles y patentes
+
+    const [adminRole] = await Rol.findOrCreate({
+      where: { nombre: 'Admin' },
+      defaults: { nombre: 'Admin' }
+    });
+    const [userRole] = await Rol.findOrCreate({
+      where: { nombre: 'Usuario' },
+      defaults: { nombre: 'Usuario' }
+    });
+
+    // Revisa cuáles patentes existen y crea las que faltan
+
+    const nombres = ['ADMIN_HOME', 'ADMIN_CREATE'];
+    const patentes = [];
+    for (const nombre of nombres) {
+      const [p] = await Patente.findOrCreate({ where: { nombre } }); // p es el objeto, tanto si existia de antes o si acaba de ser creado
+      patentes.push(p); // Lo guardamos en una 2da lista pq necesitamos el objeto, no el string del nombre
+    }
+    // Todas las patentes de la lista eran para admin
+    await adminRole.setPatentes(patentes); // Esto no sirve si le paso strings
+
+    await Benito.setRol(adminRole);
+
+
+
+
+
+
+
   } catch (error) {
     console.error('No se pudo conectar a la base de datos:', error);
   }

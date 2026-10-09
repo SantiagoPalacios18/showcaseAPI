@@ -29,7 +29,9 @@ function Profile(props){
 
     const [User, setUser] = useState("")
     const navigate = useNavigate()
-
+    function timeout(delay) {
+        return new Promise( res => setTimeout(res, delay) );
+    }
     const obtainUser = async(req, res) =>{
         try{
             setLoading(true)
@@ -41,6 +43,43 @@ function Profile(props){
         }catch(error){
             console.log(error)
             setError(error)
+        }
+    }
+    const handleSubmit = async (event) => {
+        event.preventDefault() // Evita que se recargue la página, eso hace que las variables se reseteen
+        setError("")
+        setLoading(true) // Nos sirve para meter un efecto o elemento mientras se procesa
+
+        try {
+            const response = await api.patch('users/edit/' + id, {
+                nombre,
+                apellido,
+                dni,
+                email,
+                telefono,
+
+            })
+
+            //await timeout(300);
+            setLoading(false)
+            setShowEdit(false)
+            setMessage(response.data.message)
+            
+            await timeout(1000);
+            setMessage("")
+
+            //navigate("/")
+        } catch (err) {
+            if (err.response) {
+                setError("Error con el guardado, revise los campos y vuelva a intentarlo")
+                await timeout(2000);
+                setError("")
+            } else {
+                setError("Error AL HACER LA PETICION (login.jsx)")
+                console.log(err)
+            }
+        } finally {
+            setLoading(false) // Tanto si falla o no, igualmente se deja de mostrar el efecto de carga
         }
     }
 
@@ -68,31 +107,106 @@ function Profile(props){
                 <div className="photo">
                     <img src={perfil} alt="Perfil" />
                     {User.email == props.user?.email && <button onClick={() => setShowConfirm(true)}>Cerrar Sesión</button> }
-                    {User.email == props.user?.email && <button onClick={() => navigate('/edit-profile/'+id)}>Editar Usuario</button> }
+                    {User.email == props.user?.email && <button onClick={() => setShowEdit(true)}>Editar Usuario</button> }
                 </div>
                 { User ? (
-                    <div className="profile-data-section">
-                        <div>
-                            <label>Nombre: </label>
-                            <span>{nombre}</span>
-                        </div>
-                        <div>
-                            <label>Apellido: </label>
-                            <span>{apellido}</span>
-                        </div>
-                        <div>
-                            <label>DNI: </label>
-                            <span>{dni}</span>
-                        </div>
-                        <div>
-                            <label>Email: </label>
-                            <span>{email}</span>
-                        </div>
-                        <div>
-                            <label>Teléfono: </label>
-                            <span>{telefono}</span>
-                        </div>
-                    </div>
+                    !showEdit ? (
+                        // Sin modo editar
+                        <>
+                            {message && <p style={{position: "fixed", top: "10px", left: "10px", color: "green", backgroundColor: "lightgreen", padding: "10px", borderRadius: "5px" }}>{message}</p>}
+
+                            <div className="profile-data-section">
+
+                                <div>
+                                    <label>Nombre: </label>
+                                    <span>{nombre}</span>
+                                </div>
+                                <div>
+                                    <label>Apellido: </label>
+                                    <span>{apellido}</span>
+                                </div>
+                                <div>
+                                    <label>DNI: </label>
+                                    <span>{dni}</span>
+                                </div>
+                                <div>
+                                    <label>Email: </label>
+                                    <span>{email}</span>
+                                </div>
+                                <div>
+                                    <label>Teléfono: </label>
+                                    <span>{telefono}</span>
+                                </div>
+                            </div>
+                        </>
+                    ):(
+                        // Modo editar
+                        <>
+                            {error && <p style={{position: "fixed", top: "10px", left: "10px", color: "red", backgroundColor: "#590C0C", padding: "10px", borderRadius: "5px" }}>{error}</p>}
+
+                            <form className="profile-data-section" onSubmit={handleSubmit}>
+
+                                <div>
+                                    <label htmlFor="nombre">Nombre: </label>
+                                    <input 
+                                        type="text" 
+                                        id="nombre"
+                                        name="nombre" 
+                                        value={nombre} 
+                                        onChange={(e) => setNombre(e.target.value)} 
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="apellido">Apellido: </label>
+                                    <input 
+                                        type="text" 
+                                        id="apellido"
+                                        name="apellido" 
+                                        value={apellido} 
+                                        onChange={(e) => setApellido(e.target.value)} 
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="dni">DNI: </label>
+                                    <input 
+                                        type="text" 
+                                        id="dni"
+                                        name="dni" 
+                                        value={dni} 
+                                        onChange={(e) => setDni(e.target.value)} 
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="email">Email: </label>
+                                    <input 
+                                        type="email" 
+                                        id="email"
+                                        name="email" 
+                                        value={email} 
+                                        onChange={(e) => setEmail(e.target.value)} 
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="telefono">Teléfono: </label>
+                                    <input 
+                                        type="tel" 
+                                        id="telefono"
+                                        name="telefono" 
+                                        value={telefono} 
+                                        onChange={(e) => setTelefono(e.target.value)} 
+                                    />
+                                </div>
+                                <div className="profile-buttons">
+                                    <button type="submit">Guardar Perfil</button>
+                                    <button type="cancel" onClick={() => setShowEdit(false)}>Cancelar</button>
+
+                                </div>
+
+                            </form>
+                        </>
+
+                        
+                    )
 
                 ) : (
                     <>

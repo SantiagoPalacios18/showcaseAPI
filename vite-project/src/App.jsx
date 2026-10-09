@@ -6,7 +6,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 */
 import './App.css'
-import { Routes, Route, useNavigate } from 'react-router-dom'
+import { Routes, Route, Navigate, useNavigate } from 'react-router-dom'
 import Home from './components/Home'
 import Login from './components/Login'
 import Register from './components/Register'
@@ -19,7 +19,6 @@ import Cartelera from './components/Cartelera'
 import Eventos from './components/Eventos'
 import Sorteos from './components/Sorteos'
 import Confiteria from './components/Confiteria'
-import EditProfile from './components/EditProfile'
 
 //import {Home, Login, Register, NavBar, Footer, Profile} from './components/index.js'
  
@@ -29,12 +28,13 @@ function App() {
   const [user, setUser] = useState(null)
   const [token, setToken] = useState("")
   const navigate = useNavigate()
-  
+  const [loading, setLoading] = useState(true)
 
   const fetchMe = async () => {
     const storedToken = localStorage.getItem("TOKEN")
     if (!storedToken){
       setToken("")
+      setLoading(false)
       return // EL MALVADO RETURN, ME VIOLA EL ANO
       // SIN ESTE SE HACE UN CICLO INFINITO:
       // 1. llega al /me de abajo
@@ -61,6 +61,8 @@ function App() {
         // localStorage.removeItem("REFRESH_TOKEN")
         setUser(null)
         setToken("")
+    }finally {
+        setLoading(false)
     }
   }
 
@@ -90,6 +92,13 @@ function App() {
     }
 
   }
+  function PatentChecker({ user, patente, children }) {
+    if (loading) return null // Si está cargando el fetchMe, esperamos pq sino el user va a estar null
+    if (!user) return <Navigate to="/login" replace />;
+    const nombres = user.patentes?.map(p => p.nombre) ?? [];
+    if (!nombres.includes(patente)) return <Navigate to="/" replace />;
+    return children;
+  }
 
   // 1. Checkeo si tiene el rol de admin
   // 2. Si tiene, dejo de verificar en cada cosa que hace para no tener que hacer una llamada a la BDs cada que el usuario haga otra accion
@@ -108,9 +117,11 @@ function App() {
             <Route path="/login" element={<Login onLogin={handleLogin} />} />
             <Route path="/register" element={<Register onLogin={handleLogin} />} /> {/* Tmb se le pone el handleLogin para loggeo automático */}
             <Route path='/profile/:id' element={<Profile user={user} onLogout={handleLogout}/>}></Route>
-            <Route path='/edit-profile/:id' element={<EditProfile user={user}/>}></Route>
-
-            <Route path='/admin/' element={<AdminHome></AdminHome>}></Route>
+            <Route path='/admin/' element={
+              <PatentChecker user={user} patente="ADMIN_HOME">
+                <AdminHome user={user} />
+              </PatentChecker>
+            }></Route>
 
             <Route path='/cartelera' element={<Cartelera></Cartelera>}></Route>
             <Route path='/eventos' element={<Eventos></Eventos>}></Route>

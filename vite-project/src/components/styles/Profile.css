@@ -137,3 +137,19 @@ section h1{
     margin-bottom: 300px;
 
 }
+
+.profile-buttons{
+    display: flex;
+    gap: 10px;
+    margin-top: 40px;
+}
+
+.profile-buttons button{
+    background-color: #a1939f;
+    color: white;
+    border-radius: 3px;
+    border: 0;
+    width: 150px;
+    height: 30px;
+    font-size:medium;
+}

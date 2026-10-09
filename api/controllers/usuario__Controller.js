@@ -33,7 +33,7 @@ const getUserById = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 }
-/*
+
 // Crear un nuevo usuario
 const createUser = async (req, res) => {
     try {
@@ -73,9 +73,7 @@ const modifyuserById = async (req, res) => {
         const data = req.body;
         let datosCambiar = {};
 
-        if ("id_Rol" in data) {
-            datosCambiar.id_Rol = data.id_Rol;
-        }
+
         if ("nombre" in data) {
             datosCambiar.nombre = data.nombre;
         }
@@ -91,21 +89,19 @@ const modifyuserById = async (req, res) => {
         if ("email" in data) {
             datosCambiar.email = data.email;
         }
-        if ("DVH" in data) {
-            datosCambiar.DVH = data.DVH;
+        const user = await Usuario.findByPk(id);
+        if (!user) {
+            return res.status(404).json({ message: `user con el id: ${id} no encontrado` });
         }
 
         if (Object.keys(datosCambiar).length === 0) {
             return res.status(400).json({ message: "No se ha encontrado ningún dato para modificar" });
         }
 
-        const [filasModificadas] = await userBD.update(datosCambiar, { where: { id_Administador: id } });
+        await user.update(datosCambiar);
 
-        if (filasModificadas === 0) {
-            return res.status(404).json({ message: `user con el id: ${id} no encontrado` });
-        }
 
-        res.status(200).json({ message: "El user ha sido modificado correctamente, datos modificados: " + Object.keys(datosCambiar) });
+        res.status(200).json({ message: "El user ha sido modificado correctamente" });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -126,12 +122,12 @@ const deleteuserById = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 }
-*/
+
 module.exports = {
     getUsers,
     getUserById,
-    //createUser,
-    //modifyuserById,
-    //deleteuserById,
+    createUser,
+    modifyuserById,
+    deleteuserById,
 }
 

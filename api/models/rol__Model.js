@@ -9,9 +9,13 @@ const Rol = sequelize.define(
             primaryKey: true,
             autoIncrement:true
         },
+        nombre: {
+            type: DataTypes.STRING(15),
+            unique: true
+        },
         DVH: {
             type: DataTypes.STRING(6),
-            allowNull: false,
+            allowNull: true,
             validate: {
                 isAlphanumeric: true
             }
