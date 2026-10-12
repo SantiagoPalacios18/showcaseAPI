@@ -50,7 +50,7 @@ function App() {
 
     try {
         const response = await api.get('/me', {
-            headers: { Authorization: storedToken }
+            //headers: { Authorization: storedToken }
         })
         setUser(response.data)
         console.log(response.data)

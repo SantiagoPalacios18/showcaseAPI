@@ -1,5 +1,5 @@
 const { Usuario } = require('../models/index.js');
-
+const bcrypt = require("bcrypt")
 
 
 // Obtener todos los useres
@@ -123,11 +123,44 @@ const deleteuserById = async (req, res) => {
     }
 }
 
+const createTestUser = async (req, res) => {
+    try {
+
+        
+        const existentes = await Usuario.findAll({
+            where: { email: { [Op.like]: "test%@a.com" } },
+            attributes: ["email"]
+        });
+
+        if (existingUser) {
+            return res.status(409).json({ message: "El usuario de prueba ya existe" });
+        }
+
+        const usuario = await Usuario.create({
+            nombre: nombre,
+            apellido: apellido,
+            DNI: DNI,
+            telefono: telefono,
+            email: email,
+            contraseña: await bcrypt.hash('123', 10)
+        });
+
+        res.status(200).json({ message: "Usuario test creado correctamente, contraseña: 123", user: usuario });
+    } catch (error) {
+        if (error.name === "SequelizeUniqueConstraintError") {
+            return res.status(409).json({ message: "El usuario de prueba ya existe" });
+        }
+        res.status(500).json({ error: error.message });
+        console.error(error.response?. data || error.message);
+    }
+}
+
 module.exports = {
     getUsers,
     getUserById,
     createUser,
     modifyuserById,
     deleteuserById,
+    createTestUser
 }
 
