@@ -12,11 +12,11 @@ function NavBar(props) {
 
         </div>
         <ul>
-            <li><Link to="/" style={{textDecoration: 'none', color: 'inherit'}}>Home</Link></li>
-            <li>Cartelera</li>
-            <li>Eventos</li>
-            <li>Sorteos</li>
-            <li>Confitería</li>
+            <li><Link to="/" >Home</Link></li>
+            <li><Link to="/cartelera">Cartelera</Link></li>
+            <li><Link to="/eventos">Eventos</Link></li>
+            <li><Link to="/sorteos">Sorteos</Link></li>
+            <li><Link to="confiteria">Confitería</Link></li>
         </ul>
 
         </>

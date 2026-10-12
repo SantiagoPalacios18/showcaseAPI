@@ -1,10 +1,8 @@
 const express = require("express")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
-const {Usuario} = require("../models/usuario__Model")
-const {Rol} = require("../models/rol__Model")
-const {Patente} = require("../models/patente__Model")
-const {Sesion} = require("../models/sesion__Model")
+const {Usuario, Rol, Patente, Sesion} = require("../models/index.js")
+
 const { SECRET_KEY } = require("../middlewares/auth__Middleware")
 
 
@@ -145,22 +143,25 @@ const me = async (req, res) => {
     try {
         const user = await Usuario.findByPk(req.user.id_Usuario, {
             attributes: { exclude: ["contraseña"] },
-            include:{
-                model: Rol,
-                include:[
-                    {
-                        model: Patente,
-                        through: { attributes: []}
-                    }
-                ]
-            }
-        })
+            include: [
+                { model: Rol, include: [Patente] },
+                { model: Patente }
+            ]
+        });
 
+        
         if (!user) {
             return res.status(404).json({ message: "Usuario no encontrado" })
         }
+        const patentesDelRol = user.Rol?.Patentes ?? [];
+        const patentesSueltas = user.Patentes ?? [];
 
-        res.status(200).json(user)
+        res.status(200).json({
+            id_Usuario: user.id_Usuario,
+            nombre: user.nombre,
+            email: user.email,
+            patentes: patentesDelRol.concat(patentesSueltas)
+        });
         // console.log("Usuario encontrado EN /ME:", user.toJSON()) // Muestra el usuario encontrado en la consola
     } catch (error) {
         console.log(error)

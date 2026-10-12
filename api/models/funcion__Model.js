@@ -5,7 +5,7 @@ const { DataTypes } = require('sequelize');
 const Funcion = sequelize.define(
     'funcion',
     {
-        id_compraTicket: {
+        id_Funcion: {
             type: DataTypes.MEDIUMINT.UNSIGNED,
             primaryKey: true,
             autoIncrement:true

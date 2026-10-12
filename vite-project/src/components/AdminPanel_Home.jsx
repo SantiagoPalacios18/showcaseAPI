@@ -7,6 +7,7 @@ import api from "../api"
 import './styles/Home.css'
 
 function AdminHome(props) {
+    console.log("props.user en AdminHome.jsx:", props.user)
     const [message, setMessage] = useState("")
     const getMessage = async () => {
         try {
@@ -24,14 +25,14 @@ function AdminHome(props) {
 return(
         <div>
             <div>
-                <h1>PANEL ADMINISTRADOR :Vvv:V</h1>
+                <h2>PANEL ADMINISTRADOR :Vvv:V</h2>
                 <h3>Mensaje dado por el back-end</h3>
 
-                <p>{message}</p>
+                <p style={{ color: "whitesmoke" }}>{message}</p>
             </div>
             <div style={{paddingTop: "50px"}}>
                 {props.user ? (<>
-                        <p>Bienvenido: {props.user.nombre} {props.user.apellido}</p>
+                        <p>Bienvenido {props.user.nombre} {props.user.apellido}</p>
                         <p>Tu email es: {props.user.email}</p>
                         {/*console.log(props.user)*/}
                     </> 

@@ -22,7 +22,7 @@ const Patente_Usuario = sequelize.define(
     },
     {
         timestamps: false,
-        tableName: 'Patente_ClienteLogueado'
+        tableName: 'Patente_Usuario'
     }
 );
 

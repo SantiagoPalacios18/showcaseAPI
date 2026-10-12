@@ -16,7 +16,7 @@ const Patente = sequelize.define(
         descripcion: DataTypes.TEXT,
         DVH: {
             type: DataTypes.STRING(6),
-            allowNull: false,
+            allowNull: true,
             validate: {
                 isAlphanumeric: true
             }

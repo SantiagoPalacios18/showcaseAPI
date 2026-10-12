@@ -4,8 +4,8 @@
 const { sequelize } = require('../config/db.js');
 const { DataTypes } = require('sequelize');
 
-const Operador_Candy = sequelize.define(
-    'Operador_Candy',
+const OperadorCandy = sequelize.define(
+    'OperadorCandy',
     {
         id_OperadorCandy: {
             type: DataTypes.TINYINT.UNSIGNED,
@@ -61,4 +61,4 @@ const Operador_Candy = sequelize.define(
     }
 )
 
-module.exports = { Operador_Candy }
+module.exports = { OperadorCandy }

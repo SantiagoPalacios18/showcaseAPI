@@ -39,6 +39,12 @@ const Usuario = sequelize.define(
                 isNumeric: true
             }
         },
+        alias: {
+            type: DataTypes.STRING(15),
+            validate: {
+                isAlpha: true
+            }
+        },
         email: {
             type: DataTypes.STRING(50),
             unique: true,

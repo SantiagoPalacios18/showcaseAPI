@@ -9,7 +9,7 @@ const CompraEvento = sequelize.define(
             primaryKey: true,
             autoIncrement:true
         },
-        id_ClienteLogueado: {
+        id_Usuario: {
             type: DataTypes.INTEGER.UNSIGNED,
             unique: 'noFuncionesYCliente'
         },
