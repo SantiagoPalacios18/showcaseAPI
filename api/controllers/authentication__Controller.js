@@ -102,20 +102,15 @@ const register = async (req, res) => {
             telefono,
             email,
             contraseña,
-            confirmarContraseña
         } = req.body
 
-        if (!nombre || !apellido ||  !dni || !telefono || !email || !contraseña || !confirmarContraseña) {
+        if (!nombre || !apellido ||  !dni || !telefono || !email || !contraseña) {
             return res.status(400).json({ message: "Falta ingresar datos" })
         }
 
         const existingUser = await Usuario.findOne({ where: { email } })
         if (existingUser) {
             return res.status(400).json({ message: "El correo electrónico ya está en uso" })
-        }
-
-        if (contraseña !== confirmarContraseña) {
-            return res.status(400).json({ message: "Las contraseñas no coinciden" })
         }
 
         const hashedPassword = await bcrypt.hash(contraseña, 10)

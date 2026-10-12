@@ -40,6 +40,12 @@ function Register(props) {
         
 
         try {
+            if (contraseña !== confirmarContraseña) {
+                setError("Las contraseñas no coinciden")
+                setLoading(false)
+                return
+            }
+
             await api.post('/register', {
                 nombre,
                 apellido,
@@ -48,7 +54,6 @@ function Register(props) {
                 telefono,
                 email,
                 contraseña,
-                confirmarContraseña,
             }) /* YA NO ES NECESARIO LO SIGUIENTE: ,{
                 withCredentials: true // Necesario para que se envien las cookies al backend
             })*/
