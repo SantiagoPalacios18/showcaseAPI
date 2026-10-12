@@ -51,8 +51,8 @@ const login = async (req, res) => {
         // Seteás la cookie httpOnly
         res.cookie("refreshToken", refreshToken, {
             httpOnly: true, // JavaScript no puede leerla
-            secure: false, // en local false, en producción true (HTTPS)
-            sameSite: "lax", // en local suele funcionar. Si da problemas probá "none"
+            secure: false, // en local false, en producción true (debido a https)
+            sameSite: "lax", // Solo manda si es del mismo sitio, con la excepción de los gets
             maxAge: 7 * 24 * 60 * 60 * 1000  // 7 días
         })
 
