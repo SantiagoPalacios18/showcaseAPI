@@ -1,6 +1,6 @@
 const { Usuario } = require('../models/index.js');
 const bcrypt = require("bcrypt")
-
+const { Op } = require("sequelize")
 
 // Obtener todos los useres
 const getUsers = async (req, res) => {
@@ -131,27 +131,31 @@ const createTestUser = async (req, res) => {
             where: { email: { [Op.like]: "test%@a.com" } },
             attributes: ["email"]
         });
-
-        if (existingUser) {
-            return res.status(409).json({ message: "El usuario de prueba ya existe" });
+        if (existentes.length >= 20) {
+            return res.status(400).json({ message: "Se hizo el máximo posible de usuarios test" });
         }
+        const numeros = existentes.map(u => {
+            const n = Number(u.email.match(/^test(\d+)@a\.com$/)?.[1]);
+            return Number.isNaN(n) ? 0 : n;
+        });
+        const num = numeros.length ? Math.max(...numeros) + 1 : 1;
 
         const usuario = await Usuario.create({
-            nombre: nombre,
-            apellido: apellido,
-            DNI: DNI,
-            telefono: telefono,
-            email: email,
-            contraseña: await bcrypt.hash('123', 10)
+            nombre: "Test",
+            apellido: "User",
+            DNI: "0000" + String(num),
+            telefono: "0000" + String(num),
+            email: `test${num}@a.com`,
+            contraseña: await bcrypt.hash("123", 10)
         });
 
         res.status(200).json({ message: "Usuario test creado correctamente, contraseña: 123", user: usuario });
     } catch (error) {
-        if (error.name === "SequelizeUniqueConstraintError") {
-            return res.status(409).json({ message: "El usuario de prueba ya existe" });
-        }
-        res.status(500).json({ error: error.message });
-        console.error(error.response?. data || error.message);
+    console.error(error.errors || error);
+    res.status(500).json({
+        error: error.message,
+        detalles: error.errors?.map(e => ({ campo: e.path, mensaje: e.message }))
+    });
     }
 }
 
