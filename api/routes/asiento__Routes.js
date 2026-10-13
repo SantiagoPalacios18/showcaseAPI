@@ -1,13 +1,12 @@
-const { Router } = require('express');
+const express = require('express');
+const router = express.Router();
 const {
     getAsientos,
     getAsientoById,
     createAsiento,
     modifyAsientoById,
     deleteAsientoById
-} = require('../controllers/asientoController.js');
-
-const router = Router();
+} = require('../controllers/asiento__Controller.js');
 
 router.get('/', getAsientos);
 router.get('/:id', getAsientoById);

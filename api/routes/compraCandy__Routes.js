@@ -1,9 +1,18 @@
-const { Router } = require('express');
-const { } = require('../controllers/');
+const express = require('express');
+const router = express.Router();
 
-const router = Router();
+const {
+    getComprasCandy,
+    getCompraCandyById,
+    createCompraCandy,
+    modifyCompraCandyById,
+    deleteCompraCandyById
+} = require('../controllers/compraCandy__Controller.js');
 
-router.get('/', );
-router.post('/', );
+router.get('/', getComprasCandy);
+router.get('/:id', getCompraCandyById);
+router.post('/', createCompraCandy);
+router.patch('/:id', modifyCompraCandyById);
+router.delete('/:id', deleteCompraCandyById);
 
 module.exports = router;

@@ -1,4 +1,4 @@
-const mysql = require('mysql2/promise');
+//const mysql = require('mysql2/promise');
 const express = require("express"); // Framework para hacer servidores web y administrar peticiones
 const { sequelize } = require('./config/db.js'); // Importamos el sequelize, el cual ya fue importado dentro de config/db.js
 
@@ -43,12 +43,10 @@ server.get('/', (req, res) => {
     res.status(200).json({ message: "🔥🔥🔥 HOLAAAAA 🔥🔥🔥" });
 });
 
-const routes = require("./routes/index.js");
-server.use(routes);
-//server.use('/users', userRoutes);
-//server.use('/hobbies', hobbyRoutes);
-
-
+// PONÉ ESTO:
+// Rutas de la API
+const apiRoutes = require('./routes/index.js');
+server.use('/api', apiRoutes);
 
 
 
