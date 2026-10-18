@@ -23,13 +23,27 @@ function Sorteos(props) {
     }, [])
 
 return(
+    <div>
+        <div>
+            <h1>¡SORTEOS SUPER CINEFILOS!</h1>
+            <h2>Selecciona en que sorteo queres participar WACHIN</h2>
+        </div>
         <div>
             <div>
-                <h2>ded</h2>
-
+                <h3>sorteo1</h3>
             </div>
-            <img src={imagenTest} alt="Elded" />
-        </div>  
+            <div>
+                <h3>sorteo2</h3>
+            </div>
+            <div>
+                <h3>sorteo3</h3>
+            </div>
+            <div>
+                <h3>sorteo4</h3>
+            </div>
+        </div>
+    </div>
+
     )
 }
 
