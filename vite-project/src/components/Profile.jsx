@@ -1,5 +1,6 @@
 import {useState, useEffect } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
+import ReactCrop from 'react-image-crop'
 
 import api from '../api'
 import perfil from '../assets/perfil-default.png'
@@ -17,6 +18,7 @@ function Profile(props){
     const [dni, setDni] = useState("");
     const [email, setEmail] = useState("");
     const [telefono, setTelefono] = useState("");
+    const [img, setImg] = useState("")
 
     // Variables de estado
     const [error, setError] = useState("")
@@ -26,6 +28,7 @@ function Profile(props){
     // Variable booleana param ostrar la ventana emergente
     const [showConfirm, setShowConfirm] = useState("")
     const [showEdit, setShowEdit] = useState("")
+    const [showPfp, setShowPfp] = useState("")
 
     const [User, setUser] = useState("")
     const navigate = useNavigate()
@@ -61,12 +64,19 @@ function Profile(props){
         }
     }, [User]); // Se ejecuta cada vez que el usuario pasa de null a tener datos*/
 
+    const cambiarImg = (img) => {
+
+    }
+
     return(
         <section className="profile">
             <h1>PERFIL</h1>
             <div className="profile-container">
                 <div className="photo">
-                    <img src={perfil} alt="Perfil" />
+                    <div className="pfp">
+                        <img src={perfil} alt="Perfil" onClick={() => {setShowPfp(true); console.log(showPfp)}}/>
+                    </div>
+                    
                     {User.email == props.user?.email && <button onClick={() => setShowConfirm(true)}>Cerrar Sesión</button> }
                     {User.email == props.user?.email && <button onClick={() => navigate('/edit-profile/'+id)}>Editar Usuario</button> }
                 </div>
@@ -118,6 +128,27 @@ function Profile(props){
                         
                     </div>
                 )}
+                {showPfp && (
+                    <div className="overlay">
+                        <div className="pfp-panel">
+                            <div className="cerrar">
+                                <button id="btn-cerrar" onClick={() => setShowPfp(false)}>
+                                        <img src="https://i.postimg.cc/1tgHsdPp/flecha-volver-atras.png" alt="volver atras" />
+                                </button>
+                            </div>
+                            <h3>Seleccionar imagen</h3>
+                            <form>
+                                <input type="file" name="avatar" id="avatar" onChange={(e) => cambiarImg(e.target.value)} accept="image/png, image/jpg, image/jpeg" />
+                                <label htmlFor="avatar" className="avatar-btn">
+                                    <span>Buscar archivo</span>
+                                </label>
+
+                            </form>
+                            
+                        </div>
+                    </div>
+                )}
+
 
             </div>
             <span id="texto">Un video mas mi gente pa pelder el tiempo. Quien quiera perder su tiempo que lo pierda. Yeeaaah. Mmm, de locos, hermano. De locoooaaaas.

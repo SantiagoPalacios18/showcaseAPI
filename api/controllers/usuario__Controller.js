@@ -66,6 +66,8 @@ const createUser = async (req, res) => {
     }
 }
 
+*/
+
 // Modificar parcialmente un user en base a su ID
 const modifyuserById = async (req, res) => {
     try {
@@ -111,6 +113,7 @@ const modifyuserById = async (req, res) => {
     }
 }
 
+/*
 // Eliminar el registro de un user en base a su ID
 const deleteuserById = async (req, res) => {
     try {
@@ -131,7 +134,7 @@ module.exports = {
     getUsers,
     getUserById,
     //createUser,
-    //modifyuserById,
+    modifyuserById,
     //deleteuserById,
 }
 

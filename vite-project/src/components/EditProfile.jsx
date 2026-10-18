@@ -1,5 +1,6 @@
 import {useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios"
 
 import api from '../api'
 import perfil from '../assets/perfil-default.png'
@@ -23,7 +24,7 @@ function EditProfile(props){
     const [loading, setLoading] = useState(false)
     const [message, setMessage] = useState("")
 
-    // Variable booleana param ostrar la ventana emergente
+    // Variable booleana para mostrar la ventana emergente
     const [showConfirm, setShowConfirm] = useState("")
 
     const [User, setUser] = useState("")
@@ -64,13 +65,12 @@ function EditProfile(props){
         setLoading(true) // Nos sirve para meter un efecto o elemento mientras se procesa
 
         try {
-            const response = await api.patch('/edit-profile', {
+            const response = await axios.patch('/users/patch/' + id, {
                 nombre,
                 apellido,
                 dni,
                 email,
                 telefono,
-
             })
 
             //await timeout(300);
