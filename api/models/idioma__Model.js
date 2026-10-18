@@ -9,6 +9,12 @@ const Idioma = sequelize.define(
             type: DataTypes.STRING(10),
             primaryKey: true
         },
+        nombre: {
+            type: DataTypes.STRING(15),
+            validate: {
+                isAlpha: true
+            }
+        },
         DVH: {
             type: DataTypes.STRING(6),
             allowNull: false,

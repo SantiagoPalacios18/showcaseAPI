@@ -1,14 +1,12 @@
-const { Router } = require('express');
-
+const express = require('express');
+const router = express.Router();
 const {
     getCines,
     getCineById,
     createCine,
     modifyCineById,
     deleteCineById
-} = require('../controllers/cineController.js');
-
-const router = Router();
+} = require('../controllers/cine__Controller.js');
 
 router.get('/', getCines);
 router.get('/:id', getCineById);

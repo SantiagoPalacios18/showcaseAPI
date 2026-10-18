@@ -32,9 +32,9 @@ function Login(props) {
             const response = await api.post('/login', {
                 email,
                 contraseña
-            },{
+            }/*,{
                 withCredentials: true // Necesario para que se envien las cookies al backend
-            })
+            }*/)
 
             props.onLogin(response.data.user, response.data.accessToken /* , response.data.refreshToken  */)
 

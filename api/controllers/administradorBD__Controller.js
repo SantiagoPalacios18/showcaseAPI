@@ -3,7 +3,7 @@ const { AdministradorBD } = require('../models/index.js');
 
 
 const adminHomeMessage = async (req ,res) =>{
-    res.status(200).json({message:"Hola ADMIN :vv.vVvVv"})
+    res.status(200).json({message:"Jarvis, dame acceso a toda la base de datos :vVvVv"})
 }
 
 
@@ -125,6 +125,8 @@ const deleteAdministradorById = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 }
+
+
 
 module.exports = {
     adminHomeMessage,

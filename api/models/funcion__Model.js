@@ -7,20 +7,15 @@ const Funcion = sequelize.define(
     {
         id_Funcion: {
             type: DataTypes.MEDIUMINT.UNSIGNED,
-            primaryKey: true,
-            autoIncrement:true
         },
         id_sala: {
             type: DataTypes.TINYINT.UNSIGNED,
-            primaryKey: true,
         },
         id_pelicula: {
             type: DataTypes.TINYINT.UNSIGNED,
-            primaryKey: true,
         },
         id_tecnologia: {
             type: DataTypes.TINYINT.UNSIGNED,
-            primaryKey: true,
         },
         idioma: DataTypes.STRING(10),
         proyeccion: DataTypes.STRING(10),

@@ -6,7 +6,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 */
 import './App.css'
-import { Routes, Route, useNavigate } from 'react-router-dom'
+import { Routes, Route, Navigate, useNavigate } from 'react-router-dom'
 import Home from './components/Home'
 import Login from './components/Login'
 import Register from './components/Register'
@@ -19,7 +19,6 @@ import Cartelera from './components/Cartelera'
 import Eventos from './components/Eventos'
 import Sorteos from './components/Sorteos'
 import Confiteria from './components/Confiteria'
-import EditProfile from './components/EditProfile'
 
 //import {Home, Login, Register, NavBar, Footer, Profile} from './components/index.js'
  
@@ -29,12 +28,13 @@ function App() {
   const [user, setUser] = useState(null)
   const [token, setToken] = useState("")
   const navigate = useNavigate()
-  
+  const [loading, setLoading] = useState(true)
 
   const fetchMe = async () => {
     const storedToken = localStorage.getItem("TOKEN")
     if (!storedToken){
       setToken("")
+      setLoading(false)
       return // EL MALVADO RETURN, ME VIOLA EL ANO
       // SIN ESTE SE HACE UN CICLO INFINITO:
       // 1. llega al /me de abajo
@@ -50,7 +50,7 @@ function App() {
 
     try {
         const response = await api.get('/me', {
-            headers: { Authorization: storedToken }
+            //headers: { Authorization: storedToken }
         })
         setUser(response.data)
         console.log(response.data)
@@ -61,6 +61,8 @@ function App() {
         // localStorage.removeItem("REFRESH_TOKEN")
         setUser(null)
         setToken("")
+    }finally {
+        setLoading(false)
     }
   }
 
@@ -69,11 +71,16 @@ function App() {
   }, [])
 
   // Funcion que va a utilizar Login.jsx para guardar el usuario y los tokens
-  const handleLogin = (userData, accessToken /*, refreshToken*/ ) => {
+  const handleLogin = async (userData, accessToken /*, refreshToken*/ ) => {
       localStorage.setItem("TOKEN", accessToken)
       // localStorage.setItem("REFRESH_TOKEN", refreshToken) // Sujeto a cambios, se debe guardar como cookie httpOnly
       setUser(userData)
       setToken(accessToken)
+      // El login no manda las patentes, llamamos a /me para tenerlas
+      const { data } = await api.get("/me", {
+        headers: { Authorization: accessToken }
+      });
+      setUser(data);
   }
 
 
@@ -89,6 +96,13 @@ function App() {
       console.log(error)
     }
 
+  }
+  function PatentChecker({ user, patente, children }) {
+    if (loading) return null // Si está cargando el fetchMe, esperamos pq sino el user va a estar null
+    if (!user) return <Navigate to="/login" replace />;
+    const nombres = user.patentes?.map(p => p.nombre) ?? [];
+    if (!nombres.includes(patente)) return <Navigate to="/" replace />;
+    return children;
   }
 
   // 1. Checkeo si tiene el rol de admin
@@ -108,9 +122,11 @@ function App() {
             <Route path="/login" element={<Login onLogin={handleLogin} />} />
             <Route path="/register" element={<Register onLogin={handleLogin} />} /> {/* Tmb se le pone el handleLogin para loggeo automático */}
             <Route path='/profile/:id' element={<Profile user={user} onLogout={handleLogout}/>}></Route>
-            <Route path='/edit-profile/:id' element={<EditProfile user={user}/>}></Route>
-
-            <Route path='/admin/' element={<AdminHome></AdminHome>}></Route>
+            <Route path='/admin/' element={
+              <PatentChecker user={user} patente="ADMIN_HOME">
+                <AdminHome user={user} />
+              </PatentChecker>
+            }></Route>
 
             <Route path='/cartelera' element={<Cartelera></Cartelera>}></Route>
             <Route path='/eventos' element={<Eventos></Eventos>}></Route>

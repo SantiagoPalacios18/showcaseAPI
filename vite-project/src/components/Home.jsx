@@ -29,8 +29,10 @@ function Home(props) {
         getMessage()
     }, [])
 
+
     return(
         <div>
+            
             <div>
                 <h2>Viví la magia del cine en pantalla gigante</h2>
                 <h3>Mensaje dado por el back-end</h3    >

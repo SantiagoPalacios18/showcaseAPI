@@ -1,6 +1,6 @@
 const { Usuario } = require('../models/index.js');
-
-
+const bcrypt = require("bcrypt")
+const { Op } = require("sequelize")
 
 // Obtener todos los useres
 const getUsers = async (req, res) => {
@@ -33,7 +33,7 @@ const getUserById = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 }
-/*
+
 // Crear un nuevo usuario
 const createUser = async (req, res) => {
     try {
@@ -75,9 +75,7 @@ const modifyuserById = async (req, res) => {
         const data = req.body;
         let datosCambiar = {};
 
-        if ("id_Rol" in data) {
-            datosCambiar.id_Rol = data.id_Rol;
-        }
+
         if ("nombre" in data) {
             datosCambiar.nombre = data.nombre;
         }
@@ -93,21 +91,19 @@ const modifyuserById = async (req, res) => {
         if ("email" in data) {
             datosCambiar.email = data.email;
         }
-        if ("DVH" in data) {
-            datosCambiar.DVH = data.DVH;
+        const user = await Usuario.findByPk(id);
+        if (!user) {
+            return res.status(404).json({ message: `user con el id: ${id} no encontrado` });
         }
 
         if (Object.keys(datosCambiar).length === 0) {
             return res.status(400).json({ message: "No se ha encontrado ningún dato para modificar" });
         }
 
-        const [filasModificadas] = await userBD.update(datosCambiar, { where: { id_Administador: id } });
+        await user.update(datosCambiar);
 
-        if (filasModificadas === 0) {
-            return res.status(404).json({ message: `user con el id: ${id} no encontrado` });
-        }
 
-        res.status(200).json({ message: "El user ha sido modificado correctamente, datos modificados: " + Object.keys(datosCambiar) });
+        res.status(200).json({ message: "El user ha sido modificado correctamente" });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -129,12 +125,49 @@ const deleteuserById = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 }
-*/
+
+const createTestUser = async (req, res) => {
+    try {
+
+        
+        const existentes = await Usuario.findAll({
+            where: { email: { [Op.like]: "test%@a.com" } },
+            attributes: ["email"]
+        });
+        if (existentes.length >= 20) {
+            return res.status(400).json({ message: "Se hizo el máximo posible de usuarios test" });
+        }
+        const numeros = existentes.map(u => {
+            const n = Number(u.email.match(/^test(\d+)@a\.com$/)?.[1]);
+            return Number.isNaN(n) ? 0 : n;
+        });
+        const num = numeros.length ? Math.max(...numeros) + 1 : 1;
+
+        const usuario = await Usuario.create({
+            nombre: "Test",
+            apellido: "User",
+            DNI: "0000" + String(num),
+            telefono: "0000" + String(num),
+            email: `test${num}@a.com`,
+            contraseña: await bcrypt.hash("123", 10)
+        });
+
+        res.status(200).json({ message: "Usuario test creado correctamente, contraseña: 123", user: usuario });
+    } catch (error) {
+    console.error(error.errors || error);
+    res.status(500).json({
+        error: error.message,
+        detalles: error.errors?.map(e => ({ campo: e.path, mensaje: e.message }))
+    });
+    }
+}
+
 module.exports = {
     getUsers,
     getUserById,
-    //createUser,
+    createUser,
     modifyuserById,
-    //deleteuserById,
+    deleteuserById,
+    createTestUser
 }
 

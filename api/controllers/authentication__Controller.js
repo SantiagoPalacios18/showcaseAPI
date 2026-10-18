@@ -1,10 +1,8 @@
 const express = require("express")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
-const {Usuario} = require("../models/usuario__Model")
-const {Rol} = require("../models/rol__Model")
-const {Patente} = require("../models/patente__Model")
-const {Sesion} = require("../models/sesion__Model")
+const {Usuario, Rol, Patente, Sesion} = require("../models/index.js")
+
 const { SECRET_KEY } = require("../middlewares/auth__Middleware")
 
 
@@ -53,8 +51,8 @@ const login = async (req, res) => {
         // Seteás la cookie httpOnly
         res.cookie("refreshToken", refreshToken, {
             httpOnly: true, // JavaScript no puede leerla
-            secure: false, // en local false, en producción true (HTTPS)
-            sameSite: "lax", // en local suele funcionar. Si da problemas probá "none"
+            secure: false, // en local false, en producción true (debido a https)
+            sameSite: "lax", // Solo manda si es del mismo sitio, con la excepción de los gets
             maxAge: 7 * 24 * 60 * 60 * 1000  // 7 días
         })
 
@@ -104,20 +102,15 @@ const register = async (req, res) => {
             telefono,
             email,
             contraseña,
-            confirmarContraseña
         } = req.body
 
-        if (!nombre || !apellido ||  !dni || !telefono || !email || !contraseña || !confirmarContraseña) {
+        if (!nombre || !apellido ||  !dni || !telefono || !email || !contraseña) {
             return res.status(400).json({ message: "Falta ingresar datos" })
         }
 
         const existingUser = await Usuario.findOne({ where: { email } })
         if (existingUser) {
             return res.status(400).json({ message: "El correo electrónico ya está en uso" })
-        }
-
-        if (contraseña !== confirmarContraseña) {
-            return res.status(400).json({ message: "Las contraseñas no coinciden" })
         }
 
         const hashedPassword = await bcrypt.hash(contraseña, 10)
@@ -145,22 +138,25 @@ const me = async (req, res) => {
     try {
         const user = await Usuario.findByPk(req.user.id_Usuario, {
             attributes: { exclude: ["contraseña"] },
-            include:{
-                model: Rol,
-                include:[
-                    {
-                        model: Patente,
-                        through: { attributes: []}
-                    }
-                ]
-            }
-        })
+            include: [
+                { model: Rol, include: [Patente] },
+                { model: Patente }
+            ]
+        });
 
+        
         if (!user) {
             return res.status(404).json({ message: "Usuario no encontrado" })
         }
+        const patentesDelRol = user.Rol?.Patentes ?? [];
+        const patentesSueltas = user.Patentes ?? [];
 
-        res.status(200).json(user)
+        res.status(200).json({
+            id_Usuario: user.id_Usuario,
+            nombre: user.nombre,
+            email: user.email,
+            patentes: patentesDelRol.concat(patentesSueltas)
+        });
         // console.log("Usuario encontrado EN /ME:", user.toJSON()) // Muestra el usuario encontrado en la consola
     } catch (error) {
         console.log(error)

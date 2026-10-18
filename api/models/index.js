@@ -179,5 +179,6 @@ module.exports = {
     Tecnologia,
     Transaccion,
     Usuario,
-    Patente_Usuario
+    Patente_Usuario,
+    Sesion
 }; // d

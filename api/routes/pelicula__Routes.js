@@ -1,9 +1,17 @@
-const { Router } = require('express');
-const { } = require('../controllers/');
+const express = require('express');
+const router = express.Router();
+const {
+    getPeliculas,
+    getPeliculaById,
+    createPelicula,
+    modifyPeliculaById,
+    deletePeliculaById
+} = require('../controllers/pelicula__Controller.js');
 
-const router = Router();
-
-router.get('/', );
-router.post('/', );
+router.get('/', getPeliculas);
+router.get('/:id', getPeliculaById);
+router.post('/', createPelicula);
+router.patch('/:id', modifyPeliculaById);
+router.delete('/:id', deletePeliculaById);
 
 module.exports = router;

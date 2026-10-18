@@ -2,8 +2,12 @@
 
 
 
-h2{
+h1, h2{
     color: white !important;
+}
+
+h3{
+    color: #929292 !important;
 }
 
 

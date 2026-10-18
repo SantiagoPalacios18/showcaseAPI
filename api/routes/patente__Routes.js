@@ -1,9 +1,17 @@
-const { Router } = require('express');
-const { } = require('../controllers/');
+const express = require('express');
+const router = express.Router();
+const {
+    getPatentes,
+    getPatenteById,
+    createPatente,
+    modifyPatenteById,
+    deletePatenteById
+} = require('../controllers/patente__Controller.js');
 
-const router = Router();
-
-router.get('/', );
-router.post('/', );
+router.get('/', getPatentes);
+router.get('/:id', getPatenteById);
+router.post('/', createPatente);
+router.patch('/:id', modifyPatenteById);
+router.delete('/:id', deletePatenteById);
 
 module.exports = router;
