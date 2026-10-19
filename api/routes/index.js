@@ -9,7 +9,7 @@ const usuarioRoutes = require("./usuario__Routes.js");
 // Aplicadas al server
 router.use(authRoutes);
 router.use('/admin', adminRoutes)
-router.use('/users', usuarioRoutes)
+router.use('/usuarios', usuarioRoutes)
 
 // Entidades principales
 router.use('/actores', require('./actor__Routes.js'));
