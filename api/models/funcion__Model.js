@@ -7,6 +7,8 @@ const Funcion = sequelize.define(
     {
         id_Funcion: {
             type: DataTypes.MEDIUMINT.UNSIGNED,
+            primaryKey: true,
+            autoIncrement: true
         },
         id_sala: {
             type: DataTypes.TINYINT.UNSIGNED,

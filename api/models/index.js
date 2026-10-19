@@ -120,7 +120,7 @@ Patente.hasMany(Patente_Usuario, { foreignKey: 'id_Patente' });
 Patente_Usuario.belongsTo(Patente, { foreignKey: 'id_Patente' });
 
 
-// Usuario M,ASS  Sorteo (a través de cliente_sorteo)
+// Usuario MAS  Sorteo (a través de cliente_sorteo)
 Usuario.belongsToMany(Sorteo, { through: Usuario_sorteo, foreignKey: 'id_Usuario' });
 Sorteo.belongsToMany(Usuario, { through: Usuario_sorteo, foreignKey: 'id_sorteo' });
 Usuario.hasMany(Usuario_sorteo, { foreignKey: 'id_Usuario' });
@@ -128,7 +128,7 @@ Usuario_sorteo.belongsTo(Usuario, { foreignKey: 'id_Usuario' });
 Sorteo.hasMany(Usuario_sorteo, { foreignKey: 'id_sorteo' });
 Usuario_sorteo.belongsTo(Sorteo, { foreignKey: 'id_sorteo' });
 
-// Actor MASS Pelicula (a través de Actor_Pelicula)
+// Actor MAS Pelicula (a través de Actor_Pelicula)
 Actor.belongsToMany(Pelicula, { through: Actor_Pelicula, foreignKey: 'id_Actor' });
 Pelicula.belongsToMany(Actor, { through: Actor_Pelicula, foreignKey: 'id_Pelicula' });
 Actor.hasMany(Actor_Pelicula, { foreignKey: 'id_Actor' });
@@ -136,7 +136,7 @@ Actor_Pelicula.belongsTo(Actor, { foreignKey: 'id_Actor' });
 Pelicula.hasMany(Actor_Pelicula, { foreignKey: 'id_Pelicula' });
 Actor_Pelicula.belongsTo(Pelicula, { foreignKey: 'id_Pelicula' });
 
-// Pelicula MASS Idioma (a través de idioma_pelicula)
+// Pelicula MAS Idioma (a través de idioma_pelicula)
 Pelicula.belongsToMany(Idioma, { through: Idioma_pelicula, foreignKey: 'id_pelicula' });
 Idioma.belongsToMany(Pelicula, { through: Idioma_pelicula, foreignKey: 'id_idioma' });
 Pelicula.hasMany(Idioma_pelicula, { foreignKey: 'id_pelicula' });
@@ -144,7 +144,7 @@ Idioma_pelicula.belongsTo(Pelicula, { foreignKey: 'id_pelicula' });
 Idioma.hasMany(Idioma_pelicula, { foreignKey: 'id_idioma' });
 Idioma_pelicula.belongsTo(Idioma, { foreignKey: 'id_idioma' });
 
-// Pelicula MASS Proyeccion (a través de proyeccion_pelicula)
+// Pelicula MAS Proyeccion (a través de proyeccion_pelicula)
 Pelicula.belongsToMany(Proyeccion, { through: Proyeccion_pelicula, foreignKey: 'id_pelicula' });
 Proyeccion.belongsToMany(Pelicula, { through: Proyeccion_pelicula, foreignKey: 'id_proyeccion' });
 Pelicula.hasMany(Proyeccion_pelicula, { foreignKey: 'id_pelicula' });
