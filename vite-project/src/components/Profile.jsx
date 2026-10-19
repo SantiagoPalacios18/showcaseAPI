@@ -40,7 +40,7 @@ function Profile(props){
         try{
             setLoading(true)
             setError("")
-            const response = await api.get('/users/getById/' + id)
+            const response = await api.get('/usuarios/getById/' + id)
             setUser(response.data) // Datos del usuario
             console.log(response)
             setLoading(false)
@@ -55,7 +55,7 @@ function Profile(props){
         setLoading(true) // Nos sirve para meter un efecto o elemento mientras se procesa
 
         try {
-            const response = await api.patch('users/edit/' + id, {
+            const response = await api.patch('usuario/edit/' + id, {
                 nombre,
                 apellido,
                 dni,

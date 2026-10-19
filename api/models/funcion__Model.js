@@ -31,6 +31,7 @@ const Funcion = sequelize.define(
         }
     },
     {
+        tableName :"funcion",
         timestamps: false,
     }
 )
