@@ -43,11 +43,9 @@ server.get('/', (req, res) => {
     res.status(200).json({ message: "🔥🔥🔥 HOLAAAAA 🔥🔥🔥" });
 });
 
-// PONÉ ESTO:
-// Rutas de la API
-const apiRoutes = require('./routes/index.js');
-server.use('/api', apiRoutes);
 
+const routes = require("./routes/index.js");
+server.use(routes);
 
 
 
