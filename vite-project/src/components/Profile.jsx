@@ -10,6 +10,8 @@ import perfil from '../assets/perfil-default.png'
 import './styles/Profile.css'
 
 
+
+
 function Profile(props){
     const {id} = useParams();
 
@@ -36,8 +38,13 @@ function Profile(props){
     function timeout(delay) {
         return new Promise( res => setTimeout(res, delay) );
     }
+
+
     const obtainUser = async(req, res) =>{
         try{
+            const blob = await fetch(perfil).then(r => r.blob())
+            const base64 = await convertImage(blob, setLoading)
+            console.log("Converted Image (Base64):", base64)
             setLoading(true)
             setError("")
             const response = await api.get('/usuarios/getById/' + id)
@@ -88,7 +95,7 @@ function Profile(props){
     }
 
 
-    useEffect(() => {
+    useEffect( () => {
         obtainUser();
     }, [id]); // Recarga cuando modificamos el valor del params (si lo haces desde el URL esto no tiene sentido, pero si tocas el boton de tu perfil arriba a la derecha
     // ya estando en /profile/X, no te va a cargar nunca y tenes que hacer f5 manual para que te salga tu perfil,

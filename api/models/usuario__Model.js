@@ -64,6 +64,9 @@ const Usuario = sequelize.define(
             type: DataTypes.BOOLEAN,
             default: 1
         },
+        foto: {
+            type: DataTypes.TEXT("long"),
+        },
         DVH: {
             type: DataTypes.STRING(6),
             allowNull: /* deberia ser false pero como tengo interferencias con el registro le pongo*/ true,

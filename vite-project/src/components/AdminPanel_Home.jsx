@@ -4,7 +4,7 @@ import { useState , useEffect } from "react"
 // El axios configurado que vamos a usar
 import api from "../api"
 
-//import './styles/AdminPanel.css'
+import './styles/AdminPanel.css'
 
 function AdminHome(props) {
     console.log("props.user en AdminHome.jsx:", props.user)
@@ -91,49 +91,74 @@ function AdminHome(props) {
                         </option>
                     ))}
                 </select>
-                <button onClick={getRegisters}>GET ALL</button>
-                <button onClick={getRegisters}>POST</button>
-                <button onClick={getRegisters}>EDIT</button>
-                <button onClick={getRegisters}>DELETE</button>
-                <button onClick={getRegisters}>GET BY PK</button>
-
-                <div style={{ 
+                <div style={{
                     display: "flex", 
-                    flexDirection: "column",
-                    width: "600px", 
-                    height: "400px",
-                    overflowY: "auto",
-                    margin: "10px auto 0 auto",
-                    backgroundColor: "black", 
-                    padding: "15px", 
-                    borderRadius: "5px",
-                    border: "10px solid gray"
-                }}>                    {
-                        response.message && (
-                            <div style={{ textAlign: "left" }}>
-                                <p style={{ color: "whitesmoke", fontWeight: "bold" }}>Respuesta:</p>
-                                
-                                {/* Usamos <pre> y <code> para darle estructura de código JSON */}
-                                <pre style={{ 
-                                    color: "#A9FFB3", // Color verd para el texto
-                                    fontFamily: "monospace", 
-                                    whiteSpace: "pre-wrap", // Hace que si la línea es muy larga, baje sola
-                                    wordBreak: "break-all" 
-                                }}>
-                                    {typeof response.message === 'object' 
-                                        ? JSON.stringify(response.message, null, 2) // <-- El '2' es clave: mete 2 espacios de sangría
-                                        : response.message}
-                                </pre>
-                            </div>
-                        )
-                    }
-                    {
-                        response.mail && (
-                            <p>Usuario de test creado: {response.mail}</p>
-                        )
-                    }
+                    flexDirection: "row",
+                    alignItems: "flex-start",
+                    justifyContent: "center",
+                    gap: "20px",
+                    width: "100%",
+                    boxSizing: "border-box"
+                    }}>
+
+                    <div style={{ 
+                        display: "flex", 
+                        flexDirection: "column",
+                        width: "700px", 
+                        height: "450px",
+                        overflowY: "auto",
+                        margin: "10px 0",
+                        backgroundColor: "black", 
+                        padding: "15px", 
+                        borderRadius: "5px",
+                        border: "5px solid gray",
+                        flexShrink: 0,
+                    }}>                    {
+                            response.message && (
+                                <div style={{ textAlign: "left" }}>
+                                    <p style={{ color: "whitesmoke", fontWeight: "bold" }}>Respuesta:</p>
+                                    
+                                    {/* para darle estructura de JSON */}
+                                    <pre style={{ 
+                                        color: "#A9FFB3",
+                                        fontFamily: "monospace", 
+                                        whiteSpace: "pre-wrap", // Si la linea es larga, baja sola
+                                        wordBreak: "break-all" 
+                                    }}>
+                                        {typeof response.message === 'object' 
+                                            ? JSON.stringify(response.message, null, 2)
+                                            : response.message}
+                                    </pre>
+                                </div>
+                            )
+                        }
+                        {
+                            response.mail && (
+                                <p>Usuario de test creado: {response.mail}</p>
+                            )
+                        }
+                    </div>
+                    <div
+                        style={{
+                            display: "flex", 
+                            flexDirection: "column",
+                            width: "280px",
+                            flexShrink: 0,
+                        }}>
+
+                    
+                        <input></input>
+                        <div className="admin-crud-buttons">
+                        
+                            <button className="btn-admin-crud" onClick={getRegisters}>GET ALL</button>
+                            <button className="btn-admin-crud" onClick={getRegisters}>POST</button>
+                            <button className="btn-admin-crud" onClick={getRegisters}>EDIT</button>
+                            <button className="btn-admin-crud" onClick={getRegisters}>DELETE</button>
+                            <button className="btn-admin-crud" onClick={getRegisters}>GET BY PK</button>
+
+                        </div>
+                    </div>
                 </div>
-                
                 
             </section>
         </div>

@@ -20,7 +20,7 @@ const getUserById = async (req, res) => {
         const { id } = req.params;
         const user = await Usuario.findByPk(id, {
             attributes:{
-                exclude: ["contraseña"]
+                exclude: ["contraseña", "foto"]
             }
         });
 

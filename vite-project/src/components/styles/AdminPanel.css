@@ -1,0 +1,20 @@
+
+
+.admin-crud-buttons{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    width: 280px; 
+    height: 200px;
+
+}
+
+.btn-admin-crud{
+    padding: 16px;
+    background: #4a4f52;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    height: 60px;
+}

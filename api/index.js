@@ -3,7 +3,7 @@ const express = require("express"); // Framework para hacer servidores web y adm
 const { sequelize } = require('./config/db.js'); // Importamos el sequelize, el cual ya fue importado dentro de config/db.js
 
 // TABLAS
-const { Usuario, Rol, Patente } = require('./models/index.js');
+const { Usuario, Rol, Patente, Pelicula } = require('./models/index.js');
 
 // CORS
 const cors = require ("cors")
@@ -112,6 +112,28 @@ server.listen(3000, async () => {
 
     await Benito.setRol(adminRole);
 
+    const peliculas = [
+        { genero: 'Suspenso', origen: 'EEUU',    id_Director: 'Brian Duffield',    calificacion: 7, imagen: 'whalefall.jpg',                duracion: '01:46:00' },
+        { genero: 'Terror',   origen: 'EEUU',    id_Director: 'Rob Savage',        calificacion: 6, imagen: 'Madre Siniestra.webp',         duracion: '01:33:00' },
+        { genero: 'Accion',   origen: 'EEUU',    id_Director: 'Kitao Sakurai',     calificacion: 6, imagen: 'Street Fighter.webp',          duracion: '02:05:00' },
+        { genero: 'Suspenso', origen: 'EEUU',    id_Director: 'Michael Showalter', calificacion: 7, imagen: 'Verity.jpg',                   duracion: '01:50:00' },
+        { genero: 'Comedia',  origen: 'EEUU',    id_Director: 'Dave Green',        calificacion: 7, imagen: 'Coyote vs Acme.webp',          duracion: '01:30:00' },
+        { genero: 'Terror',   origen: 'EEUU',    id_Director: 'Zach Cregger',      calificacion: 6, imagen: 'Resident Evil Noche Cero.jpg', duracion: '01:45:00' },
+        { genero: 'Aventura', origen: 'EEUU',    id_Director: 'David Ayer',        calificacion: 8, imagen: 'El corazón de la Bestia.jpg',  duracion: '01:41:00' },
+        { genero: 'Aventura', origen: 'EEUU',    id_Director: 'Christopher Nolan', calificacion: 8, imagen: 'La Odisea.webp',               duracion: '02:30:00' },
+        { genero: 'Comedia',  origen: 'EEUU',    id_Director: 'Gregg Araki',       calificacion: 5, imagen: 'Quiero tu sexo.jpg',           duracion: '01:30:00' },
+        { genero: 'Drama',    origen: 'Espana',  id_Director: 'Alex Montoya',      calificacion: 7, imagen: 'La casa.jpg',                  duracion: '01:38:00' },
+    ]
+    async function insertPeliculas() {
+        try {
+            await Pelicula.bulkCreate(peliculas)
+            console.log('10 películas insertadas')
+        } catch (err) {
+            console.error(err)
+        }
+    }
+
+    insertPeliculas()
 
 
 

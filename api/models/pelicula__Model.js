@@ -13,13 +13,11 @@ const Pelicula = sequelize.define(
         origen: {
             type: DataTypes.STRING(20),
             validate: {
-                isAlpha: true
             },
         },
         id_Director: {
             type: DataTypes.STRING(20),
             validate: {
-                isAlpha: true,
                 contains: [" "]
             },
         },
@@ -31,10 +29,13 @@ const Pelicula = sequelize.define(
                 min: 0
             },
         },
+        imagen: {
+            type: DataTypes.STRING,
+        },
         duracion: DataTypes.TIME,
         DVH: {
             type: DataTypes.STRING(6),
-            allowNull: false,
+            allowNull: true,
             validate: {
                 isAlphanumeric: true
             }
