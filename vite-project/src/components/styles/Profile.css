@@ -44,7 +44,7 @@ section h1{
     transition: .3s;    
 }
 
-.pfp:hover img{
+.pfp-edit:hover img{
     filter:brightness(55%);
     border-radius: 10%;
     transition: .3s;
@@ -57,9 +57,9 @@ section h1{
     height: 100%;
 }
 
-.pfp:hover::after{
+.pfp-edit:hover::after{
     position: absolute;
-    display: inline;
+    display: inline;    
     content: "";
     background-image: url(https://i.postimg.cc/bNQFK2v4/x.png);
     background-size: 30% 30%;

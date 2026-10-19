@@ -117,7 +117,7 @@ function Profile(props){
             <h1>PERFIL</h1>
             <div className="profile-container">
                 <div className="photo">
-                    <div className="pfp">
+                    <div className={`pfp ${showEdit ? 'pfp-edit' : ''}`}>
                         <img src={img} alt="Perfil" onClick={() => {setShowPfp(true); console.log(showPfp)}}/>
                     </div>
                     
