@@ -1,6 +1,7 @@
 import {useState, useEffect } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import ReactCrop from 'react-image-crop'
+import convertImage from '../convert'
 
 import api from '../api'
 import perfil from '../assets/perfil-default.png'
@@ -18,7 +19,7 @@ function Profile(props){
     const [dni, setDni] = useState("");
     const [email, setEmail] = useState("");
     const [telefono, setTelefono] = useState("");
-    const [img, setImg] = useState("")
+    const [img, setImg] = useState(perfil)
 
     // Variables de estado
     const [error, setError] = useState("")
@@ -103,8 +104,12 @@ function Profile(props){
         }
     }, [User]); // Se ejecuta cada vez que el usuario pasa de null a tener datos*/
 
-    const cambiarImg = (img) => {
-
+    const cambiarImg = async (img) => {
+        console.log('valor ingresado' + img)
+        const base64 = await convertImage(img, setLoading)
+        console.log(base64)
+        setImg(base64)
+        setShowPfp(false)
     }
 
     return(
@@ -113,7 +118,7 @@ function Profile(props){
             <div className="profile-container">
                 <div className="photo">
                     <div className="pfp">
-                        <img src={perfil} alt="Perfil" onClick={() => {setShowPfp(true); console.log(showPfp)}}/>
+                        <img src={img} alt="Perfil" onClick={() => {setShowPfp(true); console.log(showPfp)}}/>
                     </div>
                     
                     {User.email == props.user?.email && <button onClick={() => setShowConfirm(true)}>Cerrar Sesión</button> }
@@ -252,7 +257,7 @@ function Profile(props){
                             </div>
                             <h3>Seleccionar imagen</h3>
                             <form>
-                                <input type="file" name="avatar" id="avatar" onChange={(e) => cambiarImg(e.target.value)} accept="image/png, image/jpg, image/jpeg" />
+                                <input type="file" name="avatar" id="avatar" onChange={(e) => cambiarImg(e.target.files[0])} accept="image/png, image/jpg, image/jpeg" />
                                 <label htmlFor="avatar" className="avatar-btn">
                                     <span>Buscar archivo</span>
                                 </label>

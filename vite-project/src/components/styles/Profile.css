@@ -34,15 +34,20 @@ section h1{
 }
 
 
-.photo img{
+.pfp img{
     width: 350px;
     object-fit: cover;
-    transition: .3;
+    border-style: solid;
+    border-width: 5px;
+    border-color: #2e2a2d;
+    border-radius: 100%;
+    transition: .3s;    
 }
 
 .pfp:hover img{
     filter:brightness(55%);
-    transition: .3s;    
+    border-radius: 10%;
+    transition: .3s;
 }
 
 .pfp{
@@ -56,7 +61,7 @@ section h1{
     position: absolute;
     display: inline;
     content: "";
-    background-image: url(https://www.startpage.com/av/proxy-image?piurl=https%3A%2F%2Fcdn-icons-png.flaticon.com%2F512%2F84%2F84459.png&sp=1791901969Td5ff5724f4a0e6433e967695f1c2d09f8502dde8d0d0fc428d406cbcc0266c88);
+    background-image: url(https://i.postimg.cc/bNQFK2v4/x.png);
     background-size: 30% 30%;
     background-repeat: no-repeat;
     background-position: center;
