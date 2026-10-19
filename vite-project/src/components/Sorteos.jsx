@@ -28,22 +28,29 @@ return(
             <h1>¡SORTEOS SUPER CINEFILOS!</h1>
             <h2>Selecciona en que sorteo queres participar WACHIN</h2>
         </div>
-        <div>
-            <div>
+        <div className="contenedor-sorteos">
+            <div id="s-1">
                 <h3>sorteo1</h3>
+                <img src={imagenTest} alt="Elded" />
+                <button>participar ahora</button>
             </div>
-            <div>
+            <div id="s-2">
                 <h3>sorteo2</h3>
+                <img src={imagenTest} alt="Elded" />
+                <button>participar ahora</button>
             </div>
-            <div>
+            <div id="s-3">
                 <h3>sorteo3</h3>
+                <img src={imagenTest} alt="Elded" />
+                <button>participar ahora</button>
             </div>
-            <div>
+            <div id="s-4">
                 <h3>sorteo4</h3>
+                <img src={imagenTest} alt="Elded" />
+                <button>participar ahora</button>
             </div>
         </div>
     </div>
-
     )
 }
 
