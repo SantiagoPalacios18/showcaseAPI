@@ -11,7 +11,7 @@ function AdminHome(props) {
     const [message, setMessage] = useState("")
     const [response, setResponse] = useState("")
     const [tablasDisponibles, setTablasDisponibles] = useState([])
-    
+    const [id, setId] = useState("") 
     const getMessage = async () => {
         try {
             const response = await api.get("/admin/")
@@ -48,7 +48,7 @@ function AdminHome(props) {
         }
     };
 
-    const getRegisters = async () => {
+    const getUsers = async () => {
         try {
             const response = await api.get(`${tablaElegida}/`)
             // Eliminamos el setResponse() vacío que no hacía falta
@@ -56,6 +56,26 @@ function AdminHome(props) {
         } catch (error) {
             console.error("Error al traer registros:", error);
         }
+    }
+    const getUserByPk = async () =>{
+        try{
+            const response = await api.get(`${tablaElegida}/getByPk/${id}`)
+            setResponse(response.data)
+            console.log(response.data)
+        }catch(error){
+            console.log("Error al buscar el registro", error)
+        }
+    }
+
+    const modifyUser = async ( ) =>{
+
+    }
+
+    const deleteUser = async ( ) =>{
+
+    }
+    const postUser = async () =>{
+
     }
 
     return(
@@ -147,14 +167,14 @@ function AdminHome(props) {
                         }}>
 
                     
-                        <input></input>
+                        <input onChange={(e) => setId(e.target.value)}></input>
                         <div className="admin-crud-buttons">
                         
-                            <button className="btn-admin-crud" onClick={getRegisters}>GET ALL</button>
-                            <button className="btn-admin-crud" onClick={getRegisters}>POST</button>
-                            <button className="btn-admin-crud" onClick={getRegisters}>EDIT</button>
-                            <button className="btn-admin-crud" onClick={getRegisters}>DELETE</button>
-                            <button className="btn-admin-crud" onClick={getRegisters}>GET BY PK</button>
+                            <button className="btn-admin-crud" onClick={getUsers}>GET ALL</button>
+                            <button className="btn-admin-crud" onClick={postUser}>POST</button>
+                            <button className="btn-admin-crud" onClick={modifyUser}>EDIT</button>
+                            <button className="btn-admin-crud" onClick={deleteUser}>DELETE</button>
+                            <button className="btn-admin-crud" onClick={getUserByPk}>GET BY PK</button>
 
                         </div>
                     </div>

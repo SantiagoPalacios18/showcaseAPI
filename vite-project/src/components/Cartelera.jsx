@@ -25,7 +25,7 @@ function Cartelera(props) {
 return(
         <div>
             <div>
-                <h2>d</h2>
+                <div className="etiqueta-novedades">Cartelera</div>
 
             </div>
             <img src={imagenTest} alt="Elded" />

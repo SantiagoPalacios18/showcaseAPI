@@ -69,7 +69,7 @@ function Profile(props){
         setLoading(true) // Nos sirve para meter un efecto o elemento mientras se procesa
 
         try {
-            const response = await api.patch('usuario/edit/' + id, {
+            const response = await api.patch('usuarios/edit/' + id, {
                 nombre,
                 apellido,
                 dni,

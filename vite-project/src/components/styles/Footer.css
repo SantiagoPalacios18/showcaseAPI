@@ -38,6 +38,11 @@
 .footer-col ul li a, .footer-col p {
   color: #bbb;
   text-decoration: none;
+  font-size: 20px;
+}
+
+.footer-col p{
+  font-size: 15px;
 }
 
 .footer-col ul li a:hover {

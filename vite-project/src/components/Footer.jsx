@@ -11,7 +11,7 @@ function Footer(props) {
             <div className="footer-container">
                 <div className="footer-col">
                 <h3>Sobre nosotros</h3>
-                <p>Una breve descripción de tu sitio web, proyecto o empresa para los visitantes.</p>
+                <p> Showcase Cinemas es una de las cadenas líderes en exhibición cinematográfica a nivel mundial. Con más de 70 pantallas distribuidas en las principales plazas de Argentina, ofrecemos la mejor experiencia tecnológica, comodidad y los estrenos más esperados para toda la familia.</p>
                 </div>
                 
                 <div className="footer-col">

@@ -122,6 +122,8 @@ h3{
 .peli-info {
     display: flex;
     justify-content: space-between; /* género a la izquierda, duración a la derecha */
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .btn-cartelera {
@@ -129,6 +131,7 @@ h3{
     background: #cc6be8;
     color: white;
     font-weight: bold;
+    font-size: 30px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
