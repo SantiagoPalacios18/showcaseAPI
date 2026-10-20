@@ -56,28 +56,6 @@ h3{
     color: #c447e6 !important;
 }
 
-.contenedor-sorteos{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-
-    grid-template-areas:
-    's-1 s-2'
-    's-3 s-4';
-}
-#s-1{
-    grid-area: s-1;
-}
-#s-2{
-    grid-area: s-2;
-}   
-#s-3{
-    grid-area: s-3;
-}
-#s-4{
-    grid-area: s-4;
-}
-
 .recomendados {
     display: flex;
     flex-direction: column;

@@ -5,6 +5,7 @@ import {useState , useEffect } from "react"
 import api from "../api"
 import imagenTest from "../media/unnamed.jpg"
 import './styles/Home.css'
+import './styles/sorteo.css'
 
 
 function Sorteos(props) {
@@ -29,25 +30,25 @@ return(
             <h2>Selecciona en que sorteo queres participar WACHIN</h2>
         </div>
         <div className="contenedor-sorteos">
-            <div id="s-1">
-                <h3>sorteo1</h3>
+            <div className="organizar-sorteo" id="s-1">
+                <h2>sorteo1</h2>
                 <img src={imagenTest} alt="Elded" />
-                <button>participar ahora</button>
+                <button className="boton-s">participar ahora</button>
+            </div>            
+            <div className="organizar-sorteo" id="s-2">
+                <h2>sorteo2</h2>
+                <img src={imagenTest} alt="Elded" />
+                <button className="boton-s">participar ahora</button>
             </div>
-            <div id="s-2">
-                <h3>sorteo2</h3>
+            <div className="organizar-sorteo" id="s-3">
+                <h2>sorteo3</h2>
                 <img src={imagenTest} alt="Elded" />
-                <button>participar ahora</button>
+                <button className="boton-s">participar ahora</button>
             </div>
-            <div id="s-3">
-                <h3>sorteo3</h3>
+            <div className="organizar-sorteo" id="s-4">
+                <h2>sorteo4</h2>
                 <img src={imagenTest} alt="Elded" />
-                <button>participar ahora</button>
-            </div>
-            <div id="s-4">
-                <h3>sorteo4</h3>
-                <img src={imagenTest} alt="Elded" />
-                <button>participar ahora</button>
+                <button className="boton-s">participar ahora</button>
             </div>
         </div>
     </div>

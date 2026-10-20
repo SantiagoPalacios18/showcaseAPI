@@ -33,9 +33,9 @@ const createUsuarioSorteo = async (req, res) => {
     try {
         const data = req.body;
 
-        if (!data.id_Usuario || !data.id_sorteo || !data.DVH) {
+        if ( !data.id_Usuario || !data.id_sorteo ) {
             return res.status(400).json({
-                message: "Faltan datos obligatorios (id_Usuario, id_sorteo o DVH)"
+                message: "Faltan datos obligatorios (id_Usuario, id_sorteo)"
             });
         }
 
@@ -53,8 +53,7 @@ const createUsuarioSorteo = async (req, res) => {
         const nuevaInscripcion = await Usuario_sorteo.create({
             id_Usuario: data.id_Usuario,
             id_sorteo: data.id_sorteo,
-            fecha_inscripcion: data.fecha_inscripcion || new Date(),
-            DVH: data.DVH
+            fecha_inscripcion: data.fecha_inscripcion || new Date().now(),
         });
 
         res.status(200).json({

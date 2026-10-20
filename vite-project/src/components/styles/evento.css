@@ -1,0 +1,31 @@
+.e{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+
+
+    grid-template-areas:
+    'e-1 e-2'
+    'e-3 e-4'
+    'e-5 e-6';
+}
+
+
+#e-1{
+    grid-area: e-1;
+}
+#e-2{
+    grid-area: e-2;
+}
+#e-3{
+    grid-area: e-3;
+}
+#e-4{
+    grid-area: e-4;
+}
+#e-5{
+    grid-area: e-5;
+}
+#e-6{
+    grid-area: e-6;
+}

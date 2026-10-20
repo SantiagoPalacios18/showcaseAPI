@@ -1,0 +1,40 @@
+.contenedor-sorteos{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+
+    grid-template-areas:
+    's-1 s-2'
+    's-3 s-4';
+}
+#s-1{
+    grid-area: s-1;
+}
+#s-2{
+    grid-area: s-2;
+}
+#s-3{
+    grid-area: s-3;
+}
+#s-4{
+    grid-area: s-4;
+}
+
+.organizar-sorteo{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+
+.boton-s{
+    background-color: #a1939f;
+    color: white;
+    border-radius: 3px;
+    border: 0;
+    width: 150px;
+    height: 30px;
+    font-size:medium;
+}
