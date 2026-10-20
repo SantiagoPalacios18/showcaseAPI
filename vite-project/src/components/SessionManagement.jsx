@@ -26,7 +26,7 @@ function SessionManagement(props){
                 ):(
                     <>
                         {isAdmin && <Link to="/admin" style={{ height: "40px", marginTop: "22px", marginRight: "10px" }}>Panel Admin</Link>}
-                        <Link id='profile-pic' to={`/profile/${props.user.id_Usuario}`} ><img src={perfil} alt="Perfil" /></Link>
+                        <Link id='profile-pic' to={`/profile/${props.user.id_Usuario}`} ><img src={perfil} alt="Perfil" style={{borderRadius: "100%"}} /></Link>
                         
                     </>
                 )}

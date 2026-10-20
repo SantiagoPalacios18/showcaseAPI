@@ -125,7 +125,7 @@ function Profile(props){
             <div className="profile-container">
                 <div className="photo">
                     <div className={`pfp ${showEdit ? 'pfp-edit' : ''}`}>
-                        <img src={img} alt="Perfil" onClick={() => {setShowPfp(true); console.log(showPfp)}}/>
+                        <img src={img} alt="Perfil" onClick={() => {if(showEdit === true) setShowPfp(true); console.log(showPfp)}}/>
                     </div>
                     
                     {User.email == props.user?.email && <button onClick={() => setShowConfirm(true)}>Cerrar Sesión</button> }
