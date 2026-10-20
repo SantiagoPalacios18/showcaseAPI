@@ -3,9 +3,7 @@ import { Navigate, useNavigate, useParams } from "react-router-dom";
 import ReactCrop from 'react-image-crop'
 import convertImage from '../convert'
 
-import api from '../api'
-import perfil from '../assets/perfil-default.png'
-
+import api from '../api'    
 
 import './styles/Profile.css'
 
@@ -21,14 +19,14 @@ function Profile(props){
     const [dni, setDni] = useState("");
     const [email, setEmail] = useState("");
     const [telefono, setTelefono] = useState("");
-    const [img, setImg] = useState("")
+    const [foto, setFoto] = useState("")
     
     const [Mnombre, setmNombre] = useState("");
     const [Mapellido, setmApellido] = useState("");
     const [Mdni, setmDni] = useState("");
     const [Memail, setmEmail] = useState("");
     const [Mtelefono, setmTelefono] = useState("");
-    const [Mimg, setmImg] = useState(perfil)
+    const [Mfoto, setmFoto] = useState("")
 
     // Variables de estado
     const [error, setError] = useState("")
@@ -49,12 +47,9 @@ function Profile(props){
 
     const obtainUser = async(req, res) =>{
         try{
-            const blob = await fetch(perfil).then(r => r.blob())
-            const base64 = await convertImage(blob, setLoading)
-            console.log("Converted Image (Base64):", base64)
             setLoading(true)
             setError("")
-            const response = await api.get('/usuarios/getById/' + id)
+            const response = await api.get('/usuarios/getByPk/' + id)
             setUser(response.data) // Datos del usuario
             console.log(response)
             setLoading(false)
@@ -70,13 +65,20 @@ function Profile(props){
 
         try {
             const response = await api.patch('usuarios/edit/' + id, {
-                nombre,
-                apellido,
-                dni,
-                email,
-                telefono,
-                img
+                Mnombre,
+                Mapellido,
+                Mdni,
+                Memail,
+                Mtelefono,
+                Mfoto
             })
+
+            setNombre(Mnombre)
+            setApellido(Mapellido)
+            setDni(Mdni)
+            setEmail(Memail)
+            setTelefono(Mtelefono)
+            setFoto(Mfoto)
 
             //await timeout(300);
             setLoading(false)
@@ -115,14 +117,22 @@ function Profile(props){
             setDni(User.DNI || "");
             setEmail(User.email || "");
             setTelefono(User.telefono || "");
+            setFoto(User.foto || "")
+            setmFoto(User.foto || "")
         }
     }, [User]); // Se ejecuta cada vez que el usuario pasa de null a tener datos*/
 
+    // useEffect(()=>{
+    //     console.log("Se modifico un valor temporal")
+    // }, [Mnombre, Mapellido, Mdni, Memail, Mtelefono, Mfoto])
+    
+    // useEffect(()=>{
+    //     console.log("Se modifico un valor permanente")
+    // }, [nombre, apellido, dni, email, telefono, foto])
+
     const cambiarImg = async (img) => {
-        console.log('valor ingresado' + img)
         const base64 = await convertImage(img, setLoading)
-        console.log(base64)
-        setImg(base64)
+        setmFoto(base64)
         setShowPfp(false)
     }
 
@@ -133,7 +143,7 @@ function Profile(props){
                 <div className="profile-container">
                     <div className="photo">
                         <div className={`pfp ${showEdit ? 'pfp-edit' : ''}`}>
-                            <img src={img} alt="Perfil" onClick={() => {if(showEdit === true) setShowPfp(true); console.log(showPfp)}}/>
+                            <img src={showEdit ? Mfoto : foto} alt="Perfil" onClick={() => {if(showEdit === true) setShowPfp(true); console.log(showPfp)}}/>
                         </div>
                         
                         {User.email == props.user?.email && <button onClick={() => setShowConfirm(true)}>Cerrar Sesión</button> }
@@ -182,8 +192,8 @@ function Profile(props){
                                             type="text" 
                                             id="nombre"
                                             name="nombre" 
-                                            value={nombre} 
-                                            onChange={(e) => setNombre(e.target.value)} 
+                                            value={Mnombre} 
+                                            onChange={(e) => setmNombre(e.target.value)} 
                                         />
                                     </div>
                                     <div>
@@ -192,8 +202,8 @@ function Profile(props){
                                             type="text" 
                                             id="apellido"
                                             name="apellido" 
-                                            value={apellido} 
-                                            onChange={(e) => setApellido(e.target.value)} 
+                                            value={Mapellido} 
+                                            onChange={(e) => setmApellido(e.target.value)} 
                                         />
                                     </div>
                                     <div>
@@ -202,8 +212,8 @@ function Profile(props){
                                             type="text" 
                                             id="dni"
                                             name="dni" 
-                                            value={dni} 
-                                            onChange={(e) => setDni(e.target.value)} 
+                                            value={Mdni} 
+                                            onChange={(e) => setmDni(e.target.value)} 
                                         />
                                     </div>
                                     <div>
@@ -212,8 +222,8 @@ function Profile(props){
                                             type="email" 
                                             id="email"
                                             name="email" 
-                                            value={email} 
-                                            onChange={(e) => setEmail(e.target.value)} 
+                                            value={Memail} 
+                                            onChange={(e) => setmEmail(e.target.value)} 
                                         />
                                     </div>
                                     <div>
@@ -222,13 +232,23 @@ function Profile(props){
                                             type="tel" 
                                             id="telefono"
                                             name="telefono" 
-                                            value={telefono} 
-                                            onChange={(e) => setTelefono(e.target.value)} 
+                                            value={Mtelefono} 
+                                            onChange={(e) => setmTelefono(e.target.value)} 
                                         />
                                     </div>
                                     <div className="profile-buttons">
                                         <button type="submit">Guardar Perfil</button>
-                                        <button type="cancel" onClick={() => setShowEdit(false)}>Cancelar</button>
+                                        <button type="cancel" onClick={() =>
+                                        {
+                                        setShowEdit(false)
+                                        setmNombre(nombre)
+                                        setmApellido(apellido)
+                                        setmDni(dni)
+                                        setmEmail(email)
+                                        setmTelefono(telefono)
+                                        setmFoto(foto)
+                                        } 
+                                    }>Cancelar</button>
 
                                     </div>
 
