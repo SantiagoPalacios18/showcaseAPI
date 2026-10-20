@@ -11,7 +11,7 @@ function AdminHome(props) {
     const [message, setMessage] = useState("")
     const [response, setResponse] = useState("")
     const [tablasDisponibles, setTablasDisponibles] = useState([])
-    
+    const [id, setId] = useState("") 
     const getMessage = async () => {
         try {
             const response = await api.get("/admin/")
@@ -58,7 +58,13 @@ function AdminHome(props) {
         }
     }
     const getUserByPk = async () =>{
-
+        try{
+            const response = await api.get(`${tablaElegida}/getByPk/${id}`)
+            setResponse(response.data)
+            console.log(response.data)
+        }catch(error){
+            console.log("Error al buscar el registro", error)
+        }
     }
 
     const modifyUser = async ( ) =>{
@@ -69,7 +75,7 @@ function AdminHome(props) {
 
     }
     const postUser = async () =>{
-        
+
     }
 
     return(
@@ -161,7 +167,7 @@ function AdminHome(props) {
                         }}>
 
                     
-                        <input></input>
+                        <input onChange={(e) => setId(e.target.value)}></input>
                         <div className="admin-crud-buttons">
                         
                             <button className="btn-admin-crud" onClick={getUsers}>GET ALL</button>
