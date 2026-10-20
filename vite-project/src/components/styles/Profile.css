@@ -46,6 +46,10 @@ section h1{
 
 .pfp-edit:hover img{
     filter:brightness(55%);
+    transition: .1s;
+}
+
+.pfp:hover img{
     border-radius: 10%;
     transition: .1s;
 }

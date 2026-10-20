@@ -21,7 +21,7 @@ const getUserById = async (req, res) => {
         const { id } = req.params;
         const user = await Usuario.findByPk(id, {
             attributes:{
-                exclude: ["contraseña", "foto"]
+                exclude: ["contraseña"]
             }
         });
 
@@ -92,6 +92,9 @@ const modifyuserById = async (req, res) => {
         }
         if ("email" in data) {
             datosCambiar.email = data.email;
+        }
+        if ("foto" in data) {
+            datosCambiar.foto = data.foto;
         }
         const user = await Usuario.findByPk(id);
         if (!user) {

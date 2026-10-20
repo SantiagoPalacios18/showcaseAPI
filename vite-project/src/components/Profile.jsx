@@ -21,7 +21,14 @@ function Profile(props){
     const [dni, setDni] = useState("");
     const [email, setEmail] = useState("");
     const [telefono, setTelefono] = useState("");
-    const [img, setImg] = useState(perfil)
+    const [img, setImg] = useState("")
+    
+    const [Mnombre, setmNombre] = useState("");
+    const [Mapellido, setmApellido] = useState("");
+    const [Mdni, setmDni] = useState("");
+    const [Memail, setmEmail] = useState("");
+    const [Mtelefono, setmTelefono] = useState("");
+    const [Mimg, setmImg] = useState(perfil)
 
     // Variables de estado
     const [error, setError] = useState("")
@@ -68,7 +75,7 @@ function Profile(props){
                 dni,
                 email,
                 telefono,
-
+                img
             })
 
             //await timeout(300);
@@ -119,171 +126,185 @@ function Profile(props){
         setShowPfp(false)
     }
 
-    return(
-        <section className="profile">
-            <h1>PERFIL</h1>
-            <div className="profile-container">
-                <div className="photo">
-                    <div className={`pfp ${showEdit ? 'pfp-edit' : ''}`}>
-                        <img src={img} alt="Perfil" onClick={() => {if(showEdit === true) setShowPfp(true); console.log(showPfp)}}/>
-                    </div>
-                    
-                    {User.email == props.user?.email && <button onClick={() => setShowConfirm(true)}>Cerrar Sesión</button> }
-                    {User.email == props.user?.email && <button onClick={() => setShowEdit(true)}>Editar Usuario</button> }
-                </div>
-                { User ? (
-                    !showEdit ? (
-                        // Sin modo editar
-                        <>
-                            {message && <p style={{position: "fixed", top: "10px", left: "10px", color: "green", backgroundColor: "lightgreen", padding: "10px", borderRadius: "5px" }}>{message}</p>}
-
-                            <div className="profile-data-section">
-
-                                <div>
-                                    <label>Nombre: </label>
-                                    <span>{nombre}</span>
-                                </div>
-                                <div>
-                                    <label>Apellido: </label>
-                                    <span>{apellido}</span>
-                                </div>
-                                <div>
-                                    <label>DNI: </label>
-                                    <span>{dni}</span>
-                                </div>
-                                <div>
-                                    <label>Email: </label>
-                                    <span>{email}</span>
-                                </div>
-                                <div>
-                                    <label>Teléfono: </label>
-                                    <span>{telefono}</span>
-                                </div>
-                            </div>
-                        </>
-                    ):(
-                        // Modo editar
-                        <>
-                            {error && <p style={{position: "fixed", top: "10px", left: "10px", color: "red", backgroundColor: "#590C0C", padding: "10px", borderRadius: "5px" }}>{error}</p>}
-
-                            <form className="profile-data-section" onSubmit={handleSubmit}>
-
-                                <div>
-                                    <label htmlFor="nombre">Nombre: </label>
-                                    <input 
-                                        type="text" 
-                                        id="nombre"
-                                        name="nombre" 
-                                        value={nombre} 
-                                        onChange={(e) => setNombre(e.target.value)} 
-                                    />
-                                </div>
-                                <div>
-                                    <label htmlFor="apellido">Apellido: </label>
-                                    <input 
-                                        type="text" 
-                                        id="apellido"
-                                        name="apellido" 
-                                        value={apellido} 
-                                        onChange={(e) => setApellido(e.target.value)} 
-                                    />
-                                </div>
-                                <div>
-                                    <label htmlFor="dni">DNI: </label>
-                                    <input 
-                                        type="text" 
-                                        id="dni"
-                                        name="dni" 
-                                        value={dni} 
-                                        onChange={(e) => setDni(e.target.value)} 
-                                    />
-                                </div>
-                                <div>
-                                    <label htmlFor="email">Email: </label>
-                                    <input 
-                                        type="email" 
-                                        id="email"
-                                        name="email" 
-                                        value={email} 
-                                        onChange={(e) => setEmail(e.target.value)} 
-                                    />
-                                </div>
-                                <div>
-                                    <label htmlFor="telefono">Teléfono: </label>
-                                    <input 
-                                        type="tel" 
-                                        id="telefono"
-                                        name="telefono" 
-                                        value={telefono} 
-                                        onChange={(e) => setTelefono(e.target.value)} 
-                                    />
-                                </div>
-                                <div className="profile-buttons">
-                                    <button type="submit">Guardar Perfil</button>
-                                    <button type="cancel" onClick={() => setShowEdit(false)}>Cancelar</button>
-
-                                </div>
-
-                            </form>
-                        </>
-
-                        
-                    )
-
-                ) : (
-                    <>
-                        { loading && <p>Cargando...</p>}
-                        { error &&  <p>{error}</p> }
-                    </>
-                ) }
-
-                {showConfirm && (
-
-                    <div className="overlay">
-                        <div className="confirm-panel">
-                            <h3>Estas seguro de que quieres cerrar sesión?</h3>
-                            <div>
-                                <button id="btn-cancel" onClick={() => setShowConfirm(false)}>Cancelar</button>
-                                <button id="btn-confirm" onClick={() => {
-                                    setShowConfirm(false);
-                                    props.onLogout();
-                                }}>Sí, salir</button>
-                            </div>
+    if(User) {
+        return(
+            <section className="profile">
+                <h1>PERFIL</h1>
+                <div className="profile-container">
+                    <div className="photo">
+                        <div className={`pfp ${showEdit ? 'pfp-edit' : ''}`}>
+                            <img src={img} alt="Perfil" onClick={() => {if(showEdit === true) setShowPfp(true); console.log(showPfp)}}/>
                         </div>
                         
-                        
+                        {User.email == props.user?.email && <button onClick={() => setShowConfirm(true)}>Cerrar Sesión</button> }
+                        {User.email == props.user?.email && <button onClick={() => setShowEdit(true)}>Editar Usuario</button> }
                     </div>
-                )}
-                {showPfp && (
-                    <div className="overlay">
-                        <div className="pfp-panel">
-                            <div className="cerrar">
-                                <button id="btn-cerrar" onClick={() => setShowPfp(false)}>
-                                        <img src="https://i.postimg.cc/1tgHsdPp/flecha-volver-atras.png" alt="volver atras" />
-                                </button>
-                            </div>
-                            <h3>Seleccionar imagen</h3>
-                            <form>
-                                <input type="file" name="avatar" id="avatar" onChange={(e) => cambiarImg(e.target.files[0])} accept="image/png, image/jpg, image/jpeg" />
-                                <label htmlFor="avatar" className="avatar-btn">
-                                    <span>Buscar archivo</span>
-                                </label>
+                    { User ? (
+                        !showEdit ? (
+                            // Sin modo editar
+                            <>
+                                {message && <p style={{position: "fixed", top: "10px", left: "10px", color: "green", backgroundColor: "lightgreen", padding: "10px", borderRadius: "5px" }}>{message}</p>}
 
-                            </form>
+                                <div className="profile-data-section">
+
+                                    <div>
+                                        <label>Nombre: </label>
+                                        <span>{nombre}</span>
+                                    </div>
+                                    <div>
+                                        <label>Apellido: </label>
+                                        <span>{apellido}</span>
+                                    </div>
+                                    <div>
+                                        <label>DNI: </label>
+                                        <span>{dni}</span>
+                                    </div>
+                                    <div>
+                                        <label>Email: </label>
+                                        <span>{email}</span>
+                                    </div>
+                                    <div>
+                                        <label>Teléfono: </label>
+                                        <span>{telefono}</span>
+                                    </div>
+                                </div>
+                            </>
+                        ):(
+                            // Modo editar
+                            <>
+                                {error && <p style={{position: "fixed", top: "10px", left: "10px", color: "red", backgroundColor: "#590C0C", padding: "10px", borderRadius: "5px" }}>{error}</p>}
+
+                                <form className="profile-data-section" onSubmit={handleSubmit}>
+
+                                    <div>
+                                        <label htmlFor="nombre">Nombre: </label>
+                                        <input 
+                                            type="text" 
+                                            id="nombre"
+                                            name="nombre" 
+                                            value={nombre} 
+                                            onChange={(e) => setNombre(e.target.value)} 
+                                        />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="apellido">Apellido: </label>
+                                        <input 
+                                            type="text" 
+                                            id="apellido"
+                                            name="apellido" 
+                                            value={apellido} 
+                                            onChange={(e) => setApellido(e.target.value)} 
+                                        />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="dni">DNI: </label>
+                                        <input 
+                                            type="text" 
+                                            id="dni"
+                                            name="dni" 
+                                            value={dni} 
+                                            onChange={(e) => setDni(e.target.value)} 
+                                        />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="email">Email: </label>
+                                        <input 
+                                            type="email" 
+                                            id="email"
+                                            name="email" 
+                                            value={email} 
+                                            onChange={(e) => setEmail(e.target.value)} 
+                                        />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="telefono">Teléfono: </label>
+                                        <input 
+                                            type="tel" 
+                                            id="telefono"
+                                            name="telefono" 
+                                            value={telefono} 
+                                            onChange={(e) => setTelefono(e.target.value)} 
+                                        />
+                                    </div>
+                                    <div className="profile-buttons">
+                                        <button type="submit">Guardar Perfil</button>
+                                        <button type="cancel" onClick={() => setShowEdit(false)}>Cancelar</button>
+
+                                    </div>
+
+                                </form>
+                            </>
+
+                            
+                        )
+
+                    ) : (
+                        <>
+                            { loading && <p>Cargando...</p>}
+                            { error &&  <p>{error}</p> }
+                        </>
+                    ) }
+
+                    {showConfirm && (
+
+                        <div className="overlay">
+                            <div className="confirm-panel">
+                                <h3>Estas seguro de que quieres cerrar sesión?</h3>
+                                <div>
+                                    <button id="btn-cancel" onClick={() => setShowConfirm(false)}>Cancelar</button>
+                                    <button id="btn-confirm" onClick={() => {
+                                        setShowConfirm(false);
+                                        props.onLogout();
+                                    }}>Sí, salir</button>
+                                </div>
+                            </div>
+                            
                             
                         </div>
-                    </div>
-                )}
+                    )}
+                    {showPfp && (
+                        <div className="overlay">
+                            <div className="pfp-panel">
+                                <div className="cerrar">
+                                    <button id="btn-cerrar" onClick={() => setShowPfp(false)}>
+                                            <img src="https://i.postimg.cc/1tgHsdPp/flecha-volver-atras.png" alt="volver atras" />
+                                    </button>
+                                </div>
+                                <h3>Seleccionar imagen</h3>
+                                <form>
+                                    <input type="file" name="avatar" id="avatar" onChange={(e) => cambiarImg(e.target.files[0])} accept="image/png, image/jpg, image/jpeg" />
+                                    <label htmlFor="avatar" className="avatar-btn">
+                                        <span>Buscar archivo</span>
+                                    </label>
+
+                                </form>
+                                
+                            </div>
+                        </div>
+                    )}
 
 
-            </div>
-            <span id="texto">Un video mas mi gente pa pelder el tiempo. Quien quiera perder su tiempo que lo pierda. Yeeaaah. Mmm, de locos, hermano. De locoooaaaas.
-¿Pero qué es esto, mi gente? ¡Wasaaaaaaaaa! Miren este pedazo de pollo. Crujiente, jugoso, una bendición del de arriba. Hoy andamos activos, rompiendo la dieta porque el cuerpo lo pide y el Rey de Kentucky lo respalda. ¡Bravísimo! Linganguliguliguliwacha lingangu lingangu.
-Atención a todos los envidiosos que están mirando este video con hambre. No se me queden ahí parados, vayan por el suyo. Si la vida te da limones, tú le pides pollo frito al universo, ¡así de simple! Nooo, no lo diga, así no.
-Uff, qué delicia, mi hermano. Esto no es comida, esto es una obra de arte. Un respeto para los cocineros, ¡un aplauso! Eso es, eso es. Salsa y picante y nos fuimo.
-Que nadie te quite la alegría de comer bien. ¡Sabor, sazón y pura energía positiva! ¡Vaaaamos por más! Si te gustó, deja tu 'like' y no te me duermas. ¡Chao, chao, chao! ¡BEEP BEEP!</span>
+                </div>
+                <span id="texto">Un video mas mi gente pa pelder el tiempo. Quien quiera perder su tiempo que lo pierda. Yeeaaah. Mmm, de locos, hermano. De locoooaaaas.
+                ¿Pero qué es esto, mi gente? ¡Wasaaaaaaaaa! Miren este pedazo de pollo. Crujiente, jugoso, una bendición del de arriba. Hoy andamos activos, rompiendo la dieta porque el cuerpo lo pide y el Rey de Kentucky lo respalda. ¡Bravísimo! Linganguliguliguliwacha lingangu lingangu.
+                Atención a todos los envidiosos que están mirando este video con hambre. No se me queden ahí parados, vayan por el suyo. Si la vida te da limones, tú le pides pollo frito al universo, ¡así de simple! Nooo, no lo diga, así no.
+                Uff, qué delicia, mi hermano. Esto no es comida, esto es una obra de arte. Un respeto para los cocineros, ¡un aplauso! Eso es, eso es. Salsa y picante y nos fuimo.
+                Que nadie te quite la alegría de comer bien. ¡Sabor, sazón y pura energía positiva! ¡Vaaaamos por más! Si te gustó, deja tu 'like' y no te me duermas. ¡Chao, chao, chao! ¡BEEP BEEP!</span>
+            </section>
+        )
+    }
+    else{
+        return(
+        <section className="user-error">
+            <h1>
+                404
+            </h1>
+            <h2>
+                El usuario que buscas no existe
+            </h2>
         </section>
-    )
+        )
+    } 
 }
 
 

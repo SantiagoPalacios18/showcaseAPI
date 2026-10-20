@@ -83,7 +83,8 @@ server.listen(3000, async () => {
         DNI: 1,
         telefono: 666,
         email: 'asd@a.com',
-        contraseña: await bcrypt.hash('123', 10)
+        contraseña: await bcrypt.hash('123', 10),
+        foto: "sas"
       }
       
     });
