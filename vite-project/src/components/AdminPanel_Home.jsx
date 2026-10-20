@@ -48,7 +48,7 @@ function AdminHome(props) {
         }
     };
 
-    const getRegisters = async () => {
+    const getUsers = async () => {
         try {
             const response = await api.get(`${tablaElegida}/`)
             // Eliminamos el setResponse() vacío que no hacía falta
@@ -56,6 +56,20 @@ function AdminHome(props) {
         } catch (error) {
             console.error("Error al traer registros:", error);
         }
+    }
+    const getUserByPk = async () =>{
+
+    }
+
+    const modifyUser = async ( ) =>{
+
+    }
+
+    const deleteUser = async ( ) =>{
+
+    }
+    const postUser = async () =>{
+        
     }
 
     return(
@@ -150,11 +164,11 @@ function AdminHome(props) {
                         <input></input>
                         <div className="admin-crud-buttons">
                         
-                            <button className="btn-admin-crud" onClick={getRegisters}>GET ALL</button>
-                            <button className="btn-admin-crud" onClick={getRegisters}>POST</button>
-                            <button className="btn-admin-crud" onClick={getRegisters}>EDIT</button>
-                            <button className="btn-admin-crud" onClick={getRegisters}>DELETE</button>
-                            <button className="btn-admin-crud" onClick={getRegisters}>GET BY PK</button>
+                            <button className="btn-admin-crud" onClick={getUsers}>GET ALL</button>
+                            <button className="btn-admin-crud" onClick={postUser}>POST</button>
+                            <button className="btn-admin-crud" onClick={modifyUser}>EDIT</button>
+                            <button className="btn-admin-crud" onClick={deleteUser}>DELETE</button>
+                            <button className="btn-admin-crud" onClick={getUserByPk}>GET BY PK</button>
 
                         </div>
                     </div>

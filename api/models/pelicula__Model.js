@@ -9,6 +9,10 @@ const Pelicula = sequelize.define(
             primaryKey: true,
             autoIncrement: true
         },
+        titulo:{
+            type: DataTypes.STRING(50),
+            allowNull: false,
+        },
         genero: DataTypes.STRING(15),
         origen: {
             type: DataTypes.STRING(20),

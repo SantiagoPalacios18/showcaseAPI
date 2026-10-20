@@ -138,7 +138,11 @@ section h1{
     padding: 55px;
     border-radius: 8px;
     text-align: center;
+    border: 5px gray;
+}
 
+.confirm-panel h3{
+    color: white
 }
 
 

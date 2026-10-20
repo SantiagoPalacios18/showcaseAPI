@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import {useState , useEffect } from "react"
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, EffectCoverflow } from 'swiper/modules';
@@ -46,14 +46,13 @@ import imagenTest from "../media/unnamed.jpg"
 const getMinutos = (tiempo = '') => {
     const [h = 0, m = 0] = tiempo.split(':').map(Number)
     return h * 60 + m
-}
-const getTitulo = (nombre = '') => nombre.replace(/\.[^.]+$/, '') // [^.] : todo que no sea un punto
+} 
 
 
 function Home(props) {
     const [message, setMessage] = useState("")
     const [peliculas, setPeliculas] = useState([])
-
+    const navigate = useNavigate()
     const getMessage = async () => {
         try {
             const response = await api.get("/")
@@ -66,6 +65,7 @@ function Home(props) {
         try {
             const response = await api.get("/peliculas/")   // <-- la misma ruta que usa tu panel admin
             setPeliculas(response.data)
+            console.log(response.data)
         } catch (error) {
             console.error("Error al traer películas:", error)
         }
@@ -134,7 +134,7 @@ function Home(props) {
                             <img
                                 className="img-carrusel-cine"
                                 src={getImagen(peli.imagen)}
-                                alt={getTitulo(peli.imagen)}
+                                alt={peli.titulo}
                             />
                         </SwiperSlide>
                     ))}
@@ -147,8 +147,8 @@ function Home(props) {
                 <div className="recomendados-content">
                     {recomendadas.map((peli) => (
                         <article key={peli.id_Pelicula} className="pelicula">
-                            <img src={getImagen(peli.imagen)} alt={getTitulo(peli.imagen)} className="peli-img" />
-                            <p className="peli-titulo">{getTitulo(peli.imagen)}</p>
+                            <img src={getImagen(peli.imagen)} alt={peli.titulo} className="peli-img" />
+                            <p className="peli-titulo">{peli.titulo}</p>
                             <div className="peli-info">
                                 <span>{peli.genero}</span>
                                 <span>{getMinutos(peli.duracion)}min</span>
@@ -157,7 +157,7 @@ function Home(props) {
                     ))}
                 </div>
 
-                <button className="btn-cartelera" onClick={() => {/* lo configurás vos */}}>
+                <button className="btn-cartelera" onClick={() => {navigate('/cartelera')}}>
                     CARTELERA
                 </button>
             </section>
