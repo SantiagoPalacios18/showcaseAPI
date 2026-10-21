@@ -95,7 +95,7 @@ const logout = async (req, res) => {
   }
 
 // POST: Crear un usuario
-const register = async (req, res) => {
+/*const register = async (req, res) => {
     try {
         const {
             nombre,
@@ -134,7 +134,7 @@ const register = async (req, res) => {
         console.log(error)
         res.status(500).json({ message: "Error del servidor" })
     }
-}
+}*/
 
 // GET: Devuelve la información del usuario basado en el token del localStorage (SE USA MIDDLEWARE, fijarse authetication__Routes.js)
 // Esto se hace porque cuando se recarga la pagina, se pierde al estado del usuario
@@ -214,7 +214,7 @@ const refresh = async (req, res) => {
 
 module.exports = {
     login,
-    register,
+    //register,
     me,
     refresh,
     logout,

@@ -234,6 +234,11 @@ p{
   box-sizing: border-box;
   font-size: 16px;
 }
+.submit-form label{
+  color: white;
+  align-self: flex-start;
+  margin-left: 150px;
+}
 
 .submit-form input:focus {
   outline: none;

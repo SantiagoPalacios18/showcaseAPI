@@ -6,12 +6,18 @@ const {default_foto} = require('../SRC/default-foto.js')
 // Obtener todos los useres
 const getUsers = async (req, res) => {
     try {
-        const users = await Usuario.findAll();
+        const users = await Usuario.findAll({
+            attributes:{
+                exclude: ["contraseña", "foto"]
+            }
+        });
         res.status(200).json(users);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 }
+
+
 
 
 
@@ -21,7 +27,8 @@ const getUserById = async (req, res) => {
         const { id } = req.params;
         const user = await Usuario.findByPk(id, {
             attributes:{
-                exclude: ["contraseña"]
+                exclude: ["contraseña", "foto"]
+
             }
         });
 
@@ -40,22 +47,27 @@ const createUser = async (req, res) => {
     try {
         const data = req.body;
 
-        if (!data.id_Rol || !data.nombre || !data.apellido || !data.DNI || !data.telefono || !data.email || !data.DVH) {
+        if (!data.id_Rol || !data.nombre || !data.apellido || !data.DNI || !data.telefono || !data.email || !data.fechaNacimiento || !data.DVV) {
             return res.status(400).json({
-                message: "Faltan datos obligatorios (id_Rol, nombre, apellido, DNI, telefono, email o DVH)"
+                message: "Faltan datos obligatorios (id_Rol, nombre, apellido, DNI, telefono, email, fechaNacimiento DVH)"
             });
         }
-
         let extra = "";
-        if ("id_Administador" in data) {
-            extra = " Alerta: El campo id_Administador no es modificable, se estableció otro";
+        if ("id_Usuario" in data) {
+            extra = " Alerta: El campo id_Usuario no es modificable, se estableció otro";
         }
 
+        const nacimiento = new Date(data.fechaNacimiento)
+        //const edad = (Date.now() - nacimiento) / (1000 * 60 * 60 * 24 * 365.25)
+        if ( nacimiento > new Date()) {
+            return res.status(400).json({ message: "Fecha de nacimiento inválida" })
+        }
         const nuevouser = await userBD.create({
             id_Rol: data.id_Rol,
             nombre: data.nombre,
             apellido: data.apellido,
             DNI: data.DNI,
+            fechaNacimiento: data.fechaNacimiento,
             telefono: data.telefono,
             email: data.email,
             foto: default_foto,

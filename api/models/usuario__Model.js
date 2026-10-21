@@ -25,7 +25,10 @@ const Usuario = sequelize.define(
                 isAlpha: true
             }
         },
-        edad: DataTypes.TINYINT.UNSIGNED,
+        fechaNacimiento: {
+            type: DataTypes.DATEONLY,
+            
+        },
         DNI: {
             type: DataTypes.STRING(10),
             unique: true,
@@ -66,7 +69,7 @@ const Usuario = sequelize.define(
         },
         foto: {
             type: DataTypes.TEXT("long"),
-            allowNull: false
+            allowNull: true
         },
         DVH: {
             type: DataTypes.STRING(6),

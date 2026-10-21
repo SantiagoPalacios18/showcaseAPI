@@ -92,6 +92,20 @@ server.listen(3000, async () => {
       }
       
     });
+    const [Polo] = await Usuario.findOrCreate({
+      where: { email: 'asd@a.com' },
+      defaults: {
+        nombre: 'Polo',
+        apellido: 'Rivera',
+        edad: '999',
+        DNI: 1,
+        telefono: 666,
+        email: 'asd@a.com',
+        contraseña: await bcrypt.hash('123', 10),
+        foto: DEFAULT_FOTO
+      }
+      
+    });
 
     // Creación de roles y patentes
 
@@ -106,7 +120,7 @@ server.listen(3000, async () => {
 
     // Revisa cuáles patentes existen y crea las que faltan
 
-    const nombres = ['ADMIN_HOME', 'ADMIN_CREATE'];
+    const nombres = ['ADMIN_HOME', 'GET_USERS', 'GET_USER_BY_ID', 'POST_USER', 'PATCH_USER', 'DELETE_USER', 'POST_USER_TEST'];
     const patentes = [];
     for (const nombre of nombres) {
       const [p] = await Patente.findOrCreate({ where: { nombre } }); // p es el objeto, tanto si existia de antes o si acaba de ser creado
@@ -150,10 +164,13 @@ server.listen(3000, async () => {
 
 
 
+
+
   } catch (error) {
     console.error('No se pudo conectar a la base de datos:', error);
   }
 });
+
 /*
  (async(req,res) => {
   let Benito = await Usuario.findOne({where:{email: 'asd@a.com'}})

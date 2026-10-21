@@ -17,6 +17,7 @@ function Profile(props){
     const [nombre, setNombre] = useState("");
     const [apellido, setApellido] = useState("");
     const [dni, setDni] = useState("");
+    const [fechaNacimiento, setFechaNacimiento] = useState("")
     const [email, setEmail] = useState("");
     const [telefono, setTelefono] = useState("");
     const [foto, setFoto] = useState("")
@@ -24,6 +25,8 @@ function Profile(props){
     const [Mnombre, setmNombre] = useState("");
     const [Mapellido, setmApellido] = useState("");
     const [Mdni, setmDni] = useState("");
+    const [MfechaNacimiento, setmFechaNacimiento] = useState("")
+
     const [Memail, setmEmail] = useState("");
     const [Mtelefono, setmTelefono] = useState("");
     const [Mfoto, setmFoto] = useState("")
@@ -68,6 +71,7 @@ function Profile(props){
                 Mnombre,
                 Mapellido,
                 Mdni,
+                MfechaNacimiento,
                 Memail,
                 Mtelefono,
                 Mfoto
@@ -76,6 +80,7 @@ function Profile(props){
             setNombre(Mnombre)
             setApellido(Mapellido)
             setDni(Mdni)
+            setFechaNacimiento(MfechaNacimiento)
             setEmail(Memail)
             setTelefono(Mtelefono)
             setFoto(Mfoto)
@@ -115,6 +120,7 @@ function Profile(props){
             setNombre(User.nombre || "");
             setApellido(User.apellido || "");
             setDni(User.DNI || "");
+            setFechaNacimiento(User.fechaNacimiento || "")
             setEmail(User.email || "");
             setTelefono(User.telefono || "");
             setFoto(User.foto || "")
@@ -168,6 +174,10 @@ function Profile(props){
                                     <div>
                                         <label>DNI: </label>
                                         <span>{dni}</span>
+                                    </div>
+                                    <div>
+                                        <label>Fecha de Nacimiento: </label>
+                                        <span>{fechaNacimiento}</span>
                                     </div>
                                     <div>
                                         <label>Email: </label>

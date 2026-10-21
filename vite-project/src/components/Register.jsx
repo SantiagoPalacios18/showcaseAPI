@@ -11,6 +11,7 @@ function Register(props) {
     const [nombre, setNombre] = useState("")
     const [apellido, setApellido] = useState("")
     const [dni, setDni] = useState("");
+    const [fechaNacimiento, setFechaNacimiento] = useState("");
     const [telefono, setTelefono] = useState("");
     const [email, setEmail] = useState("")
     const [contraseña, setContraseña] = useState("")
@@ -46,10 +47,10 @@ function Register(props) {
                 return
             }
 
-            await api.post('/register', {
+            await api.post('/users/', {
                 nombre,
                 apellido,
-                // fechaNacimiento,
+                fechaNacimiento,
                 dni,
                 telefono,
                 email,
@@ -93,43 +94,56 @@ function Register(props) {
                     {message && <p style={{ color: "green" }}>{message}</p>}
                 </div>
                 <form className="submit-form" onSubmit={handleSubmit}>
+                    <label>Nombre</label>
                     <input 
                         type="text"
                         name="nombre"
                         placeholder="Nombre"
                         value={nombre}
                         onChange={(e) => setNombre(e.target.value)} />
+                    <label>Apellido</label>
                     <input 
                         type="text"
                         name="apellido"
                         placeholder="Apellido"
                         value={apellido}
                         onChange={(e) => setApellido(e.target.value)} />
+                    <label>DNI</label>
                     <input 
                         type="text"
                         name="dni"
                         placeholder="Número de documento (DNI)"
                         value={dni}
                         onChange={(e) => setDni(e.target.value)} />
+                    <label htmlFor="fechaNacimiento">Fecha de nacimiento</label>
+                    <input 
+                        type="date"
+                        name="fechNacimiento"
+                        placeholder="Fecha de Nacimiento"
+                        value={fechaNacimiento}
+                        onChange={(e) => setFechaNacimiento(e.target.value)} />
+                    <label>Número de Teléfono</label>
                     <input 
                         type="text"
                         name="teléfono"
                         placeholder="Número de teléfono"
                         value={telefono}
                         onChange={(e) => setTelefono(e.target.value)} />
+                    <label>Correo Elecrónico</label>
                     <input 
                         type="text"
                         name="email"
                         placeholder="Correo Electrónico"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)} />
-
+                    <label>Contraseña</label>
                     <input 
                         type="password"
                         name="password"
                         placeholder="Contraseña"
                         value={contraseña}
                         onChange={(e) => setContraseña(e.target.value)} />
+                    <label>Confirmar Contraseña</label>
                     <input 
                         type="password"
                         name="confirmPassword"
