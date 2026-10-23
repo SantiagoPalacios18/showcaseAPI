@@ -8,10 +8,23 @@ const {
     deleteCompraEventoById
 } = require('../controllers/compraEvento_controller.js');
 
-router.get('/', getComprasEventos);
-router.get('/:id', getCompraEventoById);
-router.post('/', createCompraEvento);
-router.patch('/:id', modifyCompraEventoById);
-router.delete('/:id', deleteCompraEventoById);
+// Importamos los middlewares de autenticación y verificación de patentes (permisos)
+const { authMiddleware, checkPatent } = require('../middlewares/auth.js');
+
+// GET: Obtener todas las compras/reservas (ej. requiere estar logueado y permiso de lectura)
+router.get('/', authMiddleware, checkPatent('VER_RESERVA_EVENTO'), getComprasEventos);
+
+// GET: Obtener compra/reserva por ID
+router.get('/:id', authMiddleware, checkPatent('VER_RESERVA_EVENTO'), getCompraEventoById);
+
+// POST: Crear nueva reserva (Salida Grupal, Corporativo, Cumpleaños)
+// Cumple con la precondición del CU: "El usuario debe tener permisos para realizar la acción"
+router.post('/', authMiddleware, checkPatent('CREAR_RESERVA_EVENTO'), createCompraEvento);
+
+// PATCH: Modificar reserva existente
+router.patch('/:id', authMiddleware, checkPatent('MODIFICAR_RESERVA_EVENTO'), modifyCompraEventoById);
+
+// DELETE: Eliminar / cancelar reserva
+router.delete('/:id', authMiddleware, checkPatent('ELIMINAR_RESERVA_EVENTO'), deleteCompraEventoById);
 
 module.exports = router;
