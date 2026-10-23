@@ -7,20 +7,50 @@ const CompraEvento = sequelize.define(
         id_CompraEvento: {
             type: DataTypes.SMALLINT.UNSIGNED,
             primaryKey: true,
-            autoIncrement:true
+            autoIncrement: true
         },
         id_Usuario: {
             type: DataTypes.INTEGER.UNSIGNED,
+            allowNull: false,
             unique: 'noFuncionesYCliente'
         },
         id_Funcion: {
             type: DataTypes.MEDIUMINT.UNSIGNED,
+            allowNull: true, // Nulo para reservas de espacios (corporativos / cumpleaños) que no dependen de una función de cine
             unique: 'noFuncionesYCliente'
         },
-        tipo: DataTypes.STRING(10),
+        id_Espacio: {
+            type: DataTypes.SMALLINT.UNSIGNED,
+            allowNull: true // Nulo para compra de tickets grupales de cine
+        },
+        tipo: {
+            type: DataTypes.STRING(30), // Ampliado para soportar "Grupal", "Corporativo", "Cumpleaños"
+            allowNull: false
+        },
+        cantidad_personas: {
+            type: DataTypes.SMALLINT.UNSIGNED,
+            allowNull: false,
+            defaultValue: 1
+        },
+        detalle_comida_bebida: {
+            type: DataTypes.TEXT,
+            allowNull: true // Requerido para eventos corporativos y cumpleaños
+        },
+        fecha_hora_reserva: {
+            type: DataTypes.DATE,
+            allowNull: false
+        },
+        monto_total: {
+            type: DataTypes.DECIMAL(10, 2),
+            allowNull: false
+        },
+        aplicó_descuento: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false // Maneja la regla de más de 25 personas
+        },
         pendiente: {
             type: DataTypes.BOOLEAN,
-            default: 1
+            defaultValue: true
         },
         DVH: {
             type: DataTypes.STRING(6),
@@ -32,7 +62,8 @@ const CompraEvento = sequelize.define(
     },
     {
         timestamps: false,
+        tableName: 'compra_evento'
     }
-)
+);
 
-module.exports = { CompraEvento }    
+module.exports = { CompraEvento };
