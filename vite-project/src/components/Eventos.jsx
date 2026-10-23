@@ -6,34 +6,56 @@ import './styles/evento.css'
 function Eventos(props) {
     const [message, setMessage] = useState("")
     
+    // Estados para catálogos desde la BD
+    const [funcionesDisponibles, setFuncionesDisponibles] = useState([])
+    const [espaciosDisponibles, setEspaciosDisponibles] = useState([])
+
     // Estados del formulario unificado
     const [tipoEvento, setTipoEvento] = useState("Grupal") // "Grupal", "Corporativo", "Cumpleaños"
-    const [idFuncion, setIdFuncion] = useState("1")
-    const [idEspacio, setIdEspacio] = useState("1")
+    const [idFuncion, setIdFuncion] = useState("")
+    const [idEspacio, setIdEspacio] = useState("")
     const [fechaHora, setFechaHora] = useState("")
     const [cantidadPersonas, setCantidadPersonas] = useState(1)
     const [detalleComida, setDetalleComida] = useState("")
     const [montoTotal, setMontoTotal] = useState(15000) 
     const [cargando, setCargando] = useState(false)
     const [resultado, setResultado] = useState(null)
+    const [error, setError] = useState("")
 
-    const getMessage = async () => {
-        try {
-            const response = await api.get("/")
-            setMessage(response.data.message)
-        } catch (error) {
-            setMessage("upsis")
-        }
-    }
-
+    // Cargar datos iniciales y catálogos de la BD al montar el componente
     useEffect(() => {
-        getMessage()
+        const fetchData = async () => {
+            try {
+                const resMsg = await api.get("/")
+                setMessage(resMsg.data.message)
+
+                // Obtener funciones reales de la BD para Salidas Grupales
+                const resFunciones = await api.get("/funciones")
+                setFuncionesDisponibles(resFunciones.data)
+                if (resFunciones.data.length > 0) {
+                    setIdFuncion(resFunciones.data[0].id_Funcion || resFunciones.data[0].id)
+                }
+
+                // Obtener salas / espacios reales de la BD para Corporativos y Cumpleaños
+                const resSalas = await api.get("/salas")
+                setEspaciosDisponibles(resSalas.data)
+                if (resSalas.data.length > 0) {
+                    setIdEspacio(resSalas.data[0].id_Sala || resSalas.data[0].id)
+                }
+
+            } catch (err) {
+                console.error("Error al cargar los datos iniciales:", err)
+                setError("No se pudieron cargar los datos del servidor.")
+            }
+        }
+        fetchData()
     }, [])
 
     const handleSubmitReserva = async (e) => {
         e.preventDefault()
         setCargando(true)
         setResultado(null)
+        setError("")
 
         try {
             const payload = {
@@ -45,16 +67,14 @@ function Eventos(props) {
                 detalle_comida_bebida: tipoEvento !== "Grupal" ? detalleComida : null,
                 fecha_hora_reserva: fechaHora || new Date(),
                 monto_total: parseFloat(montoTotal),
-                DVH: "ABC123" // Dígito Verificador Horizontal (CU04)
+                DVH: "ABC123" // Dígito Verificador Horizontal
             }
 
             const response = await api.post("/compras-eventos", payload)
-            setResultado({ ok: true, mensaje: response.data.message })
-        } catch (error) {
-            setResultado({ 
-                ok: false, 
-                mensaje: error.response?.data?.error || "Error al procesar la reserva (sistema no disponible)." 
-            })
+            setResultado(response.data.message || "¡Reserva realizada con éxito!")
+        } catch (err) {
+            console.error(err)
+            setError(err.response?.data?.error || "Error al procesar la reserva.")
         } finally {
             setCargando(false)
         }
@@ -69,6 +89,8 @@ function Eventos(props) {
             </div>
 
             <form onSubmit={handleSubmitReserva} className="e">
+                {error && <p style={{ color: "#ef4444", fontSize: "14px", marginBottom: "10px" }}>{error}</p>}
+
                 <label>Tipo de reserva:</label>
                 <select 
                     value={tipoEvento} 
@@ -82,13 +104,16 @@ function Eventos(props) {
                 {/* Renderizado condicional según el tipo elegido */}
                 {tipoEvento === "Grupal" ? (
                     <>
-                        <label>Selecciona la función (Película, fecha y hora):</label>
+                        <label>Selecciona la función:</label>
                         <select 
                             value={idFuncion} 
                             onChange={(e) => setIdFuncion(e.target.value)}
                         >
-                            <option value="1">Spider-Man: Función 18:00hs (2D)</option>
-                            <option value="2">Avatar 2: Función 21:30hs (3D)</option>
+                            {funcionesDisponibles.map((funcion) => (
+                                <option key={funcion.id_Funcion || funcion.id} value={funcion.id_Funcion || funcion.id}>
+                                    {funcion.pelicula?.titulo || `Función ID: ${funcion.id_Funcion || funcion.id}`} - {funcion.horario || funcion.fecha_hora}
+                                </option>
+                            ))}
                         </select>
 
                         <label>Cantidad de tickets {cantidadPersonas > 25 && "(¡Descuento grupal aplicado >25!):"}</label>
@@ -107,9 +132,11 @@ function Eventos(props) {
                             value={idEspacio} 
                             onChange={(e) => setIdEspacio(e.target.value)}
                         >
-                            <option value="1">Sala 1 (Privada)</option>
-                            <option value="2">Sala 2 (VIP)</option>
-                            <option value="3">SUM / Espacio Social</option>
+                            {espaciosDisponibles.map((espacio) => (
+                                <option key={espacio.id_Sala || espacio.id} value={espacio.id_Sala || espacio.id}>
+                                    {espacio.nombre || `Sala ID: ${espacio.id_Sala || espacio.id}`}
+                                </option>
+                            ))}
                         </select>
 
                         <label>Selecciona fecha y horario:</label>
@@ -131,7 +158,7 @@ function Eventos(props) {
 
                         <label>Detalle de comida y bebida:</label>
                         <textarea 
-                            placeholder="Ej: 3 combos de snacks, gaseosas..."
+                            placeholder="Ej: Combos de snacks, gaseosas..."
                             value={detalleComida}
                             onChange={(e) => setDetalleComida(e.target.value)}
                         />
@@ -146,8 +173,8 @@ function Eventos(props) {
                 </button>
 
                 {resultado && (
-                    <div style={{ marginTop: '15px', color: resultado.ok ? '#10b981' : '#ef4444' }}>
-                        <p>{resultado.mensaje}</p>
+                    <div style={{ marginTop: '15px', color: '#10b981', fontSize: '14px' }}>
+                        <p>{resultado}</p>
                     </div>
                 )}
             </form>
