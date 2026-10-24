@@ -4,77 +4,87 @@ import './styles/Home.css'
 import './styles/evento.css'
 
 function Eventos(props) {
-    const [message, setMessage] = useState("")
-    
-    // Estados para catálogos desde la BD
-    const [funcionesDisponibles, setFuncionesDisponibles] = useState([])
-    const [espaciosDisponibles, setEspaciosDisponibles] = useState([])
-
-    // Estados del formulario unificado
-    const [tipoEvento, setTipoEvento] = useState("Grupal") // "Grupal", "Corporativo", "Cumpleaños"
-    const [idFuncion, setIdFuncion] = useState("")
-    const [idEspacio, setIdEspacio] = useState("")
+    // 1. Estados básicos del formulario
+    const [tipoEvento, setTipoEvento] = useState("Grupal")
+    const [idFuncion, setIdFuncion] = useState(1)
+    const [idEspacio, setIdEspacio] = useState(1)
     const [fechaHora, setFechaHora] = useState("")
     const [cantidadPersonas, setCantidadPersonas] = useState(1)
     const [detalleComida, setDetalleComida] = useState("")
-    const [montoTotal, setMontoTotal] = useState(15000) 
+    const [montoTotal, setMontoTotal] = useState(0)
+
+    // 2. Listas para los selects y mensajes
+    const [funciones, setFunciones] = useState([])
+    const [salas, setSalas] = useState([])
+    const [mensaje, setMensaje] = useState("")
     const [cargando, setCargando] = useState(false)
-    const [resultado, setResultado] = useState(null)
-    const [error, setError] = useState("")
 
-    // Cargar datos iniciales y catálogos de la BD al montar el componente
+    // Cargar las funciones y salas al abrir la página
     useEffect(() => {
-        const fetchData = async () => {
+        const cargarDatos = async () => {
             try {
-                const resMsg = await api.get("/")
-                setMessage(resMsg.data.message)
-
-                // Obtener funciones reales de la BD para Salidas Grupales
                 const resFunciones = await api.get("/funciones")
-                setFuncionesDisponibles(resFunciones.data)
-                if (resFunciones.data.length > 0) {
-                    setIdFuncion(resFunciones.data[0].id_Funcion || resFunciones.data[0].id)
-                }
+                setFunciones(resFunciones.data)
 
-                // Obtener salas / espacios reales de la BD para Corporativos y Cumpleaños
                 const resSalas = await api.get("/salas")
-                setEspaciosDisponibles(resSalas.data)
-                if (resSalas.data.length > 0) {
-                    setIdEspacio(resSalas.data[0].id_Sala || resSalas.data[0].id)
-                }
-
-            } catch (err) {
-                console.error("Error al cargar los datos iniciales:", err)
-                setError("No se pudieron cargar los datos del servidor.")
+                setSalas(resSalas.data)
+            } catch (error) {
+                console.log("Error al cargar catálogos:", error)
             }
         }
-        fetchData()
+        cargarDatos()
     }, [])
 
-    const handleSubmitReserva = async (e) => {
+    // Cálculo dinámico de precio según tipo y cantidad de personas
+    useEffect(() => {
+        const personas = parseInt(cantidadPersonas) || 1
+        let calculo = 0
+
+        if (tipoEvento === "Grupal") {
+            const PRECIO_TICKET = 5000
+            calculo = personas * PRECIO_TICKET
+
+            // Descuento del 10% si supera los 25 asistentes
+            if (personas > 25) {
+                calculo = calculo * 0.90
+            }
+        } else if (tipoEvento === "Corporativo") {
+            const BASE_CORPORATIVO = 100000
+            const ADICIONAL_PERSONA = 2000
+            calculo = BASE_CORPORATIVO + (personas * ADICIONAL_PERSONA)
+        } else if (tipoEvento === "Cumpleaños") {
+            const BASE_CUMPLE = 60000
+            const ADICIONAL_PERSONA = 1500
+            calculo = BASE_CUMPLE + (personas * ADICIONAL_PERSONA)
+        }
+
+        setMontoTotal(calculo)
+    }, [tipoEvento, cantidadPersonas])
+
+    // Enviar el formulario al backend
+    const handleSubmit = async (e) => {
         e.preventDefault()
         setCargando(true)
-        setResultado(null)
-        setError("")
+        setMensaje("")
+
+        const payload = {
+            id_Usuario: props.id_Usuario || 1,
+            id_Funcion: tipoEvento === "Grupal" ? parseInt(idFuncion) : null,
+            id_Espacio: tipoEvento !== "Grupal" ? parseInt(idEspacio) : null,
+            tipo: tipoEvento,
+            cantidad_personas: parseInt(cantidadPersonas),
+            detalle_comida_bebida: tipoEvento !== "Grupal" ? detalleComida : null,
+            fecha_hora_reserva: fechaHora || new Date(),
+            monto_total: parseFloat(montoTotal),
+            DVH: "ABC123"
+        }
 
         try {
-            const payload = {
-                id_Usuario: props.id_Usuario || 1,
-                id_Funcion: tipoEvento === "Grupal" ? parseInt(idFuncion) : null,
-                id_Espacio: tipoEvento !== "Grupal" ? parseInt(idEspacio) : null,
-                tipo: tipoEvento, 
-                cantidad_personas: parseInt(cantidadPersonas),
-                detalle_comida_bebida: tipoEvento !== "Grupal" ? detalleComida : null,
-                fecha_hora_reserva: fechaHora || new Date(),
-                monto_total: parseFloat(montoTotal),
-                DVH: "ABC123" // Dígito Verificador Horizontal
-            }
-
             const response = await api.post("/compras-eventos", payload)
-            setResultado(response.data.message || "¡Reserva realizada con éxito!")
-        } catch (err) {
-            console.error(err)
-            setError(err.response?.data?.error || "Error al procesar la reserva.")
+            setMensaje("¡Reserva creada con éxito!")
+        } catch (error) {
+            setMensaje("Error al crear la reserva. Intente de nuevo.")
+            console.log(error)
         } finally {
             setCargando(false)
         }
@@ -83,102 +93,80 @@ function Eventos(props) {
     return (
         <div className="eventos-wrapper">
             <div className="eventos-header">
-                <h1>¡Gestión de Reservas!</h1>
-                <h2>Salidas Grupales, Eventos Corporativos y Cumpleaños</h2>
-                {message && <p className="text-muted">Estado API: {message}</p>}
+                <h1>Gestión de Reservas</h1>
             </div>
 
-            <form onSubmit={handleSubmitReserva} className="e">
-                {error && <p style={{ color: "#ef4444", fontSize: "14px", marginBottom: "10px" }}>{error}</p>}
-
-                <label>Tipo de reserva:</label>
-                <select 
-                    value={tipoEvento} 
-                    onChange={(e) => setTipoEvento(e.target.value)}
-                >
+            <form onSubmit={handleSubmit} className="e">
+                {/* Selector de Tipo de Evento */}
+                <label>Tipo de Reserva:</label>
+                <select value={tipoEvento} onChange={(e) => setTipoEvento(e.target.value)}>
                     <option value="Grupal">Salida Grupal (Cine)</option>
                     <option value="Corporativo">Evento Corporativo</option>
                     <option value="Cumpleaños">Cumpleaños</option>
                 </select>
 
-                {/* Renderizado condicional según el tipo elegido */}
+                {/* Campos condicionales según el tipo */}
                 {tipoEvento === "Grupal" ? (
                     <>
-                        <label>Selecciona la función:</label>
-                        <select 
-                            value={idFuncion} 
-                            onChange={(e) => setIdFuncion(e.target.value)}
-                        >
-                            {funcionesDisponibles.map((funcion) => (
-                                <option key={funcion.id_Funcion || funcion.id} value={funcion.id_Funcion || funcion.id}>
-                                    {funcion.pelicula?.titulo || `Función ID: ${funcion.id_Funcion || funcion.id}`} - {funcion.horario || funcion.fecha_hora}
+                        <label>Función de Cine:</label>
+                        <select value={idFuncion} onChange={(e) => setIdFuncion(e.target.value)}>
+                            {funciones.map((f) => (
+                                <option key={f.id} value={f.id}>
+                                    Función #{f.id}
                                 </option>
                             ))}
                         </select>
-
-                        <label>Cantidad de tickets {cantidadPersonas > 25 && "(¡Descuento grupal aplicado >25!):"}</label>
-                        <input 
-                            type="number" 
-                            min="1" 
-                            value={cantidadPersonas}
-                            onChange={(e) => setCantidadPersonas(e.target.value)}
-                            required
-                        />
                     </>
                 ) : (
                     <>
-                        <label>Selecciona espacio a alquilar:</label>
-                        <select 
-                            value={idEspacio} 
-                            onChange={(e) => setIdEspacio(e.target.value)}
-                        >
-                            {espaciosDisponibles.map((espacio) => (
-                                <option key={espacio.id_Sala || espacio.id} value={espacio.id_Sala || espacio.id}>
-                                    {espacio.nombre || `Sala ID: ${espacio.id_Sala || espacio.id}`}
+                        <label>Sala / Espacio:</label>
+                        <select value={idEspacio} onChange={(e) => setIdEspacio(e.target.value)}>
+                            {salas.map((s) => (
+                                <option key={s.id} value={s.id}>
+                                    {s.nombre || `Sala #${s.id}`}
                                 </option>
                             ))}
                         </select>
 
-                        <label>Selecciona fecha y horario:</label>
+                        <label>Fecha y Hora:</label>
                         <input 
                             type="datetime-local" 
-                            value={fechaHora}
-                            onChange={(e) => setFechaHora(e.target.value)}
-                            required
+                            value={fechaHora} 
+                            onChange={(e) => setFechaHora(e.target.value)} 
+                            required 
                         />
 
-                        <label>Cantidad de personas:</label>
-                        <input 
-                            type="number" 
-                            min="1" 
-                            value={cantidadPersonas}
-                            onChange={(e) => setCantidadPersonas(e.target.value)}
-                            required
-                        />
-
-                        <label>Detalle de comida y bebida:</label>
+                        <label>Detalle de Comida:</label>
                         <textarea 
-                            placeholder="Ej: Combos de snacks, gaseosas..."
-                            value={detalleComida}
+                            value={detalleComida} 
                             onChange={(e) => setDetalleComida(e.target.value)}
+                            placeholder="Opcional..."
                         />
                     </>
                 )}
 
-                <label>Precio total:</label>
-                <p id="e-6">${montoTotal} {cantidadPersonas > 25 && tipoEvento === "Grupal" && "(Con descuento aplicado)"}</p>
+                <label>Cantidad de Personas:</label>
+                <input 
+                    type="number" 
+                    min="1" 
+                    value={cantidadPersonas} 
+                    onChange={(e) => setCantidadPersonas(e.target.value)} 
+                    required 
+                />
+
+                <label>Precio Total Estimado:</label>
+                <p id="e-6" style={{ fontWeight: 'bold', fontSize: '1.1rem' }}>
+                    ${montoTotal.toLocaleString('es-AR')} 
+                    {cantidadPersonas > 25 && tipoEvento === "Grupal" && " (¡10% de descuento aplicado!)"}
+                </p>
 
                 <button type="submit" disabled={cargando}>
-                    {cargando ? "Procesando..." : "Confirmar y Pagar Reserva"}
+                    {cargando ? "Guardando..." : "Confirmar Reserva"}
                 </button>
 
-                {resultado && (
-                    <div style={{ marginTop: '15px', color: '#10b981', fontSize: '14px' }}>
-                        <p>{resultado}</p>
-                    </div>
-                )}
+                {mensaje && <p style={{ marginTop: "10px", color: "green" }}>{mensaje}</p>}
             </form>
-        </div>  
+        </div>
     )
 }
 
