@@ -19,7 +19,7 @@ const CompraEvento = sequelize.define(
             allowNull: true, // Nulo para reservas de espacios (corporativos / cumpleaños) que no dependen de una función de cine
             unique: 'noFuncionesYCliente'
         },
-        id_Espacio: {
+        id_Sala: {
             type: DataTypes.SMALLINT.UNSIGNED,
             allowNull: true // Nulo para compra de tickets grupales de cine
         },
