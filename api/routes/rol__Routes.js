@@ -9,7 +9,7 @@ const {
 } = require('../controllers/rol__Controller.js');
 
 router.get('/', getRoles);
-router.get('/:id', getRolById);
+router.get('/getByPk/:id', getRolById);
 router.post('/', createRol);
 router.patch('/:id', modifyRolById);
 router.delete('/:id', deleteRolById);

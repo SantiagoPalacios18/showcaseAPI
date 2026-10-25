@@ -14,7 +14,7 @@ const router = Router();
 
 router.get('/', authMiddleware, checkPatent("ADMIN_HOME"), adminHomeMessage);
 router.get('/getall', getAdministradores);
-router.get('/getById/:id', getAdministradorById);
+router.get('/getByPk/:id', getAdministradorById);
 router.post('/create', createAdministrador);
 router.patch('/modify/:id', modifyAdministradorById);
 router.delete('/delete:id', deleteAdministradorById);

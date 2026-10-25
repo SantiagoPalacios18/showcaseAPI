@@ -9,7 +9,7 @@ const {
 } = require('../controllers/cine__Controller.js');
 
 router.get('/', getCines);
-router.get('/:id', getCineById);
+router.get('/getByPk/:id', getCineById);
 router.post('/', createCine);
 router.patch('/:id', modifyCineById);
 router.delete('/:id', deleteCineById);

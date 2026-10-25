@@ -9,7 +9,7 @@ const {
 } = require('../controllers/proyeccion__Controller.js');
 
 router.get('/', getProyecciones);
-router.get('/:id', getProyeccionById);
+router.get('/getByPk/:id', getProyeccionById);
 router.post('/', createProyeccion);
 router.patch('/:id', modifyProyeccionById);
 router.delete('/:id', deleteProyeccionById);

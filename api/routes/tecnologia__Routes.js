@@ -9,7 +9,7 @@ const {
 } = require('../controllers/tecnologia_controller.js');
 
 router.get('/', getTecnologias);
-router.get('/:id', getTecnologiaById);
+router.get('/getByPk/:id', getTecnologiaById);
 router.post('/', createTecnologia);
 router.patch('/:id', modifyTecnologiaById);
 router.delete('/:id', deleteTecnologiaById);

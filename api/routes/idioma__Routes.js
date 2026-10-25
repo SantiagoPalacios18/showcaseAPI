@@ -9,7 +9,7 @@ const {
 } = require('../controllers/idioma_controller.js');
 
 router.get('/', getIdiomas);
-router.get('/:id', getIdiomaById);
+router.get('/getByPk/:id', getIdiomaById);
 router.post('/', createIdioma);
 router.patch('/:id', modifyIdiomaById);
 router.delete('/:id', deleteIdiomaById);

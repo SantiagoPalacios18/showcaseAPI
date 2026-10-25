@@ -10,7 +10,7 @@ const {
 } = require('../controllers/compraCandy__Controller.js');
 
 router.get('/', getComprasCandy);
-router.get('/:id', getCompraCandyById);
+router.get('/getByPk/:id', getCompraCandyById);
 router.post('/', createCompraCandy);
 router.patch('/:id', modifyCompraCandyById);
 router.delete('/:id', deleteCompraCandyById);

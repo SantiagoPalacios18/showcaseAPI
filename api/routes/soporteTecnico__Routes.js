@@ -9,7 +9,7 @@ const {
 } = require('../controllers/soporteTecnico_controller.js');
 
 router.get('/', getSoporteTecnico);
-router.get('/:id', getSoporteTecnicoById);
+router.get('/getByPk/:id', getSoporteTecnicoById);
 router.post('/', createSoporteTecnico);
 router.patch('/:id', modifySoporteTecnicoById);
 router.delete('/:id', deleteSoporteTecnicoById);

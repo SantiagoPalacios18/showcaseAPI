@@ -9,7 +9,7 @@ const {
 } = require('../controllers/sesion_Controller.js');
 
 router.get('/', getSesiones);
-router.get('/:id', getSesionById);
+router.get('/getByPk/:id', getSesionById);
 router.post('/', createSesion);
 router.patch('/:id', modifySesionById);
 router.delete('/:id', deleteSesionById);

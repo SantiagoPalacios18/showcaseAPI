@@ -9,7 +9,7 @@ const {
 } = require('../controllers/pelicula_cine_Controller.js');
 
 router.get('/', getPeliculasCines);
-router.get('/:id_Cine', getPeliculasByCineId);
+router.get('/getByPk/:id_Cine', getPeliculasByCineId);
 router.post('/', createPeliculaCine);
 router.patch('/:id_Pelicula/:id_Cine', modifyPeliculaCine);
 router.delete('/:id_Pelicula/:id_Cine', deletePeliculaCine);

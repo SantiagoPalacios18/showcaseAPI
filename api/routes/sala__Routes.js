@@ -9,7 +9,7 @@ const {
 } = require('../controllers/sala__Controller.js');
 
 router.get('/', getSalas);
-router.get('/:id', getSalaById);
+router.get('/getByPk/:id', getSalaById);
 router.post('/', createSala);
 router.patch('/:id', modifySalaById);
 router.delete('/:id', deleteSalaById);

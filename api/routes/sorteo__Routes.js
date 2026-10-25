@@ -9,7 +9,7 @@ const {
 } = require('../controllers/sorteo_controller.js');
 
 router.get('/', getSorteos);
-router.get('/:id', getSorteoById);
+router.get('/getByPk/:id', getSorteoById);
 router.post('/', createSorteo);
 router.patch('/:id', modifySorteoById);
 router.delete('/:id', deleteSorteoById);

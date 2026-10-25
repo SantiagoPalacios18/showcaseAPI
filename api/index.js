@@ -93,43 +93,66 @@ server.listen(3000, async () => {
       
     });
     const [Polo] = await Usuario.findOrCreate({
-      where: { email: 'asd@a.com' },
+      where: { email: 'asd@aa.com' },
       defaults: {
         nombre: 'Polo',
         apellido: 'Rivera',
         edad: '999',
-        DNI: 1,
+        DNI: 2,
         telefono: 666,
-        email: 'asd@a.com',
+        email: 'asd@aa.com',
         contraseña: await bcrypt.hash('123', 10),
         foto: DEFAULT_FOTO
       }
       
     });
 
-    // Creación de roles y patentes
+    // ---------- LISTA CON TODAS LAS PATENTES DEL SISTEMA ----------
+    const patentes_lista = [
+      'ADMIN_HOME', 'GET_USERS',
+      'GET_USER_BY_ID', 'POST_USER',
+      'PATCH_USER', 'DELETE_USER',
+      'POST_USER_TEST'
+    ];
+    const patentes = {};
+    for (const nombre of patentes_lista) {
+      const [p] = await Patente.findOrCreate({ where: { nombre } }); // p es el objeto, tanto si existia de antes o si acaba de ser creado
+      patentes[nombre] = p; // Lo guardamos en una 2da lista pq necesitamos el objeto, no el string del nombre
+    }
+    // patentes va a ser la lista de donde vamos a sacar las patentes para asignarlas, uso "patentes" y no "patentes_lista" por lo que dije arriba, para usar el setPatentes() necesito el objeto de la patente, no el string del nombre
 
+    // ---------- CREACION DE ROLES Y ASIGNACIÓN DE PATENTES ----------
     const [adminRole] = await Rol.findOrCreate({
       where: { nombre: 'Admin' },
       defaults: { nombre: 'Admin' }
     });
+
+    const [SemiAdminRole] = await Rol.findOrCreate({
+      where: { nombre: 'SemiAdmin' },
+      defaults: { nombre: 'SemiAdmin' }
+    });
+
     const [userRole] = await Rol.findOrCreate({
       where: { nombre: 'Usuario' },
       defaults: { nombre: 'Usuario' }
     });
 
-    // Revisa cuáles patentes existen y crea las que faltan
 
-    const nombres = ['ADMIN_HOME', 'GET_USERS', 'GET_USER_BY_ID', 'POST_USER', 'PATCH_USER', 'DELETE_USER', 'POST_USER_TEST'];
-    const patentes = [];
-    for (const nombre of nombres) {
-      const [p] = await Patente.findOrCreate({ where: { nombre } }); // p es el objeto, tanto si existia de antes o si acaba de ser creado
-      patentes.push(p); // Lo guardamos en una 2da lista pq necesitamos el objeto, no el string del nombre
-    }
-    // Todas las patentes de la lista eran para admin
-    await adminRole.setPatentes(patentes); // Esto no sirve si le paso strings
+
+    // El admin tiene todas las patentes
+    await adminRole.setPatentes(Object.values(patentes));
+
+    await SemiAdminRole.setPatentes([
+      patentes.ADMIN_HOME,
+    ])
+
+
+    // ---------- ASIGNACIÓN DE ROLES Y/O PATENTES A LOS USUARIOS ----------
 
     await Benito.setRol(adminRole);
+    await Polo.setRol(SemiAdminRole);
+
+
 
     const peliculas = [
         { genero: 'Suspenso', titulo:"Whalefall" , origen: 'EEUU', id_Director: 'Brian Duffield', calificacion: 7, imagen: 'whalefall.jpg',                duracion: '01:46:00' },

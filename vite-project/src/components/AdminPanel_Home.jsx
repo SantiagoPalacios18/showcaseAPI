@@ -48,34 +48,36 @@ function AdminHome(props) {
         }
     };
 
-    const getUsers = async () => {
+    const getData = async () => {
         try {
             const response = await api.get(`${tablaElegida}/`)
-            // Eliminamos el setResponse() vacío que no hacía falta
             setResponse({message: response.data}) 
         } catch (error) {
             console.error("Error al traer registros:", error);
         }
     }
-    const getUserByPk = async () =>{
+    // Los 4 de abajo necesitan la id
+    const getRegisterByPk = async () => {
         try{
             const response = await api.get(`${tablaElegida}/getByPk/${id}`)
-            setResponse(response.data)
+            setResponse({message: response.data})
             console.log(response.data)
         }catch(error){
             console.log("Error al buscar el registro", error)
         }
     }
 
-    const modifyUser = async ( ) =>{
+    const modifyRegister = async ( ) =>{
+        console.log("MODIFY REGISTRO ANDANDO, SE REQUIRIÓ PATENTE ESPECIFICA")
 
     }
 
-    const deleteUser = async ( ) =>{
+    const deleteRegister = async ( ) =>{
+        console.log("DELETE REGISTRO ANDANDO, SE REQUIRIÓ PATENTE ESPECIFICA")
 
     }
-    const postUser = async () =>{
-
+    const postRegister = async () =>{
+        console.log("POST REGISTRO ANDANDO, SE REQUIRIÓ PATENTE ESPECIFICA")
     }
 
     return(
@@ -170,11 +172,11 @@ function AdminHome(props) {
                         <input onChange={(e) => setId(e.target.value)}></input>
                         <div className="admin-crud-buttons">
                         
-                            <button className="btn-admin-crud" onClick={getUsers}>GET ALL</button>
-                            <button className="btn-admin-crud" onClick={postUser}>POST</button>
-                            <button className="btn-admin-crud" onClick={modifyUser}>EDIT</button>
-                            <button className="btn-admin-crud" onClick={deleteUser}>DELETE</button>
-                            <button className="btn-admin-crud" onClick={getUserByPk}>GET BY PK</button>
+                            <button className="btn-admin-crud" onClick={getData}>GET ALL</button>
+                            <button className="btn-admin-crud" onClick={postRegister}>POST</button>
+                            <button className="btn-admin-crud" onClick={modifyRegister}>EDIT</button>
+                            <button className="btn-admin-crud" onClick={deleteRegister}>DELETE</button>
+                            <button className="btn-admin-crud" onClick={getRegisterByPk}>GET BY PK</button>
 
                         </div>
                     </div>

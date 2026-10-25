@@ -9,7 +9,7 @@ const {
 } = require('../controllers/idioma_pelicula_Controller.js');
 
 router.get('/', getIdiomasPeliculas);
-router.get('/:id_pelicula', getIdiomasByPeliculaId);
+router.get('/getByPk/:id_pelicula', getIdiomasByPeliculaId);
 router.post('/', createIdiomaPelicula);
 router.patch('/:id_pelicula/:id_idioma', modifyIdiomaPelicula);
 router.delete('/:id_pelicula/:id_idioma', deleteIdiomaPelicula);

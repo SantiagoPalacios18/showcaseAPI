@@ -9,7 +9,7 @@ const {
 } = require('../controllers/usuario_sorteo_Controller.js');
 
 router.get('/', getUsuariosSorteos);
-router.get('/:id_sorteo', getUsuariosBySorteoId);
+router.get('/getByPk/:id_sorteo', getUsuariosBySorteoId);
 router.post('/', createUsuarioSorteo);
 router.patch('/:id_Usuario/:id_sorteo', modifyUsuarioSorteo);
 router.delete('/:id_Usuario/:id_sorteo', deleteUsuarioSorteo);

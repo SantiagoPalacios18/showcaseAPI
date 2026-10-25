@@ -33,7 +33,7 @@ function Profile(props){
 
     // Variables de estado
     const [error, setError] = useState("")
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
     const [message, setMessage] = useState("")
 
     // Variable booleana param ostrar la ventana emergente
@@ -55,10 +55,13 @@ function Profile(props){
             const response = await api.get('/usuarios/getByPk/' + id)
             setUser(response.data) // Datos del usuario
             console.log(response)
-            setLoading(false)
         }catch(error){
             console.log(error)
             setError(error)
+        }
+        finally{
+            setLoading(false)
+
         }
     }
     const handleSubmit = async (event) => {
@@ -141,8 +144,19 @@ function Profile(props){
         setmFoto(base64)
         setShowPfp(false)
     }
-
-    if(User) {
+    if(loading) return <p>Cargando...</p>
+    if(!User) {
+        return(
+        <section className="user-error">
+            <h1>
+                404
+            </h1>
+            <h2>
+                El usuario que buscas no existe
+            </h2>
+        </section>
+        )
+    }else{
         return(
             <section className="profile">
                 <h1>PERFIL</h1>
@@ -323,18 +337,7 @@ function Profile(props){
             </section>
         )
     }
-    else{
-        return(
-        <section className="user-error">
-            <h1>
-                404
-            </h1>
-            <h2>
-                El usuario que buscas no existe
-            </h2>
-        </section>
-        )
-    } 
+
 }
 
 

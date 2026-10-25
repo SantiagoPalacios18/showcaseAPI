@@ -6,12 +6,12 @@ const authRoutes = require("./authentication__Routes.js");
 const adminRoutes = require("./administradorBD__Routes.js")
 const usuarioRoutes = require("./usuario__Routes.js");
 
-const {authMiddleware} = require("../controllers/authentication__Controller.js")
+const {authMiddleware} = require("../middlewares/auth__Middleware.js")
 
 // Aplicadas al server
 router.use(authRoutes);
 
-router.use(authMiddleware) // en cada endpoint se va a usar el middleware auth, que busca el token y guarda el usuario en req.user (necesario para el middleware checkPatent)
+router.use(authMiddleware) // en cada endpoint (de los routes de abajo) se va a usar el middleware auth, que busca el token y guarda el usuario en req.user (necesario para el middleware checkPatent)
 
 
 router.use('/admin', adminRoutes)

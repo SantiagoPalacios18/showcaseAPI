@@ -9,7 +9,7 @@ const {
 } = require('../controllers/pelicula__Controller.js');
 
 router.get('/', getPeliculas);
-router.get('/:id', getPeliculaById);
+router.get('/getByPk/:id', getPeliculaById);
 router.post('/', createPelicula);
 router.patch('/:id', modifyPeliculaById);
 router.delete('/:id', deletePeliculaById);

@@ -9,7 +9,7 @@ const {
 } = require('../controllers/operadorCandy__Controller.js');
 
 router.get('/', getOperadoresCandy);
-router.get('/:id', getOperadorCandyById);
+router.get('/getByPk/:id', getOperadorCandyById);
 router.post('/', createOperadorCandy);
 router.patch('/:id', modifyOperadorCandyById);
 router.delete('/:id', deleteOperadorCandyById);

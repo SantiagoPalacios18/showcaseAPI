@@ -9,7 +9,7 @@ const {
 } = require('../controllers/compraTicket_controller.js');
 
 router.get('/', getComprasTickets);
-router.get('/:id', getCompraTicketById);
+router.get('/getByPk/:id', getCompraTicketById);
 router.post('/', createCompraTicket);
 router.patch('/:id', modifyCompraTicketById);
 router.delete('/:id', deleteCompraTicketById);

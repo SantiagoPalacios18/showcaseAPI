@@ -10,7 +10,7 @@ const {
 } = require('../controllers/funcion__Controller.js');
 
 router.get('/', getFunciones);
-router.get('/:id', getFuncionById);
+router.get('/getByPk/:id', getFuncionById);
 router.post('/', createFuncion);
 router.patch('/:id', modifyFuncionById);
 router.delete('/:id', deletefuncionById);
