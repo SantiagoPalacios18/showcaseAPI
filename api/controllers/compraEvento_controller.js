@@ -31,9 +31,9 @@ const createCompraEvento = async (req, res) => {
     try {
         const data = req.body;
 
-        if (!data.id_Usuario || !data.tipo || data.monto_total === undefined || !data.DVH) {
+        if (!data.id_Usuario || !data.tipo || data.monto_total === undefined) {
             return res.status(400).json({
-                message: "Faltan datos obligatorios (id_Usuario, tipo, monto_total o DVH)"
+                message: "Faltan datos obligatorios (id_Usuario, tipo o monto_total)"
             });
         }
 
@@ -56,8 +56,7 @@ const createCompraEvento = async (req, res) => {
             fecha_hora_reserva: data.fecha_hora_reserva || new Date(),
             monto_total: data.monto_total,
             aplicó_descuento: aplicóDescuento,
-            pendiente: data.pendiente !== undefined ? data.pendiente : true,
-            DVH: data.DVH
+            pendiente: data.pendiente !== undefined ? data.pendiente : true
         });
 
         res.status(201).json({
@@ -88,7 +87,6 @@ const modifyCompraEventoById = async (req, res) => {
         if ("fecha_hora_reserva" in data) datosCambiar.fecha_hora_reserva = data.fecha_hora_reserva;
         if ("monto_total" in data) datosCambiar.monto_total = data.monto_total;
         if ("pendiente" in data) datosCambiar.pendiente = data.pendiente;
-        if ("DVH" in data) datosCambiar.DVH = data.DVH;
 
         if (Object.keys(datosCambiar).length === 0) {
             return res.status(400).json({ message: "No se ha encontrado ningún dato para modificar" });
