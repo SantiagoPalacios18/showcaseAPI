@@ -11,6 +11,8 @@ const {authMiddleware} = require("../middlewares/auth__Middleware.js")
 // Aplicadas al server
 router.use(authRoutes);
 
+router.use('/peliculas', require('./pelicula__Routes.js'));
+
 router.use(authMiddleware) // en cada endpoint (de los routes de abajo) se va a usar el middleware auth, que busca el token y guarda el usuario en req.user (necesario para el middleware checkPatent)
 
 
@@ -28,7 +30,6 @@ router.use('/funciones', require('./Funcion__Routes.js'));
 router.use('/idiomas', require('./idioma__Routes.js'));
 router.use('/operadores-candy', require('./operadorCandy__Routes.js'));
 router.use('/patentes', require('./patente__Routes.js'));
-router.use('/peliculas', require('./pelicula__Routes.js'));
 router.use('/productos-candy', require('./productoCandy__Routes.js'));
 router.use('/proyecciones', require('./proyeccion__Routes.js'));
 router.use('/roles', require('./rol__Routes.js'));

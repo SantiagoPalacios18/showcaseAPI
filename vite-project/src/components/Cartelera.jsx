@@ -1,35 +1,44 @@
 import { Link } from "react-router-dom"
-import {useState , useEffect } from "react"
+import { useState, useEffect } from "react"
 
-// El axios configurado que vamos a usar
 import api from "../api"
-import imagenTest from "../media/unnamed.jpg"
 import './styles/Home.css'
 
-
 function Cartelera(props) {
-    const [message, setMessage] = useState("")
-    const getMessage = async () => {
+    const [peliculas, setPeliculas] = useState([])
+
+    const getPeliculas = async () => {
         try {
-            const response = await api.get("/")
-            setMessage(response.data.message)
+            const response = await api.get("/peliculas")
+            setPeliculas(response.data)
         } catch (error) {
-            setMessage("upsis")
+            console.error("Error al traer las películas:", error)
         }
     }
-    // Apenas carga la página, el useEffect ejecuta todo lo que tenga adentro
+
     useEffect(() => {
-        getMessage()
+        getPeliculas()
     }, [])
 
-return(
+    return (
         <div>
             <div>
                 <div className="etiqueta-novedades">Cartelera</div>
-
             </div>
-            <img src={imagenTest} alt="Elded" />
-        </div>  
+
+            <div className="contenedor-peliculas">
+                {peliculas.map((peli) => (
+                    <div key={peli.id_Pelicula} className="tarjeta-pelicula">
+                        {peli.imagen && (
+                            <img src={peli.imagen} alt={peli.titulo} />
+                        )}
+                        <h3>{peli.titulo}</h3>
+                        <p>Género: {peli.genero}</p>
+                        <p>Duración: {peli.duracion}</p>
+                    </div>
+                ))}
+            </div>
+        </div>
     )
 }
 
