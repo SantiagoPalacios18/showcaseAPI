@@ -75,8 +75,7 @@ function Eventos(props) {
             cantidad_personas: parseInt(cantidadPersonas),
             detalle_comida_bebida: tipoEvento !== "Grupal" ? detalleComida : null,
             fecha_hora_reserva: fechaHora || new Date(),
-            monto_total: parseFloat(montoTotal),
-            DVH: "ABC123"
+            monto_total: parseFloat(montoTotal)
         }
 
         try {
