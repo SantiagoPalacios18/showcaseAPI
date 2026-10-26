@@ -8,12 +8,16 @@
     background-color: blueviolet;
     border-radius: 1rem;
     transition: .2s;
-
+    cursor: pointer;
 }
 
 .tarjeta-pelicula:hover{
     filter: brightness(70%);
     transition: .2s;
+}
+
+.tarjeta-pelicula img{
+    border-radius: 1rem;
 }
 
 .tarjeta-pelicula > *{
