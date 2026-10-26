@@ -6,8 +6,8 @@ import './styles/evento.css'
 function Eventos(props) {
     // 1. Estados básicos del formulario
     const [tipoEvento, setTipoEvento] = useState("Grupal")
-    const [idFuncion, setIdFuncion] = useState(1)
-    const [idEspacio, setIdEspacio] = useState(1)
+    const [idFuncion, setIdFuncion] = useState("")
+    const [idEspacio, setIdEspacio] = useState("")
     const [fechaHora, setFechaHora] = useState("")
     const [cantidadPersonas, setCantidadPersonas] = useState(1)
     const [detalleComida, setDetalleComida] = useState("")
@@ -25,9 +25,15 @@ function Eventos(props) {
             try {
                 const resFunciones = await api.get("/funciones")
                 setFunciones(resFunciones.data)
+                if (resFunciones.data.length > 0) {
+                    setIdFuncion(resFunciones.data[0].id_Funcion)
+                }
 
                 const resSalas = await api.get("/salas")
                 setSalas(resSalas.data)
+                if (resSalas.data.length > 0) {
+                    setIdEspacio(resSalas.data[0].id_Sala)
+                }
             } catch (error) {
                 console.log("Error al cargar catálogos:", error)
             }
@@ -61,7 +67,7 @@ function Eventos(props) {
         setMontoTotal(calculo)
     }, [tipoEvento, cantidadPersonas])
 
-    // Enviar el formulario al backend
+    // Enviar el formulario al backend para procesar el pago o la reserva
     const handleSubmit = async (e) => {
         e.preventDefault()
         setCargando(true)
@@ -75,12 +81,20 @@ function Eventos(props) {
             cantidad_personas: parseInt(cantidadPersonas),
             detalle_comida_bebida: tipoEvento !== "Grupal" ? detalleComida : null,
             fecha_hora_reserva: fechaHora || new Date(),
-            monto_total: parseFloat(montoTotal)
+            monto_total: parseFloat(montoTotal),
         }
 
         try {
+            // Aquí puedes apuntar al endpoint que genera la preferencia de Mercado Pago
             const response = await api.post("/compras-eventos", payload)
-            setMensaje("¡Reserva creada con éxito!")
+            
+            // Si tu backend devuelve un link de pago de Mercado Pago (init_point):
+            if (response.data && response.data.init_point) {
+                setMensaje("Redirigiendo a Mercado Pago...")
+                window.location.href = response.data.init_point
+            } else {
+                setMensaje("¡Reserva creada con éxito!")
+            }
         } catch (error) {
             setMensaje("Error al crear la reserva. Intente de nuevo.")
             console.log(error)
@@ -110,8 +124,8 @@ function Eventos(props) {
                         <label>Función de Cine:</label>
                         <select value={idFuncion} onChange={(e) => setIdFuncion(e.target.value)}>
                             {funciones.map((f) => (
-                                <option key={f.id} value={f.id}>
-                                    Función #{f.id}
+                                <option key={f.id_Funcion} value={f.id_Funcion}>
+                                    Función #{f.id_Funcion} - Película ID: {f.id_pelicula}
                                 </option>
                             ))}
                         </select>
@@ -121,8 +135,8 @@ function Eventos(props) {
                         <label>Sala / Espacio:</label>
                         <select value={idEspacio} onChange={(e) => setIdEspacio(e.target.value)}>
                             {salas.map((s) => (
-                                <option key={s.id} value={s.id}>
-                                    {s.nombre || `Sala #${s.id}`}
+                                <option key={s.id_Sala} value={s.id_Sala}>
+                                    Sala #{s.numero} (Cine ID: {s.id_Cine})
                                 </option>
                             ))}
                         </select>

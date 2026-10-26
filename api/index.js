@@ -3,7 +3,7 @@ const express = require("express"); // Framework para hacer servidores web y adm
 const { sequelize } = require('./config/db.js'); // Importamos el sequelize, el cual ya fue importado dentro de config/db.js
 
 // TABLAS
-const { Usuario, Rol, Patente, Pelicula } = require('./models/index.js');
+const { Usuario, Rol, Patente, Pelicula, Sala, Funcion, Cine, Tecnologia } = require('./models/index.js');
 
 // CORS
 const cors = require ("cors")
@@ -183,9 +183,60 @@ server.listen(3000, async () => {
     insertPeliculas()
 
 
+    // ==========================================
+    // 4. CINES Y SALAS
+    // ==========================================
+    const [cinePrueba] = await Cine.findOrCreate({
+        where: { nombre: 'Mega Cine' },
+        defaults: { 
+            nombre: 'Mega Cine', 
+            ubicacion: 'Centro 1', 
+            DVH: "ABC123" 
+        }
+    });
 
+    const salas = [
+        { id_Cine: cinePrueba.id_Cine, numero: 1, cant_Asientos: 50, DVH: "ABC123" },
+        { id_Cine: cinePrueba.id_Cine, numero: 2, cant_Asientos: 40, DVH: "ABC123" },
+        { id_Cine: cinePrueba.id_Cine, numero: 3, cant_Asientos: 60, DVH: "ABC123" },
+    ];
 
+    for (const salaData of salas) {
+        await Sala.findOrCreate({
+            where: { id_Cine: salaData.id_Cine, numero: salaData.numero },
+            defaults: salaData
+        });
+    }
+    console.log('Salas insertadas correctamente');
 
+    // ==========================================
+    // 5. TECNOLOGÍA Y FUNCIONES
+    // ==========================================
+    const [tecnologiaPrueba] = await Tecnologia.findOrCreate({
+        where: { nombre: '2D Estándar' },
+        defaults: { 
+            nombre: '2D Estándar', 
+            descripcion: 'Proyección digital', 
+            DVH: "ABC123" 
+        }
+    });
+
+    const funciones = [
+        { id_sala: 1, id_pelicula: 1, id_tecnologia: tecnologiaPrueba.id_tecnologia, idioma: 'Español', proyeccion: '2D', horarioInicio: new Date('2026-06-15T18:00:00'), DVH: "ABC123" },
+        { id_sala: 2, id_pelicula: 2, id_tecnologia: tecnologiaPrueba.id_tecnologia, idioma: 'Subtitulad', proyeccion: '3D', horarioInicio: new Date('2026-06-15T21:30:00'), DVH: "ABC123" },
+        { id_sala: 3, id_pelicula: 3, id_tecnologia: tecnologiaPrueba.id_tecnologia, idioma: 'Español', proyeccion: '2D', horarioInicio: new Date('2026-06-16T19:00:00'), DVH: "ABC123" },
+    ];
+
+    for (const funcionData of funciones) {
+        await Funcion.findOrCreate({
+            where: { 
+                id_sala: funcionData.id_sala, 
+                horarioInicio: funcionData.horarioInicio 
+            },
+            defaults: funcionData
+        });
+    }
+    console.log('Funciones insertadas correctamente');
 
 
 

@@ -56,7 +56,8 @@ const createCompraEvento = async (req, res) => {
             fecha_hora_reserva: data.fecha_hora_reserva || new Date(),
             monto_total: data.monto_total,
             aplicó_descuento: aplicóDescuento,
-            pendiente: data.pendiente !== undefined ? data.pendiente : true
+            pendiente: data.pendiente !== undefined ? data.pendiente : true,
+            DVH: "DVH123" // Campo obligatorio exigido por el modelo/base de datos
         });
 
         res.status(201).json({
@@ -64,7 +65,14 @@ const createCompraEvento = async (req, res) => {
             compraEvento: nuevaCompra
         });
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.error("--- ERROR DETALLADO DE SEQUELIZE ---");
+        console.error("Mensaje:", error.message);
+        if (error.errors) {
+            error.errors.forEach(err => console.error(`- Campo (${err.path}): ${err.message}`));
+        }
+        console.error("-------------------------------------");
+
+        res.status(500).json({ error: error.message, details: error.errors });
     }
 };
 
