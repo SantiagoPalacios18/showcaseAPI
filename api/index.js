@@ -67,7 +67,7 @@ server.listen(3000, async () => {
   try {
     await sequelize.authenticate(); // Prueba para verificar que haya conexión exitosa y ver si el motor de la BD está encendido
     await sequelize.query('SET FOREIGN_KEY_CHECKS = 0;');
-    await sequelize.sync({ force: true }); // Verifica las estructuras de la BD, comparando lo ingresado en el JS con lo que está en la BD
+    await sequelize.sync({ alter: true }); // Verifica las estructuras de la BD, comparando lo ingresado en el JS con lo que está en la BD
     await sequelize.query('SET FOREIGN_KEY_CHECKS = 1;'); // Esto lo meto para poder modificar tablas y que no tire errores por relaciones, luego se deberia poder sacar sin problema
     /* INTERACCIÓN CON LAS TABLAS: (SE: Si Existe, SNE: Si No Existe)
         sync() : Crea tablas (SNE), no modifica ni borra

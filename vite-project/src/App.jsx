@@ -53,7 +53,9 @@ function App() {
             //headers: { Authorization: storedToken }
         })
         setUser(response.data)
-        console.log(response.data)
+        // console.log("---------")
+        // console.log(response.data)
+        // console.log("---------")
         setToken(storedToken)
     } catch (error) { 
         console.log("Token inválido, eliminandolo del localStorage")
@@ -130,7 +132,7 @@ function App() {
 
             <Route path='/cartelera' element={<Cartelera></Cartelera>}></Route>
             <Route path='/eventos' element={<Eventos></Eventos>}></Route>
-            <Route path='/sorteos' element={<Sorteos></Sorteos>}></Route>
+            <Route path='/sorteos' element={<Sorteos user={user} />}></Route>
             <Route path='/confiteria' element={<Confiteria></Confiteria>}></Route>
 
         </Routes>

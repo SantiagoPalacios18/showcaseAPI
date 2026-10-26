@@ -4,6 +4,7 @@ const { Sorteo } = require('../models/index.js');
 const getSorteos = async (req, res) => {
     try {
         const sorteos = await Sorteo.findAll();
+        console.log({sorteos})
         res.status(200).json(sorteos);
     } catch (error) {
         res.status(500).json({ error: error.message });

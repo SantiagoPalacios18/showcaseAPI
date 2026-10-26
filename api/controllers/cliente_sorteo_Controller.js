@@ -32,6 +32,7 @@ const getClientesBySorteoId = async (req, res) => {
 const createClienteSorteo = async (req, res) => {
     try {
         const data = req.body;
+        
 
         if (!data.id_Cliente || !data.id_sorteo || !data.DVH) {
             return res.status(400).json({

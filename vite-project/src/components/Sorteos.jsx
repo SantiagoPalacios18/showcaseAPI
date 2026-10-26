@@ -29,6 +29,19 @@ function Sorteos(props) {
         }
     }
 
+    const participarusuario = async () => {
+        try {
+            await api.post("/clientes-sorteos/",{
+                id_sorteo: sorteos.id.sorteo,
+                id_Cliente: props.user.id_Usuario,
+                DVH: 1
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
     // Apenas carga la página, el useEffect ejecuta todo lo que tenga adentro
     useEffect(() => {
         getMessage(),
@@ -42,13 +55,19 @@ return(
             <h2>Selecciona en que sorteo queres participar WACHIN</h2>
         </div>
         <div className="sorteosLista">
-            <ul>
+            <ul className="contenedor-sorteos">
                 {sorteos.map(sor => 
-                    <li key={sor.id}>{sor.premio}{sor.DVH}</li>
+                    <li key={sor.id}>
+                         <div className="organizar-sorteo">
+                            <h2>sor.premio</h2>
+                            <img src={imagenTest} alt="Elded" />
+                            <button className="boton-s" onClick={participarusuario}>participar ahora</button>
+                        </div>
+                    </li>
                 )}
             </ul>
         </div>
-        <div className="contenedor-sorteos">
+        {/* <div className="contenedor-sorteos">
             <div className="organizar-sorteo" id="s-1">
                 <h2>sorteo1</h2>
                 <img src={imagenTest} alt="Elded" />
@@ -69,7 +88,7 @@ return(
                 <img src={imagenTest} alt="Elded" />
                 <button className="boton-s" >participar ahora</button>
             </div>
-        </div>
+        </div> */}
     </div>
     )
 }
