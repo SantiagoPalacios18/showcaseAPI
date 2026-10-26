@@ -11,6 +11,7 @@ import './styles/sorteo.css'
 function Sorteos(props) {
     const [message, setMessage] = useState("")
     const [sorteos, setSorteos] = useState([])
+    console.log({sorteos})
     const getMessage = async () => {
         try {
             const response = await api.get("/")
@@ -29,10 +30,10 @@ function Sorteos(props) {
         }
     }
 
-    const participarusuario = async () => {
+    const participarusuario = async (id) => {
         try {
             await api.post("/clientes-sorteos/",{
-                id_sorteo: sorteos.id.sorteo,
+                id_sorteo:  sor.id_sorteo,
                 id_Cliente: props.user.id_Usuario,
                 DVH: 1
             })
@@ -59,9 +60,21 @@ return(
                 {sorteos.map(sor => 
                     <li key={sor.id}>
                          <div className="organizar-sorteo">
-                            <h2>sor.premio</h2>
-                            <img src={imagenTest} alt="Elded" />
-                            <button className="boton-s" onClick={participarusuario}>participar ahora</button>
+                            <h2>{sor.nombre}</h2>
+                            <img src={imagenTest} alt="Elded" /* onClick={}*/ />
+                            <button className="boton-s" onClick={
+                                async () => {
+                                    try {
+                                        console.log(sor.id_sorteo)
+                                        await api.post("/clientes-sorteos/",{
+                                            id_sorteo: sor.id_sorteo,
+                                            id_Cliente: props.user.id_Usuario,
+                                            DVH: 1
+                                        })
+                                    } catch (error) {
+                                        console.log(error)
+                                }
+    }}>participar ahora</button>
                         </div>
                     </li>
                 )}

@@ -13,6 +13,10 @@ const Usuario_sorteo = sequelize.define(
             type: DataTypes.SMALLINT.UNSIGNED,
             primaryKey: true,
         },
+        fecha_inscripcion: {
+            type: DataTypes.DATE,
+            defaultValue: DataTypes.NOW
+        },
         DVH: {
             type: DataTypes.STRING(6),
             allowNull: false,

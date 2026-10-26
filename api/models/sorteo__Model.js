@@ -10,6 +10,12 @@ const Sorteo = sequelize.define(
             primaryKey: true,
             autoIncrement:true
         },
+        nombre: {
+            type: DataTypes.STRING(15),
+            validate: {
+                isAlpha: true
+            }
+        },
         premio: DataTypes.STRING(30),
         DVH: {
             type: DataTypes.STRING(6),
