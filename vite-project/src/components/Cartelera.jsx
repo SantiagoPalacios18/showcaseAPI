@@ -2,7 +2,8 @@ import { Link } from "react-router-dom"
 import { useState, useEffect } from "react"
 
 import api from "../api"
-import './styles/Home.css'
+import imagenTest from "../media/unnamed.jpg"
+import './styles/Cartelera.css'
 
 function Cartelera(props) {
     const [peliculas, setPeliculas] = useState([])
@@ -30,9 +31,9 @@ function Cartelera(props) {
                 {peliculas.map((peli) => (
                     <div key={peli.id_Pelicula} className="tarjeta-pelicula">
                         {peli.imagen && (
-                            <img src={peli.imagen} alt={peli.titulo} />
+                            <img src={imagenTest} alt={peli.titulo} />
                         )}
-                        <h3>{peli.titulo}</h3>
+                        <h3 className="titulo">{peli.titulo}</h3>
                         <p>Género: {peli.genero}</p>
                         <p>Duración: {peli.duracion}</p>
                     </div>
