@@ -1,9 +1,9 @@
-const { Cliente_sorteo } = require('../models/index.js');
+const { Usuario_sorteo } = require('../models/index.js');
 
 // GET: Obtener todos los clientes en sorteos
 const getClientesSorteos = async (req, res) => {
     try {
-        const registros = await Cliente_sorteo.findAll();
+        const registros = await Usuario_sorteo.findAll();
         res.status(200).json(registros);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -14,7 +14,7 @@ const getClientesSorteos = async (req, res) => {
 const getClientesBySorteoId = async (req, res) => {
     try {
         const { id_sorteo } = req.params;
-        const registros = await Cliente_sorteo.findAll({
+        const registros = await Usuario_sorteo.findAll({
             where: { id_sorteo }
         });
 
@@ -32,7 +32,7 @@ const getClientesBySorteoId = async (req, res) => {
 const createClienteSorteo = async (req, res) => {
     try {
         const data = req.body;
-        
+        console.log(req.body)
 
         if (!data.id_Cliente || !data.id_sorteo || !data.DVH) {
             return res.status(400).json({
@@ -40,9 +40,9 @@ const createClienteSorteo = async (req, res) => {
             });
         }
 
-        const existe = await Cliente_sorteo.findOne({
+        const existe = await Usuario_sorteo.findOne({
             where: {
-                id_Cliente: data.id_Cliente,
+                id_Usuario: data.id_Cliente,
                 id_sorteo: data.id_sorteo
             }
         });
@@ -51,10 +51,10 @@ const createClienteSorteo = async (req, res) => {
             return res.status(400).json({ message: "El cliente ya está inscripto en este sorteo" });
         }
 
-        const nuevoRegistro = await Cliente_sorteo.create({
-            id_Cliente: data.id_Cliente,
+        const nuevoRegistro = await Usuario_sorteo.create({
+            id_Usuario: data.id_Cliente,
             id_sorteo: data.id_sorteo,
-            fecha_inscripcion: data.fecha_inscripcion || new Date(),
+            fecha_inscripcion: data.fecha_inscripcion || undefined,
             DVH: data.DVH
         });
 
@@ -81,7 +81,7 @@ const modifyClienteSorteo = async (req, res) => {
             return res.status(400).json({ message: "No se ha encontrado ningún dato para modificar" });
         }
 
-        const [filasModificadas] = await Cliente_sorteo.update(datosCambiar, {
+        const [filasModificadas] = await Usuario_sorteo.update(datosCambiar, {
             where: { id_Cliente, id_sorteo }
         });
 
@@ -101,7 +101,7 @@ const modifyClienteSorteo = async (req, res) => {
 const deleteClienteSorteo = async (req, res) => {
     try {
         const { id_Cliente, id_sorteo } = req.params;
-        const eliminadas = await Cliente_sorteo.destroy({
+        const eliminadas = await Usuario_sorteo.destroy({
             where: { id_Cliente, id_sorteo }
         });
 
