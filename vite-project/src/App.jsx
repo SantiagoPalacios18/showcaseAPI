@@ -135,6 +135,7 @@ function App() {
             <Route path='/cartelera' element={<Cartelera></Cartelera>}></Route>
             <Route path='/eventos' element={<Eventos></Eventos>}></Route>
             <Route path='/sorteos' element={<Sorteos user={user} />}></Route>
+            <Route path='/sorteoinfo/:id' element={<Sorteoinfo></Sorteoinfo>}></Route>            
             <Route path='/confiteria' element={<Confiteria></Confiteria>}></Route>
 
         </Routes>

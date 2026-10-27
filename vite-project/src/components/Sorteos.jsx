@@ -61,7 +61,7 @@ return(
                     <li key={sor.id}>
                          <div className="organizar-sorteo">
                             <h2>{sor.nombre}</h2>
-                            <img src={imagenTest} alt="Elded" /* onClick={}*/ />
+                            <img onClick={()=> Navigate(`/sorteoinfo/${sor.id_sorteo}`) } src={imagenTest} alt="Elded"/>
                             <button className="boton-s" onClick={
                                 async () => {
                                     try {
