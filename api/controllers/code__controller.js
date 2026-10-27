@@ -67,7 +67,7 @@ const solicitarCodigo = async (req, res) => {
     }
 }
 
-// POST: Verifica que el código sea correcto y no haya vencido (NO lo consume)
+// GET: Verifica que el código sea correcto y no haya vencido (NO lo consume)
 // Sirve para que el front pase del paso "ingresar código" al paso "nueva contraseña"
 const verificarCodigo = async (req, res) => {
     try {

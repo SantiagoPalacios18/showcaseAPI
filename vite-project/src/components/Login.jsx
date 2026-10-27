@@ -24,6 +24,7 @@ function Login(props) {
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
     const navigate = useNavigate(); 
+    
     const handleSubmit = async (event) => {
         event.preventDefault() // Evita que se recargue la página, eso hace que las variables se reseteen
         setError("")
