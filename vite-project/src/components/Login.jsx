@@ -3,12 +3,13 @@ import { useNavigate } from "react-router-dom";
 
 // El axios configurado que vamos a usar
 import api from "../api"
+import './styles/Login.css'
 
 
 function Login(props) {
     const [email, setEmail] = useState("");
     const [contraseña, setContraseña] = useState("");
-
+    const Navigate = useNavigate()
 
     // Source - https://stackoverflow.com/a/63006702
     // Posted by Ronit Roy, modified by community. See post 'Timeline' for change history
@@ -78,6 +79,9 @@ function Login(props) {
                         placeholder="Contraseña"
                         value={contraseña}
                         onChange={(e) => setContraseña(e.target.value)} />
+                    <div id="recuperarCuentaDiv">
+                        <button id="recuperarCuentaBoton" onClick={() => {Navigate('/reclaim')}}>Olvide mi contraseña</button>
+                    </div>
                     <button type="submit">Login</button>
                 </form>
             </div>

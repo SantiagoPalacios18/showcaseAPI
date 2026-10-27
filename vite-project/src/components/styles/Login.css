@@ -1,0 +1,10 @@
+#recuperarCuentaDiv{
+    width: 30rem;
+    display: flex;
+    align-items: start;
+}
+#recuperarCuentaBoton {
+    margin: 0;
+    font-size: small;
+    width: 30%;
+}
