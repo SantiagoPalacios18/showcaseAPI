@@ -20,6 +20,10 @@
     border-radius: 1rem;
 }
 
+.tarjeta-pelicula img:hover{
+    filter: brightness(100%);
+}
+
 .tarjeta-pelicula > *{
     margin-block-start: .5rem;
 }

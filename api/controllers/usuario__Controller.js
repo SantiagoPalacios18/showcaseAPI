@@ -179,6 +179,26 @@ const createTestUser = async (req, res) => {
     }
 }
 
+const changePassword = async(req,res) => {
+    try{
+        const {contraseña, nuevaContraseña} = req.body
+        const {id} = req.params
+        const user = Usuario.findByPk(id)
+        const validPassword = await bcrypt.compare(contraseña, user.contraseña)
+        
+        if (!validPassword){
+            res.status(400).json({message: 'La contraseña actual no es esa'})
+        }
+         
+        user.update({'contraseña' :  nuevaContraseña})
+
+        res.status(200).json({message: 'CONTRASE;A MODOFICADA CORRECTAMENTE'})
+        
+    }catch(error){
+        
+    }
+}    
+
 module.exports = {
     getUsers,
     getUserById,

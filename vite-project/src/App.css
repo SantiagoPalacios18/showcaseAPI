@@ -1,3 +1,7 @@
+html{
+  cursor: url("./media/unnamed.jpg");
+}
+
 .body{
   margin:0;
   padding:0;

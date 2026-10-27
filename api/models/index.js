@@ -38,6 +38,7 @@ const { Usuario } = require('./usuario__Model.js');
 
 const { Usuario_sorteo } = require('./usuario_sorteo__Model.js');
 
+const { Code } = require('./code__model.js')
 
 const { DVV } = require('./DVV__Model.js');
 
@@ -94,6 +95,9 @@ CompraEvento.belongsTo(Usuario, { foreignKey: 'id_Usuario' });
 // Funcion <-> CompraEvento
 Funcion.hasMany(CompraEvento, { foreignKey: 'id_Funcion' });
 CompraEvento.belongsTo(Funcion, { foreignKey: 'id_Funcion' });
+
+Code.belongsTo(Usuario, {foreignKey: 'id_User'})
+Usuario.hasOne(Code, {foreignKey: 'id_User'})
 
 // ==========================================
 // RELACIONES M a M (BELONGSTOMANY / HASMANY / BELONGSTO)
@@ -155,6 +159,7 @@ Proyeccion_pelicula.belongsTo(Proyeccion, { foreignKey: 'id_proyeccion' });
 
 
 
+
 module.exports = {
     Actor,
     Actor_Pelicula,
@@ -180,5 +185,6 @@ module.exports = {
     Transaccion,
     Usuario,
     Patente_Usuario,
-    Sesion
+    Sesion,
+    Code
 }; // d

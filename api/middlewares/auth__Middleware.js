@@ -32,7 +32,7 @@ const checkPatent = (patenteNecesaria) => {
                     { model: Patente } // solo si también usás patente_usuario
                 ]
             });
-            console.log("Usuario encontrado en checkPatent:", usuario.toJSON())
+            // console.log("Usuario encontrado en checkPatent:", usuario.toJSON())
             const patentesDeRol = usuario.Rol?.Patentes?.map(p => p.nombre) ?? []
             const patentesSueltas = usuario.Patentes?.map(p => p.nombre) ?? []
             const patentes = [...patentesDeRol, ...patentesSueltas]

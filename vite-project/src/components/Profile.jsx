@@ -1,5 +1,5 @@
 import {useState, useEffect } from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import ReactCrop from 'react-image-crop'
 import convertImage from '../convert'
 
@@ -40,9 +40,12 @@ function Profile(props){
     const [showConfirm, setShowConfirm] = useState("")
     const [showEdit, setShowEdit] = useState("")
     const [showPfp, setShowPfp] = useState("")
+    const [showChangePassword, setMuyLargo] = useState("")
+
+    const [password, setPassword] = useState("")
+    const [Mpassword, setmPassword] = useState("")
 
     const [User, setUser] = useState("")
-    const navigate = useNavigate()
     function timeout(delay) {
         return new Promise( res => setTimeout(res, delay) );
     }
@@ -111,7 +114,9 @@ function Profile(props){
         }
     }
 
-
+    function timeout(delay) {
+        return new Promise( res => setTimeout(res, delay) );
+    }
     useEffect( () => {
         obtainUser();
     }, [id]); // Recarga cuando modificamos el valor del params (si lo haces desde el URL esto no tiene sentido, pero si tocas el boton de tu perfil arriba a la derecha
@@ -126,7 +131,7 @@ function Profile(props){
             setFechaNacimiento(User.fechaNacimiento || "")
             setEmail(User.email || "");
             setTelefono(User.telefono || "");
-            setFoto(User.foto || "")
+            setFoto(User.foto || "../assets/perfil-default.png")
             setmFoto(User.foto || "")
         }
     }, [User]); // Se ejecuta cada vez que el usuario pasa de null a tener datos*/
@@ -144,6 +149,17 @@ function Profile(props){
         setmFoto(base64)
         setShowPfp(false)
     }
+
+    const cambiarCont = async (e, cont, newCont) => {
+        e.preventDefault
+        console.log("LA CHUCHA WEON FUNCA")
+        const response = api.patch(`usuarios/cambiar-contraseña${id}`,{
+            contraseña: cont,
+            nuevaContraseña: newCont
+        })
+        await timeout(3000)
+    }
+
     if(loading) return <p>Cargando...</p>
     if(!User) {
         return(
@@ -260,9 +276,12 @@ function Profile(props){
                                             onChange={(e) => setmTelefono(e.target.value)} 
                                         />
                                     </div>
+                                    <button className="edit-button" onClick={()=>setMuyLargo(true)}>
+                                        Cambiar Contraseña
+                                    </button>
                                     <div className="profile-buttons">
-                                        <button type="submit">Guardar Perfil</button>
-                                        <button type="cancel" onClick={() =>
+                                        <button className="edit-button" type="submit">Guardar Perfil</button>
+                                        <button className="edit-button" type="cancel" onClick={() =>
                                         {
                                         setShowEdit(false)
                                         setmNombre(nombre)
@@ -323,6 +342,38 @@ function Profile(props){
 
                                 </form>
                                 
+                            </div>
+                        </div>
+                    )}
+
+                    {showChangePassword && (
+                        <div className="overlay">
+                            <div className="cp-panel">
+                                <div className="cerrar">
+                                    <button id="btn-cerrar" onClick={() => setMuyLargo(false)}>
+                                            <img src="https://i.postimg.cc/1tgHsdPp/flecha-volver-atras.png" alt="volver atras" />
+                                    </button>
+                                </div>
+                                <form>
+                                    <label htmlFor="password">Contraseña actual</label>
+                                    <input 
+                                    type="password"
+                                    id="password"
+                                    name="password"
+                                    onChange={(e)=>setPassword(e.target.value)
+                                    }
+                                    />
+
+                                    <label htmlFor="Mpassword">Nueva contraseña</label>
+                                    <input 
+                                    type="password"
+                                    id="Mpassword"
+                                    name="Mpassword"
+                                    onChange={(e)=>setmPassword(e.target.value)}
+                                    />
+
+                                    <button onClick={()=>cambiarCont(password, Mpassword)}>Cambiar Contraseña</button>
+                                </form>
                             </div>
                         </div>
                     )}
