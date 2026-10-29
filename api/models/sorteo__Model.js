@@ -16,9 +16,6 @@ const Sorteo = sequelize.define(
                 isAlpha: true
             }
         },
-        requisitosloged:{
-            
-        },
         infoGral:{
             type: DataTypes.STRING(30),
         },

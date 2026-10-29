@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import {useState , useEffect } from "react"
 
 // El axios configurado que vamos a usar
@@ -11,6 +11,7 @@ import './styles/sorteo.css'
 function Sorteos(props) {
     const [message, setMessage] = useState("")
     const [sorteos, setSorteos] = useState([])
+    const Navigate = useNavigate()
     console.log({sorteos})
     const getMessage = async () => {
         try {
@@ -62,19 +63,6 @@ return(
                          <div className="organizar-sorteo">
                             <h2>{sor.nombre}</h2>
                             <img onClick={()=> Navigate(`/sorteoinfo/${sor.id_sorteo}`) } src={imagenTest} alt="Elded"/>
-                            <button className="boton-s" onClick={
-                                async () => {
-                                    try {
-                                        console.log(sor.id_sorteo)
-                                        await api.post("/clientes-sorteos/",{
-                                            id_sorteo: sor.id_sorteo,
-                                            id_Cliente: props.user.id_Usuario,
-                                            DVH: 1
-                                        })
-                                    } catch (error) {
-                                        console.log(error)
-                                }
-    }}>participar ahora</button>
                         </div>
                     </li>
                 )}

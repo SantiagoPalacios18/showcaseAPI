@@ -9,7 +9,7 @@ const {
 } = require('../controllers/cliente_sorteo_Controller.js');
 
 router.get('/', getClientesSorteos);
-router.get('/getByPk/:id_sorteo', getClientesBySorteoId);
+router.get('/getByPk/:id_sorteo/:id_Usuario', getClientesBySorteoId);
 router.post('/', createClienteSorteo);
 router.patch('/:id_Cliente/:id_sorteo', modifyClienteSorteo);
 router.delete('/:id_Cliente/:id_sorteo', deleteClienteSorteo);

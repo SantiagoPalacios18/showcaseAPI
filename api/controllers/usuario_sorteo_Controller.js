@@ -17,6 +17,11 @@ const getUsuariosBySorteoId = async (req, res) => {
         const registros = await Usuario_sorteo.findAll({
             where: { id_sorteo }
         });
+        
+        const { id_Usuario } = req.params;
+        const registros2 = await Usuario_sorteo.findAll({
+            where: { id_sorteo, id_Usuario}
+        });
 
         if (registros.length === 0) {
             return res.status(404).json({ message: `No se encontraron participantes para el sorteo: ${id_sorteo}` });

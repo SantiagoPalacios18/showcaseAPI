@@ -19,6 +19,7 @@ import AdminHome from './components/AdminPanel_Home'
 import Cartelera from './components/Cartelera'
 import Eventos from './components/Eventos'
 import Sorteos from './components/Sorteos'
+import Sorteoinfo from './components/sorteoinfo'
 import Confiteria from './components/Confiteria'
 
 //import {Home, Login, Register, NavBar, Footer, Profile} from './components/index.js'
@@ -135,7 +136,7 @@ function App() {
             <Route path='/cartelera' element={<Cartelera></Cartelera>}></Route>
             <Route path='/eventos' element={<Eventos></Eventos>}></Route>
             <Route path='/sorteos' element={<Sorteos user={user} />}></Route>
-            <Route path='/sorteoinfo/:id' element={<Sorteoinfo></Sorteoinfo>}></Route>            
+            <Route path='/sorteoinfo/:id' element={<Sorteoinfo user={user} />}></Route>             
             <Route path='/confiteria' element={<Confiteria></Confiteria>}></Route>
 
         </Routes>
