@@ -5,6 +5,7 @@ const router = express.Router();
 const authRoutes = require("./authentication__Routes.js");
 const adminRoutes = require("./administradorBD__Routes.js")
 const usuarioRoutes = require("./usuario__Routes.js");
+const tableRoutes = require("./table__Routes.js")
 
 const {authMiddleware} = require("../middlewares/auth__Middleware.js")
 
@@ -15,11 +16,18 @@ router.use('/peliculas', require('./pelicula__Routes.js'));
 
 router.use('/codes', require('./code__Routes.js'))
 
+
 router.use(authMiddleware) // en cada endpoint (de los routes de abajo) se va a usar el middleware auth, que busca el token y guarda el usuario en req.user (necesario para el middleware checkPatent)
 
+// ==========================================================
+
+// TODO LO DE ACÁ PARA ABAJO VA A UTILIZAR EL AUTH MIDDLEWARE (SI NO QUERES QUE SUCEDA MOVELO ARRIBA DEL routes.use(authMiddleware))
+
+// ==========================================================
 
 router.use('/admin', adminRoutes)
 router.use('/usuarios', usuarioRoutes)
+router.use('/tables', tableRoutes)
 
 // Entidades principales
 router.use('/actores', require('./actor__Routes.js'));

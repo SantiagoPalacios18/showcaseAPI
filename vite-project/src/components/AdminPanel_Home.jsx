@@ -7,7 +7,7 @@ import api from "../api"
 import './styles/AdminPanel.css'
 
 function AdminHome(props) {
-    console.log("props.user en AdminHome.jsx:", props.user)
+    //console.log("props.user en AdminHome.jsx:", props.user)
     const [message, setMessage] = useState("")
     const [response, setResponse] = useState("")
     const [tablasDisponibles, setTablasDisponibles] = useState([])
@@ -59,11 +59,14 @@ function AdminHome(props) {
     // Los 4 de abajo necesitan la id
     const getRegisterByPk = async () => {
         try{
+            console.log("PK ingresada: "+id)
+            if (!id){alert("Se debe ingresar un valor de PK")}
             const response = await api.get(`${tablaElegida}/getByPk/${id}`)
             setResponse({message: response.data})
-            console.log(response.data)
+            console.log({message: response.data})
         }catch(error){
             console.log("Error al buscar el registro", error)
+            alert(error.response?.data?.message || "Error al buscar el registro")
         }
     }
 
@@ -77,6 +80,21 @@ function AdminHome(props) {
 
     }
     const postRegister = async () =>{
+        try{
+            console.log("PK ingresada: "+id)
+            //if (!id){alert("Se debe ingresar un valor de PK")}
+            const response = await api.post(`${tablaElegida}/`,{
+                id_Usuario: 999,
+                DNI : 123345678,
+                email: 'asdasdasd@a.com' 
+            })
+            setResponse({message: response.data})
+            console.log({message: response.data})
+        }catch(error){
+            console.log("Error al buscar el registro", error)
+            alert(error.response?.data?.message || "Error al postear el registro")
+
+        }
         console.log("POST REGISTRO ANDANDO, SE REQUIRIÓ PATENTE ESPECIFICA")
     }
 
@@ -169,7 +187,10 @@ function AdminHome(props) {
                         }}>
 
                     
-                        <input onChange={(e) => setId(e.target.value)}></input>
+                        <input
+                        placeholder="Inserte la Clave Primaria"
+                        onChange={(e) => setId(e.target.value)}
+                        ></input>
                         <div className="admin-crud-buttons">
                         
                             <button className="btn-admin-crud" onClick={getData}>GET ALL</button>
@@ -183,6 +204,11 @@ function AdminHome(props) {
                 </div>
                 
             </section>
+            <div>
+                <div className="emergent-CRUD">
+                        
+                </div>
+            </div>
         </div>
     )
 }

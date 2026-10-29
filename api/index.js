@@ -49,12 +49,6 @@ server.get('/', (req, res) => {
     res.status(200).json({ message: "🔥🔥🔥 HOLAAAAA 🔥🔥🔥" });
 });
 
-server.get('/tables/getAllTables',async (req,res)=>{
-    const tablas = await sequelize.getQueryInterface().showAllTables();
-    res.status(200).json(tablas)
-    console.log(tablas)
-})
-
 
 const routes = require("./routes/index.js");
 server.use(routes);
