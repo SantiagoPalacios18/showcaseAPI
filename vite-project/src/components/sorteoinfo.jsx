@@ -16,6 +16,7 @@ function sorteoinfo(props) {
     const [sort, setSorteos] = useState([])
     const { id } = useParams(); // Acá extraés el ID directamente de la URL
     const [usuario_sort, setusuario_sort ] = useState({})
+    const [mostrarBoton, setMostrarBoton] = useState(true);
 
     const getMessage = async () => {
         try {
@@ -55,12 +56,22 @@ function sorteoinfo(props) {
                 id_Cliente: props.user.id_Usuario,
                 DVH: sort.DVH
             })
+            const click_si = manejarClick()
             setusuario_sort(usu_sort.data.clienteSorteo)
             console.log(usu_sort.data.clienteSorteo)
         } catch (error) {   
             console.log({error})
             console.log(usuario_sort)
         } 
+    }
+
+    const manejarClick = () => {
+    // 2. Haces lo que necesites que haga el botón al hacerle clic
+    console.log("¡Botón clickeado!");
+
+    // 3. Cambiamos el estado a false para que desaparezca
+    setMostrarBoton(false);
+
     }
 
     useEffect(() => {
@@ -75,7 +86,7 @@ return(
             <button className="boton-s">para participar tenes que estar logueado</button>
         )}
         {props.user && (
-            <button className="boton-s" onClick={()=>{inscribir()}}>participar ahora</button>
+            <button className="boton-s" onClick={()=>{inscribir()} }  >participar ahora</button>
         )}
         {usuario_sort?.id_Usuario && (
             <h2>ya estas inscripto 🥳</h2>
