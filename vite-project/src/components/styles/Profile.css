@@ -245,12 +245,13 @@ section h1{
 
 .edit-button{
     background-color: #a1939f;
-    color: white;
+    color: rgb(244, 244, 244);
     border-radius: 3px;
     border: 0;
     width: 150px;
     font-size:medium;
     transition: .1s;
+    
 }
 
 .edit-button:hover{
@@ -269,7 +270,8 @@ section h1{
     padding-block: 1.5rem;
     border-radius: 18px;
     text-align: center;    
-    justify-content: center; 
+    justify-content: center;
+    color: #b956c9; 
 }
 
 .cp-panel > *{
