@@ -10,6 +10,7 @@ import { Routes, Route, Navigate, useNavigate } from 'react-router-dom'
 import Home from './components/Home'
 import Login from './components/Login'
 import Register from './components/Register'
+import RecuperarCuenta from './components/RecuperarCuenta'
 import NavBar from './components/NavBar'
 import Footer from './components/Footer'
 import Profile from './components/Profile'
@@ -123,6 +124,7 @@ function App() {
             <Route path="/" element={<Home user={user} />} />
             <Route path="/login" element={<Login onLogin={handleLogin} />} />
             <Route path="/register" element={<Register onLogin={handleLogin} />} /> {/* Tmb se le pone el handleLogin para loggeo automático */}
+            <Route path="/reclaim" element={<RecuperarCuenta user={user} />}/>
             <Route path='/profile/:id' element={<Profile user={user} onLogout={handleLogout}/>}></Route>
             <Route path='/admin/' element={
               <PatentChecker user={user} patente="ADMIN_HOME">
@@ -133,6 +135,7 @@ function App() {
             <Route path='/cartelera' element={<Cartelera></Cartelera>}></Route>
             <Route path='/eventos' element={<Eventos></Eventos>}></Route>
             <Route path='/sorteos' element={<Sorteos user={user} />}></Route>
+            <Route path='/sorteoinfo/:id' element={<Sorteoinfo></Sorteoinfo>}></Route>            
             <Route path='/confiteria' element={<Confiteria></Confiteria>}></Route>
 
         </Routes>

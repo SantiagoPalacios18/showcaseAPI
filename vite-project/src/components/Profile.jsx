@@ -151,13 +151,18 @@ function Profile(props){
     }
 
     const cambiarCont = async (e, cont, newCont) => {
-        e.preventDefault
-        console.log("LA CHUCHA WEON FUNCA")
-        const response = api.patch(`usuarios/cambiar-contraseña${id}`,{
-            contraseña: cont,
-            nuevaContraseña: newCont
-        })
-        await timeout(3000)
+        e.preventDefault()
+        try {
+            console.log("LA CHUCHA WEON FUNCA")
+            const response = await api.patch(`usuarios/cambiar-contraseña${id}`,{
+                contraseña: cont,
+                nuevaContraseña: newCont
+            })
+            await timeout(3000)
+            console.log(response)
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     if(loading) return <p>Cargando...</p>

@@ -3,12 +3,13 @@ import { useNavigate } from "react-router-dom";
 
 // El axios configurado que vamos a usar
 import api from "../api"
+import './styles/Login.css'
 
 
 function Login(props) {
     const [email, setEmail] = useState("");
     const [contraseña, setContraseña] = useState("");
-
+    const Navigate = useNavigate()
 
     // Source - https://stackoverflow.com/a/63006702
     // Posted by Ronit Roy, modified by community. See post 'Timeline' for change history
@@ -23,6 +24,7 @@ function Login(props) {
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
     const navigate = useNavigate(); 
+    
     const handleSubmit = async (event) => {
         event.preventDefault() // Evita que se recargue la página, eso hace que las variables se reseteen
         setError("")
@@ -78,6 +80,9 @@ function Login(props) {
                         placeholder="Contraseña"
                         value={contraseña}
                         onChange={(e) => setContraseña(e.target.value)} />
+                    <div id="recuperarCuentaDiv">
+                        <button id="recuperarCuentaBoton" onClick={() => {Navigate('/reclaim')}}>Olvide mi contraseña</button>
+                    </div>
                     <button type="submit">Login</button>
                 </form>
             </div>
