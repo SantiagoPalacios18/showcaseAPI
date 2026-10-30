@@ -62,6 +62,7 @@ const createCompraEvento = async (req, res) => {
 
         res.status(201).json({
             message: "Se ha registrado la reserva/compra correctamente." + extra,
+            id_CompraEvento: nuevaCompra.id_CompraEvento, // <--- Lo exponemos directo
             compraEvento: nuevaCompra
         });
     } catch (error) {

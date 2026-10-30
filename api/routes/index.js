@@ -6,6 +6,7 @@ const authRoutes = require("./authentication__Routes.js");
 const adminRoutes = require("./administradorBD__Routes.js")
 const usuarioRoutes = require("./usuario__Routes.js");
 const tableRoutes = require("./table__Routes.js")
+const pagoRoutes = require("./pagos_Routes.js");
 
 const {authMiddleware} = require("../middlewares/auth__Middleware.js")
 
@@ -28,6 +29,7 @@ router.use(authMiddleware) // en cada endpoint (de los routes de abajo) se va a 
 router.use('/admin', adminRoutes)
 router.use('/usuarios', usuarioRoutes)
 router.use('/tables', tableRoutes)
+router.use('/pagos', pagoRoutes);
 
 // Entidades principales
 router.use('/actores', require('./actor__Routes.js'));

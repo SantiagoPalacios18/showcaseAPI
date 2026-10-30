@@ -11,16 +11,16 @@ const CompraEvento = sequelize.define(
         },
         id_Usuario: {
             type: DataTypes.INTEGER.UNSIGNED,
-            allowNull: false,
-            unique: 'noFuncionesYCliente'
+            allowNull: false
+            // ❌ Se eliminó el unique: 'noFuncionesYCliente' para permitir múltiples compras por usuario
         },
         id_Funcion: {
             type: DataTypes.MEDIUMINT.UNSIGNED,
-            allowNull: true, // Nulo para reservas de espacios (corporativos / cumpleaños) que no dependen de una función de cine
-            unique: 'noFuncionesYCliente'
+            allowNull: true // Nulo para reservas de espacios (corporativos / cumpleaños) que no dependen de una función de cine
+            // ❌ Se eliminó el unique: 'noFuncionesYCliente' para permitir múltiples reservas en la misma función
         },
         id_Sala: {
-            type: DataTypes.SMALLINT.UNSIGNED,
+            type: DataTypes.TINYINT.UNSIGNED, // <-- Coincide exactamente con el tipo de la tabla Salas
             allowNull: true // Nulo para compra de tickets grupales de cine
         },
         tipo: {

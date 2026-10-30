@@ -67,7 +67,7 @@ function Eventos(props) {
         setMontoTotal(calculo)
     }, [tipoEvento, cantidadPersonas])
 
-    // Enviar el formulario al backend para procesar el pago o la reserva
+    // Enviar el formulario al backend para crear la reserva y luego solicitar la preferencia de pago
     const handleSubmit = async (e) => {
         e.preventDefault()
         setCargando(true)
@@ -75,8 +75,9 @@ function Eventos(props) {
 
         const payload = {
             id_Usuario: props.id_Usuario || 1,
+            DVH: "DVH123", // Cumple estrictamente con la validación alfanumérica de máximo 6 caracteres de Sequelize
             id_Funcion: tipoEvento === "Grupal" ? parseInt(idFuncion) : null,
-            id_Espacio: tipoEvento !== "Grupal" ? parseInt(idEspacio) : null,
+            id_Sala: tipoEvento !== "Grupal" ? parseInt(idEspacio) : null, // Mapeado correctamente a id_Sala según tu modelo
             tipo: tipoEvento,
             cantidad_personas: parseInt(cantidadPersonas),
             detalle_comida_bebida: tipoEvento !== "Grupal" ? detalleComida : null,
@@ -85,19 +86,35 @@ function Eventos(props) {
         }
 
         try {
-            // Aquí puedes apuntar al endpoint que genera la preferencia de Mercado Pago
-            const response = await api.post("/compras-eventos", payload)
+            // 1. Creamos la reserva en la base de datos a través de la API
+            const responseReserva = await api.post("/compras-eventos", payload)
             
-            // Si tu backend devuelve un link de pago de Mercado Pago (init_point):
-            if (response.data && response.data.init_point) {
+            // Extraemos el ID de la compra creada (según cómo lo retorne tu backend)
+            const idCompra = responseReserva.data.id_CompraEvento || responseReserva.data.id;
+
+            if (!idCompra) {
+                throw new Error("No se pudo obtener el ID de la reserva creada.");
+            }
+
+            setMensaje("Reserva guardada. Generando preferencia de pago...")
+
+            // 2. Pedimos al backend la preferencia de Mercado Pago pasándole el ID
+            const responsePago = await api.post("/pagos/crear-preferencia-evento", {
+                id_CompraEvento: idCompra
+            })
+
+            // 3. Si nos devuelve el init_point, redirigimos automáticamente a Mercado Pago
+            if (responsePago.data && responsePago.data.init_point) {
                 setMensaje("Redirigiendo a Mercado Pago...")
-                window.location.href = response.data.init_point
+                window.location.href = responsePago.data.init_point
             } else {
                 setMensaje("¡Reserva creada con éxito!")
             }
+
         } catch (error) {
-            setMensaje("Error al crear la reserva. Intente de nuevo.")
-            console.log(error)
+            setMensaje("Error al procesar la reserva o el pago. Intente de nuevo.")
+            // Imprimimos la respuesta exacta que manda el backend
+            console.error("Detalle del error:", error.response?.data || error.message);
         } finally {
             setCargando(false)
         }
@@ -174,7 +191,7 @@ function Eventos(props) {
                 </p>
 
                 <button type="submit" disabled={cargando}>
-                    {cargando ? "Guardando..." : "Confirmar Reserva"}
+                    {cargando ? "Procesando..." : "Confirmar Reserva y Pagar"}
                 </button>
 
                 {mensaje && <p style={{ marginTop: "10px", color: "green" }}>{mensaje}</p>}

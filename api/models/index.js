@@ -1,5 +1,3 @@
-
-
 const { Actor } = require('./actor__Model.js');
 const { Actor_Pelicula } = require('./actor_pelicula__Model.js');
 const { Asiento } = require('./asiento__Model.js');
@@ -78,7 +76,7 @@ Usuario.belongsTo(Rol, { foreignKey: 'id_Rol' });
 
 // Usuario <-> Transaccion
 Usuario.hasMany(Transaccion, { foreignKey: 'id_Usuario' });
-Transaccion.belongsTo(Usuario, { foreignKey: 'id_Usuario' });
+Transaccion.belongsTo(Transaccion, { foreignKey: 'id_Usuario' });
 
 // Transaccion <-> CompraTicket
 Transaccion.hasMany(CompraTicket, { foreignKey: 'id_transaccion' });
@@ -95,6 +93,10 @@ CompraEvento.belongsTo(Usuario, { foreignKey: 'id_Usuario' });
 // Funcion <-> CompraEvento
 Funcion.hasMany(CompraEvento, { foreignKey: 'id_Funcion' });
 CompraEvento.belongsTo(Funcion, { foreignKey: 'id_Funcion' });
+
+// Sala <-> CompraEvento (Añadido para las reservas de espacios/cumpleaños/corporativos)
+Sala.hasMany(CompraEvento, { foreignKey: 'id_Sala' });
+CompraEvento.belongsTo(Sala, { foreignKey: 'id_Sala' });
 
 Code.belongsTo(Usuario, {foreignKey: 'id_User'})
 Usuario.hasOne(Code, {foreignKey: 'id_User'})
@@ -187,4 +189,4 @@ module.exports = {
     Patente_Usuario,
     Sesion,
     Code
-}; // d
+};
