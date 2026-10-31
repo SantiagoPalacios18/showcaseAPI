@@ -1,4 +1,4 @@
-const { Usuario } = require('../models/index.js');
+const { Usuario, CompraTicket, Asiento, Funcion, Pelicula } = require('../models/index.js');
 const bcrypt = require("bcrypt")
 const { Op } = require("sequelize")
 const {default_foto} = require('../SRC/default-foto.js')
@@ -197,7 +197,46 @@ const changePassword = async(req,res) => {
     }catch(error){
         
     }
-}    
+}   
+
+const buscarUsuarioPelicula = async (req, res) => {
+    try {
+        Usuario.findAll(
+            {
+                include: {
+                    model: Transaccion,
+                    required: true,
+                    where:{
+                        idClienteLogueado : idIngreaado
+                    },
+                    include: {
+                        model: CompraTicket,
+                        required: true,
+                        include:{
+                            model: Asiento,
+                            required: true,
+                            include: {
+                                model: Funcion,
+                                required: true,
+                                include:{
+                                    model: Pelicula,
+                                    required: true,
+                                }
+                            }
+                        }
+                    }
+                },
+                where: {
+                    id : id
+                }
+            }
+        )
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
 
 module.exports = {
     getUsers,
@@ -205,6 +244,7 @@ module.exports = {
     createUser,
     modifyuserById,
     deleteuserById,
-    createTestUser
+    createTestUser,
+    buscarUsuarioPelicula
 }
 

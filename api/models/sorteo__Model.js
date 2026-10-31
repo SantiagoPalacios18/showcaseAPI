@@ -10,6 +10,11 @@ const Sorteo = sequelize.define(
             primaryKey: true,
             autoIncrement:true
         },
+        id_Pelicula: {
+            type: DataTypes.TINYINT.UNSIGNED,
+            allowNul: true,
+            autoIncrement: true
+        },
         nombre: {
             type: DataTypes.STRING(15),
             validate: {

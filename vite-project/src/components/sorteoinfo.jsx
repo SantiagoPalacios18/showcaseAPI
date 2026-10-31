@@ -56,7 +56,6 @@ function sorteoinfo(props) {
                 id_Cliente: props.user.id_Usuario,
                 DVH: sort.DVH
             })
-            const click_si = manejarClick()
             setusuario_sort(usu_sort.data.clienteSorteo)
             console.log(usu_sort.data.clienteSorteo)
         } catch (error) {   
@@ -85,12 +84,13 @@ return(
         {!props.user && (
             <button className="boton-s">para participar tenes que estar logueado</button>
         )}
-        {props.user && (
-            <button className="boton-s" onClick={()=>{inscribir()} }  >participar ahora</button>
+        {props.user && mostrarBoton &&  (
+            <button className="boton-s" onClick={()=>{inscribir(); manejarClick();} }  >participar ahora</button>
         )}
-        {usuario_sort?.id_Usuario && (
+        {usuario_sort?.id_Usuario && !mostrarBoton && (
             <h2>ya estas inscripto 🥳</h2>
         )}
+
     </div>  
     )
 }

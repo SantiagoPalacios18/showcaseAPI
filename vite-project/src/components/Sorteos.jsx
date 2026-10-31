@@ -7,6 +7,30 @@ import imagenTest from "../media/unnamed.jpg"
 import './styles/Home.css'
 import './styles/sorteo.css'
 
+import peli1 from '../../../api/SRC/whalefall.jpg'
+import peli2 from '../../../api/SRC/Madre Siniestra.webp'
+import peli3 from '../../../api/SRC/Street Fighter.webp'
+import peli4 from '../../../api/SRC/Verity.jpg'
+import peli5 from '../../../api/SRC/Coyote vs Acme.webp'
+import peli6 from '../../../api/SRC/Resident Evil Noche Cero.jpg'
+import peli7 from '../../../api/SRC/El corazón de la Bestia.jpg'
+import peli8 from '../../../api/SRC/La Odisea.webp'
+import peli9 from '../../../api/SRC/Quiero tu sexo.jpg'
+import peli10 from '../../../api/SRC/La casa.jpg'
+
+const imagenes = {
+    'whalefall.jpg': peli1,
+    'Madre Siniestra.webp': peli2,
+    'Street Fighter.webp': peli3,
+    'Verity.jpg': peli4,
+    'Coyote vs Acme.webp': peli5,
+    'Resident Evil Noche Cero.jpg': peli6,
+    'El corazón de la Bestia.jpg': peli7,
+    'La Odisea.webp': peli8,
+    'Quiero tu sexo.jpg': peli9,
+    'La casa.jpg': peli10,
+}
+
 
 function Sorteos(props) {
     const [message, setMessage] = useState("")
