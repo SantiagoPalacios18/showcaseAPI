@@ -7,30 +7,17 @@ import imagenTest from "../media/unnamed.jpg"
 import './styles/Home.css'
 import './styles/sorteo.css'
 
-import peli1 from '../../../api/SRC/whalefall.jpg'
-import peli2 from '../../../api/SRC/Madre Siniestra.webp'
-import peli3 from '../../../api/SRC/Street Fighter.webp'
-import peli4 from '../../../api/SRC/Verity.jpg'
-import peli5 from '../../../api/SRC/Coyote vs Acme.webp'
-import peli6 from '../../../api/SRC/Resident Evil Noche Cero.jpg'
-import peli7 from '../../../api/SRC/El corazón de la Bestia.jpg'
-import peli8 from '../../../api/SRC/La Odisea.webp'
-import peli9 from '../../../api/SRC/Quiero tu sexo.jpg'
-import peli10 from '../../../api/SRC/La casa.jpg'
+import sor1 from '../../../api/SRC/sorteo_odisea.png'
+import sor2 from '../../../api/SRC/sorteo_SF.png'
+import sor3 from '../../../api/SRC/sorteo_coyote.png'
 
-const imagenes = {
-    'whalefall.jpg': peli1,
-    'Madre Siniestra.webp': peli2,
-    'Street Fighter.webp': peli3,
-    'Verity.jpg': peli4,
-    'Coyote vs Acme.webp': peli5,
-    'Resident Evil Noche Cero.jpg': peli6,
-    'El corazón de la Bestia.jpg': peli7,
-    'La Odisea.webp': peli8,
-    'Quiero tu sexo.jpg': peli9,
-    'La casa.jpg': peli10,
+const imagenes_sort = {
+    'Sorteo La Odisea.webp': sor1,
+    'Sorteo Street Fighter.webp': sor2,
+    'Sorteo Coyote vs Acme.webp': sor3,
 }
 
+const getImagen = (nombre) => imagenes_sort[nombre] ?? imagenTest
 
 function Sorteos(props) {
     const [message, setMessage] = useState("")
@@ -55,19 +42,6 @@ function Sorteos(props) {
         }
     }
 
-    const participarusuario = async (id) => {
-        try {
-            await api.post("/clientes-sorteos/",{
-                id_sorteo:  sor.id_sorteo,
-                id_Cliente: props.user.id_Usuario,
-                DVH: 1
-            })
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-
     // Apenas carga la página, el useEffect ejecuta todo lo que tenga adentro
     useEffect(() => {
         getMessage(),
@@ -84,9 +58,9 @@ return(
             <ul className="contenedor-sorteos">
                 {sorteos.map(sor => 
                     <li key={sor.id}>
-                         <div className="organizar-sorteo">
+                        <div className="organizar-sorteo">
                             <h2>{sor.nombre}</h2>
-                            <img onClick={()=> Navigate(`/sorteoinfo/${sor.id_sorteo}`) } src={imagenTest} alt="Elded"/>
+                            <img onClick={()=> Navigate(`/sorteoinfo/${sor.id_sorteo}`) } src={getImagen(sor.imagen)} alt={sor.nombre}/>
                         </div>
                     </li>
                 )}

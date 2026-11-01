@@ -10,13 +10,11 @@ import './styles/sorteo.css'
 
 
 
-
 function sorteoinfo(props) {
     const [message, setMessage] = useState("")
     const [sort, setSorteos] = useState([])
     const { id } = useParams(); // Acá extraés el ID directamente de la URL
     const [usuario_sort, setusuario_sort ] = useState({})
-    const [mostrarBoton, setMostrarBoton] = useState(true);
 
     const getMessage = async () => {
         try {
@@ -31,7 +29,6 @@ function sorteoinfo(props) {
     const getSorteoById = async (id) => {
         try {
         const sort = await api.get(`/sorteos/getByPk/${id}`);
-        console.log(sort)
         setSorteos(sort.data);
         } catch (error) {
         console.log(error);
@@ -40,9 +37,12 @@ function sorteoinfo(props) {
 
     const getUsuariosBySorteoId = async () => {
         try {
-            const usu_sort = await api.get('/clientes-sorteos/getByPk/{1}/{1}')
+            console.log("hola")
+            const usu_sort = await api.get(`/clientes-sorteos/getByPk/${id}/${props.user}`)
             if (usu_sort)
-                setusuario_sort(usu_sort.data)
+                setusuario_sort(usu_sort.data[0])
+            console.log(usu_sort)
+            console.log(usuario_sort)
         } catch (error) {
             console.log(error)
         }
@@ -54,7 +54,7 @@ function sorteoinfo(props) {
             const usu_sort = await api.post("/clientes-sorteos/",{
                 id_sorteo: sort.id_sorteo,
                 id_Cliente: props.user.id_Usuario,
-                DVH: sort.DVH
+                DVH: sort.DVH,
             })
             setusuario_sort(usu_sort.data.clienteSorteo)
             console.log(usu_sort.data.clienteSorteo)
@@ -64,17 +64,9 @@ function sorteoinfo(props) {
         } 
     }
 
-    const manejarClick = () => {
-    // 2. Haces lo que necesites que haga el botón al hacerle clic
-    console.log("¡Botón clickeado!");
-
-    // 3. Cambiamos el estado a false para que desaparezca
-    setMostrarBoton(false);
-
-    }
-
     useEffect(() => {
-        getSorteoById(id)
+        getSorteoById(id),
+        getUsuariosBySorteoId()
     }, [])
 return(
     <div>
@@ -84,10 +76,10 @@ return(
         {!props.user && (
             <button className="boton-s">para participar tenes que estar logueado</button>
         )}
-        {props.user && mostrarBoton &&  (
-            <button className="boton-s" onClick={()=>{inscribir(); manejarClick();} }  >participar ahora</button>
+        {props.user && !usuario_sort?.id_Usuario &&  (
+            <button className="boton-s" onClick={()=>{inscribir()} }  >participar ahora</button>
         )}
-        {usuario_sort?.id_Usuario && !mostrarBoton && (
+        {usuario_sort?.id_Usuario && (
             <h2>ya estas inscripto 🥳</h2>
         )}
 

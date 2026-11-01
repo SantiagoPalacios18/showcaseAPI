@@ -12,8 +12,7 @@ const Sorteo = sequelize.define(
         },
         id_Pelicula: {
             type: DataTypes.TINYINT.UNSIGNED,
-            allowNul: true,
-            autoIncrement: true
+            allowNull: true,
         },
         nombre: {
             type: DataTypes.STRING(15),
@@ -23,6 +22,9 @@ const Sorteo = sequelize.define(
         },
         infoGral:{
             type: DataTypes.STRING(30),
+        },
+        imagen: {
+            type: DataTypes.STRING,
         },
         premio: DataTypes.STRING(30),
         DVH: {

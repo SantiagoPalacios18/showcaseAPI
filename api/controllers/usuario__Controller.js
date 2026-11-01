@@ -201,8 +201,12 @@ const changePassword = async(req,res) => {
 
 const buscarUsuarioPelicula = async (req, res) => {
     try {
+        const {idCliente} = req.body
         Usuario.findAll(
             {
+                where: {
+                    id_Usuario : id
+                },
                 include: {
                     model: Transaccion,
                     required: true,
@@ -225,9 +229,6 @@ const buscarUsuarioPelicula = async (req, res) => {
                             }
                         }
                     }
-                },
-                where: {
-                    id : id
                 }
             }
         )

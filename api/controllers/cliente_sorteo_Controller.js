@@ -13,12 +13,11 @@ const getClientesSorteos = async (req, res) => {
 // GET: Obtener registros por ID de sorteo
 const getClientesBySorteoId = async (req, res) => {
     try {
-        const { id_sorteo } = req.params;
+        const { id_sorteo, id_Usuario } = req.params;
         const registros = await Usuario_sorteo.findAll({
             where: { id_sorteo }
         });
 
-        const { id_Usuario } = req.params;
         const registros2 = await Usuario_sorteo.findAll({
             where: { id_sorteo, id_Usuario}
         });
