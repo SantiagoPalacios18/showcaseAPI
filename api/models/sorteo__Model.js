@@ -15,21 +15,23 @@ const Sorteo = sequelize.define(
             allowNull: true,
         },
         nombre: {
-            type: DataTypes.STRING(15),
-            validate: {
-                isAlpha: true
-            }
+            type: DataTypes.STRING(30),
+            allowNull: false
         },
         infoGral:{
-            type: DataTypes.STRING(30),
+            type: DataTypes.STRING(120),
+            allowNull: false
         },
         imagen: {
             type: DataTypes.STRING,
         },
-        premio: DataTypes.STRING(30),
+        premio: {
+            type: DataTypes.JSON, //cambiado a JSON para almacenar una lista de premios organizada: premio: {premio1: X, premio2: Y}
+            allowNull: false
+        },
         DVH: {
             type: DataTypes.STRING(6),
-            allowNull: false,
+            allowNull: true, // Se cambia a false una vez tengamos el sistema de dvv/dvh programado
             validate: {
                 isAlphanumeric: true
             }
