@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom"
 import { useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 
 import api from "../api"
 import imagenTest from "../media/unnamed.jpg"
@@ -7,6 +8,7 @@ import './styles/Cartelera.css'
 
 function Cartelera(props) {
     const [peliculas, setPeliculas] = useState([])
+    const Navigate = useNavigate()
 
     const getPeliculas = async () => {
         try {
@@ -29,7 +31,7 @@ function Cartelera(props) {
 
             <div className="contenedor-peliculas">
                 {peliculas.map((peli) => (
-                    <div key={peli.id_Pelicula} className="tarjeta-pelicula">
+                    <div key={peli.id_Pelicula} className="tarjeta-pelicula" onClick={() => {Navigate(`/peliculaInfo/${peli.id_Pelicula}`)}}>
                         {peli.imagen && (
                             <img src={imagenTest} alt={peli.titulo} />
                         )}
