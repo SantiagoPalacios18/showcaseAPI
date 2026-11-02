@@ -26,7 +26,9 @@ function peliculaInfo(props) {
 
     const reservar = async () => {
         try {
-            const reserva = api.
+            const reserva = api.post('', {
+                idCliente: props.user.id_Cliente
+            })
         } catch (error) {
             console.log({error})
         }
