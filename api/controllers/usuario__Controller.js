@@ -237,6 +237,17 @@ const buscarUsuarioPelicula = async (req, res) => {
     }
 }
 
+const registrarUsuarioEnPelicula = async (req, res) => {
+try {
+  const result = await sequelize.transaction( //Usamos transaction pq sino puede modificarse una parte de la bd, dar error desues y no rollbackearse
+    async t => {
+        
+    });
+} catch (error) {
+  console.log({error})
+}
+}
+
 
 
 module.exports = {

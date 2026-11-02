@@ -17,6 +17,7 @@ import Profile from './components/Profile'
 import SessionManagement from './components/SessionManagement'
 import AdminHome from './components/AdminPanel_Home'
 import Cartelera from './components/Cartelera'
+import PeliculaInfo from './components/peliculaInfo'
 import Eventos from './components/Eventos'
 import Sorteos from './components/Sorteos'
 import Sorteoinfo from './components/sorteoinfo'
@@ -134,6 +135,7 @@ function App() {
             }></Route>
 
             <Route path='/cartelera' element={<Cartelera></Cartelera>}></Route>
+            <Route path='/peliculaInfo/:id' element={<PeliculaInfo user={user} />}></Route>
             <Route path='/eventos' element={<Eventos></Eventos>}></Route>
             <Route path='/sorteos' element={<Sorteos user={user} />}></Route>
             <Route path='/sorteoinfo/:id' element={<Sorteoinfo user={user} />}></Route>             

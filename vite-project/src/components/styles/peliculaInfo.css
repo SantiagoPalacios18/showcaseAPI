@@ -1,0 +1,18 @@
+#peliculaInfoDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+}
+
+#peliculaInfoDivDiv {
+    margin: 0 3% 0 3%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#peliculaInfoDivDiv > *{
+    margin: 0;
+    font-size: calc(0.9rem + 1.5vw);
+}

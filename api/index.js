@@ -3,7 +3,7 @@ const express = require("express"); // Framework para hacer servidores web y adm
 const { sequelize } = require('./config/db.js'); // Importamos el sequelize, el cual ya fue importado dentro de config/db.js
 
 // TABLAS
-const { Usuario, Rol, Patente, Pelicula, Sala, Funcion, Cine, Tecnologia } = require('./models/index.js');
+const { Usuario, Rol, Patente, Pelicula, Sala, Funcion, Cine, Tecnologia, Sorteo } = require('./models/index.js');
 
 // CORS
 const cors = require ("cors")
@@ -59,7 +59,7 @@ server.listen(3000, async () => {
   try {
     await sequelize.authenticate(); // Prueba para verificar que haya conexión exitosa y ver si el motor de la BD está encendido
     await sequelize.query('SET FOREIGN_KEY_CHECKS = 0;');
-    await sequelize.sync({ alter: true }); // Verifica las estructuras de la BD, comparando lo ingresado en el JS con lo que está en la BD
+    await sequelize.sync({ force: true }); // Verifica las estructuras de la BD, comparando lo ingresado en el JS con lo que está en la BD
     await sequelize.query('SET FOREIGN_KEY_CHECKS = 1;'); // Esto lo meto para poder modificar tablas y que no tire errores por relaciones, luego se deberia poder sacar sin problema
     /* INTERACCIÓN CON LAS TABLAS: (SE: Si Existe, SNE: Si No Existe)
         sync() : Crea tablas (SNE), no modifica ni borra
@@ -174,6 +174,27 @@ server.listen(3000, async () => {
 
     insertPeliculas()
 
+    const sorteos = [
+      { id_Pelicula: 3, nombre: "Ready, watch!", infoGral: 'Para los fans mas acerrimos de la franquicia, mira la peli y gana grandes premios!', premio: {premio1: 'Vaso Ryu', premio2: 'Pochoclera Street Fighter'} },
+      { id_Pelicula: 6, nombre: "De vuelta a Racoon City", infoGral: 'Adentrate en los misterios de Resident Evil: Noche Cero ', premio: {premio1: 'Vaso Resident Evil: Noche Cero', premio2: 'Resident Evil Requiem para Steam'} },
+    ]
+
+    async function insertSorteos() {
+      try{
+        for (const sorteoInfo of sorteos){
+          await Sorteo.findOrCreate({
+            where: {nombre: sorteoInfo.nombre},
+            defaults: sorteoInfo
+          });
+        }
+        console.log('2 sorteos insertados')
+      }
+      catch(err){
+        console.log(err)
+      }
+    }
+
+    insertSorteos()
 
     // ==========================================
     // 4. CINES Y SALAS
@@ -233,7 +254,7 @@ server.listen(3000, async () => {
 
 
   } catch (error) {
-    console.error('No se pudo conectar a la base de datos:', error);
+    console.error('No se pudo conectar a la base de datos:', {error});
   }
 });
 
