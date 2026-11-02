@@ -20,6 +20,9 @@ const Sorteo = sequelize.define(
                 isAlpha: true
             }
         },
+        fecha_sor:{
+            type: DataTypes.DATE,
+        },
         infoGral:{
             type: DataTypes.STRING(30),
         },

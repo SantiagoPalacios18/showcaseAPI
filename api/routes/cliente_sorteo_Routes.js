@@ -3,6 +3,7 @@ const router = express.Router();
 const {
     getClientesSorteos,
     getClientesBySorteoId,
+    getUnClienteSorteo,
     createClienteSorteo,
     modifyClienteSorteo,
     deleteClienteSorteo
@@ -10,6 +11,7 @@ const {
 
 router.get('/', getClientesSorteos);
 router.get('/getByPk/:id_sorteo/:id_Usuario', getClientesBySorteoId);
+router.get('/getById_u/:id_sorteo/:id_Usuario', getUnClienteSorteo);
 router.post('/', createClienteSorteo);
 router.patch('/:id_Cliente/:id_sorteo', modifyClienteSorteo);
 router.delete('/:id_Cliente/:id_sorteo', deleteClienteSorteo);

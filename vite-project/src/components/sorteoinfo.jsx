@@ -9,12 +9,12 @@ import './styles/Home.css'
 import './styles/sorteo.css'
 
 
-
 function sorteoinfo(props) {
     const [message, setMessage] = useState("")
     const [sort, setSorteos] = useState([])
     const { id } = useParams(); // Acá extraés el ID directamente de la URL
     const [usuario_sort, setusuario_sort ] = useState({})
+    const [ganador, setGanador] = useState("")
 
     const getMessage = async () => {
         try {
@@ -26,19 +26,22 @@ function sorteoinfo(props) {
     }
 
 
-    const getSorteoById = async (id) => {
+    const getSorteoById = async () => {
         try {
-        const sort = await api.get(`/sorteos/getByPk/${id}`);
+            const algo = api.get
+        const sort = await api.get(`/sorteos/getByPk/${id}`, {
+            usuarios: algo
+        });
         setSorteos(sort.data);
         } catch (error) {
-        console.log(error);
+            console.log({error});
         }
     }
 
-    const getUsuariosBySorteoId = async () => {
+    const getUnClienteSorteo = async () => {
         try {
-            console.log("hola")
-            const usu_sort = await api.get(`/clientes-sorteos/getByPk/${id}/${props.user}`)
+            console.log('User Id: '+props.user.id_Usuario)
+            const usu_sort = await api.get(`/clientes-sorteos/getById_u/${id}/${props.user.id_Usuario}`)
             if (usu_sort)
                 setusuario_sort(usu_sort.data[0])
             console.log(usu_sort)
@@ -64,9 +67,18 @@ function sorteoinfo(props) {
         } 
     }
 
+    const getElegirGanador = async () => {
+        try {
+            const ganador = await api.get(`sorteos/getGanador/${id}`)
+            setGanador(ganador.data)
+        } catch (error) {
+            console.log({error})
+        }
+    }
+
     useEffect(() => {
         getSorteoById(id),
-        getUsuariosBySorteoId()
+        getUnClienteSorteo()
     }, [])
 return(
     <div>
@@ -82,7 +94,7 @@ return(
         {usuario_sort?.id_Usuario && (
             <h2>ya estas inscripto 🥳</h2>
         )}
-
+        <button onClick={getElegirGanador} >elegir ganador</button>
     </div>  
     )
 }

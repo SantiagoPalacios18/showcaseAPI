@@ -1,4 +1,7 @@
 const { Sorteo } = require('../models/index.js');
+const crypto = require("crypto");
+const { Usuario_sorteo } = require('../models/index.js');
+
 
 // GET: Obtener todos los sorteos
 const getSorteos = async (req, res) => {
@@ -102,17 +105,39 @@ const deleteSorteoById = async (req, res) => {
         if (filas === 0) {
             return res.status(400).json({ message: "No se ha encontrado el sorteo, 0 eliminaciones realizadas" });
         }
-
         res.status(200).json({ message: "Se ha eliminado correctamente el sorteo de ID: " + id });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 };
 
+const getElegirGanador = async (req, res) => {
+    try {
+        const { id } = req.params;
+        console.log("aaa" + id)
+        const lista_u = await Usuario_sorteo.findAll({
+            where: { id_sorteo:id }
+        });
+
+        if (lista_u.length === 0) {
+            return res.status(404).json({ message: `No se encontraron clientes para el sorteo: ${id_sorteo}` });
+        }
+        const indice = crypto.randomInt(0, lista_u.length);
+        const ganador = lista_u[indice];
+        console.log({ ganador });   
+
+        res.status(200).json({ message:"se eligio un ganador"})
+    }
+    catch (error) {
+        console.log(error)
+    }
+}
+
 module.exports = {
     getSorteos,
     getSorteoById,
     createSorteo,
     modifySorteoById,
-    deleteSorteoById
+    deleteSorteoById,
+    getElegirGanador
 };
