@@ -15,8 +15,11 @@ router.use(authRoutes);
 
 router.use('/peliculas', require('./pelicula__Routes.js'));
 
-router.use('/codes', require('./code__Routes.js'))
+router.use('/codes', require('./code__Routes.js'));
 
+router.use('/sorteos', require('./sorteo__Routes.js'));
+
+router.use('/clientes-sorteos', require('./cliente_sorteo_Routes.js'));
 
 router.use(authMiddleware) // en cada endpoint (de los routes de abajo) se va a usar el middleware auth, que busca el token y guarda el usuario en req.user (necesario para el middleware checkPatent)
 
@@ -48,12 +51,10 @@ router.use('/roles', require('./rol__Routes.js'));
 router.use('/salas', require('./sala__Routes.js'));
 router.use('/sesiones', require('./Sesion__Routes.js'));
 router.use('/soporte-tecnico', require('./soporteTecnico__Routes.js'));
-router.use('/sorteos', require('./sorteo__Routes.js'));
 router.use('/tecnologias', require('./tecnologia__Routes.js'));
 
 // Rutas intermedias (M:N)
 router.use('/actores-peliculas', require('./actor_pelicula_Routes.js'));
-router.use('/clientes-sorteos', require('./cliente_sorteo_Routes.js'));
 router.use('/idiomas-peliculas', require('./idioma_pelicula_Routes.js'));
 router.use('/patentes-roles', require('./patente_rol_Routes.js'));
 router.use('/patentes-usuarios', require('./patente_Usuario_Routes.js'));
