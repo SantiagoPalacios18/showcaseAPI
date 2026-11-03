@@ -6,15 +6,63 @@
 
 
 .organizar-sorteo{
+    background-color: blueviolet;
     display: flex;
     flex-direction: column;
+    width: 40%;
     justify-content: center;
-    align-items: center;
-    padding: 10px;
+    align-items: start;
+    margin: 5%;
+    padding: 1rem;
+    box-shadow: 0rem 0rem 1.5rem .5rem darkslategrey;
+    border-radius: 1rem;
+    transition: ease-out .08s;
 }
 
-img:hover{
+.imagen{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.imagen img{
+    width: 100%;
+    transition: .1s;
+    border: 5px double darkslategrey;
+    border-radius: 1rem;
+}
+
+.organizar-sorteo h2{
+    margin: 0;
+}
+
+.imagen:hover img{
     filter: brightness(50%);
+    transition: .1s;
+    cursor: pointer;
+}
+
+.organizar-sorteo:has(.imagen:hover){
+    transform: scale(1.05);
+    box-shadow: 0rem 0rem 1.5rem 1rem darkslategrey;
+    transition: ease-in .08s;
+}
+
+.organizar-sorteo:has(.imagen:active){
+    transform: scale(0.9);
+    transition: ease-in .08s;
+}
+
+.imagen:hover::after{
+    content: 'Ver +';
+    position: absolute;
+    color: aliceblue;
+    font-size: 2rem;
+    font-weight: 800;
+    font-style: italic;
+    pointer-events: none;
 }
 
 .boton-s{

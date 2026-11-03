@@ -1,20 +1,20 @@
-import { Link, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import {useState , useEffect } from "react"
 
 
 // El axios configurado que vamos a usar
 import api from "../api"
 import imagenTest from "../media/unnamed.jpg"
-import './styles/Home.css'
-import './styles/sorteo.css'
-
-
+import './styles/sorteoInfo.css'
 
 function sorteoinfo(props) {
     const [message, setMessage] = useState("")
     const [sort, setSorteos] = useState([])
+    const [premios, setPremios] = useState([])
     const { id } = useParams(); // Acá extraés el ID directamente de la URL
     const [usuario_sort, setusuario_sort ] = useState({})
+
+    const navigate = useNavigate()
 
     const getMessage = async () => {
         try {
@@ -30,6 +30,9 @@ function sorteoinfo(props) {
         try {
         const sort = await api.get(`/sorteos/getByPk/${id}`);
         setSorteos(sort.data);
+        const premios = sort.data.premio
+        console.log(premios)
+        setPremios(JSON.parse(premios))
         } catch (error) {
         console.log(error);
         }
@@ -37,14 +40,13 @@ function sorteoinfo(props) {
 
     const getUsuariosBySorteoId = async () => {
         try {
-            console.log("hola")
             const usu_sort = await api.get(`/clientes-sorteos/getByPk/${id}/${props.user}`)
             if (usu_sort)
                 setusuario_sort(usu_sort.data[0])
             console.log(usu_sort)
             console.log(usuario_sort)
         } catch (error) {
-            console.log(error)
+            console.log({error})
         }
     }
 
@@ -68,24 +70,46 @@ function sorteoinfo(props) {
         getSorteoById(id),
         getUsuariosBySorteoId()
     }, [])
-return(
-    <div>
-        <h1>{sort.nombre}</h1>
-        <h2>el premio es: {sort.premio}</h2>
-        <p>{sort.infoGral}</p>
-        {!props.user && (
-            <button className="boton-s">para participar tenes que estar logueado</button>
-        )}
-        {props.user && !usuario_sort?.id_Usuario &&  (
-            <button className="boton-s" onClick={()=>{inscribir()} }  >participar ahora</button>
-        )}
-        {usuario_sort?.id_Usuario && (
-            <h2>ya estas inscripto 🥳</h2>
-        )}
 
-    </div>  
+    return(
+    <div className="sorteo">
+        <section className="details">
+            <h1>{sort.nombre}</h1>
+            <img src={imagenTest} alt="Foto sorteo" />
+            <p className="info-gral">{sort.infoGral}</p>
+        </section>
+        <section className="premios">
+            <h2>Premios</h2>
+            <ul className="premios-l">
+                {Object.values(premios).map(premio => 
+                    <li className="premio">
+                        {premio}
+                    </li>
+                )}
+            </ul>
+        </section>
+        <section className="requisitos">
+            
+            <h2>Requisitos</h2>
+            <ul className="req-list">
+                <li key={'registrado'} className={props.user ? 'aproved' : 'denied'} onClick={()=>{!props.user && navigate('/login')}}>Estar Registrado {props.user ? '✅' : '❌'}</li>
+            </ul>
+        </section>
+        <section className="btn">
+            {!props.user && (
+                <button className="boton-s">para participar tenes que estar logueado</button>
+            )}
+            {props.user && !usuario_sort?.id_Usuario &&  (
+                <button className="boton-s" id="btn-logged" onClick={()=>{inscribir()} }  >participar ahora</button>
+            )}
+            {usuario_sort?.id_Usuario && (
+                <h2>ya estas inscripto 🥳</h2>
+            )}
+        </section>
+    </div> 
     )
-}
+ }
+
                           
 
 export default sorteoinfo

@@ -22,9 +22,9 @@ const getClientesBySorteoId = async (req, res) => {
             where: { id_sorteo, id_Usuario}
         });
 
-        if (registros.length === 0) {
-            return res.status(404).json({ message: `No se encontraron clientes para el sorteo: ${id_sorteo}` });
-        }
+        // if (registros.length === 0) {
+        //     return res.status(404).json({ message: `No se encontraron clientes para el sorteo: ${id_sorteo}` });
+        // }
 
         res.status(200).json(registros);
     } catch (error) {
