@@ -1,22 +1,25 @@
-import { Link, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import {useState , useEffect } from "react"
 
 
 // El axios configurado que vamos a usar
 import api from "../api"
 import imagenTest from "../media/unnamed.jpg"
-import './styles/Home.css'
-import './styles/sorteo.css'
+import './styles/sorteoInfo.css'
+
 
 
 
 function sorteoinfo(props) {
     const [message, setMessage] = useState("")
     const [sort, setSorteos] = useState([])
+    const [premios, setPremios] = useState([])
     const { id } = useParams(); // Acá extraés el ID directamente de la URL
     const [usuario_sort, setusuario_sort ] = useState({})
     const [ganador, setGanador] = useState("")
     const [usu_peli, setUsu_peli] = useState("")
+
+    const navigate = useNavigate()
 
     const getMessage = async () => {
         try {
@@ -35,6 +38,9 @@ function sorteoinfo(props) {
             usuarios: algo
         });
         setSorteos(sort.data);
+        const premios = sort.data.premio
+        console.log(premios)
+        setPremios(JSON.parse(premios))
         } catch (error) {
             console.log({error});
         }
@@ -52,14 +58,18 @@ function sorteoinfo(props) {
 
     const getUnClienteSorteo = async () => {
         try {
+
+            const usu_sort = await api.get(`/clientes-sorteos/getByPk/${id}/${props.user}`)
+
             console.log('User Id: '+props.user.id_Usuario)
             const usu_sort = await api.get(`/clientes-sorteos/getById_u/${id}/${props.user.id_Usuario}`)
+
             if (usu_sort)
                 setusuario_sort(usu_sort.data[0])
             console.log(usu_sort)
             console.log(usuario_sort)
         } catch (error) {
-            console.log(error)
+            console.log({error})
         }
     }
 
@@ -112,7 +122,8 @@ return(
         <button onClick={getBuscarUsuarioPelicula}>ver si el pibe compro</button>
     </div>  
     )
-}
+ }
+
                           
 
 export default sorteoinfo

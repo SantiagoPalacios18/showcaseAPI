@@ -7,17 +7,7 @@ import imagenTest from "../media/unnamed.jpg"
 import './styles/Home.css'
 import './styles/sorteo.css'
 
-import sor1 from '../../../api/SRC/sorteo_odisea.png'
-import sor2 from '../../../api/SRC/sorteo_SF.png'
-import sor3 from '../../../api/SRC/sorteo_coyote.png'
-
-const imagenes_sort = {
-    'Sorteo La Odisea.webp': sor1,
-    'Sorteo Street Fighter.webp': sor2,
-    'Sorteo Coyote vs Acme.webp': sor3,
-}
-
-const getImagen = (nombre) => imagenes_sort[nombre] ?? imagenTest
+const getImagen = (nombre) => imagenTest
 
 function Sorteos(props) {
     const [message, setMessage] = useState("")
@@ -51,15 +41,14 @@ function Sorteos(props) {
 return(
     <div>
         <div>
-            <h1>¡SORTEOS SUPER CINEFILOS!</h1>
-            <h2>Selecciona en que sorteo queres participar WACHIN</h2>
+            <h1>¡SORTEOS SUPER CINEFILOS!</h1>  
         </div>
         <div className="sorteosLista">
             <ul className="contenedor-sorteos">
                 {sorteos.map(sor => 
-                    <li key={sor.id}>
-                        <div className="organizar-sorteo">
-                            <h2>{sor.nombre}</h2>
+                    <li key={sor.id} className="organizar-sorteo">
+                        <h2>{sor.nombre}</h2>
+                        <div className="imagen">
                             <img onClick={()=> Navigate(`/sorteoinfo/${sor.id_sorteo}`) } src={getImagen(sor.imagen)} alt={sor.nombre}/>
                         </div>
                     </li>

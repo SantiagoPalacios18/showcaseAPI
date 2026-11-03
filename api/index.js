@@ -176,7 +176,7 @@ server.listen(3000, async () => {
 
     const sorteos = [
       { id_Pelicula: 3, nombre: "Ready, watch!", infoGral: 'Para los fans mas acerrimos de la franquicia, mira la peli y gana grandes premios!', premio: {premio1: 'Vaso Ryu', premio2: 'Pochoclera Street Fighter'} },
-      { id_Pelicula: 6, nombre: "De vuelta a Racoon City", infoGral: 'Adentrate en los misterios de Resident Evil: Noche Cero ', premio: {premio1: 'Vaso Resident Evil: Noche Cero', premio2: 'Resident Evil Requiem para Steam'} },
+      { id_Pelicula: 6, nombre: "De vuelta a Racoon City", infoGral: 'Adentrate en los misterios de Resident Evil: Noche Cero ', premio: {premio1: 'Vaso Resident Evil: Noche Cero', premio2: 'Pochoclera Resident Evil: Noche Cero', premio3: 'Resident Evil Requiem para Steam'} },
     ]
 
     async function insertSorteos() {
