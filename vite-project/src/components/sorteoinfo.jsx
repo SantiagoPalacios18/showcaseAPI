@@ -58,9 +58,6 @@ function sorteoinfo(props) {
 
     const getUnClienteSorteo = async () => {
         try {
-
-            const usu_sort = await api.get(`/clientes-sorteos/getByPk/${id}/${props.user}`)
-
             console.log('User Id: '+props.user.id_Usuario)
             const usu_sort = await api.get(`/clientes-sorteos/getById_u/${id}/${props.user.id_Usuario}`)
 
