@@ -86,13 +86,14 @@ function sorteoinfo(props) {
             setGanador(ganador.data)
         } catch (error) {
             console.log({error})
-        } 
+        }
     }
 
     useEffect(() => {
         getSorteoById(id),
-        getUsuariosBySorteoId()
+        getUnClienteSorteo()
     }, [])
+<<<<<<< HEAD
 
     return(
     <div className="sorteo">
