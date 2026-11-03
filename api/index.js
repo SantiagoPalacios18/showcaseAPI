@@ -3,7 +3,7 @@ const express = require("express"); // Framework para hacer servidores web y adm
 const { sequelize } = require('./config/db.js'); // Importamos el sequelize, el cual ya fue importado dentro de config/db.js
 
 // TABLAS
-const { Usuario, Rol, Patente, Pelicula, Sala, Funcion, Cine, Tecnologia, Sorteo } = require('./models/index.js');
+const { Usuario, Rol, Patente, Pelicula, Sala, Funcion, Cine, Tecnologia, Sorteo, Asiento, Transaccion, CompraTicket } = require('./models/index.js');
 
 // CORS
 const cors = require ("cors")
@@ -59,7 +59,7 @@ server.listen(3000, async () => {
   try {
     await sequelize.authenticate(); // Prueba para verificar que haya conexión exitosa y ver si el motor de la BD está encendido
     await sequelize.query('SET FOREIGN_KEY_CHECKS = 0;');
-    await sequelize.sync({ force: true }); // Verifica las estructuras de la BD, comparando lo ingresado en el JS con lo que está en la BD
+    await sequelize.sync({ alter: true }); // Verifica las estructuras de la BD, comparando lo ingresado en el JS con lo que está en la BD
     await sequelize.query('SET FOREIGN_KEY_CHECKS = 1;'); // Esto lo meto para poder modificar tablas y que no tire errores por relaciones, luego se deberia poder sacar sin problema
     /* INTERACCIÓN CON LAS TABLAS: (SE: Si Existe, SNE: Si No Existe)
         sync() : Crea tablas (SNE), no modifica ni borra
@@ -253,10 +253,154 @@ server.listen(3000, async () => {
 
 
 
+  
+
   } catch (error) {
     console.error('No se pudo conectar a la base de datos:', {error});
   }
 });
+
+const insertDatosCompletos = async () => {
+    try {
+        // 1. Cine
+        const cines = [
+            { nombre: "Hoyts Abasto", ubicacion: "Av Corrientes 3247", DVH: "CIN001" },
+            { nombre: "Village Recolet", ubicacion: "Vicente Lopez 2050", DVH: "CIN002" }
+        ];
+        for (const cine of cines) {
+            await Cine.findOrCreate({
+                where: { nombre: cine.nombre },
+                defaults: cine
+            });
+        }
+        console.log('1/7 Cines insertados');
+
+        // 2. Tecnologia
+        const tecnologias = [
+            { nombre: "IMAX 3D", descripcion: "Pantalla gigante", DVH: "TEC001" },
+            { nombre: "2D Standard", descripcion: "Proyección clásica", DVH: "TEC002" }
+        ];
+        for (const tecno of tecnologias) {
+            await Tecnologia.findOrCreate({
+                where: { nombre: tecno.nombre },
+                defaults: tecno
+            });
+        }
+        console.log('2/7 Tecnologías insertadas');
+
+        // 3. Sala
+        const salas = [
+            { id_Cine: 1, numero: 1, cant_Asientos: 50, DVH: "SAL001" },
+            { id_Cine: 1, numero: 2, cant_Asientos: 40, DVH: "SAL002" }
+        ];
+        for (const sala of salas) {
+            await Sala.findOrCreate({
+                where: { id_Cine: sala.id_Cine, numero: sala.numero },
+                defaults: sala
+            });
+        }
+        console.log('3/7 Salas insertadas');
+
+        // 4. Funcion (Corregido: cargamos todas las FKs necesarias)
+        const funciones = [
+            {
+                id_sala: 1,
+                id_pelicula: 3,
+                id_tecnologia: 1,
+                id_asiento: 1,
+                idioma: "Subtitulado",
+                proyeccion: "2D",
+                horarioInicio: new Date("2026-11-10T18:30:00"),
+                DVH: "FUN001"
+            },
+            {
+                id_sala: 2,
+                id_pelicula: 6,
+                id_tecnologia: 2,
+                id_asiento: 2,
+                idioma: "Español",
+                proyeccion: "3D",
+                horarioInicio: new Date("2026-11-10T21:00:00"),
+                DVH: "FUN002"
+            }
+        ];
+        for (const funcion of funciones) {
+            await Funcion.findOrCreate({
+                where: { 
+                    id_sala: funcion.id_sala, 
+                    horarioInicio: funcion.horarioInicio 
+                },
+                defaults: funcion
+            });
+        }
+        console.log('4/7 Funciones insertadas');
+
+        // 5. Asiento
+        const asientos = [
+            { id_Funcion: 1, numero: 1, fila: "A", DVH: "ASI001" },
+            { id_Funcion: 1, numero: 2, fila: "A", DVH: "ASI002" }
+        ];
+        for (const asiento of asientos) {
+            await Asiento.findOrCreate({
+                where: { 
+                    id_Funcion: asiento.id_Funcion, 
+                    numero: asiento.numero, 
+                    fila: asiento.fila 
+                },
+                defaults: asiento
+            });
+        }
+        console.log('5/7 Asientos insertados');
+
+        // 6. Transaccion
+        const transacciones = [
+            {
+                id_Usuario: 1,
+                total: 5000,
+                fechaDeEmision: new Date(),
+                fechaVencimiento: new Date(Date.now() + 86400000),
+                metodoDePago: "MercadoPago",
+                DVH: "TRX001"
+            }
+        ];
+        for (const trx of transacciones) {
+            await Transaccion.findOrCreate({
+                where: { 
+                    id_Usuario: trx.id_Usuario, 
+                    metodoDePago: trx.metodoDePago 
+                },
+                defaults: trx
+            });
+        }
+        console.log('6/7 Transacciones insertadas');
+
+        // 7. CompraTicket
+        const tickets = [
+            {
+                id_transaccion: 1,
+                id_FuncionAsiento: 1,
+                precio: 2500,
+                DVH: "TCK001"
+            }
+        ];
+        for (const ticket of tickets) {
+            await CompraTicket.findOrCreate({
+                where: { 
+                    id_transaccion: ticket.id_transaccion, 
+                    id_FuncionAsiento: ticket.id_FuncionAsiento 
+                },
+                defaults: ticket
+            });
+        }
+        console.log('7/7 CompraTickets insertados');
+
+        console.log('¡Carga de los 7 modelos ejecutada completamente con éxito!');
+    } catch (err) {
+        console.error('Error durante la inserción:', err);
+    }
+};
+
+insertDatosCompletos();
 
 /*
  (async(req,res) => {

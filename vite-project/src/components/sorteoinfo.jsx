@@ -9,12 +9,14 @@ import './styles/Home.css'
 import './styles/sorteo.css'
 
 
+
 function sorteoinfo(props) {
     const [message, setMessage] = useState("")
     const [sort, setSorteos] = useState([])
     const { id } = useParams(); // Acá extraés el ID directamente de la URL
     const [usuario_sort, setusuario_sort ] = useState({})
     const [ganador, setGanador] = useState("")
+    const [usu_peli, setUsu_peli] = useState("")
 
     const getMessage = async () => {
         try {
@@ -35,6 +37,16 @@ function sorteoinfo(props) {
         setSorteos(sort.data);
         } catch (error) {
             console.log({error});
+        }
+    }
+
+    const getBuscarUsuarioPelicula = async () => {
+        try {
+            const usu_peli =await api.get(`/usuarios/${props.user.id_Usuario}`)
+            setUsu_peli(usu_peli.data[0])
+            console.log(usu_peli)
+        } catch (error) {
+            console.log({error})   
         }
     }
 
@@ -71,6 +83,7 @@ function sorteoinfo(props) {
         try {
             const ganador = await api.get(`sorteos/getGanador/${id}`)
             setGanador(ganador.data)
+            console.log(ganador)
         } catch (error) {
             console.log({error})
         }
@@ -78,7 +91,8 @@ function sorteoinfo(props) {
 
     useEffect(() => {
         getSorteoById(id),
-        getUnClienteSorteo()
+        getUnClienteSorteo(),
+        getBuscarUsuarioPelicula()
     }, [])
 return(
     <div>
@@ -95,6 +109,7 @@ return(
             <h2>ya estas inscripto 🥳</h2>
         )}
         <button onClick={getElegirGanador} >elegir ganador</button>
+        <button onClick={getBuscarUsuarioPelicula}>ver si el pibe compro</button>
     </div>  
     )
 }

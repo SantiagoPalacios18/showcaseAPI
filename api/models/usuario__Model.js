@@ -11,7 +11,7 @@ const Usuario = sequelize.define(
         },
         id_Rol: {
             type: DataTypes.TINYINT.UNSIGNED,
-            defaultValue: 1,
+            // defaultValue: 1,
         },
         nombre: {
             type: DataTypes.STRING(15),
