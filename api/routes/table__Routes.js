@@ -6,6 +6,6 @@ const {
 } = require('../controllers/table__Controller');
 
 router.get('/getAllTables', getAllTables);
-router.get('/getTableFields', getTableFields);
+router.get('/getTableFields/:tabla', getTableFields);
 
 module.exports = router;

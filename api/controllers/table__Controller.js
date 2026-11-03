@@ -16,7 +16,7 @@ const getTableFields = async (req, res) => {
 
         // SOlo permite tablas que existen
         const existentes = (await qi.showAllTables())
-            .map(t => (typeof t === 'string' ? t : t.tableName)); // Busca todas las tablas con los nombres
+            .map(t => (typeof t === 'string' ? t : t.tableName)); // Busca todas las tablas con los nombres ()
         if (!existentes.includes(tabla)) { // Si la tabla pedida no está dentro de la lista de todas las tablas, lanza error
             return res.status(404).json({ message: "Tabla inexistente" });
         }

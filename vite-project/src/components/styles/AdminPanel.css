@@ -18,3 +18,43 @@
     cursor: pointer;
     height: 60px;
 }
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;                         /* cubre toda la pantalla */
+    background: rgba(0, 0, 0, 0.7);   /* fondo oscurecido */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;                    /* por encima de todo */
+}
+
+.modal-content {
+    background: #1e1e1e;
+    color: whitesmoke;
+    padding: 20px;
+    border-radius: 8px;
+    width: 450px;
+    max-width: 90vw;
+    max-height: 85vh;
+    overflow-y: auto;                 /* scroll si hay muchos campos */
+    text-align: left;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+}
+.modal-content h3 { color: whitesmoke; margin-top: 0; }
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 12px;
+}
+.form-field small { color: gray; }
+.form-field input[type="checkbox"] { align-self: flex-start; }
+.form-field textarea { min-height: 80px; resize: vertical; }
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 16px;
+}
