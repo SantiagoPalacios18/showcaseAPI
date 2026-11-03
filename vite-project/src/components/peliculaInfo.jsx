@@ -13,6 +13,13 @@ import './styles/peliculaInfo.css'
 function peliculaInfo(props) {
     const [pelicula, setPelicula] = useState([])
     const [peliculaKeys, setPeliculaKeys] = useState([])
+    const [mostrarReservar, setMostrarReservar] = useState(false)
+    const [mostrarFunciones, setMostrarFunciones] = useState(false)
+    const [datosReserva, setDatosReserva] = useState({
+        Total: null,
+        MetodoPago: null,
+
+    })
     const { id } = useParams(); // Acá extraés el ID directamente de la URL
     
     const getPeliculaById = async () => {
@@ -24,7 +31,9 @@ function peliculaInfo(props) {
         }
     }
 
-    const reservar = async () => {
+    const reservar = async (e) => {
+        e.preventDefault()
+        setMostrarReservar(false)
         try {
             const reserva = api.post('', {
                 idCliente: props.user.id_Cliente
@@ -48,7 +57,35 @@ function peliculaInfo(props) {
                     ))}
                 </div>
             </div>
-            <button onClick={()=>{reservar}}>Comprar tickets</button>
+
+            {mostrarFunciones==false && (
+                <button onClick={()=>{setMostrarReservar(true)}}>Comprar tickets</button>
+            )}
+            {mostrarReservar==true && (
+                <h1>kjfgasdlafsdfk</h1>
+            )}
+            {mostrarReservar==false && (
+                <button onClick={()=>{setMostrarReservar(true)}}>Comprar tickets</button>
+            )}
+            {mostrarReservar==true && (
+                <div id="divReserva">
+                    <legend>Reservar</legend>
+                    <form onSubmit={reservar}>
+                        <label> Asientos</label>
+                        <input type="text" placeholder="Cuantos asientos quiere?" />
+                        <label> Seleccione su metodo de pago</label>
+                        <select>
+                            <option value="">Seleccionar Metodo de Pago</option>
+                            <option value="Mercado Pago">Mercado Pago</option>
+                            <option value="Debito">Debito</option>
+                            <option value="Credito">Credito</option>
+                            <option value="Colita">Colita</option>
+                        </select>
+                        <button type="submit">Reservar</button>
+                    </form>
+                </div>
+            )}
+
         </>
     )
 }

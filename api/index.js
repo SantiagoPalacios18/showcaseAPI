@@ -358,20 +358,17 @@ const insertDatosCompletos = async () => {
                 id_Usuario: 1,
                 total: 5000,
                 fechaDeEmision: new Date(),
-                fechaVencimiento: new Date(Date.now() + 86400000),
                 metodoDePago: "MercadoPago",
                 DVH: "TRX001"
             }
         ];
-        for (const trx of transacciones) {
-            await Transaccion.findOrCreate({
-                where: { 
-                    id_Usuario: trx.id_Usuario, 
-                    metodoDePago: trx.metodoDePago 
-                },
-                defaults: trx
-            });
-        }
+        await Transaccion.create({
+            id_Usuario: 1,
+            total: 5000,
+            fechaDeEmision: new Date(),
+            metodoDePago: "MercadoPago",
+            DVH: "TRX001"
+        });
         console.log('6/7 Transacciones insertadas');
 
         // 7. CompraTicket
@@ -400,7 +397,7 @@ const insertDatosCompletos = async () => {
     }
 };
 
-insertDatosCompletos();
+//insertDatosCompletos();
 
 /*
  (async(req,res) => {

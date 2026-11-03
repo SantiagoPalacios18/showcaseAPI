@@ -5,7 +5,7 @@ import {useState , useEffect } from "react"
 // El axios configurado que vamos a usar
 import api from "../api"
 import imagenTest from "../media/unnamed.jpg"
-import './styles/sorteoInfo.css'
+import './styles/sorteoinfo.css'
 
 
 

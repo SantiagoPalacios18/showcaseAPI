@@ -1,3 +1,7 @@
+*{
+    color: white
+}
+
 #peliculaInfoDiv {
     display: flex;
     flex-direction: row;
@@ -15,4 +19,30 @@
 #peliculaInfoDivDiv > *{
     margin: 0;
     font-size: calc(0.9rem + 1.5vw);
+}
+
+#divReserva {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    > * {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    > form {
+        background-color: aqua;
+    }
+}
+
+select {
+    color: black;
+}
+option {
+    color: black;
+}
+button {
+    color: black
 }

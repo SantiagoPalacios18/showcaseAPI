@@ -15,8 +15,10 @@ const Transaccion = sequelize.define(
             primaryKey: true,
         },
         total:DataTypes.INTEGER(8),
-        fechaDeEmision: DataTypes.DATE,
-        fechaVencimiento: DataTypes.DATE,
+        fechaDeEmision: {
+            type: DataTypes.DATE,
+            defaultValue: DataTypes.NOW()
+        },
         metodoDePago: DataTypes.STRING(15),
         DVH: {
             type: DataTypes.STRING(6),
