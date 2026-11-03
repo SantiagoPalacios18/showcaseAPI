@@ -28,7 +28,7 @@ function Sorteos(props) {
             const sort = await api.get('/sorteos')
             setSorteos(sort.data)
         } catch (error) {
-            console.log(error)
+            console.log({error})
         }
     }
 

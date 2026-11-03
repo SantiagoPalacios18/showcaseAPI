@@ -47,7 +47,7 @@ const createUser = async (req, res) => {
     try {
         const data = req.body;
 
-        if (!data.id_Rol || !data.nombre || !data.apellido || !data.DNI || !data.telefono || !data.email || !data.fechaNacimiento || !data.DVV) {
+        if (!data.id_Rol || !data.nombre || !data.apellido || !data.DNI || !data.telefono || !data.email || !data.fechaNacimiento || !data.DVH) {
             return res.status(400).json({
                 message: "Faltan datos obligatorios (id_Rol, nombre, apellido, DNI, telefono, email, fechaNacimiento DVH)"
             });
@@ -62,7 +62,7 @@ const createUser = async (req, res) => {
         if ( nacimiento > new Date()) {
             return res.status(400).json({ message: "Fecha de nacimiento inválida" })
         }
-        const nuevouser = await userBD.create({
+        const nuevouser = await Usuario.create({
             id_Rol: data.id_Rol,
             nombre: data.nombre,
             apellido: data.apellido,
@@ -71,7 +71,8 @@ const createUser = async (req, res) => {
             telefono: data.telefono,
             email: data.email,
             foto: default_foto,
-            DVH: data.DVH
+            DVH: data.DVH,
+            contraseña: await bcrypt.hash(data.contraseña, 10),
         });
 
         res.status(200).json({ message: "Se ha creado el user correctamente." + extra, user: nuevouser });
@@ -235,6 +236,17 @@ const buscarUsuarioPelicula = async (req, res) => {
     } catch (error) {
         console.log(error)
     }
+}
+
+const registrarUsuarioEnPelicula = async (req, res) => {
+try {
+  const result = await sequelize.transaction( //Usamos transaction pq sino puede modificarse una parte de la bd, dar error desues y no rollbackearse
+    async t => {
+        
+    });
+} catch (error) {
+  console.log({error})
+}
 }
 
 

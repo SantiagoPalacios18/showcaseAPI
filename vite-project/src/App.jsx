@@ -135,7 +135,7 @@ function App() {
             }></Route>
 
             <Route path='/cartelera' element={<Cartelera></Cartelera>}></Route>
-            <Route path='/peliculaInfo/:id' element={<PeliculaInfo />}></Route>
+            <Route path='/peliculaInfo/:id' element={<PeliculaInfo user={user} />}></Route>
             <Route path='/eventos' element={<Eventos></Eventos>}></Route>
             <Route path='/sorteos' element={<Sorteos user={user} />}></Route>
             <Route path='/sorteoinfo/:id' element={<Sorteoinfo user={user} />}></Route>             

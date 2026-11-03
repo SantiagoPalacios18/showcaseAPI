@@ -11,7 +11,7 @@ const Usuario = sequelize.define(
         },
         id_Rol: {
             type: DataTypes.TINYINT.UNSIGNED,
-            default: 'Usuario'
+            defaultValue: 1,
         },
         nombre: {
             type: DataTypes.STRING(15),
@@ -61,11 +61,11 @@ const Usuario = sequelize.define(
         },
         isActive: {
             type: DataTypes.BOOLEAN,
-            default: 1
+            defaultValue: 1
         },
         isLogged: {
             type: DataTypes.BOOLEAN,
-            default: 1
+            defaultValue: 1
         },
         foto: {
             type: DataTypes.TEXT("long"),

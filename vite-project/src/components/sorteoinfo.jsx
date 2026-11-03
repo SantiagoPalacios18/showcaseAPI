@@ -6,6 +6,11 @@ import {useState , useEffect } from "react"
 import api from "../api"
 import imagenTest from "../media/unnamed.jpg"
 import './styles/sorteoInfo.css'
+=======
+import './styles/Home.css'
+import './styles/sorteo.css'
+
+>>>>>>> 8529de4e924d68e06885b7bf954095691824c870
 
 function sorteoinfo(props) {
     const [message, setMessage] = useState("")
@@ -13,6 +18,7 @@ function sorteoinfo(props) {
     const [premios, setPremios] = useState([])
     const { id } = useParams(); // Acá extraés el ID directamente de la URL
     const [usuario_sort, setusuario_sort ] = useState({})
+    const [ganador, setGanador] = useState("")
 
     const navigate = useNavigate()
 
@@ -26,21 +32,29 @@ function sorteoinfo(props) {
     }
 
 
-    const getSorteoById = async (id) => {
+    const getSorteoById = async () => {
         try {
-        const sort = await api.get(`/sorteos/getByPk/${id}`);
+            const algo = api.get
+        const sort = await api.get(`/sorteos/getByPk/${id}`, {
+            usuarios: algo
+        });
         setSorteos(sort.data);
         const premios = sort.data.premio
         console.log(premios)
         setPremios(JSON.parse(premios))
         } catch (error) {
-        console.log(error);
+            console.log({error});
         }
     }
 
-    const getUsuariosBySorteoId = async () => {
+    const getUnClienteSorteo = async () => {
         try {
+<<<<<<< HEAD
             const usu_sort = await api.get(`/clientes-sorteos/getByPk/${id}/${props.user}`)
+=======
+            console.log('User Id: '+props.user.id_Usuario)
+            const usu_sort = await api.get(`/clientes-sorteos/getById_u/${id}/${props.user.id_Usuario}`)
+>>>>>>> 8529de4e924d68e06885b7bf954095691824c870
             if (usu_sort)
                 setusuario_sort(usu_sort.data[0])
             console.log(usu_sort)
@@ -63,6 +77,15 @@ function sorteoinfo(props) {
         } catch (error) {   
             console.log({error})
             console.log(usuario_sort)
+        } 
+    }
+
+    const getElegirGanador = async () => {
+        try {
+            const ganador = await api.get(`sorteos/getGanador/${id}`)
+            setGanador(ganador.data)
+        } catch (error) {
+            console.log({error})
         } 
     }
 

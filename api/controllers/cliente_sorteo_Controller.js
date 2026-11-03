@@ -13,7 +13,7 @@ const getClientesSorteos = async (req, res) => {
 // GET: Obtener registros por ID de sorteo
 const getClientesBySorteoId = async (req, res) => {
     try {
-        const { id_sorteo, id_Usuario } = req.params;
+        const { id_sorteo } = req.params;
         const registros = await Usuario_sorteo.findAll({
             where: { id_sorteo }
         });
@@ -31,6 +31,20 @@ const getClientesBySorteoId = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+const getUnClienteSorteo = async (req, res) =>{
+    try {
+        const { id_sorteo, id_Usuario } = req.params;
+        const registros = await Usuario_sorteo.findAll({
+            where: { id_sorteo, id_Usuario}
+        });   
+        
+        console.log(registros)
+        res.status(200).json(registros);
+    } catch (error) {
+         res.status(500).json({ error: error.message });
+    }
+}
 
 // POST: Inscribir cliente a sorteo
 const createClienteSorteo = async (req, res) => {
@@ -124,6 +138,7 @@ const deleteClienteSorteo = async (req, res) => {
 module.exports = {
     getClientesSorteos,
     getClientesBySorteoId,
+    getUnClienteSorteo,
     createClienteSorteo,
     modifyClienteSorteo,
     deleteClienteSorteo

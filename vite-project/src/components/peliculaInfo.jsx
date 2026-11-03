@@ -1,41 +1,57 @@
 import { Link, useParams } from "react-router-dom"
-import {useState , useEffect } from "react"
+import { useState, useEffect } from "react"
 
 
 // El axios configurado que vamos a usar
 import api from "../api"
 import imagenTest from "../media/unnamed.jpg"
 import './styles/Home.css'
-import './styles/sorteo.css'
+import './styles/peliculaInfo.css'
 
 
 
 function peliculaInfo(props) {
     const [pelicula, setPelicula] = useState([])
+    const [peliculaKeys, setPeliculaKeys] = useState([])
     const { id } = useParams(); // Acá extraés el ID directamente de la URL
-
-    const getPeliculaById = async (id) => {
+    
+    const getPeliculaById = async () => {
         try {
             const peli = await api.get(`/peliculas/getByPk/${id}`);
             setPelicula(peli.data);
-            console.log(peli, pelicula)
         } catch (error) {
-            console.log(error);
+            console.log({ error });
         }
     }
 
-    useEffect(()=>{
-        getPeliculaById
+    const reservar = async () => {
+        try {
+            const reserva = api.post('', {
+                idCliente: props.user.id_Cliente
+            })
+        } catch (error) {
+            console.log({error})
+        }
+    }
+
+    useEffect(() => {
+        getPeliculaById()
     }, [])
 
-    return(
+    return (
         <>
-            <h1>akjdfls</h1>
-            <h1>{id}</h1>
-            <h1>{pelicula}</h1>
+            <div id="peliculaInfoDiv">
+                <img src={imagenTest} alt={pelicula.titulo} />
+                <div id="peliculaInfoDivDiv">
+                    {Object.keys(pelicula).filter((key) => key != "imagen").map((key) => (
+                        <h1>{pelicula[key]}</h1>
+                    ))}
+                </div>
+            </div>
+            <button onClick={()=>{reservar}}>Comprar tickets</button>
         </>
-        )
+    )
 }
-                          
+
 
 export default peliculaInfo
