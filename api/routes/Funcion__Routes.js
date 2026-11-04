@@ -12,7 +12,7 @@ const {
 router.get('/', getFunciones);
 router.get('/getByPk/:id', getFuncionById);
 router.post('/', createFuncion);
-router.patch('/:id', modifyFuncionById);
+router.patch('/edit/:id', modifyFuncionById);
 router.delete('/:id', deletefuncionById);
 
 module.exports = router;

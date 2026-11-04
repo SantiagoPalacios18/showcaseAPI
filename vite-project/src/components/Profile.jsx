@@ -385,11 +385,7 @@ function Profile(props){
 
 
                 </div>
-                <span id="texto">Un video mas mi gente pa pelder el tiempo. Quien quiera perder su tiempo que lo pierda. Yeeaaah. Mmm, de locos, hermano. De locoooaaaas.
-                ¿Pero qué es esto, mi gente? ¡Wasaaaaaaaaa! Miren este pedazo de pollo. Crujiente, jugoso, una bendición del de arriba. Hoy andamos activos, rompiendo la dieta porque el cuerpo lo pide y el Rey de Kentucky lo respalda. ¡Bravísimo! Linganguliguliguliwacha lingangu lingangu.
-                Atención a todos los envidiosos que están mirando este video con hambre. No se me queden ahí parados, vayan por el suyo. Si la vida te da limones, tú le pides pollo frito al universo, ¡así de simple! Nooo, no lo diga, así no.
-                Uff, qué delicia, mi hermano. Esto no es comida, esto es una obra de arte. Un respeto para los cocineros, ¡un aplauso! Eso es, eso es. Salsa y picante y nos fuimo.
-                Que nadie te quite la alegría de comer bien. ¡Sabor, sazón y pura energía positiva! ¡Vaaaamos por más! Si te gustó, deja tu 'like' y no te me duermas. ¡Chao, chao, chao! ¡BEEP BEEP!</span>
+                
             </section>
         )
     }

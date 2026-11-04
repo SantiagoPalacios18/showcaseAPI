@@ -11,7 +11,7 @@ const {
 router.get('/', getSalas);
 router.get('/getByPk/:id', getSalaById);
 router.post('/', createSala);
-router.patch('/:id', modifySalaById);
+router.patch('/edit/:id', modifySalaById);
 router.delete('/:id', deleteSalaById);
 
 module.exports = router;

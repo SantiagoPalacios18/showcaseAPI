@@ -11,7 +11,7 @@ const {
 router.get('/', getTecnologias);
 router.get('/getByPk/:id', getTecnologiaById);
 router.post('/', createTecnologia);
-router.patch('/:id', modifyTecnologiaById);
+router.patch('/edit/:id', modifyTecnologiaById);
 router.delete('/:id', deleteTecnologiaById);
 
 module.exports = router;

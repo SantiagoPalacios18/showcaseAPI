@@ -123,9 +123,23 @@ const deletePatenteUsuario = async (req, res) => {
     }
 };
 
+const getPatenteUsuarioByPk = async (req, res) => {
+    try {
+        const { id_Usuario, id_Patente } = req.params;
+        const registro = await Patente_Usuario.findOne({ where: { id_Usuario, id_Patente } });
+        if (!registro) {
+            return res.status(404).json({ message: "Relación no encontrada" });
+        }
+        res.status(200).json(registro);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 module.exports = {
     getPatentesUsuarios,
     getPatentesByUsuarioId,
+    getPatenteUsuarioByPk,
     createPatenteUsuario,
     modifyPatenteUsuario,
     deletePatenteUsuario

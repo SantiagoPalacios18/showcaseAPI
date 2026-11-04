@@ -11,7 +11,7 @@ const {
 router.get('/', getSesiones);
 router.get('/getByPk/:id', getSesionById);
 router.post('/', createSesion);
-router.patch('/:id', modifySesionById);
+router.patch('/edit/:id', modifySesionById);
 router.delete('/:id', deleteSesionById);
 
 module.exports = router;

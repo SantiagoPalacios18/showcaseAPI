@@ -11,7 +11,7 @@ const {
 router.get('/', getIdiomas);
 router.get('/getByPk/:id', getIdiomaById);
 router.post('/', createIdioma);
-router.patch('/:id', modifyIdiomaById);
+router.patch('/edit/:id', modifyIdiomaById);
 router.delete('/:id', deleteIdiomaById);
 
 module.exports = router;

@@ -114,9 +114,23 @@ const deleteIdiomaPelicula = async (req, res) => {
     }
 };
 
+const getIdiomaPeliculaByPk = async (req, res) => {
+    try {
+        const { id_pelicula, id_idioma } = req.params;
+        const registro = await Idioma_pelicula.findOne({ where: { id_pelicula, id_idioma } });
+        if (!registro) {
+            return res.status(404).json({ message: "Relación no encontrada" });
+        }
+        res.status(200).json(registro);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 module.exports = {
     getIdiomasPeliculas,
     getIdiomasByPeliculaId,
+    getIdiomaPeliculaByPk,
     createIdiomaPelicula,
     modifyIdiomaPelicula,
     deleteIdiomaPelicula

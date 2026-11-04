@@ -52,6 +52,7 @@ router.use('/salas', require('./sala__Routes.js'));
 router.use('/sesiones', require('./Sesion__Routes.js'));
 router.use('/soporte-tecnico', require('./soporteTecnico__Routes.js'));
 router.use('/tecnologias', require('./tecnologia__Routes.js'));
+router.use('/transacciones', require('./transaccion__Routes.js'));
 
 // Rutas intermedias (M:N)
 router.use('/actores-peliculas', require('./actor_pelicula_Routes.js'));

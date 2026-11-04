@@ -11,7 +11,7 @@ const {
 router.get('/', getComprasTickets);
 router.get('/getByPk/:id', getCompraTicketById);
 router.post('/', createCompraTicket);
-router.patch('/:id', modifyCompraTicketById);
+router.patch('/edit/:id', modifyCompraTicketById);
 router.delete('/:id', deleteCompraTicketById);
 
 module.exports = router;

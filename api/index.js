@@ -1,6 +1,6 @@
 //const mysql = require('mysql2/promise');
 const express = require("express"); // Framework para hacer servidores web y administrar peticiones
-const { sequelize } = require('./config/db.js'); // Importamos el sequelize, el cual ya fue importado dentro de config/db.js
+const { sequelize, crearBDSiNoExiste } = require('./config/db.js'); // Importamos el sequelize, el cual ya fue importado dentro de config/db.js
 
 // TABLAS
 const { Usuario, Rol, Patente, Pelicula, Sala, Funcion, Cine, Tecnologia, Sorteo, Asiento, Transaccion, CompraTicket } = require('./models/index.js');
@@ -32,7 +32,7 @@ server.use((req, res, next) => {
   // 👇 Acá decís qué origen tiene permiso
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173')
   // 👇 Métodos HTTP permitidos
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS')
   // 👇 Qué headers puede mandar el frontend
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
   // 👇 Si querés permitir cookies/tokens en las peticiones
@@ -57,6 +57,7 @@ cron.schedule('0 * * * *', limpiarCodigosVencidos);
 
 server.listen(3000, async () => {
   try {
+    await crearBDSiNoExiste();
     await sequelize.authenticate(); // Prueba para verificar que haya conexión exitosa y ver si el motor de la BD está encendido
     await sequelize.query('SET FOREIGN_KEY_CHECKS = 0;');
     await sequelize.sync({ alter: true }); // Verifica las estructuras de la BD, comparando lo ingresado en el JS con lo que está en la BD
@@ -67,7 +68,7 @@ server.listen(3000, async () => {
         sync(alter: true): Crea (SNE) y modifica (SE) tablas pero no borra
     */
     console.log("El servidor está ON en el puerto 3000 y la BD lista");
-    console.log("hash de prueba:", await bcrypt.hash("123", 10));
+    // console.log("hash de prueba:", await bcrypt.hash("123", 10));
 
     // EL MEGA ADMIN: BENITO CAMELA
     const [Benito] = await Usuario.findOrCreate({
@@ -75,7 +76,7 @@ server.listen(3000, async () => {
       defaults: {
         nombre: 'Benito',
         apellido: 'Camela',
-        edad: '999',
+        fechaNacimiento: '67-06-07',
         DNI: 1,
         telefono: 666,
         email: 'asd@a.com',
@@ -89,7 +90,7 @@ server.listen(3000, async () => {
       defaults: {
         nombre: 'Polo',
         apellido: 'Rivera',
-        edad: '999',
+        fechaNacimiento: '67-06-07',
         DNI: 2,
         telefono: 666,
         email: 'asd@aa.com',
@@ -166,7 +167,7 @@ server.listen(3000, async () => {
                     defaults: peliData
                 });
             }
-            console.log('10 películas insertadas')
+            console.log('--- 10 películas insertadas')
         } catch (err) {
             console.error(err)
         }
@@ -187,7 +188,7 @@ server.listen(3000, async () => {
             defaults: sorteoInfo
           });
         }
-        console.log('2 sorteos insertados')
+        console.log('--- 2 sorteos insertados')
       }
       catch(err){
         console.log(err)
@@ -220,7 +221,7 @@ server.listen(3000, async () => {
             defaults: salaData
         });
     }
-    console.log('Salas insertadas correctamente');
+    console.log('--- Salas insertadas correctamente');
 
     // ==========================================
     // 5. TECNOLOGÍA Y FUNCIONES
@@ -249,7 +250,7 @@ server.listen(3000, async () => {
             defaults: funcionData
         });
     }
-    console.log('Funciones insertadas correctamente');
+    console.log('--- Funciones insertadas correctamente');
 
 
 
