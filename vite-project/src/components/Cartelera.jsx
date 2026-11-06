@@ -1,6 +1,11 @@
-import { Link } from "react-router-dom"
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect} from "react"
 import { useNavigate } from "react-router-dom"
+import {getPaletteSync} from 'colorthief'
+//  Una idea es que cada tarjeta tenga los colores predominantes de su paleta, para lograrlo 
+// necesito modularizar la interfaz, separando la tarjeta de la cartelera, asi cada tarjeta
+// puede guardar un valor permanente para las variables de su style y los colores no se pisan
+// entre si.
+//  Lo voy a intentar dsp de que haga el FTP
 
 import api from "../api"
 import imagenTest from "../media/unnamed.jpg"
@@ -10,17 +15,17 @@ function Cartelera(props) {
     const [peliculas, setPeliculas] = useState([])
 
     const [x, setX] = useState(0)
+    const [y, setY] = useState(0)
     const [distX, setDistX] = useState(0)
     const [distY, setDistY] = useState(0)
     const [angulo, setAngulo] = useState(0)
-    const [y, setY] = useState(0)
-    const [ancho, setAncho] = useState(0)
-    const [alto, setAlto] = useState(0)
 
     const styleVar = {
         '--inclinacion-x': distX,
-        '--inclinacion-y': distY
+        '--inclinacion-y': distY,
+        '--angulo-mouse': angulo + 'rad'
     }
+
 
     const Navigate = useNavigate()
 
@@ -48,7 +53,7 @@ function Cartelera(props) {
 
         let distanciaX = x < mitadAncho ? - ((mitadAncho - x) / mitadAncho) :  (x - mitadAncho) / mitadAncho;
         let distanciaY = y < mitadAlto ? ((mitadAlto - y) / mitadAlto) : - (y - mitadAlto) / mitadAlto;
-        // let angulo = Math.asin(distanciaY / (Math.sqrt(Math.pow(distanciaX, 2) + Math.pow(distanciaY, 2)) / 1)) 
+        let angulo = Math.atan2(distanciaY, distanciaX) 
         setDistX(distanciaX)
         setDistY(distanciaY)
         setAngulo(angulo)
@@ -60,7 +65,6 @@ function Cartelera(props) {
 
     return (
         <div>
-            <p>Inc. X: {distX} Inc. Y: {distY}</p>
             <div>
                 <div className="etiqueta-novedades">Cartelera</div>
             </div>

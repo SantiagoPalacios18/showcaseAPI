@@ -12,8 +12,37 @@ const getImagen = (nombre) => imagenTest
 function Sorteos(props) {
     const [message, setMessage] = useState("")
     const [sorteos, setSorteos] = useState([])
+
+    const [distX, setDistX] = useState(0)
+    const [distY, setDistY] = useState(0)
+    const [angulo, setAngulo] = useState(0)
+
+
     const Navigate = useNavigate()
-    console.log({sorteos})
+
+    const styleVar = {
+        '--inclinacion-x': distX,
+        '--inclinacion-y': distY,
+        '--angulo-mouse': angulo + 'rad'
+    }
+
+    function handleMousemove(e){
+        const element = e.currentTarget;
+        
+        let x = e.nativeEvent.layerX
+        let y = e.nativeEvent.layerY
+
+        let mitadAncho = element.getBoundingClientRect().width / 2
+        let mitadAlto = element.getBoundingClientRect().height / 2
+
+        let distanciaX = x < mitadAncho ? - ((mitadAncho - x) / mitadAncho) :  (x - mitadAncho) / mitadAncho;
+        let distanciaY = y < mitadAlto ? ((mitadAlto - y) / mitadAlto) : - (y - mitadAlto) / mitadAlto;
+        let angulo = Math.atan2(distanciaY, distanciaX) 
+        setDistX(distanciaX)
+        setDistY(distanciaY)
+        setAngulo(angulo)
+    }
+
     const getMessage = async () => {
         try {
             const response = await api.get("/")
@@ -47,9 +76,11 @@ return(
             <ul className="contenedor-sorteos">
                 {sorteos.map(sor => 
                     <li key={sor.id} className="organizar-sorteo">
-                        <h2>{sor.nombre}</h2>
-                        <div className="imagen">
-                            <img onClick={()=> Navigate(`/sorteoinfo/${sor.id_sorteo}`) } src={getImagen(sor.imagen)} alt={sor.nombre}/>
+                        <div className="tarjeta-sorteo" style={styleVar}>
+                            <h2>{sor.nombre}</h2>
+                            <div className="imagen" onMouseMove={(e)=>{handleMousemove(e)}}>
+                                <img onClick={()=> Navigate(`/sorteoinfo/${sor.id_sorteo}`) } src={getImagen(sor.imagen)} alt={sor.nombre}/>
+                            </div>
                         </div>
                     </li>
                 )}
