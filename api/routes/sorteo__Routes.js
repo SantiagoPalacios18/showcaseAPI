@@ -13,7 +13,7 @@ router.get('/getGanador/:id', getElegirGanador)
 router.get('/', getSorteos);
 router.get('/getByPk/:id', getSorteoById);
 router.post('/', createSorteo);
-router.patch('/:id', modifySorteoById);
+router.patch('/edit/:id', modifySorteoById);
 router.delete('/:id', deleteSorteoById);
 
 module.exports = router;

@@ -13,13 +13,13 @@ const getPeliculasCines = async (req, res) => {
 // GET: Obtener películas de un cine específico
 const getPeliculasByCineId = async (req, res) => {
     try {
-        const { id_Cine } = req.params;
+        const { id_cine } = req.params;
         const registros = await Pelicula_cine.findAll({
-            where: { id_Cine }
+            where: { id_cine }
         });
 
         if (registros.length === 0) {
-            return res.status(404).json({ message: `No se encontraron películas para el cine: ${id_Cine}` });
+            return res.status(404).json({ message: `No se encontraron películas para el cine: ${id_cine}` });
         }
 
         res.status(200).json(registros);
@@ -33,16 +33,16 @@ const createPeliculaCine = async (req, res) => {
     try {
         const data = req.body;
 
-        if (!data.id_Pelicula || !data.id_Cine || !data.DVH) {
+        if (!data.id_pelicula || !data.id_cine || !data.DVH) {
             return res.status(400).json({
-                message: "Faltan datos obligatorios (id_Pelicula, id_Cine o DVH)"
+                message: "Faltan datos obligatorios (id_pelicula, id_cine o DVH)"
             });
         }
 
         const existe = await Pelicula_cine.findOne({
             where: {
-                id_Pelicula: data.id_Pelicula,
-                id_Cine: data.id_Cine
+                id_pelicula: data.id_pelicula,
+                id_cine: data.id_cine
             }
         });
 
@@ -51,8 +51,8 @@ const createPeliculaCine = async (req, res) => {
         }
 
         const nuevoRegistro = await Pelicula_cine.create({
-            id_Pelicula: data.id_Pelicula,
-            id_Cine: data.id_Cine,
+            id_pelicula: data.id_pelicula,
+            id_cine: data.id_cine,
             DVH: data.DVH
         });
 
@@ -68,7 +68,7 @@ const createPeliculaCine = async (req, res) => {
 // PATCH: Modificar (DVH)
 const modifyPeliculaCine = async (req, res) => {
     try {
-        const { id_Pelicula, id_Cine } = req.params;
+        const { id_pelicula, id_cine } = req.params;
         const data = req.body;
         let datosCambiar = {};
 
@@ -79,7 +79,7 @@ const modifyPeliculaCine = async (req, res) => {
         }
 
         const [filasModificadas] = await Pelicula_cine.update(datosCambiar, {
-            where: { id_Pelicula, id_Cine }
+            where: { id_pelicula, id_cine }
         });
 
         if (filasModificadas === 0) {
@@ -97,9 +97,9 @@ const modifyPeliculaCine = async (req, res) => {
 // DELETE: Quitar película de un cine
 const deletePeliculaCine = async (req, res) => {
     try {
-        const { id_Pelicula, id_Cine } = req.params;
+        const { id_pelicula, id_cine } = req.params;
         const eliminadas = await Pelicula_cine.destroy({
-            where: { id_Pelicula, id_Cine }
+            where: { id_pelicula, id_cine }
         });
 
         if (eliminadas === 0) {
@@ -107,8 +107,21 @@ const deletePeliculaCine = async (req, res) => {
         }
 
         res.status(200).json({
-            message: `Película ${id_Pelicula} quitada del cine ${id_Cine} correctamente.`
+            message: `Película ${id_pelicula} quitada del cine ${id_cine} correctamente.`
         });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+const getPeliculaCineByPk = async (req, res) => {
+    try {
+        const { id_cine, id_pelicula } = req.params;
+        const registro = await Pelicula_cine.findOne({ where: { id_cine, id_pelicula } });
+        if (!registro) {
+            return res.status(404).json({ message: "Relación no encontrada" });
+        }
+        res.status(200).json(registro);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -117,6 +130,7 @@ const deletePeliculaCine = async (req, res) => {
 module.exports = {
     getPeliculasCines,
     getPeliculasByCineId,
+    getPeliculaCineByPk,
     createPeliculaCine,
     modifyPeliculaCine,
     deletePeliculaCine

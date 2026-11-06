@@ -10,7 +10,7 @@ function AdminHome(props) {
     //console.log("props.user en AdminHome.jsx:", props.user)
     const [message, setMessage] = useState("")
     const [response, setResponse] = useState("")
-    const [tablasDisponibles, setTablasDisponibles] = useState([])
+    const [recursos, setRecursos] = useState([])
     const [id, setId] = useState("") 
 
     // Para la ventana emergente de CRUD:
@@ -34,7 +34,10 @@ function AdminHome(props) {
     const getTables = async() =>{
         try{
             const response = await api.get("tables/getAllTables")
-            setTablasDisponibles(response.data); 
+            const lista = Array.isArray(response.data) ? response.data : []
+            setRecursos(lista.map((item) => (
+                typeof item === "string" ? { ruta: item, tabla: item, pks: [] } : item
+            )))
         }catch(error){
             console.error("Error al traer tablas:", error);
         }
@@ -47,6 +50,11 @@ function AdminHome(props) {
     }, [])
 
     const [tablaElegida, setTablaElegida] = useState("");
+    const recursoActual = recursos.find((recurso) => recurso.ruta === tablaElegida)
+    const tablaSql = recursoActual?.tabla || ""
+    const pkHint = Array.isArray(recursoActual?.pks) ? recursoActual.pks.join("/") : ""
+
+    const pkPath = () => String(id || "").trim().replace(/^\/+|\/+$/g, "")
 
     const createTestUser = async () => {
         try {
@@ -69,9 +77,10 @@ function AdminHome(props) {
     // Los 4 de abajo necesitan la id
     const getRegisterByPk = async () => {
         try{
-            console.log("PK ingresada: "+id)
-            if (!id){return alert("Se debe ingresar un valor de PK")}
-            const response = await api.get(`${tablaElegida}/getByPk/${id}`)
+            const pk = pkPath()
+            console.log("PK ingresada: "+pk)
+            if (!pk){return alert("Se debe ingresar un valor de PK")}
+            const response = await api.get(`${tablaElegida}/getByPk/${pk}`)
             setResponse({message: response.data})
             console.log({message: response.data})
         }catch(error){
@@ -113,14 +122,25 @@ function AdminHome(props) {
     }
     const openForm = async (mode) => { // Esta función va a funcar para 2 modos: POST y EDIT
         if (!tablaElegida) return alert("Seleccioná una tabla primero")
-        if (mode === "edit" && !id) return alert("Ingresá la PK del registro a editar")
+        const pk = pkPath()
+        if (mode === "edit" && !pk) return alert("Ingresá la PK del registro a editar")
 
         try {
-            const { data: camposData } = await api.get(`tables/getTableFields/${tablaElegida}`) // Esto nos crea una constante llamada camposData, así no tengo q agarrar el .data siempre
+            const { data: camposData } = await api.get(`tables/getTableFields/${encodeURIComponent(tablaSql)}`) // Esto nos crea una constante llamada camposData, así no tengo q agarrar el .data siempre
 
             let dataOriginal = {}
             if (mode === "edit") {
-                const { data: registro } = await api.get(`${tablaElegida}/getByPk/${id}`) // Esto noes crea la constante registro
+                const { data: respuestaRegistro } = await api.get(`${tablaElegida}/getByPk/${pk}`) // Esto noes crea la constante registro
+                let registro = respuestaRegistro
+                if (Array.isArray(registro)) {
+                    if (registro.length === 1) registro = registro[0]
+                    else {
+                        alert(pkHint
+                            ? `Esta tabla tiene clave compuesta. Ingresala como ${pkHint}`
+                            : "Esta tabla tiene clave compuesta. Separá los valores con /")
+                        return
+                    }
+                }
                 for (const c of camposData) {
                     let v = registro[c.name] // Se agarra el valor del campo asignado (c) del registro
                     if (v == null) continue
@@ -135,7 +155,7 @@ function AdminHome(props) {
             setCampos(camposData)
             setData(dataOriginal)
             setOriginalData(dataOriginal)
-            setEditId(id)
+            setEditId(pk)
             setErrorForm("")
             setShowCRUDForm(mode)
         } catch (error) {
@@ -192,10 +212,11 @@ function AdminHome(props) {
 
     const deleteRegister = async () => {
         if (!tablaElegida) return alert("Seleccioná una tabla primero")
-        if (!id) return alert("Ingresá la PK del registro a borrar")
-        if (!window.confirm(`¿Borrar el registro ${id} de "${tablaElegida}"?`)) return
+        const pk = pkPath()
+        if (!pk) return alert("Ingresá la PK del registro a borrar")
+        if (!window.confirm(`¿Borrar el registro ${pk} de "${tablaElegida}"?`)) return
         try {
-            const { data } = await api.delete(`${tablaElegida}/${id}`)
+            const { data } = await api.delete(`${tablaElegida}/${pk}`)
             setResponse({ message: data })
         } catch (error) {
             alert(error.response?.data?.message || "Error al borrar el registro")
@@ -231,9 +252,11 @@ function AdminHome(props) {
                 >
                     {/* Agregamos una opción por defecto para evitar que mande vacío */}
                     <option value="">Seleccioná una tabla</option>
-                    {tablasDisponibles.map((nombreTabla) => (
-                        <option key={nombreTabla} value={nombreTabla}>
-                            {nombreTabla}
+                    {recursos.map((recurso) => (
+                        <option key={recurso.ruta} value={recurso.ruta}>
+                            {recurso.tabla && recurso.tabla !== recurso.ruta
+                                ? `${recurso.ruta} (${recurso.tabla})`
+                                : recurso.ruta}
                         </option>
                     ))}
                 </select>
@@ -294,7 +317,7 @@ function AdminHome(props) {
 
                     
                         <input
-                        placeholder="Inserte la Clave Primaria"
+                        placeholder={pkHint ? `PK: ${pkHint}` : "Inserte la Clave Primaria"}
                         onChange={(e) => setId(e.target.value)}
                         ></input>
                         <div className="admin-crud-buttons">

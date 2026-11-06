@@ -11,7 +11,7 @@ const {
 router.get('/', getPatentes);
 router.get('/getByPk/:id', getPatenteById);
 router.post('/', createPatente);
-router.patch('/:id', modifyPatenteById);
+router.patch('/edit/:id', modifyPatenteById);
 router.delete('/:id', deletePatenteById);
 
 module.exports = router;

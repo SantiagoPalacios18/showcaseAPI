@@ -12,7 +12,7 @@ const {
 router.get('/', getComprasCandy);
 router.get('/getByPk/:id', getCompraCandyById);
 router.post('/', createCompraCandy);
-router.patch('/:id', modifyCompraCandyById);
+router.patch('/edit/:id', modifyCompraCandyById);
 router.delete('/:id', deleteCompraCandyById);
 
 module.exports = router;

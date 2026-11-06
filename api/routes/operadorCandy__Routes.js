@@ -11,7 +11,7 @@ const {
 router.get('/', getOperadoresCandy);
 router.get('/getByPk/:id', getOperadorCandyById);
 router.post('/', createOperadorCandy);
-router.patch('/:id', modifyOperadorCandyById);
+router.patch('/edit/:id', modifyOperadorCandyById);
 router.delete('/:id', deleteOperadorCandyById);
 
 module.exports = router;

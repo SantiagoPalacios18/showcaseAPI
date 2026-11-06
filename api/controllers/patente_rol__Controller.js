@@ -122,9 +122,23 @@ const deletePatenteRol = async (req, res) => {
     }
 };
 
+const getPatenteRolByPk = async (req, res) => {
+    try {
+        const { id_Rol, id_Patente } = req.params;
+        const registro = await Patente_Rol.findOne({ where: { id_Rol, id_Patente } });
+        if (!registro) {
+            return res.status(404).json({ message: "Relación no encontrada" });
+        }
+        res.status(200).json(registro);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 module.exports = {
     getPatentesRoles,
     getPatentesByRolId,
+    getPatenteRolByPk,
     createPatenteRol,
     modifyPatenteRol,
     deletePatenteRol

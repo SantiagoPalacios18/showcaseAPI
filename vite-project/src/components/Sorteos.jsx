@@ -4,8 +4,8 @@ import {useState , useEffect } from "react"
 // El axios configurado que vamos a usar
 import api from "../api"
 import imagenTest from "../media/unnamed.jpg"
-import './styles/Home.css'
 import './styles/sorteo.css'
+
 
 const getImagen = (nombre) => imagenTest
 

@@ -1,4 +1,4 @@
-const { Usuario,Transaccion, CompraTicket, Asiento, Funcion, Pelicula } = require('../models/index.js');
+const { Usuario, Transaccion, CompraTicket, Asiento, Funcion, Pelicula } = require('../models/index.js');
 const bcrypt = require("bcrypt")
 const { Op } = require("sequelize")
 const {default_foto} = require('../SRC/default-foto.js')
@@ -246,14 +246,38 @@ const getBuscarUsuarioPelicula = async (req, res) => {
 }
 
 const registrarUsuarioEnPelicula = async (req, res) => {
-try {
-  const result = await sequelize.transaction( //Usamos transaction pq sino puede modificarse una parte de la bd, dar error desues y no rollbackearse
-    async t => {
-        
-    });
-} catch (error) {
-  console.log({error})
-}
+    try {
+        const {idCliente, datosReserva, id_Funcion, Numero, Fila, Precio} = req.body
+        const {Total, MetodoPago} = datosReserva
+        const result = await sequelize.transaction( //Usamos transaction pq sino puede modificarse una parte de la bd, dar error desues y no rollbackearse
+            async (t) => {
+                const transactionNueva = Transaccion.create({
+                    id_ClienteLogueado: idCliente,
+                    Total,
+                    MetodoPago,
+                    DVH: 1
+                },{transaction: t})
+                
+                const asientoNuevo = Asiento.create({
+                    id_Funcion,
+                    Numero,
+                    Fila,
+                    DVH: 1
+                },{transaction: t})
+                
+                const compraTicketNuevo = CompraTicket.create({
+                    id_Transaccion: transactionNueva.id_Transaccion,
+                    id_Asiento: asientoNuevo.id_Asiento,
+                    Precio,
+                    DVH: 1
+                },{transaction: t})
+
+
+            }
+        );
+    } catch (error) {
+        console.log({error})
+    }
 }
 
 

@@ -21,7 +21,7 @@ router.get('/getByPk/:id', authMiddleware, getCompraEventoById);
 router.post('/', authMiddleware, createCompraEvento);
 
 // PATCH: Modificar reserva existente
-router.patch('/:id', authMiddleware, modifyCompraEventoById);
+router.patch('/edit/:id', authMiddleware, modifyCompraEventoById);
 
 // DELETE: Eliminar / cancelar reserva
 router.delete('/:id', authMiddleware, deleteCompraEventoById);

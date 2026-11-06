@@ -46,10 +46,21 @@ function sorteoinfo(props) {
         }
     }
 
+    const getBuscarUsuarioPelicula = async () => {
+        try {
+            const usu_peli =await api.get(`/usuarios/${props.user.id_Usuario}`)
+            setUsu_peli(usu_peli.data[0])
+            console.log(usu_peli)
+        } catch (error) {
+            console.log({error})   
+        }
+    }
+
     const getUnClienteSorteo = async () => {
         try {
             console.log('User Id: '+props.user.id_Usuario)
             const usu_sort = await api.get(`/clientes-sorteos/getById_u/${id}/${props.user.id_Usuario}`)
+
             if (usu_sort)
                 setusuario_sort(usu_sort.data[0])
             console.log(usu_sort)
@@ -96,6 +107,8 @@ function sorteoinfo(props) {
 
     useEffect(() => {
         getSorteoById(id),
+        getUnClienteSorteo(),
+        getBuscarUsuarioPelicula()
         getUnClienteSorteo(),
         getBuscarUsuarioPelicula()
     }, [])

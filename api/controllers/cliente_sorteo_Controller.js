@@ -18,14 +18,6 @@ const getClientesBySorteoId = async (req, res) => {
             where: { id_sorteo }
         });
 
-        const registros2 = await Usuario_sorteo.findAll({
-            where: { id_sorteo, id_Usuario}
-        });
-
-        // if (registros.length === 0) {
-        //     return res.status(404).json({ message: `No se encontraron clientes para el sorteo: ${id_sorteo}` });
-        // }
-
         res.status(200).json(registros);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -55,13 +47,13 @@ const createClienteSorteo = async (req, res) => {
 
         if (!data.id_Cliente || !data.id_sorteo) {
             return res.status(400).json({
-                message: "Faltan datos obligatorios (id_Cliente, id_sorteo o DVH)"
+                message: "Faltan datos obligatorios (id_Usuario o id_Cliente, id_sorteo o DVH)"
             });
         }
 
         const existe = await Usuario_sorteo.findOne({
             where: {
-                id_Usuario: data.id_Cliente,
+                id_Usuario: idUsuario,
                 id_sorteo: data.id_sorteo
             }
         });
@@ -71,7 +63,7 @@ const createClienteSorteo = async (req, res) => {
         }
 
         const nuevoRegistro = await Usuario_sorteo.create({
-            id_Usuario: data.id_Cliente,
+            id_Usuario: idUsuario,
             id_sorteo: data.id_sorteo,
             fecha_inscripcion: data.fecha_inscripcion || undefined,
             DVH: data.DVH
@@ -89,7 +81,7 @@ const createClienteSorteo = async (req, res) => {
 // PATCH: Modificar parcialmente (DVH / fecha)
 const modifyClienteSorteo = async (req, res) => {
     try {
-        const { id_Cliente, id_sorteo } = req.params;
+        const { id_sorteo, id_Usuario } = req.params;
         const data = req.body;
         let datosCambiar = {};
 
@@ -101,7 +93,7 @@ const modifyClienteSorteo = async (req, res) => {
         }
 
         const [filasModificadas] = await Usuario_sorteo.update(datosCambiar, {
-            where: { id_Cliente, id_sorteo }
+            where: { id_sorteo, id_Usuario }
         });
 
         if (filasModificadas === 0) {
@@ -119,9 +111,9 @@ const modifyClienteSorteo = async (req, res) => {
 // DELETE: Quitar cliente del sorteo
 const deleteClienteSorteo = async (req, res) => {
     try {
-        const { id_Cliente, id_sorteo } = req.params;
+        const { id_sorteo, id_Usuario } = req.params;
         const eliminadas = await Usuario_sorteo.destroy({
-            where: { id_Cliente, id_sorteo }
+            where: { id_sorteo, id_Usuario }
         });
 
         if (eliminadas === 0) {
@@ -129,8 +121,21 @@ const deleteClienteSorteo = async (req, res) => {
         }
 
         res.status(200).json({
-            message: `Cliente ${id_Cliente} quitado del sorteo ${id_sorteo} correctamente.`
+            message: `Cliente ${id_Usuario} quitado del sorteo ${id_sorteo} correctamente.`
         });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+const getClienteSorteoByPk = async (req, res) => {
+    try {
+        const { id_sorteo, id_Usuario } = req.params;
+        const registro = await Usuario_sorteo.findOne({ where: { id_sorteo, id_Usuario } });
+        if (!registro) {
+            return res.status(404).json({ message: "Registro no encontrado" });
+        }
+        res.status(200).json(registro);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -139,6 +144,7 @@ const deleteClienteSorteo = async (req, res) => {
 module.exports = {
     getClientesSorteos,
     getClientesBySorteoId,
+    getClienteSorteoByPk,
     getUnClienteSorteo,
     createClienteSorteo,
     modifyClienteSorteo,

@@ -19,8 +19,8 @@ const Funcion = sequelize.define(
         id_tecnologia: {
             type: DataTypes.TINYINT.UNSIGNED,
         },
-        id_Asiento: {
-            type: DataTypes.SMALLINT.UNSIGNED,
+        id_asiento: {
+            type: DataTypes.TINYINT.UNSIGNED,
         },
         idioma: DataTypes.STRING(10),
         proyeccion: DataTypes.STRING(10),

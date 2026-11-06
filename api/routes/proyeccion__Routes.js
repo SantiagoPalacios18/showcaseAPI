@@ -11,7 +11,7 @@ const {
 router.get('/', getProyecciones);
 router.get('/getByPk/:id', getProyeccionById);
 router.post('/', createProyeccion);
-router.patch('/:id', modifyProyeccionById);
+router.patch('/edit/:id', modifyProyeccionById);
 router.delete('/:id', deleteProyeccionById);
 
 module.exports = router;

@@ -11,7 +11,7 @@ const {
 router.get('/', getActores);
 router.get('/getByPk/:id', getActorById);
 router.post('/', createActor);
-router.patch('/:id', modifyActorById);
+router.patch('/edit/:id', modifyActorById);
 router.delete('/:id', deleteActorById);
 
 module.exports = router;
