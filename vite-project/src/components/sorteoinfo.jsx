@@ -95,16 +95,6 @@ function sorteoinfo(props) {
         }
     }
 
-    const getBuscarUsuarioPelicula = async () => {
-        try {
-            const usu_peli =await api.get(`/usuarios/${props.user.id_Usuario}`)
-            setUsu_peli(usu_peli.data[0])
-            console.log(usu_peli)
-        } catch (error) {
-            console.log({error})   
-        }
-    }
-
     useEffect(() => {
         getSorteoById(id),
         getUnClienteSorteo(),
