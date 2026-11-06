@@ -3,7 +3,8 @@ import { useParams } from "react-router-dom";
 import ReactCrop from 'react-image-crop'
 import convertImage from '../convert'
 
-import api from '../api'    
+import api from '../api'   
+import imagenDefault from "../assets/perfil-default.png" 
 
 import './styles/Profile.css'
 
@@ -184,7 +185,7 @@ function Profile(props){
                 <div className="profile-container">
                     <div className="photo">
                         <div className={`pfp ${showEdit ? 'pfp-edit' : ''}`}>
-                            <img src={showEdit ? Mfoto : foto} alt="Perfil" onClick={() => {if(showEdit === true) setShowPfp(true); console.log(showPfp)}}/>
+                            <img src={imagenDefault} alt="Perfil" onClick={() => {if(showEdit === true) setShowPfp(true); console.log(showPfp)}}/> {/*{showEdit ? Mfoto : foto}  Para cuando arregle las imgs*/}
                         </div>
                         
                         {User.email == props.user?.email && <button onClick={() => setShowConfirm(true)}>Cerrar Sesión</button> }

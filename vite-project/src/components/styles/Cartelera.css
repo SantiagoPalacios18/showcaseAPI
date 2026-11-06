@@ -1,19 +1,48 @@
-.tarjeta-pelicula{
-    display: flex;
-    flex-direction: column;
+.tarjeta-wrapper, .tarjeta-pelicula{
+    box-sizing: border-box;
+}
+
+.tarjeta-wrapper{
     width: 24%;
-    padding: 1rem;
+    max-width: 24%;
     margin-inline: .5%;
     margin-bottom: 1rem;
-    background-color: blueviolet;
-    border-radius: 1rem;
-    transition: .2s;
+    perspective: 200rem;
     cursor: pointer;
 }
 
-.tarjeta-pelicula:hover{
-    filter: brightness(70%);
+.tarjeta-pelicula{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    padding: 1rem;
+    background: linear-gradient(45deg, rgba(128, 0, 128, 0.591), rgb(198, 3, 198));
+    border-radius: 1rem;
+    border-style: solid;
+    border-width: 2px;
+    border-color: black;
     transition: .2s;
+    pointer-events: none;
+}
+
+
+
+.contenedor-peliculas:has(.tarjeta-wrapper:hover) > .tarjeta-wrapper:not(:hover){
+    filter: brightness(50%);
+}
+
+.tarjeta-wrapper:hover{
+    z-index: 999;
+}
+
+.tarjeta-wrapper:hover .tarjeta-pelicula{
+    transform: scale(1.15) rotateY(calc(var(--inclinacion-x)*40deg)) rotateX(calc(var(--inclinacion-y)*10deg));
+    box-shadow: 0 0 1rem .5rem rgb(193, 194, 161);
+    border-color: whitesmoke;
+    transition: .2s;
+    z-index: 999;
 }
 
 .tarjeta-pelicula img{
@@ -41,5 +70,6 @@
 .contenedor-peliculas{
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap; /*flex-wrap hace que cuando los elementos del contenedor superan el ancho total, los envia hacia abajo*/
+    flex-wrap: wrap;
+    /*flex-wrap hace que cuando los elementos del contenedor superan el ancho total, los envia hacia abajo*/
 }

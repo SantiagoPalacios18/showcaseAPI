@@ -61,7 +61,7 @@ const Usuario = sequelize.define(
         },
         isActive: {
             type: DataTypes.BOOLEAN,
-            defaultValue: 1
+            //defaultValue: 1
         },
         isLogged: {
             type: DataTypes.BOOLEAN,

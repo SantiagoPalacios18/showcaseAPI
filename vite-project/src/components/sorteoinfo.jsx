@@ -4,11 +4,11 @@ import {useState , useEffect } from "react"
 
 // El axios configurado que vamos a usar
 import api from "../api"
-import imagenTest from "../media/unnamed.jpg"
-import './styles/sorteoinfo.css'
+import imagenTest from "../media/showcase-placeholder.jpg"
+import './styles/sorteoInfo.css'
 
-
-
+import './styles/Home.css'
+import './styles/sorteo.css'
 
 function sorteoinfo(props) {
     const [message, setMessage] = useState("")
@@ -38,9 +38,9 @@ function sorteoinfo(props) {
             usuarios: algo
         });
         setSorteos(sort.data);
-        const premios = sort.data.premio
-        console.log(premios)
-        setPremios(JSON.parse(premios))
+        const premios_string = sort.data.premio
+        const premios_objeto =JSON.parse(premios_string)
+        setPremios(Object.values(premios_objeto))
         } catch (error) {
             console.log({error});
         }
@@ -90,7 +90,6 @@ function sorteoinfo(props) {
         try {
             const ganador = await api.get(`sorteos/getGanador/${id}`)
             setGanador(ganador.data)
-            console.log(ganador)
         } catch (error) {
             console.log({error})
         }
@@ -100,24 +99,49 @@ function sorteoinfo(props) {
         getSorteoById(id),
         getUnClienteSorteo(),
         getBuscarUsuarioPelicula()
+        getUnClienteSorteo(),
+        getBuscarUsuarioPelicula()
     }, [])
-return(
-    <div>
-        <h1>{sort.nombre}</h1>
-        <h2>el premio es: {sort.premio}</h2>
-        <p>{sort.infoGral}</p>
-        {!props.user && (
-            <button className="boton-s">para participar tenes que estar logueado</button>
-        )}
-        {props.user && !usuario_sort?.id_Usuario &&  (
-            <button className="boton-s" onClick={()=>{inscribir()} }  >participar ahora</button>
-        )}
-        {usuario_sort?.id_Usuario && (
-            <h2>ya estas inscripto 🥳</h2>
-        )}
-        <button onClick={getElegirGanador} >elegir ganador</button>
-        <button onClick={getBuscarUsuarioPelicula}>ver si el pibe compro</button>
-    </div>  
+
+    return(
+    <div className="sorteo">
+        <section className="details">
+            <h1>{sort.nombre}</h1>
+            <img src={imagenTest} alt="Foto sorteo" />
+            <p className="info-gral">{sort.infoGral}</p>
+        </section>
+        <section className="premios">
+            <h2>Premios</h2>
+            <ul className="premios-l">
+                {premios.map(premio => {
+                document.documentElement.style.setProperty('--alto-items-lista', (100 / premios.length + '%')); console.log(' FUNCAAAA: ' + 100 / premios.length + '%');
+                return(
+                    <li className="premio">
+                        {premio}
+                    </li>
+                )
+            })}
+            </ul>
+        </section>
+        <section className="requisitos">
+            
+            <h2>Requisitos</h2>
+            <ul className="req-list">
+                <li key={'registrado'} className={props.user ? 'aproved' : 'denied'} onClick={()=>{!props.user && navigate('/login')}}>Estar Registrado {props.user ? '✅' : '❌'}</li>
+            </ul>
+        </section>
+        <section id="boton">
+            {!props.user && (
+                <button className="boton-s">para participar tenes que estar logueado</button>
+            )}
+            {props.user && !usuario_sort?.id_Usuario &&  (
+                <button className="boton-s" id="btn-logged" onClick={()=>{inscribir()} }  >participar ahora</button>
+            )}
+            {usuario_sort?.id_Usuario && (
+                <h2>ya estas inscripto 🥳</h2>
+            )}
+        </section>
+    </div> 
     )
  }
 

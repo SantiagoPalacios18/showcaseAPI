@@ -202,39 +202,37 @@ const changePassword = async(req,res) => {
 
 const getBuscarUsuarioPelicula = async (req, res) => {
     try {
-        const {id} = req.params
-        console.log(id)
-        // const userCompra = await Usuario.findAll(
-        //     {
-        //         where: {
-        //             id_Usuario : id
-        //         },
-        //         include: {
-        //             model: Transaccion,
-        //             required: true,
-        //             where:{
-        //                 id_Usuario : id
-        //             },
-        //             include: {
-        //                 model: CompraTicket,
-        //                 required: true,
-        //                 include:{
-        //                     model: Asiento,
-        //                     required: true,
-        //                     include: {
-        //                         model: Funcion,
-        //                         required: true,
-        //                         include:{
-        //                             model: Pelicula,
-        //                             required: true,
-        //                         }
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //     }
-        // )
-
+        const {id} = req.body
+        Usuario.findAll(
+            {
+                where: {
+                    id_Usuario : id
+                },
+                include: {
+                    model: Transaccion,
+                    required: true,
+                    where:{
+                        id_Usuario : id
+                    },
+                    include: {
+                        model: CompraTicket,
+                        required: true,
+                        include:{
+                            model: Asiento,
+                            required: true,
+                            include: {
+                                model: Funcion,
+                                required: true,
+                                include:{
+                                    model: Pelicula,
+                                    required: true,
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        )
         const userCompra = await CompraTicket.findAll()
 
         console.log(userCompra)
@@ -242,7 +240,6 @@ const getBuscarUsuarioPelicula = async (req, res) => {
         if (!userCompra) return res.status(201).json({message: "No comraste papu"})
 
         res.status(200).json({message: 'compro', userCompra})
-        
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
