@@ -52,7 +52,8 @@ const createClienteSorteo = async (req, res) => {
         const data = req.body;
         console.log(req.body)
 
-        if (!data.id_Cliente || !data.id_sorteo || !data.DVH) {
+
+        if (!data.id_Cliente || !data.id_sorteo) {
             return res.status(400).json({
                 message: "Faltan datos obligatorios (id_Cliente, id_sorteo o DVH)"
             });

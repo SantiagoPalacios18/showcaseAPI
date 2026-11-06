@@ -6,7 +6,8 @@ const {
     createUser,
     modifyuserById,
     deleteuserById,
-    createTestUser
+    createTestUser,
+    getBuscarUsuarioPelicula
 } = require('../controllers/usuario__Controller.js');
 const {checkPatent} = require('../middlewares/auth__Middleware.js')
 
@@ -17,6 +18,7 @@ router.get('/getByPk/:id', (req, res, next) =>{
     return checkPatent("GET_USER_BY_ID")(req,res,next) // Le tengo que pasar el req res y next para que termine la llamada y devuelva el res, sino queda colgado
 },getUserById);
 
+router.get('/:id', getBuscarUsuarioPelicula)
 router.post('/', checkPatent("POST_USER"), createUser);
 router.patch('/edit/:id',checkPatent("PATCH_USER"), modifyuserById);
 router.delete('/:id',checkPatent("DELETE_USER"), deleteuserById);

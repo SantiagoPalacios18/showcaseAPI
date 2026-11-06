@@ -11,7 +11,7 @@ const Usuario = sequelize.define(
         },
         id_Rol: {
             type: DataTypes.TINYINT.UNSIGNED,
-            defaultValue: 1,
+            // defaultValue: 1,
         },
         nombre: {
             type: DataTypes.STRING(15),
@@ -61,7 +61,7 @@ const Usuario = sequelize.define(
         },
         isActive: {
             type: DataTypes.BOOLEAN,
-            defaultValue: 1
+            //defaultValue: 1
         },
         isLogged: {
             type: DataTypes.BOOLEAN,

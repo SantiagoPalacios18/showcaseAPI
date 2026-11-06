@@ -4,13 +4,11 @@ import {useState , useEffect } from "react"
 
 // El axios configurado que vamos a usar
 import api from "../api"
-import imagenTest from "../media/unnamed.jpg"
+import imagenTest from "../media/showcase-placeholder.jpg"
 import './styles/sorteoInfo.css'
-=======
+
 import './styles/Home.css'
 import './styles/sorteo.css'
-
->>>>>>> 8529de4e924d68e06885b7bf954095691824c870
 
 function sorteoinfo(props) {
     const [message, setMessage] = useState("")
@@ -19,6 +17,7 @@ function sorteoinfo(props) {
     const { id } = useParams(); // Acá extraés el ID directamente de la URL
     const [usuario_sort, setusuario_sort ] = useState({})
     const [ganador, setGanador] = useState("")
+    const [usu_peli, setUsu_peli] = useState("")
 
     const navigate = useNavigate()
 
@@ -39,9 +38,9 @@ function sorteoinfo(props) {
             usuarios: algo
         });
         setSorteos(sort.data);
-        const premios = sort.data.premio
-        console.log(premios)
-        setPremios(JSON.parse(premios))
+        const premios_string = sort.data.premio
+        const premios_objeto =JSON.parse(premios_string)
+        setPremios(Object.values(premios_objeto))
         } catch (error) {
             console.log({error});
         }
@@ -49,12 +48,8 @@ function sorteoinfo(props) {
 
     const getUnClienteSorteo = async () => {
         try {
-<<<<<<< HEAD
-            const usu_sort = await api.get(`/clientes-sorteos/getByPk/${id}/${props.user}`)
-=======
             console.log('User Id: '+props.user.id_Usuario)
             const usu_sort = await api.get(`/clientes-sorteos/getById_u/${id}/${props.user.id_Usuario}`)
->>>>>>> 8529de4e924d68e06885b7bf954095691824c870
             if (usu_sort)
                 setusuario_sort(usu_sort.data[0])
             console.log(usu_sort)
@@ -89,11 +84,21 @@ function sorteoinfo(props) {
         }
     }
 
+    const getBuscarUsuarioPelicula = async () => {
+        try {
+            const usu_peli =await api.get(`/usuarios/${props.user.id_Usuario}`)
+            setUsu_peli(usu_peli.data[0])
+            console.log(usu_peli)
+        } catch (error) {
+            console.log({error})   
+        }
+    }
+
     useEffect(() => {
         getSorteoById(id),
-        getUnClienteSorteo()
+        getUnClienteSorteo(),
+        getBuscarUsuarioPelicula()
     }, [])
-<<<<<<< HEAD
 
     return(
     <div className="sorteo">
@@ -105,11 +110,14 @@ function sorteoinfo(props) {
         <section className="premios">
             <h2>Premios</h2>
             <ul className="premios-l">
-                {Object.values(premios).map(premio => 
+                {premios.map(premio => {
+                document.documentElement.style.setProperty('--alto-items-lista', (100 / premios.length + '%')); console.log(' FUNCAAAA: ' + 100 / premios.length + '%');
+                return(
                     <li className="premio">
                         {premio}
                     </li>
-                )}
+                )
+            })}
             </ul>
         </section>
         <section className="requisitos">
@@ -119,7 +127,7 @@ function sorteoinfo(props) {
                 <li key={'registrado'} className={props.user ? 'aproved' : 'denied'} onClick={()=>{!props.user && navigate('/login')}}>Estar Registrado {props.user ? '✅' : '❌'}</li>
             </ul>
         </section>
-        <section className="btn">
+        <section id="boton">
             {!props.user && (
                 <button className="boton-s">para participar tenes que estar logueado</button>
             )}
