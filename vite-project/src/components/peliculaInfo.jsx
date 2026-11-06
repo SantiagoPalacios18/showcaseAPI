@@ -13,6 +13,8 @@ import './styles/peliculaInfo.css'
 function peliculaInfo(props) {
     const [pelicula, setPelicula] = useState([])
     const [peliculaKeys, setPeliculaKeys] = useState([])
+    const [funciones, setFunciones] = useState([])
+    const [funcion, setFuncion] = useState({})
     const [mostrarReservar, setMostrarReservar] = useState(false)
     const [mostrarFunciones, setMostrarFunciones] = useState(false)
     const [datosReserva, setDatosReserva] = useState({
@@ -21,7 +23,7 @@ function peliculaInfo(props) {
 
     })
     const { id } = useParams(); // Acá extraés el ID directamente de la URL
-    
+
     const getPeliculaById = async () => {
         try {
             const peli = await api.get(`/peliculas/getByPk/${id}`);
@@ -31,20 +33,46 @@ function peliculaInfo(props) {
         }
     }
 
+    const getFuncionesPelicula = async () => {
+        try {
+            const funcs = await api.get(`/funciones/getByPkPeli/${id}`);
+
+            const formateadas = funcs.data.map(func => ({
+                ...func,
+                horarioInicio: new Intl.DateTimeFormat('es-AR', {
+                    day: 'numeric',
+                    month: 'numeric',
+                    year: 'numeric',
+                    hour: 'numeric',
+                    minute: '2-digit',
+                    second: '2-digit',
+                    hour12: false,
+                    timeZone: 'America/Buenos_Aires'
+                }).format(new Date(func.horarioInicio)).replace(',', '')
+            }));
+
+            setFunciones(formateadas)
+        } catch (error) {
+            console.log({ error })
+        }
+    }
+
     const reservar = async (e) => {
         e.preventDefault()
         setMostrarReservar(false)
+        setMostrarFunciones(false)
         try {
             const reserva = api.post('', {
                 idCliente: props.user.id_Cliente
             })
         } catch (error) {
-            console.log({error})
+            console.log({ error })
         }
     }
 
     useEffect(() => {
-        getPeliculaById()
+        getPeliculaById(),
+            getFuncionesPelicula()
     }, [])
 
     return (
@@ -57,29 +85,37 @@ function peliculaInfo(props) {
                     ))}
                 </div>
             </div>
-
-            {mostrarFunciones==false && (
-                <button onClick={()=>{setMostrarReservar(true)}}>Comprar tickets</button>
-            )}
-            {mostrarReservar==true && (
+            {mostrarReservar == true && (
                 <h1>kjfgasdlafsdfk</h1>
             )}
-            {mostrarReservar==false && (
-                <button onClick={()=>{setMostrarReservar(true)}}>Comprar tickets</button>
+            {mostrarReservar == false && (
+                <div>
+                    <div id="divFunciones">
+                        {funciones.map((func) => {
+                            return <div onClick={() => {setMostrarReservar(true), setFuncion(func)}}>
+                                <h1>Funcion {func.id_Funcion}</h1>
+                                <h1>Sala {func.id_sala}</h1>
+                                <h1>Horario: {func.horarioInicio}</h1>
+                                <h1>Idioma: {func.idioma}</h1>
+                                <h1>Proyeccion {func.proyeccion}</h1>
+                                <h1>Tecnologia {func.tecnologium.nombre}</h1>
+                            </div>
+                        })}
+                    </div>
+                </div>
             )}
-            {mostrarReservar==true && (
+            {mostrarReservar == true && (
                 <div id="divReserva">
-                    <legend>Reservar</legend>
+                    <legend>Reservar para la funcion {funcion.id_Funcion} </legend>
                     <form onSubmit={reservar}>
                         <label> Asientos</label>
                         <input type="text" placeholder="Cuantos asientos quiere?" />
                         <label> Seleccione su metodo de pago</label>
                         <select>
-                            <option value="">Seleccionar Metodo de Pago</option>
+                            <option value="" disabled selected hidden>Seleccionar Metodo de Pago</option>
                             <option value="Mercado Pago">Mercado Pago</option>
                             <option value="Debito">Debito</option>
                             <option value="Credito">Credito</option>
-                            <option value="Colita">Colita</option>
                         </select>
                         <button type="submit">Reservar</button>
                     </form>
