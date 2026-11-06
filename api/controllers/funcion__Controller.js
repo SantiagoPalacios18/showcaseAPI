@@ -1,4 +1,4 @@
-const { Funcion } = require('../models/index.js');
+const { Funcion, Tecnologia } = require('../models/index.js');
 
 // GET: Obtener todas las funciones
 const getFunciones = async (req, res) => {
@@ -95,10 +95,28 @@ const deletefuncionById = async (req, res) => {
     }
 }
 
+const getFuncionesByIdPelicula = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const funciones = await Funcion.findAll({
+            where: {
+                id_Pelicula: id
+            },
+            include: Tecnologia
+        })
+        if (!funciones) return res.status(404).json({message: "No hay funciones para esa peli"})
+        res.status(200).json(funciones)
+    } catch (error) {
+        console.log(error)
+        res.status(500).json(error)
+    }
+}
+
 module.exports = {
     getFunciones,
     getFuncionById,
     createFuncion,
     modifyFuncionById,
     deletefuncionById,
+    getFuncionesByIdPelicula
 }

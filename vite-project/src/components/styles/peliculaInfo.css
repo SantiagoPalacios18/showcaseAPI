@@ -33,7 +33,12 @@
         align-items: center;
     }
     > form {
-        background-color: aqua;
+        padding: 10px;
+        border-radius: 10px;
+        background-color: black;
+       >* {
+            margin: 3px;
+        }
     }
 }
 
@@ -45,4 +50,19 @@ option {
 }
 button {
     color: black
+}
+
+#divFunciones { 
+    margin-top: 10px;
+    display: flex;
+    justify-content:space-around;
+    flex-wrap: wrap;
+    > div{
+    margin-bottom: 10px;
+    border-color: black;
+    border-style: solid;
+    border-width: 3px;
+    border-radius: 10px;
+    background-color: black;
+    }
 }
