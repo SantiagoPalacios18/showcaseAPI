@@ -16,6 +16,8 @@ import Footer from './components/Footer'
 import Profile from './components/Profile'
 import SessionManagement from './components/SessionManagement'
 import AdminHome from './components/AdminPanel_Home'
+import AdminSQL from './components/AdminPanel_SQL'
+
 import Cartelera from './components/Cartelera'
 import PeliculaInfo from './components/peliculaInfo'
 import Eventos from './components/Eventos'
@@ -131,6 +133,11 @@ function App() {
             <Route path='/admin/' element={
               <PatentChecker user={user} patente="ADMIN_HOME">
                 <AdminHome user={user} />
+              </PatentChecker>
+            }></Route>
+            <Route path='/admin/sql' element={
+              <PatentChecker user={user} patente="ADMIN_SQL">
+                <AdminSQL user={user} />
               </PatentChecker>
             }></Route>
 

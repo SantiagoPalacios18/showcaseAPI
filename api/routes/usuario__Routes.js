@@ -19,9 +19,9 @@ router.get('/getByPk/:id', (req, res, next) =>{
 },getUserById);
 
 router.get('/:id', getBuscarUsuarioPelicula)
-router.post('/', checkPatent("POST_USER"), createUser);
-router.patch('/edit/:id',checkPatent("PATCH_USER"), modifyuserById);
-router.delete('/:id',checkPatent("DELETE_USER"), deleteuserById);
+router.post('/', checkPatent("POST_REGISTER"), createUser);
+router.patch('/edit/:id',checkPatent("PATCH_REGISTER"), modifyuserById);
+router.delete('/:id',checkPatent("DELETE_REGISTER"), deleteuserById);
 router.post('/test',checkPatent("POST_USER_TEST"), createTestUser)
 
 module.exports = router;

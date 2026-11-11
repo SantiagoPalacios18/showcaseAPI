@@ -76,7 +76,7 @@ server.listen(3000, async () => {
       defaults: {
         nombre: 'Benito',
         apellido: 'Camela',
-        fechaNacimiento: '67-06-07',
+        fechaNacimiento: '1967-06-07',
         DNI: 1,
         telefono: 666,
         email: 'asd@a.com',
@@ -90,7 +90,7 @@ server.listen(3000, async () => {
       defaults: {
         nombre: 'Polo',
         apellido: 'Rivera',
-        fechaNacimiento: '67-06-07',
+        fechaNacimiento: '1967-06-07', // Hay q ponerlo YYYY-MM-DD
         DNI: 2,
         telefono: 666,
         email: 'asd@aa.com',
@@ -102,9 +102,13 @@ server.listen(3000, async () => {
 
     // ---------- LISTA CON TODAS LAS PATENTES DEL SISTEMA ----------
     const patentes_lista = [
-      'ADMIN_HOME', 'GET_USERS',
-      'GET_USER_BY_ID', 'POST_USER',
-      'PATCH_USER', 'DELETE_USER',
+    // Administrador
+      'ADMIN_HOME', 'ADMIN_SQL',
+      
+    // Usuario
+      'GET_REGISTERS',
+      'GET_REGISTERS_BY_ID', 'POST_REGISTER',
+      'PATCH_REGISTER', 'DELETE_REGISTER',
       'POST_USER_TEST'
     ];
     const patentes = {};
