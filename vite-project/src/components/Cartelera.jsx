@@ -8,18 +8,25 @@ import {getPaletteSync} from 'colorthief'
 //  Lo voy a intentar dsp de que haga el FTP
 
 import api from "../api"
-import imagenTest from "../media/unnamed.jpg"
+
+import imagenTest1 from "../media/poster-placeholder.jpg"
+import imagenTest2 from "../media/poster-placeholder2.jpg"
+import imagenTest3 from "../media/poster-placeholder3.jpg"
+
+
 import './styles/Cartelera.css'
 
 function Cartelera(props) {
     const [peliculas, setPeliculas] = useState([])
-
+    
     const [x, setX] = useState(0)
     const [y, setY] = useState(0)
     const [distX, setDistX] = useState(0)
     const [distY, setDistY] = useState(0)
     const [angulo, setAngulo] = useState(0)
-
+    
+    const imagenes = [imagenTest1, imagenTest2, imagenTest3]
+    
     const styleVar = {
         '--inclinacion-x': distX,
         '--inclinacion-y': distY,
@@ -29,6 +36,11 @@ function Cartelera(props) {
 
     const Navigate = useNavigate()
 
+    const getPoster = () => {
+        const poster = Math.floor(Math.random() * 3)
+        return imagenes[poster]
+    }
+
     const getPeliculas = async () => {
         try {
             const response = await api.get("/peliculas")
@@ -36,9 +48,7 @@ function Cartelera(props) {
         } catch (error) {
             console.error("Error al traer las películas:", error)
         }
-    }
-
-    
+    }    
 
     function handleMousemove(e){
         const element = e.currentTarget;
@@ -73,7 +83,8 @@ function Cartelera(props) {
                     <div className="tarjeta-wrapper" onClick={() => {Navigate(`/peliculaInfo/${peli.id_Pelicula}`)}} onMouseMove={(e)=>{handleMousemove(e)}}>
                         <div key={peli.id_Pelicula} className="tarjeta-pelicula" style={styleVar}>
                             {peli.imagen && (
-                                <img src={imagenTest} alt={peli.titulo} />
+                                
+                                <img src={imagenes[(peli.id_Pelicula - 1) % 3]} alt={peli.titulo} />
                             )}
                             <h3 className="titulo">{peli.titulo}</h3>
                             <p>Género: {peli.genero}</p>

@@ -73,7 +73,8 @@
 }
 
 .tarjeta-pelicula img{
-    padding: 1rem;
+    padding-inline: 1rem;
+    padding-top: 1rem;
     border-radius: 2rem;
 }
 
@@ -88,12 +89,16 @@
 .tarjeta-pelicula p{
     text-align: left;
     padding-inline: 1rem;
+    margin-block: 0;
+    margin-top: .1rem;
 }
 
 .titulo{
     font-size: 35px;
     height: 70px;
     max-height: 70px;
+    margin: 0;
+    margin-bottom: .6rem;
 }
 
 .contenedor-peliculas{

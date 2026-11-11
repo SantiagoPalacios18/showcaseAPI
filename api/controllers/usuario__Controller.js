@@ -271,8 +271,6 @@ const registrarUsuarioEnPelicula = async (req, res) => {
                     Precio,
                     DVH: 1
                 },{transaction: t})
-
-
             }
         );
     } catch (error) {

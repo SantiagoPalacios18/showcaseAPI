@@ -12,11 +12,11 @@ import './styles/peliculaInfo.css'
 
 function peliculaInfo(props) {
     const [pelicula, setPelicula] = useState([])
+    const [asientos, setAsientos] = useState([])
     const [peliculaKeys, setPeliculaKeys] = useState([])
     const [funciones, setFunciones] = useState([])
     const [funcion, setFuncion] = useState({})
     const [mostrarReservar, setMostrarReservar] = useState(false)
-    const [mostrarFunciones, setMostrarFunciones] = useState(false)
     const [datosReserva, setDatosReserva] = useState({
         Total: null,
         MetodoPago: null,
@@ -59,8 +59,6 @@ function peliculaInfo(props) {
 
     const reservar = async (e) => {
         e.preventDefault()
-        setMostrarReservar(false)
-        setMostrarFunciones(false)
         try {
             const reserva = api.post('', {
                 idCliente: props.user.id_Cliente
@@ -68,12 +66,30 @@ function peliculaInfo(props) {
         } catch (error) {
             console.log({ error })
         }
+        setMostrarReservar(false)
+        setFuncion({})
+    }
+
+    const consultarAsientos = async () => {
+        try {
+            if (funcion.id_Funcion) {
+                const sala = await api.get(`/sala/getByFuncionPk/${funcion.id_Funcion}`)
+                const asientosFuncion = await api.get(`/asientos/getByFuncionPk/${funcion.id_Funcion}`);
+                console.log(asientosFuncion)
+            }
+        } catch (error) {
+                console.log(error)
+        }
     }
 
     useEffect(() => {
         getPeliculaById(),
-            getFuncionesPelicula()
+        getFuncionesPelicula()
     }, [])
+
+    useEffect(() => {
+        consultarAsientos()
+    }, [funcion])
 
     return (
         <>
@@ -84,10 +100,7 @@ function peliculaInfo(props) {
                         <h1>{pelicula[key]}</h1>
                     ))}
                 </div>
-            </div>
-            {mostrarReservar == true && (
-                <h1>kjfgasdlafsdfk</h1>
-            )}
+            </div>  
             {mostrarReservar == false && (
                 <div>
                     <div id="divFunciones">
@@ -106,10 +119,16 @@ function peliculaInfo(props) {
             )}
             {mostrarReservar == true && (
                 <div id="divReserva">
+                    <button onClick={() => {setMostrarReservar(false), setFuncion({})}}>⬅️</button>
                     <legend>Reservar para la funcion {funcion.id_Funcion} </legend>
                     <form onSubmit={reservar}>
-                        <label> Asientos</label>
-                        <input type="text" placeholder="Cuantos asientos quiere?" />
+                        <label> Asientos </label>
+                        <ul>
+                            {asientos.map((asi) => {
+                                return
+                                <li>{asi.numero}.{asi.fila}</li>
+                            })}
+                        </ul>
                         <label> Seleccione su metodo de pago</label>
                         <select>
                             <option value="" disabled selected hidden>Seleccionar Metodo de Pago</option>

@@ -99,6 +99,21 @@ const deleteSalaById = async (req, res) => {
     }
 };
 
+const getSalaByFuncionId = async (req, res) => {
+    try {
+        const {id} = req.params;
+        const sala = await Sala.findOne({
+            where: {
+                id_Sala: id
+            }
+        })
+        console.log({asientos})
+        res.status(200).json({asientos})
+    } catch (error) {
+        res.status(500).json({error})
+    }
+}
+
 module.exports = {
     getSalas,
     getSalaById,
