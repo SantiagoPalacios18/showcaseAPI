@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link, Navigate, useNavigate } from "react-router-dom"
 import { useState , useEffect } from "react"
 
 // El axios configurado que vamos a usar
@@ -20,6 +20,7 @@ function AdminHome(props) {
     const [originalData, setOriginalData] = useState({})// Version antigua de los datos
     const [editId, setEditId] = useState("") //PK del registro que se edita
     const [errorForm, setErrorForm] = useState("")
+    const navigate = useNavigate()
 
 
     const getMessage = async () => {
@@ -222,13 +223,28 @@ function AdminHome(props) {
             alert(error.response?.data?.message || "Error al borrar el registro")
         }
     }
+    
+    const openSQLZone = async () =>{
+        navigate('/admin/sql/')
+    }
+
+
     return(
         <div>
-            <div>
+            <div style={{position: "relative"}}>
                 <h2>PANEL ADMINISTRADOR :Vvv:V</h2>
                 <h3>Mensaje dado por el back-end</h3>
                 <p style={{ color: "whitesmoke" }}>{message}</p>
+                <button style={{
+                position: "absolute",
+                top: "1rem",
+                right: "3rem",
+                width: "100px",
+                color: "white"
+                }} onClick={() => {openSQLZone()}}>SQL</button>
+
             </div>
+
             <div style={{paddingTop: "50px"}}>
                 {props.user ? (
                     <>
@@ -307,6 +323,7 @@ function AdminHome(props) {
                             )
                         }
                     </div>
+
                     <div
                         style={{
                             display: "flex", 
