@@ -17,7 +17,20 @@ const Sala = sequelize.define(
             type: DataTypes.TINYINT.UNSIGNED,
             unique: 'salaPorCine'
         },
-        cant_Asientos: DataTypes.TINYINT.UNSIGNED,
+        columnas: {
+            type: DataTypes.TINYINT.UNSIGNED,
+            validate: {
+                min: 1,
+                max: 30
+            }
+        },
+        filas: {
+            type: DataTypes.TINYINT.UNSIGNED,
+            validate : {
+                min: 1,
+                max: 30
+            }
+        },
         DVH: {
             type: DataTypes.STRING(6),
             allowNull: false,

@@ -210,9 +210,9 @@ server.listen(3000, async () => {
     });
 
     const salas = [
-        { id_Cine: cinePrueba.id_Cine, numero: 1, cant_Asientos: 50, DVH: "ABC123" },
-        { id_Cine: cinePrueba.id_Cine, numero: 2, cant_Asientos: 40, DVH: "ABC123" },
-        { id_Cine: cinePrueba.id_Cine, numero: 3, cant_Asientos: 60, DVH: "ABC123" },
+        { id_Cine: cinePrueba.id_Cine, numero: 1, filas: 27, columnas: 15, DVH: "ABC123" },
+        { id_Cine: cinePrueba.id_Cine, numero: 2, filas: 27, columnas: 16, DVH: "ABC123" },
+        { id_Cine: cinePrueba.id_Cine, numero: 3, filas: 17, columnas: 26, DVH: "ABC123" },
     ];
 
     for (const salaData of salas) {
@@ -291,8 +291,8 @@ const insertDatosCompletos = async () => {
 
         // 3. Sala
         const salas = [
-            { id_Cine: 1, numero: 1, cant_Asientos: 50, DVH: "SAL001" },
-            { id_Cine: 1, numero: 2, cant_Asientos: 40, DVH: "SAL002" }
+            { id_Cine: 1, numero: 1, filas: 10, columnas: 30, DVH: "SAL001" },
+            { id_Cine: 1, numero: 2, filas: 20, columnas: 30, DVH: "SAL002" }
         ];
         for (const sala of salas) {
             await Sala.findOrCreate({

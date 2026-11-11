@@ -73,12 +73,19 @@ function peliculaInfo(props) {
     const consultarAsientos = async () => {
         try {
             if (funcion.id_Funcion) {
-                const sala = await api.get(`/sala/getByFuncionPk/${funcion.id_Funcion}`)
-                const asientosFuncion = await api.get(`/asientos/getByFuncionPk/${funcion.id_Funcion}`);
+                const asientosFuncion = await api.get(`/asientos/getByFuncionPk/${funcion.id_Funcion}`); //pickeo los asientos ya comprados
+
+                const sala = await api.get(`/salas/getByFuncionPk/${funcion.id_sala}`) //pickeo la sala
+                let asieTemp = Array.from({length: sala.data.sala.filas}, ()  => Array(sala.data.sala.columnas).fill("LIBRE"))                
+                for (let i=1; i < asientosFuncion.data.asientos.length + 1; i++) {
+                    console.log(i)  
+                }
+                console.log(asieTemp)
                 console.log(asientosFuncion)
+                // console.log(asientosFuncion)
             }
         } catch (error) {
-                console.log(error)
+            console.log(error)
         }
     }
 
