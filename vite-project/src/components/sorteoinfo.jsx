@@ -96,6 +96,7 @@ function sorteoinfo(props) {
     }
 
     useEffect(() => {
+        setMessage(),
         getSorteoById(id),
         getUnClienteSorteo(),
         getBuscarUsuarioPelicula()

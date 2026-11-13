@@ -18,6 +18,13 @@ const Sesion = sequelize.define('Sesion', {
     expires_at: {
         type: DataTypes.DATE,
         allowNull: false
+    },
+    DVH: {
+            type: DataTypes.STRING(6),
+            allowNull: false,
+            validate: {
+                isAlphanumeric: true
+            }
     }
 }, {
     timestamps: false

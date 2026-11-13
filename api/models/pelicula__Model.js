@@ -19,11 +19,8 @@ const Pelicula = sequelize.define(
             validate: {
             },
         },
-        id_Director: {
-            type: DataTypes.STRING(20),
-            validate: {
-                contains: [" "]
-            },
+        Director: {
+            type: DataTypes.STRING(15),
         },
         calificacion: {
             type: DataTypes.TINYINT(2).UNSIGNED,
