@@ -21,7 +21,7 @@ const Sesion = sequelize.define('Sesion', {
     },
     DVH: {
             type: DataTypes.STRING(6),
-            allowNull: false,
+            allowNull: true,
             validate: {
                 isAlphanumeric: true
             }

@@ -11,7 +11,7 @@ const {
 } = require('../controllers/usuario__Controller.js');
 const {checkPatent} = require('../middlewares/auth__Middleware.js')
 
-router.get('/', checkPatent("GET_USERS") ,getUsers);
+router.get('/', checkPatent("GET_REGISTERS") ,getUsers);
 router.get('/getByPk/:id', (req, res, next) =>{
     // Si el usuario buscado es del propio usuario, se lo dejamos pasar (esto es para evitar problemas con el profile.jsx)
     if (Number(req.params.id) == Number(req.user.id_Usuario)) return next()

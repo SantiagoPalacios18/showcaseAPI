@@ -28,7 +28,7 @@ router.use(authMiddleware) // en cada endpoint (de los routes de abajo) se va a 
 
 // ==========================================================
 
-router.use('/admin', adminRoutes)
+
 router.use('/usuarios', usuarioRoutes)
 router.use('/tables', tableRoutes)
 router.use('/pagos', pagoRoutes);
