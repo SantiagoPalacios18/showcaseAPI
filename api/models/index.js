@@ -2,23 +2,18 @@ const { Actor } = require('./actor__Model.js');
 const { Actor_Pelicula } = require('./actor_pelicula__Model.js');
 const { Asiento } = require('./asiento__Model.js');
 const { Cine } = require('./cine__Model.js');
-const { CompraCandy } = require('./compraCandy__Model.js')
 const { CompraEvento } = require('./CompraEvento__Model.js');
 const { CompraTicket } = require('./compraTicket__Model.js');
 const { Funcion } = require('./funcion__Model.js');
 const { Idioma } = require('./idioma__Model.js');
 const { Idioma_pelicula } = require('./idioma_pelicula__Model.js');
-const { OperadorCandy } = require('./operadorCandy__Model.js')
-
 const { Patente } = require('./patente__Model.js');
 const { Patente_Rol } = require('./patente_rol__Model.js');
 const { Patente_Usuario} = require('./patente_Usuario__Model.js');
 
 const { Pelicula } = require('./pelicula__Model.js');
 const { Pelicula_cine } = require('./pelicula_cine__Model.js');
-const { ProductoCandy } = require('./productoCandy__Model.js')
-const { ProductoCandy_ComprasCandy } = require('./ProductoCandy_ComprasCandy__Model.js')
-
+c
 const { Proyeccion } = require('./proyeccion__Model.js');
 const { Proyeccion_pelicula } = require('./proyeccion_pelicula__Model.js');
 
@@ -26,15 +21,12 @@ const { Rol } = require('./rol__Model.js');
 const { Sala } = require('./sala__Model.js');
 
 const { Sesion } = require('./sesion__Model.js')
-const { SoporteTecnico } = require('./soporteTecnico__Model.js');
 const { Sorteo } = require('./sorteo__Model.js');
 const { Tecnologia } = require('./tecnologia__Model.js');
 
 const { Transaccion } = require('./transaccion__Model.js');
 
 const { Usuario } = require('./usuario__Model.js');
-
-const { AdministradorBD } = require('./administradorBD__Model.js');
 
 const { Usuario_sorteo } = require('./usuario_sorteo__Model.js');
 
@@ -170,11 +162,6 @@ module.exports = {
     Asiento,
     Cine,
     CompraEvento,
-    CompraCandy,
-    OperadorCandy,
-    ProductoCandy,
-    ProductoCandy_ComprasCandy,
-    AdministradorBD,
     Patente,
     Patente_Rol,
     Pelicula,
@@ -189,7 +176,6 @@ module.exports = {
     Pelicula_cine,
     Proyeccion_pelicula,
     Sorteo,
-    SoporteTecnico,
     Tecnologia,
     Transaccion,
     Usuario,

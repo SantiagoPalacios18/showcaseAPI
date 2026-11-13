@@ -16,6 +16,13 @@ const Code = sequelize.define(
             type: DataTypes.DATE,
             allowNull: false,
             defaultValue: () => new Date(Date.now() + 30 * 60 * 1000)
+        },
+        DVH: {
+            type: DataTypes.STRING(6),
+            allowNull: false,
+            validate: {
+                isAlphanumeric: true
+            }
         }
     },
     {
