@@ -68,7 +68,7 @@ const Usuario = sequelize.define(
             defaultValue: 1
         },
         foto: {
-            type: DataTypes.TEXT("long"),
+            type: DataTypes.STRING(200),
             allowNull: true
         },
         DVH: {
