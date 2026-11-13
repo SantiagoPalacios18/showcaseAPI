@@ -13,7 +13,7 @@ const { Patente_Usuario} = require('./patente_Usuario__Model.js');
 
 const { Pelicula } = require('./pelicula__Model.js');
 const { Pelicula_cine } = require('./pelicula_cine__Model.js');
-c
+
 const { Proyeccion } = require('./proyeccion__Model.js');
 const { Proyeccion_pelicula } = require('./proyeccion_pelicula__Model.js');
 
