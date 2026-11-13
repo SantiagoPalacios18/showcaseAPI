@@ -13,7 +13,6 @@ const Sorteo = sequelize.define(
         id_Pelicula: {
             type: DataTypes.TINYINT.UNSIGNED,
             allowNul: true,
-            autoIncrement: true
         },
         nombre: {
             type: DataTypes.STRING(15),

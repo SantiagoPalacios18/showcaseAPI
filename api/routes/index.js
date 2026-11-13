@@ -3,7 +3,6 @@ const router = express.Router();
 
 // Rutas
 const authRoutes = require("./authentication__Routes.js");
-const adminRoutes = require("./administradorBD__Routes.js")
 const usuarioRoutes = require("./usuario__Routes.js");
 const tableRoutes = require("./table__Routes.js")
 const pagoRoutes = require("./pagos_Routes.js");

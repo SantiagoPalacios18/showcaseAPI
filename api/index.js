@@ -75,7 +75,7 @@ server.listen(3000, async () => {
       defaults: {
         nombre: 'Benito',
         apellido: 'Camela',
-        edad: '999',
+        fechaNacimiento: '10/10/2010',
         DNI: 1,
         telefono: 666,
         email: 'asd@a.com',
@@ -90,7 +90,7 @@ server.listen(3000, async () => {
         nombre: 'Polo',
         apellido: 'Rivera',
         edad: '999',
-        DNI: 2,
+        fechaNacimiento: '10/10/2010',
         telefono: 666,
         email: 'asd@aa.com',
         contraseña: await bcrypt.hash('123', 10),
