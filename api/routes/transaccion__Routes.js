@@ -11,7 +11,7 @@ const {
 router.get('/', getTransacciones);
 router.get('/getByPk/:id', getTransaccionById);
 router.post('/', createTransaccion);
-router.patch('/:id', modifyTransaccionById);
+router.patch('/edit/:id', modifyTransaccionById);
 router.delete('/:id', deleteTransaccionById);
 
 module.exports = router;

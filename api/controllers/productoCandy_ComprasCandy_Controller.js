@@ -1,6 +1,5 @@
 const { ProductoCandy_ComprasCandy } = require('../models/index.js');
 
-// GET: Obtener todos los detalles de productos por compra
 const getDetallesCandy = async (req, res) => {
     try {
         const registros = await ProductoCandy_ComprasCandy.findAll();
@@ -10,16 +9,15 @@ const getDetallesCandy = async (req, res) => {
     }
 };
 
-// GET: Obtener productos de una compra específica
 const getDetallesByCompraId = async (req, res) => {
     try {
-        const { id_compraCandy } = req.params;
+        const { id_ComprasCandy } = req.params;
         const registros = await ProductoCandy_ComprasCandy.findAll({
-            where: { id_compraCandy }
+            where: { id_ComprasCandy }
         });
 
         if (registros.length === 0) {
-            return res.status(404).json({ message: `No se encontraron items para la compra: ${id_compraCandy}` });
+            return res.status(404).json({ message: `No se encontraron items para la compra: ${id_ComprasCandy}` });
         }
 
         res.status(200).json(registros);
@@ -28,22 +26,36 @@ const getDetallesByCompraId = async (req, res) => {
     }
 };
 
-// POST: Agregar un producto a una compra
+const getDetalleCandyByPk = async (req, res) => {
+    try {
+        const { id_ComprasCandy, id_ProductoCandy } = req.params;
+        const registro = await ProductoCandy_ComprasCandy.findOne({
+            where: { id_ComprasCandy, id_ProductoCandy }
+        });
+
+        if (!registro) {
+            return res.status(404).json({ message: "Detalle no encontrado" });
+        }
+
+        res.status(200).json(registro);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 const createDetalleCandy = async (req, res) => {
     try {
         const data = req.body;
 
-        if (!data.id_compraCandy || !data.id_productoCandy || !data.cantidad || !data.DVH) {
+        if (!data.id_ComprasCandy || !data.id_ProductoCandy || !data.DVH) {
             return res.status(400).json({
-                message: "Faltan datos obligatorios (id_compraCandy, id_productoCandy, cantidad o DVH)"
+                message: "Faltan datos obligatorios (id_ComprasCandy, id_ProductoCandy o DVH)"
             });
         }
 
         const nuevoDetalle = await ProductoCandy_ComprasCandy.create({
-            id_compraCandy: data.id_compraCandy,
-            id_productoCandy: data.id_productoCandy,
-            cantidad: data.cantidad,
-            precioUnitario: data.precioUnitario || 0,
+            id_ComprasCandy: data.id_ComprasCandy,
+            id_ProductoCandy: data.id_ProductoCandy,
             DVH: data.DVH
         });
 
@@ -56,15 +68,12 @@ const createDetalleCandy = async (req, res) => {
     }
 };
 
-// PATCH: Modificar cantidad/DVH de un producto en la compra
 const modifyDetalleCandy = async (req, res) => {
     try {
-        const { id_compraCandy, id_productoCandy } = req.params;
+        const { id_ComprasCandy, id_ProductoCandy } = req.params;
         const data = req.body;
         let datosCambiar = {};
 
-        if ("cantidad" in data) datosCambiar.cantidad = data.cantidad;
-        if ("precioUnitario" in data) datosCambiar.precioUnitario = data.precioUnitario;
         if ("DVH" in data) datosCambiar.DVH = data.DVH;
 
         if (Object.keys(datosCambiar).length === 0) {
@@ -72,7 +81,7 @@ const modifyDetalleCandy = async (req, res) => {
         }
 
         const [filasModificadas] = await ProductoCandy_ComprasCandy.update(datosCambiar, {
-            where: { id_compraCandy, id_productoCandy }
+            where: { id_ComprasCandy, id_ProductoCandy }
         });
 
         if (filasModificadas === 0) {
@@ -87,12 +96,11 @@ const modifyDetalleCandy = async (req, res) => {
     }
 };
 
-// DELETE: Quitar producto de una compra
 const deleteDetalleCandy = async (req, res) => {
     try {
-        const { id_compraCandy, id_productoCandy } = req.params;
+        const { id_ComprasCandy, id_ProductoCandy } = req.params;
         const eliminadas = await ProductoCandy_ComprasCandy.destroy({
-            where: { id_compraCandy, id_productoCandy }
+            where: { id_ComprasCandy, id_ProductoCandy }
         });
 
         if (eliminadas === 0) {
@@ -100,7 +108,7 @@ const deleteDetalleCandy = async (req, res) => {
         }
 
         res.status(200).json({
-            message: `Producto ${id_productoCandy} eliminado de la compra ${id_compraCandy} correctamente.`
+            message: `Producto ${id_ProductoCandy} eliminado de la compra ${id_ComprasCandy} correctamente.`
         });
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -110,6 +118,7 @@ const deleteDetalleCandy = async (req, res) => {
 module.exports = {
     getDetallesCandy,
     getDetallesByCompraId,
+    getDetalleCandyByPk,
     createDetalleCandy,
     modifyDetalleCandy,
     deleteDetalleCandy

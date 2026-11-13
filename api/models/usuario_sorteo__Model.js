@@ -19,7 +19,7 @@ const Usuario_sorteo = sequelize.define(
         },
         DVH: {
             type: DataTypes.STRING(6),
-            allowNull: false,
+            allowNull: true,
             validate: {
                 isAlphanumeric: true
             }

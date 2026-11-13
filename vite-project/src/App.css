@@ -2,6 +2,10 @@ html{
   cursor: url("./media/unnamed.jpg");
 }
 
+:root{
+  overflow-x: hidden;
+}
+
 .body{
   margin:0;
   padding:0;

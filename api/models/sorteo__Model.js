@@ -12,21 +12,29 @@ const Sorteo = sequelize.define(
         },
         id_Pelicula: {
             type: DataTypes.TINYINT.UNSIGNED,
-            allowNul: true,
+            allowNull: true,
         },
         nombre: {
-            type: DataTypes.STRING(15),
-            validate: {
-                isAlpha: true
-            }
+            type: DataTypes.STRING(30),
+            allowNull: false
+        },
+        fecha_sor:{
+            type: DataTypes.DATE,
         },
         infoGral:{
-            type: DataTypes.STRING(30),
+            type: DataTypes.STRING(120),
+            allowNull: false
         },
-        premio: DataTypes.STRING(30),
+        imagen: {
+            type: DataTypes.STRING,
+        },
+        premio: {
+            type: DataTypes.JSON, //cambiado a JSON para almacenar una lista de premios organizada: premio: {premio1: X, premio2: Y}
+            allowNull: false
+        },
         DVH: {
             type: DataTypes.STRING(6),
-            allowNull: false,
+            allowNull: true, // Se cambia a false una vez tengamos el sistema de dvv/dvh programado
             validate: {
                 isAlphanumeric: true
             }

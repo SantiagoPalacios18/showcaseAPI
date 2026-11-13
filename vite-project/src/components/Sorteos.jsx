@@ -4,39 +4,45 @@ import {useState , useEffect } from "react"
 // El axios configurado que vamos a usar
 import api from "../api"
 import imagenTest from "../media/unnamed.jpg"
-import './styles/Home.css'
 import './styles/sorteo.css'
 
-import peli1 from '../../../api/SRC/whalefall.jpg'
-import peli2 from '../../../api/SRC/Madre Siniestra.webp'
-import peli3 from '../../../api/SRC/Street Fighter.webp'
-import peli4 from '../../../api/SRC/Verity.jpg'
-import peli5 from '../../../api/SRC/Coyote vs Acme.webp'
-import peli6 from '../../../api/SRC/Resident Evil Noche Cero.jpg'
-import peli7 from '../../../api/SRC/El corazón de la Bestia.jpg'
-import peli8 from '../../../api/SRC/La Odisea.webp'
-import peli9 from '../../../api/SRC/Quiero tu sexo.jpg'
-import peli10 from '../../../api/SRC/La casa.jpg'
 
-const imagenes = {
-    'whalefall.jpg': peli1,
-    'Madre Siniestra.webp': peli2,
-    'Street Fighter.webp': peli3,
-    'Verity.jpg': peli4,
-    'Coyote vs Acme.webp': peli5,
-    'Resident Evil Noche Cero.jpg': peli6,
-    'El corazón de la Bestia.jpg': peli7,
-    'La Odisea.webp': peli8,
-    'Quiero tu sexo.jpg': peli9,
-    'La casa.jpg': peli10,
-}
-
+const getImagen = (nombre) => imagenTest
 
 function Sorteos(props) {
     const [message, setMessage] = useState("")
     const [sorteos, setSorteos] = useState([])
+
+    const [distX, setDistX] = useState(0)
+    const [distY, setDistY] = useState(0)
+    const [angulo, setAngulo] = useState(0)
+
+
     const Navigate = useNavigate()
-    console.log({sorteos})
+
+    const styleVar = {
+        '--inclinacion-x': distX,
+        '--inclinacion-y': distY,
+        '--angulo-mouse': angulo + 'rad'
+    }
+
+    function handleMousemove(e){
+        const element = e.currentTarget;
+        
+        let x = e.nativeEvent.layerX
+        let y = e.nativeEvent.layerY
+
+        let mitadAncho = element.getBoundingClientRect().width / 2
+        let mitadAlto = element.getBoundingClientRect().height / 2
+
+        let distanciaX = x < mitadAncho ? - ((mitadAncho - x) / mitadAncho) :  (x - mitadAncho) / mitadAncho;
+        let distanciaY = y < mitadAlto ? ((mitadAlto - y) / mitadAlto) : - (y - mitadAlto) / mitadAlto;
+        let angulo = Math.atan2(distanciaY, distanciaX) 
+        setDistX(distanciaX)
+        setDistY(distanciaY)
+        setAngulo(angulo)
+    }
+
     const getMessage = async () => {
         try {
             const response = await api.get("/")
@@ -51,22 +57,9 @@ function Sorteos(props) {
             const sort = await api.get('/sorteos')
             setSorteos(sort.data)
         } catch (error) {
-            console.log(error)
+            console.log({error})
         }
     }
-
-    const participarusuario = async (id) => {
-        try {
-            await api.post("/clientes-sorteos/",{
-                id_sorteo:  sor.id_sorteo,
-                id_Cliente: props.user.id_Usuario,
-                DVH: 1
-            })
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
 
     // Apenas carga la página, el useEffect ejecuta todo lo que tenga adentro
     useEffect(() => {
@@ -77,16 +70,17 @@ function Sorteos(props) {
 return(
     <div>
         <div>
-            <h1>¡SORTEOS SUPER CINEFILOS!</h1>
-            <h2>Selecciona en que sorteo queres participar WACHIN</h2>
+            <h1>¡SORTEOS SUPER CINEFILOS!</h1>  
         </div>
         <div className="sorteosLista">
             <ul className="contenedor-sorteos">
                 {sorteos.map(sor => 
-                    <li key={sor.id}>
-                         <div className="organizar-sorteo">
+                    <li key={sor.id} className="organizar-sorteo">
+                        <div className="tarjeta-sorteo" style={styleVar}>
                             <h2>{sor.nombre}</h2>
-                            <img onClick={()=> Navigate(`/sorteoinfo/${sor.id_sorteo}`) } src={imagenTest} alt="Elded"/>
+                            <div className="imagen" onMouseMove={(e)=>{handleMousemove(e)}}>
+                                <img onClick={()=> Navigate(`/sorteoinfo/${sor.id_sorteo}`) } src={getImagen(sor.imagen)} alt={sor.nombre}/>
+                            </div>
                         </div>
                     </li>
                 )}

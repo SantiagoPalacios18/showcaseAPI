@@ -13,7 +13,7 @@ const Asiento = sequelize.define(
             type: DataTypes.MEDIUMINT.UNSIGNED,
             unique: 'asientoPorFuncion'
         },
-        numero: {
+        columna: {
             type: DataTypes.TINYINT.UNSIGNED,
             unique: 'asientoPorFuncion'
         },

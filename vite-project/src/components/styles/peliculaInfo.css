@@ -1,0 +1,73 @@
+*{
+    color: white
+}
+
+#peliculaInfoDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+}
+
+#peliculaInfoDivDiv {
+    margin: 0 3% 0 3%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#peliculaInfoDivDiv > *{
+    margin: 0;
+    font-size: calc(0.9rem + 1.5vw);
+}
+
+#divReserva {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    > * {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    > form {
+        padding: 10px;
+        border-radius: 10px;
+        background-color: black;
+       >* {
+            margin: 3px;
+        }
+    }
+}
+
+select {
+    color: black;
+}
+option {
+    color: black;
+}
+button {
+    color: black
+}
+
+#divFunciones { 
+    margin-top: 10px;
+    display: flex;
+    justify-content:space-around;
+    flex-wrap: wrap;
+    > div{
+    margin-bottom: 10px;
+    border-color: black;
+    border-style: solid;
+    border-width: 3px;
+    border-radius: 10px;
+    background-color: black;
+    }
+}
+
+#divReserva {
+        margin-top: 10px;
+
+}

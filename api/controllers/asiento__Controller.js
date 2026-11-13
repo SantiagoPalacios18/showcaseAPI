@@ -108,6 +108,20 @@ const deleteAsientoById = async (req, res) => {
     }
 }
 
+const getAsientoByFuncionId = async (req, res) => {
+    try {
+        const {id} = req.params;
+        const asientos = await Asiento.findAll({
+            where: {
+                id_Funcion: id
+            }
+        })
+        console.log({asientos})
+        res.status(200).json({asientos})
+    } catch (error) {
+        res.status(500).json({error})
+    }
+}
 
 module.exports = {
     getAsientos,
@@ -115,6 +129,7 @@ module.exports = {
     createAsiento,
     modifyAsientoById,
     deleteAsientoById,
+    getAsientoByFuncionId
 }
 
 

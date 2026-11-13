@@ -64,7 +64,7 @@ function RecuperarCuenta(props){
     <>
         { contador == 1 && (
             <div className="main-content">
-                <form action="" onSubmit={mandarCodigo}>
+                <form className="send-email" action="" onSubmit={mandarCodigo}>
                     <label>Email</label>
                     <input type="text" placeholder="Email" onChange={(e) => {setMail(e.target.value)}}/>
                     <button type="submit">Enviar Codigo</button>

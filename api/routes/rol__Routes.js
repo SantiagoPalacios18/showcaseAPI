@@ -11,7 +11,7 @@ const {
 router.get('/', getRoles);
 router.get('/getByPk/:id', getRolById);
 router.post('/', createRol);
-router.patch('/:id', modifyRolById);
+router.patch('/edit/:id', modifyRolById);
 router.delete('/:id', deleteRolById);
 
 module.exports = router;

@@ -114,9 +114,23 @@ const deleteProyeccionPelicula = async (req, res) => {
     }
 };
 
+const getProyeccionPeliculaByPk = async (req, res) => {
+    try {
+        const { id_proyeccion, id_pelicula } = req.params;
+        const registro = await Proyeccion_pelicula.findOne({ where: { id_proyeccion, id_pelicula } });
+        if (!registro) {
+            return res.status(404).json({ message: "Relación no encontrada" });
+        }
+        res.status(200).json(registro);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 module.exports = {
     getProyeccionesPeliculas,
     getProyeccionesByPeliculaId,
+    getProyeccionPeliculaByPk,
     createProyeccionPelicula,
     modifyProyeccionPelicula,
     deleteProyeccionPelicula

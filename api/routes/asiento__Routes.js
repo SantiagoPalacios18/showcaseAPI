@@ -5,13 +5,15 @@ const {
     getAsientoById,
     createAsiento,
     modifyAsientoById,
-    deleteAsientoById
+    deleteAsientoById,
+    getAsientoByFuncionId
 } = require('../controllers/asiento__Controller.js');
 
 router.get('/', getAsientos);
 router.get('/getByPk/:id', getAsientoById);
+router.get('/getByFuncionPk/:id', getAsientoByFuncionId);
 router.post('/', createAsiento);
-router.patch('/:id', modifyAsientoById);
+router.patch('/edit/:id', modifyAsientoById);
 router.delete('/:id', deleteAsientoById);
 
 module.exports = router;

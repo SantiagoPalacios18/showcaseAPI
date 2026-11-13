@@ -1,22 +1,25 @@
-import { Link, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import {useState , useEffect } from "react"
 
 
 // El axios configurado que vamos a usar
 import api from "../api"
-import imagenTest from "../media/unnamed.jpg"
+import imagenTest from "../media/showcase-placeholder.jpg"
+import './styles/sorteoInfo.css'
+
 import './styles/Home.css'
 import './styles/sorteo.css'
-
-
-
 
 function sorteoinfo(props) {
     const [message, setMessage] = useState("")
     const [sort, setSorteos] = useState([])
+    const [premios, setPremios] = useState([])
     const { id } = useParams(); // Acá extraés el ID directamente de la URL
     const [usuario_sort, setusuario_sort ] = useState({})
-    const [mostrarBoton, setMostrarBoton] = useState(true);
+    const [ganador, setGanador] = useState("")
+    const [usu_peli, setUsu_peli] = useState("")
+
+    const navigate = useNavigate()
 
     const getMessage = async () => {
         try {
@@ -28,23 +31,42 @@ function sorteoinfo(props) {
     }
 
 
-    const getSorteoById = async (id) => {
+    const getSorteoById = async () => {
         try {
-        const sort = await api.get(`/sorteos/getByPk/${id}`);
-        console.log(sort)
+            const algo = api.get
+        const sort = await api.get(`/sorteos/getByPk/${id}`, {
+            usuarios: algo
+        });
         setSorteos(sort.data);
+        const premios_string = sort.data.premio
+        const premios_objeto =JSON.parse(premios_string)
+        setPremios(Object.values(premios_objeto))
         } catch (error) {
-        console.log(error);
+            console.log({error});
         }
     }
 
-    const getUsuariosBySorteoId = async () => {
+    const getBuscarUsuarioPelicula = async () => {
         try {
-            const usu_sort = await api.get('/clientes-sorteos/getByPk/{1}/{1}')
-            if (usu_sort)
-                setusuario_sort(usu_sort.data)
+            const usu_peli =await api.get(`/usuarios/${props.user.id_Usuario}`)
+            setUsu_peli(usu_peli.data[0])
+            console.log(usu_peli)
         } catch (error) {
-            console.log(error)
+            console.log({error})   
+        }
+    }
+
+    const getUnClienteSorteo = async () => {
+        try {
+            console.log('User Id: '+props.user.id_Usuario)
+            const usu_sort = await api.get(`/clientes-sorteos/getById_u/${id}/${props.user.id_Usuario}`)
+
+            if (usu_sort)
+                setusuario_sort(usu_sort.data[0])
+            console.log(usu_sort)
+            console.log(usuario_sort)
+        } catch (error) {
+            console.log({error})
         }
     }
 
@@ -54,7 +76,7 @@ function sorteoinfo(props) {
             const usu_sort = await api.post("/clientes-sorteos/",{
                 id_sorteo: sort.id_sorteo,
                 id_Cliente: props.user.id_Usuario,
-                DVH: sort.DVH
+                DVH: sort.DVH,
             })
             setusuario_sort(usu_sort.data.clienteSorteo)
             console.log(usu_sort.data.clienteSorteo)
@@ -64,36 +86,65 @@ function sorteoinfo(props) {
         } 
     }
 
-    const manejarClick = () => {
-    // 2. Haces lo que necesites que haga el botón al hacerle clic
-    console.log("¡Botón clickeado!");
-
-    // 3. Cambiamos el estado a false para que desaparezca
-    setMostrarBoton(false);
-
+    const getElegirGanador = async () => {
+        try {
+            const ganador = await api.get(`sorteos/getGanador/${id}`)
+            setGanador(ganador.data)
+        } catch (error) {
+            console.log({error})
+        }
     }
 
     useEffect(() => {
-        getSorteoById(id)
+        getSorteoById(id),
+        getUnClienteSorteo(),
+        getBuscarUsuarioPelicula()
+        getUnClienteSorteo(),
+        getBuscarUsuarioPelicula()
     }, [])
-return(
-    <div>
-        <h1>{sort.nombre}</h1>
-        <h2>el premio es: {sort.premio}</h2>
-        <p>{sort.infoGral}</p>
-        {!props.user && (
-            <button className="boton-s">para participar tenes que estar logueado</button>
-        )}
-        {props.user && mostrarBoton &&  (
-            <button className="boton-s" onClick={()=>{inscribir(); manejarClick();} }  >participar ahora</button>
-        )}
-        {usuario_sort?.id_Usuario && !mostrarBoton && (
-            <h2>ya estas inscripto 🥳</h2>
-        )}
 
-    </div>  
+    return(
+    <div className="sorteo">
+        <section className="details">
+            <h1>{sort.nombre}</h1>
+            <img src={imagenTest} alt="Foto sorteo" />
+            <p className="info-gral">{sort.infoGral}</p>
+        </section>
+        <section className="premios">
+            <h2>Premios</h2>
+            <ul className="premios-l">
+                {premios.map(premio => {
+                document.documentElement.style.setProperty('--alto-items-lista', (100 / premios.length + '%')); console.log(' FUNCAAAA: ' + 100 / premios.length + '%');
+                return(
+                    <li className="premio">
+                        {premio}
+                    </li>
+                )
+            })}
+            </ul>
+        </section>
+        <section className="requisitos">
+            
+            <h2>Requisitos</h2>
+            <ul className="req-list">
+                <li key={'registrado'} className={props.user ? 'aproved' : 'denied'} onClick={()=>{!props.user && navigate('/login')}}>Estar Registrado {props.user ? '✅' : '❌'}</li>
+            </ul>
+        </section>
+        <section id="boton">
+            {!props.user && (
+                <button className="boton-s">para participar tenes que estar logueado</button>
+            )}
+            {props.user && !usuario_sort?.id_Usuario &&  (
+                <button className="boton-s" id="btn-logged" onClick={()=>{inscribir()} }  >participar ahora</button>
+            )}
+            {usuario_sort?.id_Usuario && (
+                <h2>ya estas inscripto 🥳</h2>
+            )}
+        </section>
+    </div> 
     )
-}
+ }
+
                           
 
 export default sorteoinfo

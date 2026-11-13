@@ -1,4 +1,4 @@
-const { Usuario, CompraTicket, Asiento, Funcion, Pelicula } = require('../models/index.js');
+const { Usuario, Transaccion, CompraTicket, Asiento, Funcion, Pelicula } = require('../models/index.js');
 const bcrypt = require("bcrypt")
 const { Op } = require("sequelize")
 const {default_foto} = require('../SRC/default-foto.js')
@@ -47,7 +47,7 @@ const createUser = async (req, res) => {
     try {
         const data = req.body;
 
-        if (!data.id_Rol || !data.nombre || !data.apellido || !data.DNI || !data.telefono || !data.email || !data.fechaNacimiento || !data.DVV) {
+        if (!data.id_Rol || !data.nombre || !data.apellido || !data.DNI || !data.telefono || !data.email || !data.fechaNacimiento || !data.DVH) {
             return res.status(400).json({
                 message: "Faltan datos obligatorios (id_Rol, nombre, apellido, DNI, telefono, email, fechaNacimiento DVH)"
             });
@@ -62,7 +62,7 @@ const createUser = async (req, res) => {
         if ( nacimiento > new Date()) {
             return res.status(400).json({ message: "Fecha de nacimiento inválida" })
         }
-        const nuevouser = await userBD.create({
+        const nuevouser = await Usuario.create({
             id_Rol: data.id_Rol,
             nombre: data.nombre,
             apellido: data.apellido,
@@ -71,7 +71,8 @@ const createUser = async (req, res) => {
             telefono: data.telefono,
             email: data.email,
             foto: default_foto,
-            DVH: data.DVH
+            DVH: data.DVH,
+            contraseña: await bcrypt.hash(data.contraseña, 10),
         });
 
         res.status(200).json({ message: "Se ha creado el user correctamente." + extra, user: nuevouser });
@@ -199,15 +200,19 @@ const changePassword = async(req,res) => {
     }
 }   
 
-const buscarUsuarioPelicula = async (req, res) => {
+const getBuscarUsuarioPelicula = async (req, res) => {
     try {
+        const {id} = req.body
         Usuario.findAll(
             {
+                where: {
+                    id_Usuario : id
+                },
                 include: {
                     model: Transaccion,
                     required: true,
                     where:{
-                        idClienteLogueado : idIngreaado
+                        id_Usuario : id
                     },
                     include: {
                         model: CompraTicket,
@@ -225,14 +230,51 @@ const buscarUsuarioPelicula = async (req, res) => {
                             }
                         }
                     }
-                },
-                where: {
-                    id : id
                 }
             }
         )
+        const userCompra = await CompraTicket.findAll()
+
+        console.log(userCompra)
+
+        if (!userCompra) return res.status(201).json({message: "No comraste papu"})
+
+        res.status(200).json({message: 'compro', userCompra})
     } catch (error) {
-        console.log(error)
+        res.status(500).json({ error: error.message });
+    }
+}
+
+const registrarUsuarioEnPelicula = async (req, res) => {
+    try {
+        const {idCliente, datosReserva, id_Funcion, Numero, Fila, Precio} = req.body
+        const {Total, MetodoPago} = datosReserva
+        const result = await sequelize.transaction( //Usamos transaction pq sino puede modificarse una parte de la bd, dar error desues y no rollbackearse
+            async (t) => {
+                const transactionNueva = Transaccion.create({
+                    id_ClienteLogueado: idCliente,
+                    Total,
+                    MetodoPago,
+                    DVH: 1
+                },{transaction: t})
+                
+                const asientoNuevo = Asiento.create({
+                    id_Funcion,
+                    Numero,
+                    Fila,
+                    DVH: 1
+                },{transaction: t})
+                
+                const compraTicketNuevo = CompraTicket.create({
+                    id_Transaccion: transactionNueva.id_Transaccion,
+                    id_Asiento: asientoNuevo.id_Asiento,
+                    Precio,
+                    DVH: 1
+                },{transaction: t})
+            }
+        );
+    } catch (error) {
+        console.log({error})
     }
 }
 
@@ -245,6 +287,6 @@ module.exports = {
     modifyuserById,
     deleteuserById,
     createTestUser,
-    buscarUsuarioPelicula
+    getBuscarUsuarioPelicula
 }
 

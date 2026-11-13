@@ -11,7 +11,7 @@ const {
 router.get('/', getCines);
 router.get('/getByPk/:id', getCineById);
 router.post('/', createCine);
-router.patch('/:id', modifyCineById);
+router.patch('/edit/:id', modifyCineById);
 router.delete('/:id', deleteCineById);
 
 module.exports = router;

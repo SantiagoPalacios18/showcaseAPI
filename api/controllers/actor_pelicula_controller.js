@@ -114,9 +114,23 @@ const deleteActorPelicula = async (req, res) => {
     }
 };
 
+const getActorPeliculaByPk = async (req, res) => {
+    try {
+        const { id_Actor, id_Pelicula } = req.params;
+        const registro = await Actor_Pelicula.findOne({ where: { id_Actor, id_Pelicula } });
+        if (!registro) {
+            return res.status(404).json({ message: "Relación no encontrada" });
+        }
+        res.status(200).json(registro);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 module.exports = {
     getActoresPeliculas,
     getActoresByPeliculaId,
+    getActorPeliculaByPk,
     createActorPelicula,
     modifyActorPelicula,
     deleteActorPelicula
