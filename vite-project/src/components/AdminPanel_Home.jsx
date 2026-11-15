@@ -23,14 +23,6 @@ function AdminHome(props) {
     const navigate = useNavigate()
 
 
-    const getMessage = async () => {
-        try {
-            const response = await api.get("/admin/")
-            setMessage(response.data.message)
-        } catch (error) {
-            setMessage("upsis")
-        }
-    }
     
     const getTables = async() =>{
         try{
@@ -46,7 +38,6 @@ function AdminHome(props) {
     
     // Apenas carga la página, el useEffect ejecuta todo lo que tenga adentro
     useEffect(() => {
-        getMessage()
         getTables()
     }, [])
 
@@ -233,8 +224,6 @@ function AdminHome(props) {
         <div>
             <div style={{position: "relative"}}>
                 <h2>PANEL ADMINISTRADOR :Vvv:V</h2>
-                <h3>Mensaje dado por el back-end</h3>
-                <p style={{ color: "whitesmoke" }}>{message}</p>
                 <button style={{
                 position: "absolute",
                 top: "1rem",

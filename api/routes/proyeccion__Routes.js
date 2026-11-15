@@ -7,11 +7,12 @@ const {
     modifyProyeccionById,
     deleteProyeccionById
 } = require('../controllers/proyeccion__Controller.js');
+const {checkPatent} = require('../middlewares/auth__Middleware.js')
 
-router.get('/', getProyecciones);
-router.get('/getByPk/:id', getProyeccionById);
-router.post('/', createProyeccion);
-router.patch('/edit/:id', modifyProyeccionById);
-router.delete('/:id', deleteProyeccionById);
+router.get('/', checkPatent("GET_REGISTERS"), getProyecciones);
+router.get('/getByPk/:id', checkPatent("GET_REGISTER_BY_ID"), getProyeccionById);
+router.post('/', checkPatent("POST_REGISTER"), createProyeccion);
+router.patch('/edit/:id', checkPatent("PATCH_REGISTER"), modifyProyeccionById);
+router.delete('/:id', checkPatent("DELETE_REGISTER"), deleteProyeccionById);
 
 module.exports = router;

@@ -15,7 +15,7 @@ router.get('/', checkPatent("GET_REGISTERS") ,getUsers);
 router.get('/getByPk/:id', (req, res, next) =>{
     // Si el usuario buscado es del propio usuario, se lo dejamos pasar (esto es para evitar problemas con el profile.jsx)
     if (Number(req.params.id) == Number(req.user.id_Usuario)) return next()
-    return checkPatent("GET_USER_BY_ID")(req,res,next) // Le tengo que pasar el req res y next para que termine la llamada y devuelva el res, sino queda colgado
+    return checkPatent("GET_REGISTER_BY_ID")(req,res,next) // Le tengo que pasar el req res y next para que termine la llamada y devuelva el res, sino queda colgado
 },getUserById);
 
 router.get('/:id', getBuscarUsuarioPelicula)

@@ -7,11 +7,12 @@ const {
     modifyPatenteById,
     deletePatenteById
 } = require('../controllers/patente__Controller.js');
+const {checkPatent} = require('../middlewares/auth__Middleware.js')
 
-router.get('/', getPatentes);
-router.get('/getByPk/:id', getPatenteById);
-router.post('/', createPatente);
-router.patch('/edit/:id', modifyPatenteById);
-router.delete('/:id', deletePatenteById);
+router.get('/', checkPatent("GET_REGISTERS"), getPatentes);
+router.get('/getByPk/:id', checkPatent("GET_REGISTER_BY_ID"), getPatenteById);
+router.post('/', checkPatent("POST_REGISTER"), createPatente);
+router.patch('/edit/:id', checkPatent("PATCH_REGISTER"), modifyPatenteById);
+router.delete('/:id', checkPatent("DELETE_REGISTER"), deletePatenteById);
 
 module.exports = router;

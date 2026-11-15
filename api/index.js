@@ -76,7 +76,7 @@ server.listen(3000, async () => {
       defaults: {
         nombre: 'Benito',
         apellido: 'Camela',
-        fechaNacimiento: '10/10/2010',
+        fechaNacimiento: '2010-10-10',
         DNI: 1,
         telefono: 666,
         email: 'asd@a.com',
@@ -90,8 +90,7 @@ server.listen(3000, async () => {
       defaults: {
         nombre: 'Polo',
         apellido: 'Rivera',
-        edad: '999',
-        fechaNacimiento: '10/10/2010',
+        fechaNacimiento: '2010-10-10',
         telefono: 666,
         email: 'asd@aa.com',
         contraseña: await bcrypt.hash('123', 10),
@@ -105,11 +104,11 @@ server.listen(3000, async () => {
     // Administrador
       'ADMIN_HOME', 'ADMIN_SQL',
       
-    // Usuario
+    // Registros de tablas normales ()
       'GET_REGISTERS',
       'GET_REGISTERS_BY_ID', 'POST_REGISTER',
       'PATCH_REGISTER', 'DELETE_REGISTER',
-      'POST_USER_TEST'
+      'POST_USER_TEST', 'GET_REGISTER_BY_ID'
     ];
     const patentes = {};
     for (const nombre of patentes_lista) {
@@ -152,16 +151,16 @@ server.listen(3000, async () => {
 
 
     const peliculas = [
-        { genero: 'Suspenso', titulo:"Whalefall" , origen: 'EEUU', id_Director: 'Brian Duffield', calificacion: 7, imagen: 'whalefall.jpg',                duracion: '01:46:00' },
-        { genero: 'Terror',   titulo:"Madre Siniestra" , origen: 'EEUU', id_Director: 'Rob Savage', calificacion: 6, imagen: 'Madre Siniestra.webp',         duracion: '01:33:00' },
-        { genero: 'Accion',   titulo:"Street Fighter" , origen: 'EEUU', id_Director: 'Kitao Sakurai', calificacion: 6, imagen: 'Street Fighter.webp',          duracion: '02:05:00' },
-        { genero: 'Suspenso', titulo:"Verity" , origen: 'EEUU', id_Director: 'Michael Showalter', calificacion: 7, imagen: 'Verity.jpg',                   duracion: '01:50:00' },
-        { genero: 'Comedia',  titulo:"Coyote vs Acme" , origen: 'EEUU', id_Director: 'Dave Green', calificacion: 7, imagen: 'Coyote vs Acme.webp',          duracion: '01:30:00' },
-        { genero: 'Terror',   titulo:"Resident Evil: Noche Cero" , origen: 'EEUU', id_Director: 'Zach Cregger', calificacion: 6, imagen: 'Resident Evil Noche Cero.jpg', duracion: '01:45:00' },
-        { genero: 'Aventura', titulo:"El Corazón de la Bestia" , origen: 'EEUU', id_Director: 'David Ayer', calificacion: 8, imagen: 'El corazón de la Bestia.jpg',  duracion: '01:41:00' },
-        { genero: 'Aventura', titulo:"La odisea" , origen: 'EEUU', id_Director: 'Christopher Nolan', calificacion: 8, imagen: 'La Odisea.webp',               duracion: '02:30:00' },
-        { genero: 'Comedia',  titulo:"Quiero Tu Sexo" , origen: 'EEUU', id_Director: 'Gregg Araki', calificacion: 5, imagen: 'Quiero tu sexo.jpg',           duracion: '01:30:00' },
-        { genero: 'Drama',    titulo:"La Casa" , origen: 'Espana',  id_Director: 'Alex Montoya', calificacion: 7, imagen: 'La casa.jpg',                  duracion: '01:38:00' },
+        { genero: 'Suspenso', titulo:"Whalefall" , origen: 'EEUU', Director: 'Brian Duffield', calificacion: 7, imagen: 'whalefall.jpg',                duracion: '01:46:00' },
+        { genero: 'Terror',   titulo:"Madre Siniestra" , origen: 'EEUU', Director: 'Rob Savage', calificacion: 6, imagen: 'Madre Siniestra.webp',         duracion: '01:33:00' },
+        { genero: 'Accion',   titulo:"Street Fighter" , origen: 'EEUU', Director: 'Kitao Sakurai', calificacion: 6, imagen: 'Street Fighter.webp',          duracion: '02:05:00' },
+        { genero: 'Suspenso', titulo:"Verity" , origen: 'EEUU', Director: 'Michael Showalter', calificacion: 7, imagen: 'Verity.jpg',                   duracion: '01:50:00' },
+        { genero: 'Comedia',  titulo:"Coyote vs Acme" , origen: 'EEUU', Director: 'Dave Green', calificacion: 7, imagen: 'Coyote vs Acme.webp',          duracion: '01:30:00' },
+        { genero: 'Terror',   titulo:"Resident Evil: Noche Cero" , origen: 'EEUU', Director: 'Zach Cregger', calificacion: 6, imagen: 'Resident Evil Noche Cero.jpg', duracion: '01:45:00' },
+        { genero: 'Aventura', titulo:"El Corazón de la Bestia" , origen: 'EEUU', Director: 'David Ayer', calificacion: 8, imagen: 'El corazón de la Bestia.jpg',  duracion: '01:41:00' },
+        { genero: 'Aventura', titulo:"La odisea" , origen: 'EEUU', Director: 'Christopher Nolan', calificacion: 8, imagen: 'La Odisea.webp',               duracion: '02:30:00' },
+        { genero: 'Comedia',  titulo:"Quiero Tu Sexo" , origen: 'EEUU', Director: 'Gregg Araki', calificacion: 5, imagen: 'Quiero tu sexo.jpg',           duracion: '01:30:00' },
+        { genero: 'Drama',    titulo:"La Casa" , origen: 'Espana',  Director: 'Alex Montoya', calificacion: 7, imagen: 'La casa.jpg',                  duracion: '01:38:00' },
     ]
     async function insertPeliculas() {
         try {
@@ -412,7 +411,6 @@ const insertDatosCompletos = async () => {
     Benito = await Usuario.create({
       nombre: 'Benito',
       apellido: 'Camela',
-      edad: '999',
       DNI: null,
       telefono: null,
       email: 'asd@a.com',

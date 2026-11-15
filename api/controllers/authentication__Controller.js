@@ -121,7 +121,6 @@ const logout = async (req, res) => {
         const user = await Usuario.create({
             nombre: nombre,
             apellido: apellido,
-            edad: fecchaNac,
             DNI: dni,
             telefono: telefono,
             email: email,

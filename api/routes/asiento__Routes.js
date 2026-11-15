@@ -8,12 +8,13 @@ const {
     deleteAsientoById,
     getAsientoByFuncionId
 } = require('../controllers/asiento__Controller.js');
+const {checkPatent} = require('../middlewares/auth__Middleware.js')
 
-router.get('/', getAsientos);
-router.get('/getByPk/:id', getAsientoById);
+router.get('/', checkPatent("GET_REGISTERS"), getAsientos);
+router.get('/getByPk/:id', checkPatent("GET_REGISTER_BY_ID"), getAsientoById);
 router.get('/getByFuncionPk/:id', getAsientoByFuncionId);
-router.post('/', createAsiento);
-router.patch('/edit/:id', modifyAsientoById);
-router.delete('/:id', deleteAsientoById);
+router.post('/', checkPatent("POST_REGISTER"), createAsiento);
+router.patch('/edit/:id', checkPatent("PATCH_REGISTER"), modifyAsientoById);
+router.delete('/:id', checkPatent("DELETE_REGISTER"), deleteAsientoById);
 
 module.exports = router;
