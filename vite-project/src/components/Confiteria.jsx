@@ -23,7 +23,7 @@ function Confiteria(props) {
     }, [])
 
 return(
-        <div>
+        <div className="confiteria">
             <div>
                 <h2>ded.</h2>
 

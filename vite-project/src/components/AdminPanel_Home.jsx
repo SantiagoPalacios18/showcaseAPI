@@ -222,9 +222,9 @@ function AdminHome(props) {
 
     return(
         <div>
-            <div style={{position: "relative"}}>
+            <div className="admin-header" style={{position: "relative"}}>
                 <h2>PANEL ADMINISTRADOR :Vvv:V</h2>
-                <button style={{
+                <button className="admin-sql-btn" style={{
                 position: "absolute",
                 top: "1rem",
                 right: "3rem",
@@ -265,7 +265,7 @@ function AdminHome(props) {
                         </option>
                     ))}
                 </select>
-                <div style={{
+                <div className="admin-workspace" style={{
                     display: "flex", 
                     flexDirection: "row",
                     alignItems: "flex-start",
@@ -275,7 +275,7 @@ function AdminHome(props) {
                     boxSizing: "border-box"
                     }}>
 
-                    <div style={{ 
+                    <div className="admin-output" style={{ 
                         display: "flex", 
                         flexDirection: "column",
                         width: "700px", 
@@ -314,6 +314,7 @@ function AdminHome(props) {
                     </div>
 
                     <div
+                        className="admin-controls"
                         style={{
                             display: "flex", 
                             flexDirection: "column",
