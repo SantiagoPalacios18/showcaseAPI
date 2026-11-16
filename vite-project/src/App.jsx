@@ -15,11 +15,10 @@ import AdminSQL from './components/AdminPanel_SQL'
 import AdminPelis from './components/AdminPanel_pelis'
 
 import Cartelera from './components/Cartelera'
-import PeliculaInfo from './components/peliculaInfo'
+import PeliculaInfo from './components/PeliculaInfo'
 import Eventos from './components/Eventos'
 import Sorteos from './components/Sorteos'
 import Sorteoinfo from './components/sorteoinfo'
-import Confiteria from './components/Confiteria'
 
 //import {Home, Login, Register, NavBar, Footer, Profile} from './components/index.js'
  

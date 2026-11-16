@@ -71,3 +71,44 @@ button {
         margin-top: 10px;
 
 }
+
+#ulImportante {
+    display: flex;
+    flex-direction: column;
+}
+
+#tablaAsientos {
+    border-collapse: separate;
+    border-spacing: 6px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+#tablaAsientos th {
+    padding: 5px;
+    color: white;
+    font-size: 16px;
+}
+
+#tablaAsientos td {
+    padding: 0;
+}
+
+#tablaAsientos td button {
+    width: 70px;
+    height: 70px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    color: white;
+}
+
+#tablaAsientos .libre {
+    background-color: #4CAF50;
+}
+
+#tablaAsientos .ocupado {
+    background-color: #777;
+    cursor: not-allowed;
+}

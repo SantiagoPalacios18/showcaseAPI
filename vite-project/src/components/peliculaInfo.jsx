@@ -27,6 +27,8 @@ function peliculaInfo(props) {
     const getPeliculaById = async () => {
         try {
             const peli = await api.get(`/peliculas/getByPk/${id}`);
+            console.log(peli)
+            console.log(peli.data)
             setPelicula(peli.data);
         } catch (error) {
             console.log({ error });
@@ -103,7 +105,6 @@ function peliculaInfo(props) {
 
     return (
         <>
-            <button onClick={()=>{console.log(asientos)}}>MOSTRAR</button>
             <div id="peliculaInfoDiv">
                 <img src={imagenTest} alt={pelicula.titulo} />
                 <div id="peliculaInfoDivDiv">
@@ -133,12 +134,34 @@ function peliculaInfo(props) {
                     <button onClick={() => {setMostrarReservar(false), setFuncion({})}}>⬅️</button>
                     <legend>Reservar para la funcion {funcion.id_Funcion} </legend>
                     <form onSubmit={reservar}>
-                        <label> Asientos </label>
-                        <ul>
-                            {asientos.map((fila) => {
-                                return <li>{fila}</li>
-                            })}
-                        </ul>
+                        <label> PANTALLA </label>
+                        
+                        <table id="tablaAsientos"> 
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    {asientos[0]?.map((_, columna) => (
+                                        <th>{columna+1}</th>
+                                    ))}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {asientos?.map((fila, i) => (
+                                        <tr>
+                                            <td>{i + 1}</td>
+                                            {fila.map((asiento, j) => ( 
+                                                <td>
+                                                    <button
+                                                        disabled = {asiento == "OCUPADO"}
+                                                        className = {asiento == "OCUPADO"? "ocupado":"libre"}
+                                                    >{i+1}.{j+1}  {asiento === "OCUPADO" ? "X" : "✓"}</button>
+                                                </td>
+                                            ))}
+                                        </tr>
+                                    ))}
+                            </tbody>
+                        </table>
+
                         <label> Seleccione su metodo de pago</label>
                         <select>
                             <option value="" disabled selected hidden>Seleccionar Metodo de Pago</option>
