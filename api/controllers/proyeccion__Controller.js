@@ -31,9 +31,9 @@ const createProyeccion = async (req, res) => {
     try {
         const data = req.body;
 
-        if (!data.tipo || !data.DVH) {
+        if (!data.tipo) {
             return res.status(400).json({
-                message: "Faltan datos obligatorios (tipo o DVH)"
+                message: "Faltan datos obligatorios (tipo)"
             });
         }
 
@@ -44,7 +44,6 @@ const createProyeccion = async (req, res) => {
 
         const nuevaProyeccion = await Proyeccion.create({
             tipo: data.tipo,
-            DVH: data.DVH
         });
 
         res.status(200).json({
@@ -64,7 +63,6 @@ const modifyProyeccionById = async (req, res) => {
         let datosCambiar = {};
 
         if ("tipo" in data) datosCambiar.tipo = data.tipo;
-        if ("DVH" in data) datosCambiar.DVH = data.DVH;
 
         if (Object.keys(datosCambiar).length === 0) {
             return res.status(400).json({ message: "No se ha encontrado ningún dato para modificar" });

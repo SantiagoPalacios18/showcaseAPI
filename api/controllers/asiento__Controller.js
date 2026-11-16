@@ -31,9 +31,9 @@ const createAsiento = async (req, res) => {
     try {
         const data = req.body;
 
-        if (!data.id_Funcion || !data.numero || !data.fila || !data.DVH) {
+        if (!data.id_Funcion || !data.numero || !data.fila) {
             return res.status(400).json({
-                message: "Faltan datos obligatorios (id_Funcion, numero, fila o DVH)"
+                message: "Faltan datos obligatorios (id_Funcion, numero, fila)"
             });
         }
 
@@ -46,7 +46,6 @@ const createAsiento = async (req, res) => {
             id_Funcion: data.id_Funcion,
             numero: data.numero,
             fila: data.fila,
-            DVH: data.DVH
         });
 
         res.status(200).json({ message: "Se ha creado el asiento correctamente." + extra, asiento: nuevoAsiento });
@@ -71,9 +70,6 @@ const modifyAsientoById = async (req, res) => {
         }
         if ("fila" in data) {
             datosCambiar.fila = data.fila;
-        }
-        if ("DVH" in data) {
-            datosCambiar.DVH = data.DVH;
         }
 
         if (Object.keys(datosCambiar).length === 0) {

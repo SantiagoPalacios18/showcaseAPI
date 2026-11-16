@@ -17,6 +17,7 @@ function Profile(props){
     // Variables del formulario
     const [nombre, setNombre] = useState("");
     const [apellido, setApellido] = useState("");
+    const [alias, setAlias] = useState("");
     const [dni, setDni] = useState("");
     const [fechaNacimiento, setFechaNacimiento] = useState("")
     const [email, setEmail] = useState("");
@@ -25,6 +26,7 @@ function Profile(props){
     
     const [Mnombre, setmNombre] = useState("");
     const [Mapellido, setmApellido] = useState("");
+    const [Malias, setmAlias] = useState("");
     const [Mdni, setmDni] = useState("");
     const [MfechaNacimiento, setmFechaNacimiento] = useState("")
 
@@ -74,23 +76,28 @@ function Profile(props){
         setLoading(true) // Nos sirve para meter un efecto o elemento mientras se procesa
 
         try {
-            const response = await api.patch('usuarios/edit/' + id, {
-                Mnombre,
-                Mapellido,
-                Mdni,
-                MfechaNacimiento,
-                Memail,
-                Mtelefono,
-                Mfoto
-            })
+            const datos = {
+                nombre: Mnombre,
+                apellido: Mapellido,
+                alias: Malias,
+                DNI: Mdni,
+                email: Memail,
+                telefono: Mtelefono
+            }
+            // foto es STRING(200) y el selector deja un base64 que no entra. Solo se manda si cabe.
+            if (Mfoto && Mfoto.length <= 200 && !Mfoto.includes("perfil-default")) {
+                datos.foto = Mfoto
+            }
+
+            const response = await api.patch('usuarios/edit/' + id, datos)
 
             setNombre(Mnombre)
             setApellido(Mapellido)
+            setAlias(Malias)
             setDni(Mdni)
-            setFechaNacimiento(MfechaNacimiento)
             setEmail(Memail)
             setTelefono(Mtelefono)
-            setFoto(Mfoto)
+            if (datos.foto) setFoto(datos.foto)
 
             //await timeout(300);
             setLoading(false)
@@ -128,11 +135,19 @@ function Profile(props){
         if (User) {
             setNombre(User.nombre || "");
             setApellido(User.apellido || "");
+            setAlias(User.alias || "");
             setDni(User.DNI || "");
             setFechaNacimiento(User.fechaNacimiento || "")
             setEmail(User.email || "");
             setTelefono(User.telefono || "");
             setFoto(User.foto || "../assets/perfil-default.png")
+            setmNombre(User.nombre || "")
+            setmApellido(User.apellido || "")
+            setmAlias(User.alias || "")
+            setmDni(User.DNI != null ? String(User.DNI) : "")
+            setmFechaNacimiento(User.fechaNacimiento || "")
+            setmEmail(User.email || "")
+            setmTelefono(User.telefono != null ? String(User.telefono) : "")
             setmFoto(User.foto || "")
         }
     }, [User]); // Se ejecuta cada vez que el usuario pasa de null a tener datos*/
@@ -208,6 +223,10 @@ function Profile(props){
                                         <span>{apellido}</span>
                                     </div>
                                     <div>
+                                        <label>Alias: </label>
+                                        <span>{alias}</span>
+                                    </div>
+                                    <div>
                                         <label>DNI: </label>
                                         <span>{dni}</span>
                                     </div>
@@ -253,6 +272,17 @@ function Profile(props){
                                         />
                                     </div>
                                     <div>
+                                        <label htmlFor="alias">Alias: </label>
+                                        <input 
+                                            type="text" 
+                                            id="alias"
+                                            name="alias" 
+                                            maxLength={15}
+                                            value={Malias} 
+                                            onChange={(e) => setmAlias(e.target.value)} 
+                                        />
+                                    </div>
+                                    <div>
                                         <label htmlFor="dni">DNI: </label>
                                         <input 
                                             type="text" 
@@ -282,20 +312,21 @@ function Profile(props){
                                             onChange={(e) => setmTelefono(e.target.value)} 
                                         />
                                     </div>
-                                    <button className="edit-button" onClick={()=>setMuyLargo(true)}>
+                                    <button className="edit-button" type="button" onClick={()=>setMuyLargo(true)}>
                                         Cambiar Contraseña
                                     </button>
                                     <div className="profile-buttons">
                                         <button className="edit-button" type="submit">Guardar Perfil</button>
-                                        <button className="edit-button" type="cancel" onClick={() =>
+                                        <button className="edit-button" type="button" onClick={() =>
                                         {
                                         setShowEdit(false)
                                         setmNombre(nombre)
                                         setmApellido(apellido)
+                                        setmAlias(alias)
                                         setmDni(dni)
                                         setmEmail(email)
                                         setmTelefono(telefono)
-                                        setmFoto(foto)
+                                        setmFoto(User.foto || "")
                                         } 
                                     }>Cancelar</button>
 
@@ -318,10 +349,11 @@ function Profile(props){
 
                         <div className="overlay">
                             <div className="confirm-panel">
-                                <h3>Estas seguro de que quieres cerrar sesión?</h3>
-                                <div>
-                                    <button id="btn-cancel" onClick={() => setShowConfirm(false)}>Cancelar</button>
-                                    <button id="btn-confirm" onClick={() => {
+                                <h3>Cerrar sesión</h3>
+                                <p className="confirm-hint">¿Estás seguro de que querés salir?</p>
+                                <div className="confirm-actions">
+                                    <button id="btn-cancel" type="button" onClick={() => setShowConfirm(false)}>Cancelar</button>
+                                    <button id="btn-confirm" type="button" onClick={() => {
                                         setShowConfirm(false);
                                         props.onLogout();
                                     }}>Sí, salir</button>
@@ -340,6 +372,7 @@ function Profile(props){
                                     </button>
                                 </div>
                                 <h3>Seleccionar imagen</h3>
+                                <p className="pfp-hint">PNG, JPG o JPEG</p>
                                 <form>
                                     <input type="file" name="avatar" id="avatar" onChange={(e) => cambiarImg(e.target.files[0])} accept="image/png, image/jpg, image/jpeg" />
                                     <label htmlFor="avatar" className="avatar-btn">

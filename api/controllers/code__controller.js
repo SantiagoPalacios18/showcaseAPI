@@ -47,6 +47,9 @@ const solicitarCodigo = async (req, res) => {
         if (!user) {
             return res.status(200).json(respuesta)
         }
+        // PARA QUE LO VEA LA BITÁCORA, pq esta url no contiene la id del usuario
+        res.locals.id_Usuario = user.id_Usuario
+        res.locals.id_Registro = user.id_Usuario
 
         // id_User es unique: se borra el código anterior (si existe) antes de crear el nuevo
         await Code.destroy({ where: { id_User: user.id_Usuario } })
@@ -82,6 +85,9 @@ const verificarCodigo = async (req, res) => {
             return res.status(400).json({ message: "Código inválido o vencido" })
         }
 
+        // PARA QUE LO VEA LA BITÁCORA, pq esta url no contiene la id del usuario
+        res.locals.id_Usuario = valido.user.id_Usuario
+        res.locals.id_Registro = valido.user.id_Usuario
         res.status(200).json({ message: "Código válido" })
     } catch (error) {
         console.log(error)
@@ -104,6 +110,9 @@ const restablecerContraseña = async (req, res) => {
         }
 
         const { user, registro } = valido
+        // PARA QUE LO VEA LA BITÁCORA, pq esta url no contiene la id del usuario
+        res.locals.id_Usuario = user.id_Usuario
+        res.locals.id_Registro = user.id_Usuario
 
         user.contraseña = await bcrypt.hash(contraseña, 10)
         await user.save()

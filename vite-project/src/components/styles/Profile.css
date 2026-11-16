@@ -137,57 +137,147 @@ section h1{
 }
 
 .confirm-panel{
-    background-color: #381285;
-    color: white;
-    padding: 55px;
-    border-radius: 8px;
+    position: relative;
+    background-color: #32107a;
+    color: #ffffff;
+    width: min(420px, 92vw);
+    padding: 36px 28px 32px;
+    border-radius: 20px;
     text-align: center;
-    border: 5px gray;
+    border: 1px solid rgba(203, 108, 230, 0.55);
+    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.45);
+    box-sizing: border-box;
 }
 
 .confirm-panel h3{
-    color: white
+    margin: 0 0 8px;
+    color: #ffffff;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.35;
 }
 
+.confirm-hint{
+    margin: 0 0 22px;
+    color: #c9b6e8;
+    font-size: 14px;
+}
+
+.confirm-actions{
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
 
 .confirm-panel button{
-    width: 200px;
-    padding: 3px;
-    margin: 10px;
-    background-color: #8d8c91;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    box-sizing: border-box;
+    width: auto;
+    min-width: 140px;
+    margin: 0;
+    padding: 14px 22px;
+    border: none;
+    border-radius: 12px;
+    background-color: #f4eefe;
+    color: #2a0c66;
+    font-weight: 700;
     font-size: 16px;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: background-color 200ms;
 }
 
-.confirm-panel button:hover{
-    background-color: #c7c1d3;
+.confirm-panel #btn-cancel:hover{
+    background-color: #ffffff;
+}
+
+.confirm-panel #btn-confirm{
+    background-color: #cb6ce6;
+    color: #1a0838;
+}
+
+.confirm-panel #btn-confirm:hover{
+    background-color: #d98ef0;
 }
 
 .pfp-panel{
-    background-color: #381285;
+    position: relative;
+    background-color: #32107a;
     color: white;
-    width: 30%; 
-    padding-inline: 0rem;
-    padding-block: 1.5rem;
-    border-radius: 18px;
-    text-align: center;    
-    justify-content: center; 
+    width: min(420px, 92vw);
+    padding: 56px 28px 32px;
+    border-radius: 20px;
+    text-align: center;
+    border: 1px solid rgba(203, 108, 230, 0.55);
+    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.45);
+    box-sizing: border-box;
+}
+
+.pfp-panel h3{
+    margin: 0 0 6px;
+    color: #ffffff;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.pfp-hint{
+    margin: 0 0 22px;
+    color: #c9b6e8;
+    font-size: 14px;
+}
+
+.pfp-panel form{
+    display: flex;
+    justify-content: center;
+}
+
+.pfp-panel .cerrar{
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    margin: 0;
+}
+
+.pfp-panel #btn-cerrar{
+    width: 44px;
+    height: 44px;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    place-items: center;
+    border: none;
+    border-radius: 12px;
+    background-color: #f4eefe;
+    cursor: pointer;
+}
+
+.pfp-panel #btn-cerrar img{
+    width: 22px;
+    height: auto;
+    display: block;
 }
 
 .avatar-btn{
-    border-radius: 1rem;
-    background-color: rgb(229, 226, 232);
-    color: #2e2a2d;
-    font-weight: bolder     ;
-    padding-inline: 3rem;
-    padding-block: 1rem;
-    transition: 250ms;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 220px;
+    border: none;
+    border-radius: 12px;
+    background-color: #f4eefe;
+    color: #2a0c66;
+    font-weight: 700;
+    font-size: 16px;
+    padding: 14px 28px;
+    cursor: pointer;
+    transition: background-color 200ms;
+}
+
+.pfp-panel .avatar-btn span{
+    color: #2a0c66;
 }
 .avatar-btn:hover{
-    filter: brightness(70%);
-    transition: 250ms;
+    background-color: #ffffff;
+    filter: none;
 }
 
 .cerrar{
@@ -225,9 +315,7 @@ section h1{
     display: none;
 }
 
-#btn-confirm:hover{
-    background-color: #eb626d;
-}
+
 
 #texto{
     font: 1;

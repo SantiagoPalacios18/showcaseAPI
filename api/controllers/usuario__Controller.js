@@ -57,10 +57,9 @@ const createUser = async (req, res) => {
     try {
         const data = req.body;
 
-
-        if (!data.id_Rol || !data.nombre || !data.apellido || !data.DNI || !data.telefono || !data.email || !data.fechaNacimiento || !data.DVH) {
+        if (!data.id_Rol || !data.nombre || !data.apellido || !data.DNI || !data.telefono || !data.email || !data.fechaNacimiento) {
             return res.status(400).json({
-                message: "Faltan datos obligatorios (id_Rol, nombre, apellido, DNI, telefono, email, fechaNacimiento DVH)"
+                message: "Faltan datos obligatorios (id_Rol, nombre, apellido, DNI, telefono, email, fechaNacimiento)"
             });
         }
         let extra = "";
@@ -83,7 +82,6 @@ const createUser = async (req, res) => {
             telefono: data.telefono,
             email: data.email,
             foto: default_foto,
-            DVH: data.DVH,
             contraseña: await bcrypt.hash(data.contraseña, 10),
         });
 
@@ -114,6 +112,9 @@ const modifyuserById = async (req, res) => {
         }
         if ("apellido" in data) {
             datosCambiar.apellido = data.apellido;
+        }
+        if ("alias" in data) {
+            datosCambiar.alias = data.alias === "" ? null : data.alias;
         }
         if ("DNI" in data) {
             datosCambiar.DNI = data.DNI;
@@ -156,7 +157,7 @@ const modifyuserById = async (req, res) => {
 const deleteuserById = async (req, res) => {
     try {
         const { id } = req.params;
-        const useresEliminados = await userBD.destroy({ where: { id_Usuario: id } });
+        const useresEliminados = await Usuario.destroy({ where: { id_Usuario: id } });
 
 
         if (useresEliminados === 0) {
@@ -285,22 +286,19 @@ const registrarUsuarioEnPelicula = async (req, res) => {
                 const transactionNueva = Transaccion.create({
                     id_ClienteLogueado: idCliente,
                     Total,
-                    MetodoPago,
-                    DVH: 1
+                    MetodoPago
                 },{transaction: t})
                
                 const asientoNuevo = Asiento.create({
                     id_Funcion,
                     Numero,
-                    Fila,
-                    DVH: 1
+                    Fila
                 },{transaction: t})
                
                 const compraTicketNuevo = CompraTicket.create({
                     id_Transaccion: transactionNueva.id_Transaccion,
                     id_Asiento: asientoNuevo.id_Asiento,
-                    Precio,
-                    DVH: 1
+                    Precio
                 },{transaction: t})
             }
         );

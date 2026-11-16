@@ -4,6 +4,7 @@ const { sequelize, crearBDSiNoExiste } = require('./config/db.js'); // Importamo
 
 // TABLAS
 const { Usuario, Rol, Patente, Pelicula, Sala, Funcion, Cine, Tecnologia, Sorteo, Asiento, Transaccion, CompraTicket } = require('./models/index.js');
+const { recalcularTodo } = require('./services/integridad__Service.js');
 
 // CORS
 const cors = require ("cors")
@@ -67,13 +68,14 @@ server.listen(3000, async () => {
     console.log("El servidor está ON en el puerto 3000 y la BD lista");
     // console.log("hash de prueba:", await bcrypt.hash("123", 10));
 
-    // EL MEGA ADMIN: BENITO CAMELA
-    const [Benito] = await Usuario.findOrCreate({
+    // EL MEGA ADMIN: SANTIAGO PALACIOS
+    const [Santiago] = await Usuario.findOrCreate({
       where: { email: 'asd@a.com' },
       defaults: {
-        nombre: 'Benito',
-        apellido: 'Camela',
+        nombre: 'Santiago',
+        apellido: 'Palacios',
         fechaNacimiento: '2010-10-10',
+        alias: 'Santi',
         DNI: 1,
         telefono: 666,
         email: 'asd@a.com',
@@ -142,7 +144,7 @@ server.listen(3000, async () => {
 
     // ---------- ASIGNACIÓN DE ROLES Y/O PATENTES A LOS USUARIOS ----------
 
-    await Benito.setRol(adminRole);
+    await Santiago.setRol(adminRole);
     await Polo.setRol(SemiAdminRole);
 
 
@@ -268,6 +270,10 @@ server.listen(3000, async () => {
 
 
   
+
+    await insertDatosCompletos();
+    await recalcularTodo();
+    console.log('DVH y DVV recalculados');
 
   } catch (error) {
     console.error('No se pudo conectar a la base de datos:', {error});
@@ -410,25 +416,8 @@ const insertDatosCompletos = async () => {
 
 
 
-insertDatosCompletos();
 
 
-/*
- (async(req,res) => {
-  let Benito = await Usuario.findOne({where:{email: 'asd@a.com'}})
-  if (!Benito){
-    const hash = await bcrypt.hash('123456', 10)
-    Benito = await Usuario.create({
-      nombre: 'Benito',
-      apellido: 'Camela',
-      DNI: null,
-      telefono: null,
-      email: 'asd@a.com',
-      contraseña: hash
-    })
-  }
 
-})()
-*/
 
 //documentacion: https://sequelize.org/

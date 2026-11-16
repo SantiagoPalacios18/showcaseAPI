@@ -38,7 +38,6 @@ const createFuncion = async (req, res) => {
             idioma: data.idioma,
             proyeccion: data.proyeccion,
             horarioInicio: data.horarioInicio,
-            DVH: data.DVH
         });
 
         res.status(201).json({ message: "Se ha creado la función correctamente.", funcion: nuevaFuncion });
@@ -60,7 +59,6 @@ const modifyFuncionById = async (req, res) => {
         if ("idioma" in data) datosCambiar.idioma = data.idioma;
         if ("proyeccion" in data) datosCambiar.proyeccion = data.proyeccion;
         if ("horarioInicio" in data) datosCambiar.horarioInicio = data.horarioInicio;
-        if ("DVH" in data) datosCambiar.DVH = data.DVH;
 
         if (Object.keys(datosCambiar).length === 0) {
             return res.status(400).json({ message: "No se ha encontrado ningún dato para modificar" });

@@ -35,9 +35,9 @@ const createTransaccion = async (req, res) => {
     try {
         const data = req.body;
 
-        if (!data.id_Usuario || !data.monto || !data.fecha || !data.DVH) {
+        if (!data.id_Usuario || !data.monto || !data.fecha) {
             return res.status(400).json({
-                message: "Faltan datos obligatorios (id_Usuario, monto, fecha o DVH)"
+                message: "Faltan datos obligatorios (id_Usuario, monto, fecha)"
             });
         }
 
@@ -52,7 +52,6 @@ const createTransaccion = async (req, res) => {
             fecha: data.fecha,
             metodoPago: data.metodoPago || 'Efectivo',
             estado: data.estado || 'Aprobada',
-            DVH: data.DVH
         });
 
         res.status(200).json({
@@ -76,7 +75,6 @@ const modifyTransaccionById = async (req, res) => {
         if ("fecha" in data) datosCambiar.fecha = data.fecha;
         if ("metodoPago" in data) datosCambiar.metodoPago = data.metodoPago;
         if ("estado" in data) datosCambiar.estado = data.estado;
-        if ("DVH" in data) datosCambiar.DVH = data.DVH;
 
         if (Object.keys(datosCambiar).length === 0) {
             return res.status(400).json({ message: "No se ha encontrado ningún dato para modificar" });

@@ -73,7 +73,7 @@ const Usuario = sequelize.define(
         },
         DVH: {
             type: DataTypes.STRING(6),
-            allowNull: /* deberia ser false pero como tengo interferencias con el registro le pongo*/ true,
+            allowNull: false,
             validate: {
                 isAlphanumeric: true
             }

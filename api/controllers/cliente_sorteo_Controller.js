@@ -54,7 +54,7 @@ const createClienteSorteo = async (req, res) => {
 
         if (!data.id_Cliente || !data.id_sorteo) {
             return res.status(400).json({
-                message: "Faltan datos obligatorios (id_Usuario o id_Cliente, id_sorteo o DVH)"
+                message: "Faltan datos obligatorios (id_Cliente, id_sorteo)"
             });
         }
 
@@ -76,7 +76,6 @@ const createClienteSorteo = async (req, res) => {
             id_Usuario: data.id_Usuario,
             id_sorteo: data.id_sorteo,
             fecha_inscripcion: data.fecha_inscripcion || undefined,
-            DVH: data.DVH
         });
 
 
@@ -99,7 +98,6 @@ const modifyClienteSorteo = async (req, res) => {
 
 
         if ("fecha_inscripcion" in data) datosCambiar.fecha_inscripcion = data.fecha_inscripcion;
-        if ("DVH" in data) datosCambiar.DVH = data.DVH;
 
 
         if (Object.keys(datosCambiar).length === 0) {

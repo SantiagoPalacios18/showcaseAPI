@@ -35,9 +35,9 @@ const createCompraTicket = async (req, res) => {
     try {
         const data = req.body;
 
-        if (!data.id_transaccion || !data.id_Asiento || !data.precio || !data.DVH) {
+        if (!data.id_transaccion || !data.id_Asiento || !data.precio) {
             return res.status(400).json({
-                message: "Faltan datos obligatorios (id_transaccion, id_Asiento, precio o DVH)"
+                message: "Faltan datos obligatorios (id_transaccion, id_Asiento, precio)"
             });
         }
 
@@ -50,7 +50,6 @@ const createCompraTicket = async (req, res) => {
             id_transaccion: data.id_transaccion,
             id_Asiento: data.id_Asiento,
             precio: data.precio,
-            DVH: data.DVH
         });
 
         res.status(200).json({
@@ -72,7 +71,6 @@ const modifyCompraTicketById = async (req, res) => {
         if ("id_transaccion" in data) datosCambiar.id_transaccion = data.id_transaccion;
         if ("id_Asiento" in data) datosCambiar.id_Asiento = data.id_Asiento;
         if ("precio" in data) datosCambiar.precio = data.precio;
-        if ("DVH" in data) datosCambiar.DVH = data.DVH;
 
         if (Object.keys(datosCambiar).length === 0) {
             return res.status(400).json({ message: "No se ha encontrado ningún dato para modificar" });
