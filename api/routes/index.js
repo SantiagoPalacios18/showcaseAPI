@@ -28,6 +28,7 @@ router.use(authMiddleware) // en cada endpoint (de los routes de abajo) se va a 
 
 router.use('/bitacora', require('./bitacora__Routes.js'));
 router.use('/integridad', require('./integridad__Routes.js'));
+router.use('/sql', require('./sql__Routes.js'));
 
 // ==========================================================
 

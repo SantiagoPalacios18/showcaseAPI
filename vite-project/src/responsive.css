@@ -305,10 +305,16 @@
     align-items: center !important;
   }
 
-  .admin-output,
-  .sql-terminal {
+  .admin-output {
     width: min(700px, 94vw) !important;
     max-width: 94vw !important;
+    box-sizing: border-box !important;
+  }
+
+  .sql-terminal {
+    width: calc(100vw - 24px) !important;
+    max-width: none !important;
+    height: calc(100svh - 230px) !important;
     box-sizing: border-box !important;
   }
 
@@ -508,6 +514,13 @@
     flex-direction: column;
     align-items: center;
     gap: 8px;
+    padding: 0;
+  }
+
+  .admin-table-select,
+  .admin-test-btn {
+    max-width: 94vw;
+    box-sizing: border-box;
   }
 
   .admin-sql-btn {
@@ -515,9 +528,13 @@
     margin: 0 auto 8px !important;
   }
 
-  .admin-output,
-  .sql-terminal {
+  .admin-output {
     height: 320px !important;
+  }
+
+  .sql-terminal {
+    height: calc(100svh - 200px) !important;
+    min-height: 280px !important;
   }
 
   .eventos-wrapper .e {

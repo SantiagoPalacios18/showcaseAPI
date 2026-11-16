@@ -44,6 +44,8 @@ function clasificar(req, res, pathOriginal) {
     if (path === '/codes/restablecer') {
         return { accion: 'RECUPERAR_RESTABLECER', tabla: 'Code', id_Registro: idEntero(res.locals.id_Registro) };
     }
+    // La terminal anota solo las consultas que modifican datos. Un SELECT no es un alta.
+    if (metodo === 'POST' && path === '/sql') return null;
 
     const partes = path.split('/').filter(Boolean);
     if (partes.length === 0) return null;

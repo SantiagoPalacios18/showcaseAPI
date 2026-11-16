@@ -157,7 +157,7 @@ const modifyuserById = async (req, res) => {
 const deleteuserById = async (req, res) => {
     try {
         const { id } = req.params;
-        const useresEliminados = await userBD.destroy({ where: { id_Usuario: id } });
+        const useresEliminados = await Usuario.destroy({ where: { id_Usuario: id } });
 
 
         if (useresEliminados === 0) {
