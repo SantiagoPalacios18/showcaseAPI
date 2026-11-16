@@ -34,8 +34,6 @@ const { Transaccion } = require('./transaccion__Model.js');
 
 const { Usuario } = require('./usuario__Model.js');
 
-const { AdministradorBD } = require('./administradorBD__Model.js');
-
 const { Usuario_sorteo } = require('./usuario_sorteo__Model.js');
 
 const { Code } = require('./code__model.js')
