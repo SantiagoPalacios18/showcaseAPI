@@ -4,6 +4,7 @@ const { sequelize, crearBDSiNoExiste } = require('./config/db.js'); // Importamo
 
 // TABLAS
 const { Usuario, Rol, Patente, Pelicula, Sala, Funcion, Cine, Tecnologia, Sorteo, Asiento, Transaccion, CompraTicket } = require('./models/index.js');
+const { recalcularTodo } = require('./services/integridad__Service.js');
 
 // CORS
 const cors = require ("cors")
@@ -67,13 +68,14 @@ server.listen(3000, async () => {
     console.log("El servidor está ON en el puerto 3000 y la BD lista");
     // console.log("hash de prueba:", await bcrypt.hash("123", 10));
 
-    // EL MEGA ADMIN: BENITO CAMELA
-    const [Benito] = await Usuario.findOrCreate({
+    // EL MEGA ADMIN: SANTIAGO PALACIOS
+    const [Santiago] = await Usuario.findOrCreate({
       where: { email: 'asd@a.com' },
       defaults: {
-        nombre: 'Benito',
-        apellido: 'Camela',
+        nombre: 'Santiago',
+        apellido: 'Palacios',
         fechaNacimiento: '2010-10-10',
+        alias: 'Santi',
         DNI: 1,
         telefono: 666,
         email: 'asd@a.com',
@@ -142,22 +144,22 @@ server.listen(3000, async () => {
 
     // ---------- ASIGNACIÓN DE ROLES Y/O PATENTES A LOS USUARIOS ----------
 
-    await Benito.setRol(adminRole);
+    await Santiago.setRol(adminRole);
     await Polo.setRol(SemiAdminRole);
 
 
 
     const peliculas = [
-        { genero: 'Suspenso', titulo:"Whalefall" , origen: 'EEUU', id_Director: 'Brian Duffield', calificacion: 7, imagen: 'http://localhost:3000/posters/poster-movie-1.jpg',                duracion: '01:46:00' },
-        { genero: 'Terror',   titulo:"Madre Siniestra" , origen: 'EEUU', id_Director: 'Rob Savage', calificacion: 6, imagen: 'http://localhost:3000/posters/poster-movie-2.webp',         duracion: '01:33:00' },
-        { genero: 'Accion',   titulo:"Street Fighter" , origen: 'EEUU', id_Director: 'Kitao Sakurai', calificacion: 6, imagen: 'http://localhost:3000/posters/poster-movie-3.webp', duracion: '02:05:00' },
-        { genero: 'Suspenso', titulo:"Verity" , origen: 'EEUU', id_Director: 'Michael Showalter', calificacion: 7, imagen: 'http://localhost:3000/posters/poster-movie-4.jpg', duracion: '01:50:00' },
-        { genero: 'Comedia',  titulo:"Coyote vs Acme" , origen: 'EEUU', id_Director: 'Dave Green', calificacion: 7, imagen: 'http://localhost:3000/posters/poster-movie-5.webp', duracion: '01:30:00' },
-        { genero: 'Terror',   titulo:"Resident Evil: Noche Cero" , origen: 'EEUU', id_Director: 'Zach Cregger', calificacion: 6, imagen: 'http://localhost:3000/posters/poster-movie-6.jpg', duracion: '01:45:00' },
-        { genero: 'Aventura', titulo:"El Corazón de la Bestia" , origen: 'EEUU', id_Director: 'David Ayer', calificacion: 8, imagen: 'http://localhost:3000/posters/poster-movie-7.jpg',  duracion: '01:41:00' },
-        { genero: 'Aventura', titulo:"La odisea" , origen: 'EEUU', id_Director: 'Christopher Nolan', calificacion: 8, imagen: 'http://localhost:3000/posters/poster-movie-8.webp', duracion: '02:30:00' },
-        { genero: 'Comedia',  titulo:"Quiero Tu Sexo" , origen: 'EEUU', id_Director: 'Gregg Araki', calificacion: 5, imagen: 'http://localhost:3000/posters/poster-movie-9.jpg', duracion: '01:30:00' },
-        { genero: 'Drama',    titulo:"La Casa" , origen: 'Espana',  id_Director: 'Alex Montoya', calificacion: 7, imagen: 'http://localhost:3000/posters/poster-movie-10.jpg', duracion: '01:38:00' },
+        { genero: 'Suspenso', titulo:"Whalefall" , origen: 'EEUU', director: 'Brian Duffield', calificacion: 7, imagen: 'http://localhost:3000/posters/poster-movie-1.jpg',                duracion: '01:46:00' },
+        { genero: 'Terror',   titulo:"Madre Siniestra" , origen: 'EEUU', director: 'Rob Savage', calificacion: 6, imagen: 'http://localhost:3000/posters/poster-movie-2.webp',         duracion: '01:33:00' },
+        { genero: 'Accion',   titulo:"Street Fighter" , origen: 'EEUU', director: 'Kitao Sakurai', calificacion: 6, imagen: 'http://localhost:3000/posters/poster-movie-3.webp', duracion: '02:05:00' },
+        { genero: 'Suspenso', titulo:"Verity" , origen: 'EEUU', director: 'Michael Showalter', calificacion: 7, imagen: 'http://localhost:3000/posters/poster-movie-4.jpg', duracion: '01:50:00' },
+        { genero: 'Comedia',  titulo:"Coyote vs Acme" , origen: 'EEUU', director: 'Dave Green', calificacion: 7, imagen: 'http://localhost:3000/posters/poster-movie-5.webp', duracion: '01:30:00' },
+        { genero: 'Terror',   titulo:"Resident Evil: Noche Cero" , origen: 'EEUU', director: 'Zach Cregger', calificacion: 6, imagen: 'http://localhost:3000/posters/poster-movie-6.jpg', duracion: '01:45:00' },
+        { genero: 'Aventura', titulo:"El Corazón de la Bestia" , origen: 'EEUU', director: 'David Ayer', calificacion: 8, imagen: 'http://localhost:3000/posters/poster-movie-7.jpg',  duracion: '01:41:00' },
+        { genero: 'Aventura', titulo:"La odisea" , origen: 'EEUU', director: 'Christopher Nolan', calificacion: 8, imagen: 'http://localhost:3000/posters/poster-movie-8.webp', duracion: '02:30:00' },
+        { genero: 'Comedia',  titulo:"Quiero Tu Sexo" , origen: 'EEUU', director: 'Gregg Araki', calificacion: 5, imagen: 'http://localhost:3000/posters/poster-movie-9.jpg', duracion: '01:30:00' },
+        { genero: 'Drama',    titulo:"La Casa" , origen: 'Espana',  director: 'Alex Montoya', calificacion: 7, imagen: 'http://localhost:3000/posters/poster-movie-10.jpg', duracion: '01:38:00' },
     ]
     async function insertPeliculas() {
         try {
@@ -252,9 +254,26 @@ server.listen(3000, async () => {
     }
     console.log('--- Funciones insertadas correctamente');
 
+    const asientos = [
+        { id_Funcion: 1, columna: 1, fila: 100, DVH: "ABC123" },
+        { id_Funcion: 1, columna: 2, fila: 100, DVH: "ABC123" },
+        { id_Funcion: 1, columna: 3, fila: 100, DVH: "ABC123" },
+    ];
+
+    for (const asiento of asientos) {
+        await Asiento.create(
+            asiento
+        );
+        console.log('--- Asientos insertados correctamente');
+    }
+
 
 
   
+
+    await insertDatosCompletos();
+    await recalcularTodo();
+    console.log('DVH y DVV recalculados');
 
   } catch (error) {
     console.error('No se pudo conectar a la base de datos:', {error});
@@ -262,160 +281,143 @@ server.listen(3000, async () => {
 });
 
 const insertDatosCompletos = async () => {
-    try {
-        // 1. Cine
-        const cines = [
-            { nombre: "Hoyts Abasto", ubicacion: "Av Corrientes 3247", DVH: "CIN001" },
-            { nombre: "Village Recolet", ubicacion: "Vicente Lopez 2050", DVH: "CIN002" }
-        ];
-        for (const cine of cines) {
-            await Cine.findOrCreate({
-                where: { nombre: cine.nombre },
-                defaults: cine
-            });
-        }
-        console.log('1/7 Cines insertados');
+  try {
+      // 1. Cine
+      const cines = [
+          { nombre: "Hoyts Abasto", ubicacion: "Av Corrientes 3247", DVH: "CIN001" },
+          { nombre: "Village Recolet", ubicacion: "Vicente Lopez 2050", DVH: "CIN002" }
+      ];
+      for (const cine of cines) {
+          await Cine.findOrCreate({
+              where: { nombre: cine.nombre },
+              defaults: cine
+          });
+      }
+      console.log('1/7 Cines insertados');
 
-        // 2. Tecnologia
-        const tecnologias = [
-            { nombre: "IMAX 3D", descripcion: "Pantalla gigante", DVH: "TEC001" },
-            { nombre: "2D Standard", descripcion: "Proyección clásica", DVH: "TEC002" }
-        ];
-        for (const tecno of tecnologias) {
-            await Tecnologia.findOrCreate({
-                where: { nombre: tecno.nombre },
-                defaults: tecno
-            });
-        }
-        console.log('2/7 Tecnologías insertadas');
 
-        // 3. Sala
-        const salas = [
-            { id_Cine: 1, numero: 1, filas: 10, columnas: 30, DVH: "SAL001" },
-            { id_Cine: 1, numero: 2, filas: 20, columnas: 30, DVH: "SAL002" }
-        ];
-        for (const sala of salas) {
-            await Sala.findOrCreate({
-                where: { id_Cine: sala.id_Cine, numero: sala.numero },
-                defaults: sala
-            });
-        }
-        console.log('3/7 Salas insertadas');
 
-        // 4. Funcion (Corregido: cargamos todas las FKs necesarias)
-        const funciones = [
-            {
-                id_sala: 1,
-                id_pelicula: 3,
-                id_tecnologia: 1,
-                id_asiento: 1,
-                idioma: "Subtitulado",
-                proyeccion: "2D",
-                horarioInicio: new Date("2026-11-10T18:30:00"),
-                DVH: "FUN001"
-            },
-            {
-                id_sala: 2,
-                id_pelicula: 6,
-                id_tecnologia: 2,
-                id_asiento: 2,
-                idioma: "Español",
-                proyeccion: "3D",
-                horarioInicio: new Date("2026-11-10T21:00:00"),
-                DVH: "FUN002"
-            }
-        ];
-        for (const funcion of funciones) {
-            await Funcion.findOrCreate({
-                where: { 
-                    id_sala: funcion.id_sala, 
-                    horarioInicio: funcion.horarioInicio 
-                },
-                defaults: funcion
-            });
-        }
-        console.log('4/7 Funciones insertadas');
 
-        // 5. Asiento
-        const asientos = [
-            { id_Funcion: 1, numero: 1, fila: "A", DVH: "ASI001" },
-            { id_Funcion: 1, numero: 2, fila: "A", DVH: "ASI002" }
-        ];
-        for (const asiento of asientos) {
-            await Asiento.findOrCreate({
-                where: { 
-                    id_Funcion: asiento.id_Funcion, 
-                    numero: asiento.numero, 
-                    fila: asiento.fila 
-                },
-                defaults: asiento
-            });
-        }
-        console.log('5/7 Asientos insertados');
+      // 2. Tecnologia
+      const tecnologias = [
+          { nombre: "IMAX 3D", descripcion: "Pantalla gigante", DVH: "TEC001" },
+          { nombre: "2D Standard", descripcion: "Proyección clásica", DVH: "TEC002" }
+      ];
+      for (const tecno of tecnologias) {
+          await Tecnologia.findOrCreate({
+              where: { nombre: tecno.nombre },
+              defaults: tecno
+          });
+      }
+      console.log('2/7 Tecnologías insertadas');
 
-        // 6. Transaccion
-        const transacciones = [
-            {
-                id_Usuario: 1,
-                total: 5000,
-                fechaDeEmision: new Date(),
-                metodoDePago: "MercadoPago",
-                DVH: "TRX001"
-            }
-        ];
-        await Transaccion.create({
-            id_Usuario: 1,
-            total: 5000,
-            fechaDeEmision: new Date(),
-            metodoDePago: "MercadoPago",
-            DVH: "TRX001"
-        });
-        console.log('6/7 Transacciones insertadas');
 
-        // 7. CompraTicket
-        const tickets = [
-            {
-                id_transaccion: 1,
-                id_FuncionAsiento: 1,
-                precio: 2500,
-                DVH: "TCK001"
-            }
-        ];
-        for (const ticket of tickets) {
-            await CompraTicket.findOrCreate({
-                where: { 
-                    id_transaccion: ticket.id_transaccion, 
-                    id_FuncionAsiento: ticket.id_FuncionAsiento 
-                },
-                defaults: ticket
-            });
-        }
-        console.log('7/7 CompraTickets insertados');
 
-        console.log('¡Carga de los 7 modelos ejecutada completamente con éxito!');
-    } catch (err) {
-        console.error('Error durante la inserción:', err);
-    }
+
+      // 3. Sala
+      const salas = [
+          { id_Cine: 1, numero: 1, filas: 10, columnas: 30, DVH: "SAL001" },
+          { id_Cine: 1, numero: 2, filas: 20, columnas: 30, DVH: "SAL002" }
+      ];
+      for (const sala of salas) {
+          await Sala.findOrCreate({
+              where: { id_Cine: sala.id_Cine, numero: sala.numero },
+              defaults: sala
+          });
+      }
+      console.log('3/7 Salas insertadas');
+
+
+
+
+      // 4. Funcion (Corregido: cargamos todas las FKs necesarias)
+      const funciones = [
+          {
+              id_sala: 1,
+              id_pelicula: 3,
+              id_tecnologia: 1,
+              idioma: "Subtitulado",
+              proyeccion: "2D",
+              horarioInicio: new Date("2026-11-10T18:30:00"),
+              DVH: "FUN001"
+          },
+          {
+              id_sala: 2,
+              id_pelicula: 6,
+              id_tecnologia: 2,
+              idioma: "Español",
+              proyeccion: "3D",
+              horarioInicio: new Date("2026-11-10T21:00:00"),
+              DVH: "FUN002"
+          }
+      ];
+      for (const funcion of funciones) {
+          await Funcion.findOrCreate({
+              where: {
+                  id_sala: funcion.id_sala,
+                  horarioInicio: funcion.horarioInicio
+              },
+              defaults: funcion
+          });
+      }
+      console.log('4/7 Funciones insertadas');
+
+      // 6. Transaccion
+      const Transacciones = [
+          {
+              id_Usuario: 1,
+              total: 5000,
+              fechaDeEmision: new Date(),
+              metodoDePago: "MercadoPago",
+              DVH: "TRX001"
+          }
+      ];
+      await Transaccion.create({
+          id_Usuario: 1,
+          total: 5000,
+          fechaDeEmision: new Date(),
+          metodoDePago: "MercadoPago",
+          DVH: "TRX001"
+      });  
+      console.log('6/7 Transacciones insertadas');
+
+
+
+
+      // 7. CompraTicket
+      const tickets = [
+          {
+              id_transaccion: 1,
+              id_Asiento: 1,
+              precio: 2500,
+              DVH: "TCK001"
+          }
+      ];
+      for (const ticket of tickets) {
+          await CompraTicket.findOrCreate({
+              where: {
+                  id_transaccion: ticket.id_transaccion,
+                  id_Asiento: ticket.id_Asiento
+              },
+              defaults: ticket
+          });
+      }
+      console.log('7/7 CompraTickets insertados');
+
+
+
+
+      console.log('¡Carga de los 7 modelos ejecutada completamente con éxito!');
+  } catch (err) {
+      console.error('Error durante la inserción:', err);
+  }
 };
 
-//insertDatosCompletos();
 
-/*
- (async(req,res) => {
-  let Benito = await Usuario.findOne({where:{email: 'asd@a.com'}})
-  if (!Benito){
-    const hash = await bcrypt.hash('123456', 10)
-    Benito = await Usuario.create({
-      nombre: 'Benito',
-      apellido: 'Camela',
-      DNI: null,
-      telefono: null,
-      email: 'asd@a.com',
-      contraseña: hash
-    })
-  }
 
-})()
-*/
+
+
+
+
 
 //documentacion: https://sequelize.org/

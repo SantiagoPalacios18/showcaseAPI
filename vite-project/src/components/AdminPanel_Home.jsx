@@ -66,6 +66,24 @@ function AdminHome(props) {
             console.error("Error al traer registros:", error);
         }
     }
+
+    const verBitacora = async () => {
+        try {
+            const { data } = await api.get("bitacora")
+            setResponse({ message: data })
+        } catch (error) {
+            alert(error.response?.data?.message || "No se pudo leer la bitácora")
+        }
+    }
+
+    const verificarIntegridad = async () => {
+        try {
+            const { data } = await api.get("integridad/verificar")
+            setResponse({ message: data })
+        } catch (error) {
+            alert(error.response?.data?.message || "No se pudo verificar la integridad")
+        }
+    }
     // Los 4 de abajo necesitan la id
     const getRegisterByPk = async () => {
         try{
@@ -161,6 +179,7 @@ function AdminHome(props) {
 
         const body = {}
         for (const campo of campos) {
+            if (campo.name === "DVH") continue
             const v = data[campo.name]
             const tipo = inputFor(campo)
 
@@ -221,20 +240,14 @@ function AdminHome(props) {
 
 
     return(
-        <div>
-            <div className="admin-header" style={{position: "relative"}}>
-                <h2>PANEL ADMINISTRADOR :Vvv:V</h2>
-                <button className="admin-sql-btn" style={{
-                position: "absolute",
-                top: "1rem",
-                right: "3rem",
-                width: "100px",
-                color: "white"
-                }} onClick={() => {openSQLZone()}}>SQL</button>
+        <div className="admin-home">
+            <div className="admin-header">
+                <h2>Panel Administrador</h2>
+                <button className="admin-sql-btn" onClick={() => {openSQLZone()}}>SQL</button>
 
             </div>
 
-            <div style={{paddingTop: "50px"}}>
+            <div className="admin-welcome">
                 {props.user ? (
                     <>
                         <p>Bienvenido {props.user.nombre} {props.user.apellido}</p>
@@ -243,12 +256,12 @@ function AdminHome(props) {
                     <p>Kien so bo </p>
                 )}
             </div>
-            <section>
+            <section className="admin-section">
                 <h3>Opciones de administrador</h3>
-                <button onClick={createTestUser}>Crear usuario de test</button>
-                <br />
+                <button className="admin-test-btn" onClick={createTestUser}>Crear usuario de test</button>
                 <select
                     id="tabla-bds"
+                    className="admin-table-select"
                     value={tablaElegida}
                     onChange={(e) => {
                         setTablaElegida(e.target.value)
@@ -265,40 +278,15 @@ function AdminHome(props) {
                         </option>
                     ))}
                 </select>
-                <div className="admin-workspace" style={{
-                    display: "flex", 
-                    flexDirection: "row",
-                    alignItems: "flex-start",
-                    justifyContent: "center",
-                    gap: "20px",
-                    width: "100%",
-                    boxSizing: "border-box"
-                    }}>
+                <div className="admin-workspace">
 
-                    <div className="admin-output" style={{ 
-                        display: "flex", 
-                        flexDirection: "column",
-                        width: "700px", 
-                        height: "450px",
-                        overflowY: "auto",
-                        margin: "10px 0",
-                        backgroundColor: "black", 
-                        padding: "15px", 
-                        borderRadius: "5px",
-                        border: "5px solid gray",
-                        flexShrink: 0,
-                    }}>                    {
+                    <div className="admin-output">                    {
                             response.message && (
-                                <div style={{ textAlign: "left" }}>
-                                    <p style={{ color: "whitesmoke", fontWeight: "bold" }}>Respuesta:</p>
+                                <div>
+                                    <p>Respuesta:</p>
                                     
                                     {/* para darle estructura de JSON */}
-                                    <pre style={{ 
-                                        color: "#A9FFB3",
-                                        fontFamily: "monospace", 
-                                        whiteSpace: "pre-wrap", // Si la linea es larga, baja sola
-                                        wordBreak: "break-all" 
-                                    }}>
+                                    <pre>
                                         {typeof response.message === 'object' 
                                             ? JSON.stringify(response.message, null, 2)
                                             : response.message}
@@ -308,22 +296,16 @@ function AdminHome(props) {
                         }
                         {
                             response.mail && (
-                                <p>Usuario de test creado: {response.mail}</p>
+                                <p className="admin-mail">Usuario de test creado: {response.mail}</p>
                             )
                         }
                     </div>
 
-                    <div
-                        className="admin-controls"
-                        style={{
-                            display: "flex", 
-                            flexDirection: "column",
-                            width: "280px",
-                            flexShrink: 0,
-                        }}>
+                    <div className="admin-controls">
 
                     
                         <input
+                        className="admin-pk"
                         placeholder={pkHint ? `PK: ${pkHint}` : "Inserte la Clave Primaria"}
                         onChange={(e) => setId(e.target.value)}
                         ></input>
@@ -335,6 +317,10 @@ function AdminHome(props) {
                             <button className="btn-admin-crud" onClick={deleteRegister}>DELETE</button>
                             <button className="btn-admin-crud" onClick={getRegisterByPk}>GET BY PK</button>
 
+                        </div>
+                        <div className="admin-auditoria">
+                            <button type="button" className="btn-admin-crud" onClick={verBitacora}>BITÁCORA</button>
+                            <button type="button" className="btn-admin-crud" onClick={verificarIntegridad}>VERIFICAR DVV</button>
                         </div>
                     </div>
                 </div>
@@ -351,6 +337,16 @@ function AdminHome(props) {
 
                         <form onSubmit={submitForm}>
                             {campos.map((campo) => {
+                                if (campo.name === "DVH") {
+                                    return (
+                                        <div key={campo.name} className="form-field">
+                                            <label>
+                                                DVH <small>(lo calcula el servidorr)</small>
+                                            </label>
+                                            <input value={data[campo.name] ?? ""} disabled />
+                                        </div>
+                                    )
+                                }
                                 const tipo = inputFor(campo)
                                 // Al editar, la contraseña es opcional (vacía = no se cambia)
                                 const requerido = campo.required && !(showCRUDForm === "edit" && tipo === "password")

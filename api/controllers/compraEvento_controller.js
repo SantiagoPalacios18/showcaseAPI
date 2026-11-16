@@ -56,8 +56,7 @@ const createCompraEvento = async (req, res) => {
             fecha_hora_reserva: data.fecha_hora_reserva || new Date(),
             monto_total: data.monto_total,
             aplicó_descuento: aplicóDescuento,
-            pendiente: data.pendiente !== undefined ? data.pendiente : true,
-            DVH: "DVH123" // Campo obligatorio exigido por el modelo/base de datos
+            pendiente: data.pendiente !== undefined ? data.pendiente : true
         });
 
         res.status(201).json({

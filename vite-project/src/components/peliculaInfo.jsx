@@ -74,14 +74,17 @@ function peliculaInfo(props) {
         try {
             if (funcion.id_Funcion) {
                 const asientosFuncion = await api.get(`/asientos/getByFuncionPk/${funcion.id_Funcion}`); //pickeo los asientos ya comprados
-
                 const sala = await api.get(`/salas/getByFuncionPk/${funcion.id_sala}`) //pickeo la sala
-                let asieTemp = Array.from({length: sala.data.sala.filas}, ()  => Array(sala.data.sala.columnas).fill("LIBRE"))                
-                for (let i=1; i < asientosFuncion.data.asientos.length + 1; i++) {
-                    console.log(i)  
+                let asieTemp = Array.from({length: sala.data.sala.filas}, ()  => Array(sala.data.sala.columnas).fill("LIBRE")) //Genero un array de filas x columnas       
+                for (let i=0; i < asientosFuncion.data.asientos.length; i++) {
+                    asieTemp[asientosFuncion.data.asientos[i].fila / 100][asientosFuncion.data.asientos[i].columna] = "OCUPADO"
                 }
-                console.log(asieTemp)
-                console.log(asientosFuncion)
+                for (let i=0; i < asieTemp.length; i++) {
+                    for (let j=0; j < asieTemp[i].length; j++) {
+                        if (asieTemp[i][j] == "OCUPADO") console.log(i, j)
+                    }
+                }
+                setAsientos(asieTemp)
                 // console.log(asientosFuncion)
             }
         } catch (error) {
@@ -100,6 +103,7 @@ function peliculaInfo(props) {
 
     return (
         <>
+            <button onClick={()=>{console.log(asientos)}}>MOSTRAR</button>
             <div id="peliculaInfoDiv">
                 <img src={imagenTest} alt={pelicula.titulo} />
                 <div id="peliculaInfoDivDiv">
@@ -131,9 +135,8 @@ function peliculaInfo(props) {
                     <form onSubmit={reservar}>
                         <label> Asientos </label>
                         <ul>
-                            {asientos.map((asi) => {
-                                return
-                                <li>{asi.numero}.{asi.fila}</li>
+                            {asientos.map((fila) => {
+                                return <li>{fila}</li>
                             })}
                         </ul>
                         <label> Seleccione su metodo de pago</label>

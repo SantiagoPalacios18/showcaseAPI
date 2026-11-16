@@ -39,9 +39,9 @@ const createPatenteRol = async (req, res) => {
     try {
         const data = req.body;
 
-        if (!data.id_Rol || !data.id_Patente || !data.DVH) {
+        if (!data.id_Rol || !data.id_Patente) {
             return res.status(400).json({
-                message: "Faltan datos obligatorios (id_Rol, id_Patente o DVH)"
+                message: "Faltan datos obligatorios (id_Rol, id_Patente)"
             });
         }
 
@@ -59,7 +59,6 @@ const createPatenteRol = async (req, res) => {
         const nuevaRelacion = await Patente_Rol.create({
             id_Rol: data.id_Rol,
             id_Patente: data.id_Patente,
-            DVH: data.DVH
         });
 
         res.status(200).json({
@@ -78,9 +77,6 @@ const modifyPatenteRol = async (req, res) => {
         const data = req.body;
         let datosCambiar = {};
 
-        if ("DVH" in data) {
-            datosCambiar.DVH = data.DVH;
-        }
 
         if (Object.keys(datosCambiar).length === 0) {
             return res.status(400).json({ message: "No se ha encontrado ningún dato para modificar" });

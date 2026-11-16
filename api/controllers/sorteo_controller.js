@@ -1,6 +1,9 @@
 const { Sorteo } = require('../models/index.js');
 const crypto = require("crypto");
 const { Usuario_sorteo } = require('../models/index.js');
+const { Op } = require('sequelize');
+
+
 
 
 // GET: Obtener todos los sorteos
@@ -14,15 +17,18 @@ const getSorteos = async (req, res) => {
     }
 };
 
+
 // GET: Obtener sorteo por ID
 const getSorteoById = async (req, res) => {
     try {
         const { id } = req.params;
         const sorteo = await Sorteo.findByPk(id);
 
+
         if (!sorteo) {
             return res.status(404).json({ message: `Sorteo con el id: ${id} no encontrado` });
         }
+
 
         res.status(200).json(sorteo);
     } catch (error) {
@@ -30,29 +36,32 @@ const getSorteoById = async (req, res) => {
     }
 };
 
+
 // POST: Crear sorteo
 const createSorteo = async (req, res) => {
     try {
         const data = req.body;
 
-        if (!data.descripcion || !data.fecha_inicio || !data.fecha_fin || !data.DVH) {
+        if (!data.descripcion || !data.fecha_inicio || !data.fecha_fin) {
             return res.status(400).json({
-                message: "Faltan datos obligatorios (descripcion, fecha_inicio, fecha_fin o DVH)"
+                message: "Faltan datos obligatorios (descripcion, fecha_inicio, fecha_fin)"
             });
         }
+
 
         let extra = "";
         if ("id_sorteo" in data) {
             extra = " Alerta: El ID no es modificable, se estableció otro";
         }
 
+
         const nuevoSorteo = await Sorteo.create({
             descripcion: data.descripcion,
             premio: data.premio || "Sin especificar",
             fecha_inicio: data.fecha_inicio,
             fecha_fin: data.fecha_fin,
-            DVH: data.DVH
         });
+
 
         res.status(200).json({
             message: "Se ha creado el sorteo correctamente." + extra,
@@ -63,6 +72,7 @@ const createSorteo = async (req, res) => {
     }
 };
 
+
 // PATCH: Modificar sorteo
 const modifySorteoById = async (req, res) => {
     try {
@@ -70,23 +80,26 @@ const modifySorteoById = async (req, res) => {
         const data = req.body;
         let datosCambiar = {};
 
+
         if ("descripcion" in data) datosCambiar.descripcion = data.descripcion;
         if ("premio" in data) datosCambiar.premio = data.premio;
         if ("fecha_inicio" in data) datosCambiar.fecha_inicio = data.fecha_inicio;
         if ("fecha_fin" in data) datosCambiar.fecha_fin = data.fecha_fin;
-        if ("DVH" in data) datosCambiar.DVH = data.DVH;
 
         if (Object.keys(datosCambiar).length === 0) {
             return res.status(400).json({ message: "No se ha encontrado ningún dato para modificar" });
         }
 
+
         const [filasModificadas] = await Sorteo.update(datosCambiar, {
             where: { id_sorteo: id }
         });
 
+
         if (filasModificadas === 0) {
             return res.status(404).json({ message: `Sorteo con el id: ${id} no encontrado` });
         }
+
 
         res.status(200).json({
             message: "El sorteo ha sido modificado correctamente, datos modificados: " + Object.keys(datosCambiar)
@@ -96,11 +109,13 @@ const modifySorteoById = async (req, res) => {
     }
 };
 
+
 // DELETE: Eliminar sorteo
 const deleteSorteoById = async (req, res) => {
     try {
         const { id } = req.params;
         const filas = await Sorteo.destroy({ where: { id_sorteo: id } });
+
 
         if (filas === 0) {
             return res.status(400).json({ message: "No se ha encontrado el sorteo, 0 eliminaciones realizadas" });
@@ -111,6 +126,39 @@ const deleteSorteoById = async (req, res) => {
     }
 };
 
+
+const SorteoTermino = async ()=> {
+    try {
+        const ahora = new Date()
+
+
+        const sorteoTerminado= await Sorteo.findAll({
+            where: {
+                fecha_sor:{
+                    [Op.lte]: ahora
+                },
+                finalizado: false
+            }
+        })
+        if (sorteoTerminado.length === 0 ) {
+            return  res.status(400).json({ message: "No se han encontrado sorteos para activar" });
+        }
+       
+        for (const sorteo of sorteoTerminado) {
+            console.log(`Ejecutando sorteo: ${sorteo.nombre} (ID: ${sorteo.id_sorteo})`);
+            //aca ejecutar elegir ganador
+            await sorteo.update({finalizado: true})
+        }
+
+
+    } catch (error) {
+        console.log({error})
+    }
+}
+
+
+
+
 const getElegirGanador = async (req, res) => {
     try {
         const { id } = req.params;
@@ -119,12 +167,14 @@ const getElegirGanador = async (req, res) => {
             where: { id_sorteo:id }
         });
 
+
         if (lista_u.length === 0) {
             return res.status(404).json({ message: `No se encontraron clientes para el sorteo: ${id_sorteo}` });
         }
         const indice = crypto.randomInt(0, lista_u.length);
         const ganador = lista_u[indice];
-        console.log({ ganador });   
+        console.log({ ganador });  
+
 
         res.status(200).json({ message:"se eligio un ganador"})
     }
@@ -132,6 +182,10 @@ const getElegirGanador = async (req, res) => {
         console.log(error)
     }
 }
+
+
+//cron.schedule(' 3 * * * *', SorteoTermino);
+
 
 module.exports = {
     getSorteos,

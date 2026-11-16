@@ -1,21 +1,271 @@
 
 
-.admin-crud-buttons{
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-    width: 280px; 
-    height: 200px;
+.admin-home {
+    padding: 8px 24px 56px;
+    box-sizing: border-box;
 }
 
-.btn-admin-crud{
-    padding: 16px;
+.admin-header {
+    position: relative;
+    padding: 8px 120px 0;
+}
+
+.admin-header h2 {
+    margin: 18px 0 0;
+}
+
+.admin-sql-btn {
+    position: absolute;
+    top: 16px;
+    right: 28px;
+    width: auto;
+    min-width: 88px;
+    height: 40px;
+    padding: 0 18px;
+    border: none;
+    border-radius: 4px;
+    background: #4a4f52;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.admin-sql-btn:hover {
+    background: #5c6164;
+}
+
+.admin-welcome {
+    margin-top: 22px;
+}
+
+.admin-section h3 {
+    margin: 28px 0 18px;
+}
+
+.admin-test-btn {
+    display: inline-block;
+    margin: 0 12px 26px;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 4px;
+    background: #4a4f52;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+.admin-test-btn:hover {
+    background: #5c6164;
+}
+
+.admin-table-select,
+.admin-pk {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: #504a5e;
+    color: #ffffff;
+    font: inherit;
+}
+
+.admin-table-select {
+    display: inline-block;
+    min-width: 280px;
+    margin: 0 0 26px;
+    padding: 12px 16px;
+    font-size: 15px;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+.admin-table-select option {
+    background: #504a5e;
+    color: #ffffff;
+}
+
+.admin-workspace {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 28px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.admin-output {
+    width: 700px;
+    height: 450px;
+    overflow-y: auto;
+    margin: 0;
+    padding: 18px 18px 20px;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    background: black;
+    border: 5px solid gray;
+    border-radius: 5px;
+    text-align: left;
+}
+
+.admin-output p {
+    margin: 0 0 8px;
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.admin-output pre {
+    margin: 0;
+    color: #A9FFB3;
+    font-family: ui-monospace, Consolas, monospace;
+    font-size: 13px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-break: break-word;
+    text-align: left;
+}
+
+.admin-output .admin-mail {
+    margin-top: 12px;
+    color: whitesmoke;
+    font-weight: 500;
+}
+
+.admin-controls {
+    display: flex;
+    flex-direction: column;
+    width: 280px;
+    flex-shrink: 0;
+    gap: 14px;
+}
+
+.admin-pk {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 14px;
+    font-size: 14px;
+}
+
+.admin-pk::placeholder {
+    color: #ccc;
+}
+
+.admin-crud-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    width: 100%;
+    height: auto;
+}
+
+.btn-admin-crud {
+    padding: 12px 8px;
+    min-height: 48px;
     background: #4a4f52;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    height: 60px;
+    height: auto;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.btn-admin-crud:hover {
+    background: #5c6164;
+}
+
+.admin-auditoria {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 2px;
+}
+
+.admin-auditoria .btn-admin-crud {
+    width: 100%;
+}
+
+.sql-screen {
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px 16px 16px;
+}
+
+.sql-terminal {
+    display: flex;
+    flex-direction: column;
+    width: calc(100vw - 32px);
+    height: calc(100svh - 250px);
+    min-height: 420px;
+    box-sizing: border-box;
+    background: black;
+    border: 5px solid gray;
+    border-radius: 5px;
+    padding: 15px;
+    font-family: monospace;
+    cursor: text;
+}
+
+.sql-titulo {
+    color: whitesmoke;
+    font-weight: bold;
+    margin: 0 0 10px;
+    text-align: left;
+}
+
+.sql-historial {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+    text-align: left;
+}
+
+.sql-linea {
+    width: max-content;
+    min-width: 100%;
+    margin: 4px 0;
+    white-space: pre;
+    word-break: normal;
+    font-family: monospace;
+    text-align: left;
+}
+
+.sql-linea-comando {
+    color: #ffffff;
+}
+
+.sql-linea-error {
+    color: #ff8d8d;
+}
+
+.sql-linea-respuesta,
+.sql-linea-sistema {
+    color: #A9FFB3;
+}
+
+.sql-prompt {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    margin-top: 8px;
+}
+
+.sql-prompt span {
+    color: #A9FFB3;
+    margin-right: 8px;
+}
+
+.sql-prompt input {
+    flex: 1;
+    min-width: 0;
+    background: transparent;
+    border: none;
+    color: #A9FFB3;
+    font-family: monospace;
+    font-size: 14px;
+    outline: none;
 }
 
 .modal-overlay {
@@ -47,8 +297,21 @@
     flex-direction: column;
     margin-bottom: 12px;
 }
+.form-field label { margin-bottom: 6px; }
 .form-field small { color: gray; }
-.form-field input[type="checkbox"] { align-self: flex-start; }
+.form-field input,
+.form-field textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background: #504a5e;
+    color: #ffffff;
+    font: inherit;
+    font-size: 16px;
+}
+.form-field input[type="checkbox"] { align-self: flex-start; width: auto; }
 .form-field textarea { min-height: 80px; resize: vertical; }
 
 .form-actions {
@@ -56,6 +319,34 @@
     justify-content: flex-end;
     gap: 10px;
     margin-top: 16px;
+}
+
+.form-actions button {
+    padding: 8px 16px;
+    border-radius: 4px;
+    border: none;
+    background: #4a4f52;
+    color: white;
+    cursor: pointer;
+}
+
+.form-actions button[type="submit"] {
+    background: #4a4f52;
+    color: white;
+}
+
+.form-actions button {
+    padding: 8px 16px;
+    border-radius: 4px;
+    border: none;
+    background: #4a4f52;
+    color: white;
+    cursor: pointer;
+}
+
+.form-actions button[type="submit"] {
+    background: #4a4f52;
+    color: white;
 }
 
 
@@ -175,7 +466,7 @@
     box-shadow: 0rem 0rem 2rem .1rem whitesmoke;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap'); */
 
 .mensaje{
     font-size: 2.2rem;

@@ -40,11 +40,10 @@ function Login(props) {
 
             props.onLogin(response.data.user, response.data.accessToken /* , response.data.refreshToken  */)
 
-            //await timeout(300);
             setLoading(false)
             setMessage("Login exitoso, redireccionando...")
-            await timeout(300);
-
+            
+            await timeout(1000);
 
             navigate("/")
         } catch (err) {
@@ -65,7 +64,8 @@ function Login(props) {
             <div className="form-container">
                 <div className="status-message-container">
                     {loading && <p>Cargando...</p>}
-                    {error ? (<p style={{ color: "red" }}>{error}</p>):(<p style={{ color: "green" }}>{message}</p>)}
+                    {error && <p style={{ color: "red" }}>{error}</p>}
+                    {message && <p style={{ color: "green" }}>{message}</p>}
                 </div>
                 <form className="submit-form" onSubmit={handleSubmit}>
                     <input 
@@ -81,7 +81,7 @@ function Login(props) {
                         value={contraseña}
                         onChange={(e) => setContraseña(e.target.value)} />
                     <div id="recuperarCuentaDiv">
-                        <button id="recuperarCuentaBoton" onClick={() => {Navigate('/reclaim')}}>Olvide mi contraseña</button>
+                        <button type="button" id="recuperarCuentaBoton" onClick={() => {Navigate('/reclaim')}}>Olvide mi contraseña</button>
                     </div>
                     <button type="submit">Login</button>
                 </form>

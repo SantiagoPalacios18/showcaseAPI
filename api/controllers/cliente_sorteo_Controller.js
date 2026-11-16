@@ -1,5 +1,6 @@
 const { Usuario_sorteo } = require('../models/index.js');
 
+
 // GET: Obtener todos los clientes en sorteos
 const getClientesSorteos = async (req, res) => {
     try {
@@ -10,6 +11,7 @@ const getClientesSorteos = async (req, res) => {
     }
 };
 
+
 // GET: Obtener registros por ID de sorteo
 const getClientesBySorteoId = async (req, res) => {
     try {
@@ -18,25 +20,28 @@ const getClientesBySorteoId = async (req, res) => {
             where: { id_sorteo }
         });
 
+
         res.status(200).json(registros);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 };
 
+
 const getUnClienteSorteo = async (req, res) =>{
     try {
         const { id_sorteo, id_Usuario } = req.params;
         const registros = await Usuario_sorteo.findAll({
             where: { id_sorteo, id_Usuario}
-        });   
-        
+        });  
+       
         console.log(registros)
         res.status(200).json(registros);
     } catch (error) {
          res.status(500).json({ error: error.message });
     }
 }
+
 
 // POST: Inscribir cliente a sorteo
 const createClienteSorteo = async (req, res) => {
@@ -45,29 +50,34 @@ const createClienteSorteo = async (req, res) => {
         console.log(req.body)
 
 
+
+
         if (!data.id_Cliente || !data.id_sorteo) {
             return res.status(400).json({
-                message: "Faltan datos obligatorios (id_Usuario o id_Cliente, id_sorteo o DVH)"
+                message: "Faltan datos obligatorios (id_Cliente, id_sorteo)"
             });
         }
 
+
         const existe = await Usuario_sorteo.findOne({
             where: {
-                id_Usuario: idUsuario,
+                id_Usuario: data.id_Usuario,
                 id_sorteo: data.id_sorteo
             }
         });
+
 
         if (existe) {
             return res.status(400).json({ message: "El cliente ya está inscripto en este sorteo" });
         }
 
+
         const nuevoRegistro = await Usuario_sorteo.create({
-            id_Usuario: idUsuario,
+            id_Usuario: data.id_Usuario,
             id_sorteo: data.id_sorteo,
             fecha_inscripcion: data.fecha_inscripcion || undefined,
-            DVH: data.DVH
         });
+
 
         res.status(200).json({
             message: "Cliente inscripto al sorteo correctamente.",
@@ -78,6 +88,7 @@ const createClienteSorteo = async (req, res) => {
     }
 };
 
+
 // PATCH: Modificar parcialmente (DVH / fecha)
 const modifyClienteSorteo = async (req, res) => {
     try {
@@ -85,20 +96,24 @@ const modifyClienteSorteo = async (req, res) => {
         const data = req.body;
         let datosCambiar = {};
 
+
         if ("fecha_inscripcion" in data) datosCambiar.fecha_inscripcion = data.fecha_inscripcion;
-        if ("DVH" in data) datosCambiar.DVH = data.DVH;
+
 
         if (Object.keys(datosCambiar).length === 0) {
             return res.status(400).json({ message: "No se ha encontrado ningún dato para modificar" });
         }
 
+
         const [filasModificadas] = await Usuario_sorteo.update(datosCambiar, {
             where: { id_sorteo, id_Usuario }
         });
 
+
         if (filasModificadas === 0) {
             return res.status(404).json({ message: "Registro no encontrado para modificar" });
         }
+
 
         res.status(200).json({
             message: "Registro modificado correctamente, datos modificados: " + Object.keys(datosCambiar)
@@ -108,6 +123,7 @@ const modifyClienteSorteo = async (req, res) => {
     }
 };
 
+
 // DELETE: Quitar cliente del sorteo
 const deleteClienteSorteo = async (req, res) => {
     try {
@@ -116,9 +132,11 @@ const deleteClienteSorteo = async (req, res) => {
             where: { id_sorteo, id_Usuario }
         });
 
+
         if (eliminadas === 0) {
             return res.status(400).json({ message: "No se encontró el registro" });
         }
+
 
         res.status(200).json({
             message: `Cliente ${id_Usuario} quitado del sorteo ${id_sorteo} correctamente.`
@@ -127,6 +145,7 @@ const deleteClienteSorteo = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
 
 const getClienteSorteoByPk = async (req, res) => {
     try {
@@ -140,6 +159,7 @@ const getClienteSorteoByPk = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
 
 module.exports = {
     getClientesSorteos,

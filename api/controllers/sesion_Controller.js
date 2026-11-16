@@ -31,9 +31,9 @@ const createSesion = async (req, res) => {
     try {
         const data = req.body;
 
-        if (!data.id_Usuario || !data.token || !data.DVH) {
+        if (!data.id_Usuario || !data.token) {
             return res.status(400).json({
-                message: "Faltan datos obligatorios (id_Usuario, token o DVH)"
+                message: "Faltan datos obligatorios (id_Usuario, token)"
             });
         }
 
@@ -48,7 +48,6 @@ const createSesion = async (req, res) => {
             fecha_inicio: data.fecha_inicio || new Date(),
             fecha_expiracion: data.fecha_expiracion || null,
             activa: data.activa !== undefined ? data.activa : 1,
-            DVH: data.DVH
         });
 
         res.status(200).json({
@@ -70,7 +69,6 @@ const modifySesionById = async (req, res) => {
         if ("token" in data) datosCambiar.token = data.token;
         if ("fecha_expiracion" in data) datosCambiar.fecha_expiracion = data.fecha_expiracion;
         if ("activa" in data) datosCambiar.activa = data.activa;
-        if ("DVH" in data) datosCambiar.DVH = data.DVH;
 
         if (Object.keys(datosCambiar).length === 0) {
             return res.status(400).json({ message: "No se ha encontrado ningún dato para modificar" });

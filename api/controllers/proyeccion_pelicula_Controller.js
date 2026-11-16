@@ -33,9 +33,9 @@ const createProyeccionPelicula = async (req, res) => {
     try {
         const data = req.body;
 
-        if (!data.id_pelicula || !data.id_proyeccion || !data.DVH) {
+        if (!data.id_pelicula || !data.id_proyeccion) {
             return res.status(400).json({
-                message: "Faltan datos obligatorios (id_pelicula, id_proyeccion o DVH)"
+                message: "Faltan datos obligatorios (id_pelicula, id_proyeccion)"
             });
         }
 
@@ -53,7 +53,6 @@ const createProyeccionPelicula = async (req, res) => {
         const nuevoRegistro = await Proyeccion_pelicula.create({
             id_pelicula: data.id_pelicula,
             id_proyeccion: data.id_proyeccion,
-            DVH: data.DVH
         });
 
         res.status(200).json({
@@ -72,7 +71,6 @@ const modifyProyeccionPelicula = async (req, res) => {
         const data = req.body;
         let datosCambiar = {};
 
-        if ("DVH" in data) datosCambiar.DVH = data.DVH;
 
         if (Object.keys(datosCambiar).length === 0) {
             return res.status(400).json({ message: "No se ha encontrado ningún dato para modificar" });

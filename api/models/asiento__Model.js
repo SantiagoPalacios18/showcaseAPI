@@ -18,10 +18,14 @@ const Asiento = sequelize.define(
             unique: 'asientoPorFuncion'
         },
         fila: {
-            type: DataTypes.STRING(1),
+            type: DataTypes.SMALLINT.UNSIGNED,
             unique: 'asientoPorFuncion',
             validate: {
-                isAlpha: true
+                esMultiploDeCien(value) {
+                    if (value % 100 != 0) {
+                        throw new Error("Solo multiplos de 100 Permitidos") //throw devuelve una excepcion, que frena por completo la ejecucion del programa (salvo que esté en un try, catch, en ese caso salta al catch). Se lanza la excepcion new Error() para mayor claridad
+                    }
+                },
             }
         },
         DVH: {

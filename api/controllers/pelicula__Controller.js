@@ -53,7 +53,12 @@ const createPelicula = async (req, res) => {
 const modifyPeliculaById = async (req, res) => {
     try {
         const { id } = req.params;
-        const [updated] = await Pelicula.update(req.body, { where: { id_pelicula: id } });
+        const datos = { ...req.body };
+        delete datos.DVH;
+        if (Object.keys(datos).length === 0) {
+            return res.status(400).json({ message: "No se ha encontrado ningún dato para modificar" });
+        }
+        const [updated] = await Pelicula.update(datos, { where: { id_pelicula: id } });
         if (!updated) return res.status(404).json({ message: "Película no encontrada" });
         res.status(200).json({ message: "Película actualizada correctamente" });
     } catch (error) {

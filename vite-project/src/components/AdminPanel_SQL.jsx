@@ -1,92 +1,102 @@
 import React, { useState, useRef, useEffect } from 'react';
+import api from '../api';
+
+const AYUDA = [
+  'MySQL sobre la base showcase. Una consulta por Enter.',
+  'Ejemplos: SHOW TABLES;    DESCRIBE usuarios;    SELECT * FROM peliculas LIMIT 5;',
+  'clear limpia la pantalla.',
+  'INSERT, UPDATE y DELETE se confirman al instante y después se recalcula el DVH.'
+].join('\n');
+
+function textoCelda(valor) {
+  if (valor === null || valor === undefined) return 'NULL';
+  const texto = typeof valor === 'object' ? JSON.stringify(valor) : String(valor);
+  return texto.length > 200 ? texto.slice(0, 197) + '...' : texto;
+}
+
+function formatearFilas(data) {
+  if (!data.filas?.length) return '0 filas.';
+  const columnas = data.columnas;
+  const celdas = data.filas.map((fila) => columnas.map((columna) => textoCelda(fila[columna])));
+  const anchos = columnas.map((columna, i) => Math.max(columna.length, ...celdas.map((fila) => fila[i].length)));
+  const linea = (valores) => valores.map((valor, i) => valor.padEnd(anchos[i])).join('  ');
+  const separador = anchos.map((ancho) => '-'.repeat(ancho)).join('  ');
+  const tabla = [linea(columnas), separador, ...celdas.map(linea)].join('\n');
+  const resumen = data.total > data.mostradas
+    ? `${data.mostradas} de ${data.total} filas. Usá LIMIT para ver el resto.`
+    : `${data.total} fila(s).`;
+  return `${tabla}\n${resumen}`;
+}
 
 export default function TerminalSQL() {
   const [input, setInput] = useState('');
+  const [ocupado, setOcupado] = useState(false);
   const [historial, setHistorial] = useState([
     { tipo: 'sistema', texto: 'Terminal lista. Escribí "help" para ver comandos disponibles.' }
   ]);
   
-  const finalTerminalRef = useRef(null);
+  const historialRef = useRef(null);
   const inputRef = useRef(null);
-  // Baja el scroll automáticamente cada vez que hay un mensaje nuevo
-  /*useEffect(() => {
-    finalTerminalRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [historial]);
-    */
 
-  const enfocarInput = () => {
+  useEffect(() => {
     inputRef.current?.focus();
-  };
+    const caja = historialRef.current;
+    if (caja) caja.scrollTop = caja.scrollHeight;
+  }, [historial]);
 
-  const manejarEnter = (e) => {
-    if (e.key === 'Enter' && input.trim() !== '') {
-      const comando = input.trim();
-      const nuevoHistorial = [...historial, { tipo: 'comando', texto: `> ${comando}` }];
+  const ejecutar = async (comando) => {
+    const linea = { tipo: 'comando', texto: `> ${comando}` };
 
-      if (comando.toLowerCase() === 'clear') {
-        setHistorial([]);
-        setInput('');
-        return;
-      } else if (comando.toLowerCase() === 'help') {
-        nuevoHistorial.push({ tipo: 'respuesta', texto: 'Comandos disponibles: revisa la documentacion de mysql papi' });
-      } else {
-        nuevoHistorial.push({ 
-          tipo: 'respuesta', 
-          texto: JSON.stringify({ status: '404', error: 'Comando inválido (porque no hay ninguno jaja caiste viejo)' }, null, 2) 
-        });
-      }
-
-      setHistorial(nuevoHistorial);
+    if (comando.toLowerCase() === 'clear') {
+      setHistorial([]);
       setInput('');
+      return;
+    }
+    if (comando.toLowerCase() === 'help') {
+      setHistorial((anterior) => [...anterior, linea, { tipo: 'respuesta', texto: AYUDA }]);
+      setInput('');
+      return;
+    }
+
+    setHistorial((anterior) => [...anterior, linea]);
+    setInput('');
+    setOcupado(true);
+    inputRef.current?.focus();
+    try {
+      const { data } = await api.post('/sql', { consulta: comando });
+      const texto = data.tipo === 'filas'
+        ? formatearFilas(data)
+        : [data.mensaje, data.aviso].filter(Boolean).join('\n');
+      setHistorial((anterior) => [...anterior, { tipo: 'respuesta', texto }]);
+    } catch (err) {
+      const message = err.response?.data?.message || 'No se pudo ejecutar la consulta';
+      setHistorial((anterior) => [...anterior, { tipo: 'error', texto: message }]);
+    } finally {
+      setOcupado(false);
     }
   };
 
+  const manejarEnter = (e) => {
+    if (e.key !== 'Enter' || ocupado || input.trim() === '') return;
+    e.preventDefault();
+    ejecutar(input.trim());
+  };
+
   return (
-    <div className="sql-screen" style={{
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      width: '100vw',
-    }}>
-      <div 
-        className="sql-terminal"
-        onClick={enfocarInput}
-        style={{ 
-          display: 'block', 
-          flexDirection: 'column', 
-          width: '700px', 
-          height: '450px', 
-          overflowY: 'auto', 
-          backgroundColor: 'black', 
-          padding: '15px', 
-          borderRadius: '5px', 
-          border: '5px solid gray',
-          fontFamily: 'monospace',
-          cursor: 'text'
-        }}
-      >
-        <p style={{ color: 'whitesmoke', fontWeight: 'bold', margin: '0 0 10px 0' }}>
-          SQL:
-        </p>
+    <div className="sql-screen">
+      <div className="sql-terminal" onClick={() => inputRef.current?.focus()}>
+        <p className="sql-titulo">SQL:</p>
 
-        {historial.map((item, index) => (
-          <pre 
-            key={index} 
-            style={{ 
-              color: item.tipo === 'comando' ? '#FFFFFF' : '#A9FFB3', 
-              fontFamily: 'monospace', 
-              whiteSpace: 'pre-wrap', 
-              wordBreak: 'break-all',
-              margin: '4px 0',
-              textAlign: 'left'
-            }}
-          >
-            {item.texto}
-          </pre>
-        ))}
+        <div className="sql-historial" ref={historialRef}>
+          {historial.map((item, index) => (
+            <pre key={index} className={`sql-linea sql-linea-${item.tipo}`}>
+              {item.texto}
+            </pre>
+          ))}
+        </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', marginTop: '5px' }}>
-          <span style={{ color: '#A9FFB3', marginRight: '8px' }}>{">"}</span>
+        <div className="sql-prompt">
+          <span>{">"}</span>
           <input
             ref={inputRef}
             type="text"
@@ -94,19 +104,8 @@ export default function TerminalSQL() {
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={manejarEnter}
             autoFocus
-            style={{
-              backgroundColor: 'transparent',
-              border: 'none',
-              color: '#A9FFB3',
-              fontFamily: 'monospace',
-              fontSize: '14px',
-              outline: 'none',
-              width: '100%'
-            }}
           />
         </div>
-
-        <div ref={finalTerminalRef} />
       </div>
     </div>
   );
