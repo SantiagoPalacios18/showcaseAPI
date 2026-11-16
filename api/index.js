@@ -270,6 +270,10 @@ server.listen(3000, async () => {
 
   
 
+    await insertDatosCompletos();
+    await recalcularTodo();
+    console.log('DVH y DVV recalculados');
+
   } catch (error) {
     console.error('No se pudo conectar a la base de datos:', {error});
   }
@@ -411,7 +415,7 @@ const insertDatosCompletos = async () => {
 
 
 
-insertDatosCompletos();
+
 
 
 /*
