@@ -116,7 +116,6 @@ const getAsientoByFuncionId = async (req, res) => {
                 id_Funcion: id
             }
         })
-        console.log({asientos})
         res.status(200).json({asientos})
     } catch (error) {
         res.status(500).json({error})

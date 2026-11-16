@@ -74,14 +74,18 @@ function peliculaInfo(props) {
         try {
             if (funcion.id_Funcion) {
                 const asientosFuncion = await api.get(`/asientos/getByFuncionPk/${funcion.id_Funcion}`); //pickeo los asientos ya comprados
-
                 const sala = await api.get(`/salas/getByFuncionPk/${funcion.id_sala}`) //pickeo la sala
-                let asieTemp = Array.from({length: sala.data.sala.filas}, ()  => Array(sala.data.sala.columnas).fill("LIBRE"))                
-                for (let i=1; i < asientosFuncion.data.asientos.length + 1; i++) {
-                    console.log(i)  
+                let asieTemp = Array.from({length: sala.data.sala.filas}, ()  => Array(sala.data.sala.columnas).fill("LIBRE")) //Genero un array de filas x columnas       
+                for (let i=0; i < asientosFuncion.data.asientos.length; i++) {
+                    asieTemp[asientosFuncion.data.asientos[i].fila / 100][asientosFuncion.data.asientos[i].columna] = "OCUPADO"
+                }
+                for (let i=0; i < asieTemp.lenght; i++) {
+                    console.log("FILA NUEVA")
+                    for (let i=0; i < asieTemp[i].lenght; i++) {
+                        if (asieTemp[i][j] == "OCUPADO") console.log(i, j)
+                    }
                 }
                 console.log(asieTemp)
-                console.log(asientosFuncion)
                 // console.log(asientosFuncion)
             }
         } catch (error) {

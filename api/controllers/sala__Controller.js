@@ -107,7 +107,6 @@ const getSalaByFuncionId = async (req, res) => {
                 id_Sala: id
             }
         })
-        console.log({sala})
         res.status(200).json({sala})
     } catch (error) {
         res.status(500).json({error})

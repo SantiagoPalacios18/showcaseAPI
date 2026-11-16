@@ -148,16 +148,16 @@ server.listen(3000, async () => {
 
 
     const peliculas = [
-        { genero: 'Suspenso', titulo:"Whalefall" , origen: 'EEUU', id_Director: 'Brian Duffield', calificacion: 7, imagen: 'http://localhost:3000/posters/poster-movie-1.jpg',                duracion: '01:46:00' },
-        { genero: 'Terror',   titulo:"Madre Siniestra" , origen: 'EEUU', id_Director: 'Rob Savage', calificacion: 6, imagen: 'http://localhost:3000/posters/poster-movie-2.webp',         duracion: '01:33:00' },
-        { genero: 'Accion',   titulo:"Street Fighter" , origen: 'EEUU', id_Director: 'Kitao Sakurai', calificacion: 6, imagen: 'http://localhost:3000/posters/poster-movie-3.webp', duracion: '02:05:00' },
-        { genero: 'Suspenso', titulo:"Verity" , origen: 'EEUU', id_Director: 'Michael Showalter', calificacion: 7, imagen: 'http://localhost:3000/posters/poster-movie-4.jpg', duracion: '01:50:00' },
-        { genero: 'Comedia',  titulo:"Coyote vs Acme" , origen: 'EEUU', id_Director: 'Dave Green', calificacion: 7, imagen: 'http://localhost:3000/posters/poster-movie-5.webp', duracion: '01:30:00' },
-        { genero: 'Terror',   titulo:"Resident Evil: Noche Cero" , origen: 'EEUU', id_Director: 'Zach Cregger', calificacion: 6, imagen: 'http://localhost:3000/posters/poster-movie-6.jpg', duracion: '01:45:00' },
-        { genero: 'Aventura', titulo:"El Corazón de la Bestia" , origen: 'EEUU', id_Director: 'David Ayer', calificacion: 8, imagen: 'http://localhost:3000/posters/poster-movie-7.jpg',  duracion: '01:41:00' },
-        { genero: 'Aventura', titulo:"La odisea" , origen: 'EEUU', id_Director: 'Christopher Nolan', calificacion: 8, imagen: 'http://localhost:3000/posters/poster-movie-8.webp', duracion: '02:30:00' },
-        { genero: 'Comedia',  titulo:"Quiero Tu Sexo" , origen: 'EEUU', id_Director: 'Gregg Araki', calificacion: 5, imagen: 'http://localhost:3000/posters/poster-movie-9.jpg', duracion: '01:30:00' },
-        { genero: 'Drama',    titulo:"La Casa" , origen: 'Espana',  id_Director: 'Alex Montoya', calificacion: 7, imagen: 'http://localhost:3000/posters/poster-movie-10.jpg', duracion: '01:38:00' },
+        { genero: 'Suspenso', titulo:"Whalefall" , origen: 'EEUU', director: 'Brian Duffield', calificacion: 7, imagen: 'http://localhost:3000/posters/poster-movie-1.jpg',                duracion: '01:46:00' },
+        { genero: 'Terror',   titulo:"Madre Siniestra" , origen: 'EEUU', director: 'Rob Savage', calificacion: 6, imagen: 'http://localhost:3000/posters/poster-movie-2.webp',         duracion: '01:33:00' },
+        { genero: 'Accion',   titulo:"Street Fighter" , origen: 'EEUU', director: 'Kitao Sakurai', calificacion: 6, imagen: 'http://localhost:3000/posters/poster-movie-3.webp', duracion: '02:05:00' },
+        { genero: 'Suspenso', titulo:"Verity" , origen: 'EEUU', director: 'Michael Showalter', calificacion: 7, imagen: 'http://localhost:3000/posters/poster-movie-4.jpg', duracion: '01:50:00' },
+        { genero: 'Comedia',  titulo:"Coyote vs Acme" , origen: 'EEUU', director: 'Dave Green', calificacion: 7, imagen: 'http://localhost:3000/posters/poster-movie-5.webp', duracion: '01:30:00' },
+        { genero: 'Terror',   titulo:"Resident Evil: Noche Cero" , origen: 'EEUU', director: 'Zach Cregger', calificacion: 6, imagen: 'http://localhost:3000/posters/poster-movie-6.jpg', duracion: '01:45:00' },
+        { genero: 'Aventura', titulo:"El Corazón de la Bestia" , origen: 'EEUU', director: 'David Ayer', calificacion: 8, imagen: 'http://localhost:3000/posters/poster-movie-7.jpg',  duracion: '01:41:00' },
+        { genero: 'Aventura', titulo:"La odisea" , origen: 'EEUU', director: 'Christopher Nolan', calificacion: 8, imagen: 'http://localhost:3000/posters/poster-movie-8.webp', duracion: '02:30:00' },
+        { genero: 'Comedia',  titulo:"Quiero Tu Sexo" , origen: 'EEUU', director: 'Gregg Araki', calificacion: 5, imagen: 'http://localhost:3000/posters/poster-movie-9.jpg', duracion: '01:30:00' },
+        { genero: 'Drama',    titulo:"La Casa" , origen: 'Espana',  director: 'Alex Montoya', calificacion: 7, imagen: 'http://localhost:3000/posters/poster-movie-10.jpg', duracion: '01:38:00' },
     ]
     async function insertPeliculas() {
         try {
@@ -251,6 +251,19 @@ server.listen(3000, async () => {
         });
     }
     console.log('--- Funciones insertadas correctamente');
+
+    const asientos = [
+        { id_Funcion: 1, columna: 1, fila: 100, DVH: "ABC123" },
+        { id_Funcion: 1, columna: 2, fila: 100, DVH: "ABC123" },
+        { id_Funcion: 1, columna: 3, fila: 100, DVH: "ABC123" },
+    ];
+
+    for (const asiento of asientos) {
+        await Asiento.create(
+            asiento
+        );
+        console.log('--- Asientos insertados correctamente');
+    }
 
 
 
