@@ -79,13 +79,12 @@ function peliculaInfo(props) {
                 for (let i=0; i < asientosFuncion.data.asientos.length; i++) {
                     asieTemp[asientosFuncion.data.asientos[i].fila / 100][asientosFuncion.data.asientos[i].columna] = "OCUPADO"
                 }
-                for (let i=0; i < asieTemp.lenght; i++) {
-                    console.log("FILA NUEVA")
-                    for (let i=0; i < asieTemp[i].lenght; i++) {
+                for (let i=0; i < asieTemp.length; i++) {
+                    for (let j=0; j < asieTemp[i].length; j++) {
                         if (asieTemp[i][j] == "OCUPADO") console.log(i, j)
                     }
                 }
-                console.log(asieTemp)
+                setAsientos(asieTemp)
                 // console.log(asientosFuncion)
             }
         } catch (error) {
@@ -104,6 +103,7 @@ function peliculaInfo(props) {
 
     return (
         <>
+            <button onClick={()=>{console.log(asientos)}}>MOSTRAR</button>
             <div id="peliculaInfoDiv">
                 <img src={imagenTest} alt={pelicula.titulo} />
                 <div id="peliculaInfoDivDiv">
@@ -135,9 +135,8 @@ function peliculaInfo(props) {
                     <form onSubmit={reservar}>
                         <label> Asientos </label>
                         <ul>
-                            {asientos.map((asi) => {
-                                return
-                                <li>{asi.numero}.{asi.fila}</li>
+                            {asientos.map((fila) => {
+                                return <li>{fila}</li>
                             })}
                         </ul>
                         <label> Seleccione su metodo de pago</label>

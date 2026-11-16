@@ -1,7 +1,7 @@
 const { Usuario, Transaccion, CompraTicket, Asiento, Funcion, Pelicula } = require('../models/index.js');
 const bcrypt = require("bcrypt")
 const { Op } = require("sequelize")
-const {default_foto} = require('../SRC/default-foto.js')
+//const {default_foto} = require('../SRC/default-foto.js')
 
 
 // Obtener todos los useres

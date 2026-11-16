@@ -356,30 +356,6 @@ const insertDatosCompletos = async () => {
       }
       console.log('4/7 Funciones insertadas');
 
-
-
-
-      // 5. Asiento
-      const asientos = [
-          { id_Funcion: 1, columna: 1, fila: "A", DVH: "ASI001" },
-          { id_Funcion: 1, columna: 2, fila: "A", DVH: "ASI002" }
-      ];
-      for (const asiento of asientos) {
-          await Asiento.findOrCreate({
-              where: {
-                  id_Funcion: asiento.id_Funcion,
-                  columna: asiento.columna,
-                  fila: asiento.fila,
-                  DVH: asiento.DVH
-              },
-              defaults: asiento
-          });
-      }
-      console.log('5/7 Asientos insertados');
-
-
-
-
       // 6. Transaccion
       const Transacciones = [
           {

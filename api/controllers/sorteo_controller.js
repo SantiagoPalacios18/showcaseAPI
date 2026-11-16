@@ -188,7 +188,7 @@ const getElegirGanador = async (req, res) => {
 }
 
 
-cron.schedule(' 3 * * * *', SorteoTermino);
+//cron.schedule(' 3 * * * *', SorteoTermino);
 
 
 module.exports = {
