@@ -12,7 +12,7 @@ const {authMiddleware} = require("../middlewares/auth__Middleware.js")
 // Aplicadas al server
 router.use(authRoutes);
 
-router.use('/peliculas', require('./pelicula__Routes.js'));
+router.use('/peliculas', require('./pelicula__Routes.js')); //esto puede generar vulnerabilidades en la tabla, pero necesito que el getPeliculas sea publico y me da paja moverlo :/
 
 router.use('/codes', require('./code__Routes.js'));
 

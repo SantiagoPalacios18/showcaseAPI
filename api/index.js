@@ -9,7 +9,6 @@ const { Usuario, Rol, Patente, Pelicula, Sala, Funcion, Cine, Tecnologia, Sorteo
 const cors = require ("cors")
 const bcrypt = require("bcrypt")
 const cookieParser = require("cookie-parser")
-
 const server = express();
 
 const DEFAULT_FOTO =

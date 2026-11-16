@@ -10,3 +10,5 @@ const convertImage = (image, setLoading) => {
 }
 
 export default convertImage
+
+// Obsoleto, para futura remocion

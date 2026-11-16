@@ -1,6 +1,7 @@
 const { sequelize } = require('../config/db.js');
 const { DataTypes } = require('sequelize');
 
+
 const Pelicula = sequelize.define(
     'Pelicula',
     {

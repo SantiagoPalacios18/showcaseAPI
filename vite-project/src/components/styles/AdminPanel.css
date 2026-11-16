@@ -58,3 +58,84 @@
     gap: 10px;
     margin-top: 16px;
 }
+
+
+
+/*Subir Pelis*/
+.img-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.minput{
+    border-radius: 1rem;
+    background-color: rgb(229, 226, 232);
+    color: black;
+    font-weight: bolder;
+    font-size: 1.6rem;
+    padding-inline: 3rem;
+    padding-block: .5rem;
+    transition: 250ms;
+    width: 30%;
+    margin-block-end: 1rem;
+}
+
+#genero{
+    border-radius: 1rem;
+    background-color: rgb(229, 226, 232);
+    color: black;
+    font-weight: bolder;
+    font-size: 1.6rem;
+    padding-inline: 3rem;
+    padding-block: .5rem;
+    transition: 250ms;
+    width: 30%;
+    margin-block-end: 1rem;
+}
+
+#genero option{
+    background-color: rgb(227, 198, 236);
+}
+
+#poster{
+    display: none;
+}
+.mbtn{
+    border-radius: 1rem;
+    background-color: rgb(229, 226, 232);
+    color: black;
+    font-weight: bolder;
+    font-size: 1.4rem;
+    padding-inline: 3rem;
+    padding-block: 1rem;
+    transition: 250ms;
+    width: 30%;
+    margin-block-end: 1rem;
+}
+
+.mbtn[type='submit']{
+    background-color: purple;
+    color: rgb(229, 226, 232);
+}
+
+.mbtn:hover{
+    filter: brightness(70%);
+    transition: 250ms;
+    cursor: pointer;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+
+.mensaje{
+    font-size: 2.2rem;
+    font-weight: 700;
+    font-family: "Roboto Mono", monospace;
+    font-style: normal;
+    color: #f6527e;
+    background-color: rgba(181, 182, 183, 0.153);
+    border-radius: 2rem;
+    padding-inline: 1rem;
+    -webkit-text-stroke: .4px #fa668e;
+}
