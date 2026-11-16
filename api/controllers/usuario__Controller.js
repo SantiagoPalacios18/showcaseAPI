@@ -113,6 +113,9 @@ const modifyuserById = async (req, res) => {
         if ("apellido" in data) {
             datosCambiar.apellido = data.apellido;
         }
+        if ("alias" in data) {
+            datosCambiar.alias = data.alias === "" ? null : data.alias;
+        }
         if ("DNI" in data) {
             datosCambiar.DNI = data.DNI;
         }

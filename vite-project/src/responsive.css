@@ -351,22 +351,25 @@
   .main-nav {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+    justify-items: stretch;
     gap: 0;
     padding: 0;
   }
 
   .main-nav > li {
     justify-content: center;
-    padding: 12px 8px;
+    align-items: center;
+    padding: 14px 8px;
     border-top: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .main-nav > li:nth-child(odd) {
+    border-right: 1px solid rgba(255, 255, 255, 0.15);
   }
 
   .main-nav > li a {
     font-size: 15px;
-  }
-
-  .main-nav > li:last-child {
-    grid-column: 1 / -1;
   }
 
   .img-carrusel-cine {
@@ -486,8 +489,17 @@
     align-items: center;
   }
 
+  .footer-logo {
+    display: block;
+  }
+
+  .footer-logo img {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
   .site-footer {
-    margin-top: 48px;
+    margin-top: auto;
     padding: 28px 16px 16px;
   }
 
