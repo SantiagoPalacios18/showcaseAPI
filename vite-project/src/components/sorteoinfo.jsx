@@ -49,10 +49,19 @@ function sorteoinfo(props) {
     const getBuscarUsuarioPelicula = async () => {
         try {
             const usu_peli =await api.get(`/usuarios/${props.user.id_Usuario}`)
-            setUsu_peli(usu_peli.data[0])
-            console.log(usu_peli)
+           
+            const usuarioEncontrado = usu_peli.data.user_Pelicula[0];
+       
+            console.log("Dato preciso del usuario:", usuarioEncontrado);
+            console.log("ID preciso:", usuarioEncontrado?.id_Usuario);
+
+
+            // Guardamos el objeto completo (o null si vino vacío) para que funcione tu condicional del botón
+            setUsu_peli(usuarioEncontrado || null);
         } catch (error) {
-            console.log({error})   
+            console.log({error})
+            console.log("dentro del catch",usu_peli)
+             
         }
     }
 
@@ -135,7 +144,10 @@ function sorteoinfo(props) {
             {!props.user && (
                 <button className="boton-s">para participar tenes que estar logueado</button>
             )}
-            {props.user && !usuario_sort?.id_Usuario &&  (
+             {props.user && !usuario_sort?.id_Usuario && !usu_peli &&(
+                <button className="boton-s">para participar tenes que comprar la entrada de la pelicula </button>
+            )}
+            {props.user && !usuario_sort?.id_Usuario && usu_peli && (
                 <button className="boton-s" id="btn-logged" onClick={()=>{inscribir()} }  >participar ahora</button>
             )}
             {usuario_sort?.id_Usuario && (
