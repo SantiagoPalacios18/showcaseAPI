@@ -84,7 +84,7 @@ function Cartelera(props) {
                         <div key={peli.id_Pelicula} className="tarjeta-pelicula" style={styleVar}>
                             {peli.imagen && (
                                 
-                                <img src={imagenes[(peli.id_Pelicula - 1) % 3]} alt={peli.titulo} />
+                                <img src={peli.imagen} alt={peli.titulo} />
                             )}
                             <h3 className="titulo">{peli.titulo}</h3>
                             <p>Género: {peli.genero}</p>

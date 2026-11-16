@@ -1,10 +1,5 @@
 import { useState, useEffect } from 'react'
 
-/*
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-*/
 import './App.css'
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom'
 import Home from './components/Home'
@@ -17,6 +12,7 @@ import Profile from './components/Profile'
 import SessionManagement from './components/SessionManagement'
 import AdminHome from './components/AdminPanel_Home'
 import AdminSQL from './components/AdminPanel_SQL'
+import AdminPelis from './components/AdminPanel_pelis'
 
 import Cartelera from './components/Cartelera'
 import PeliculaInfo from './components/peliculaInfo'
@@ -140,13 +136,17 @@ function App() {
                 <AdminSQL user={user} />
               </PatentChecker>
             }></Route>
+            <Route path='/admin/movies' element={
+              <PatentChecker user={user} patente="ADMIN_HOME">
+                <AdminPelis user={user} />
+              </PatentChecker>
+            }></Route>
 
             <Route path='/cartelera' element={<Cartelera></Cartelera>}></Route>
             <Route path='/peliculaInfo/:id' element={<PeliculaInfo user={user} />}></Route>
             <Route path='/eventos' element={<Eventos></Eventos>}></Route>
             <Route path='/sorteos' element={<Sorteos user={user} />}></Route>
             <Route path='/sorteoinfo/:id' element={<Sorteoinfo user={user} />}></Route>             
-            <Route path='/confiteria' element={<Confiteria></Confiteria>}></Route>
 
         </Routes>
         <Footer></Footer>

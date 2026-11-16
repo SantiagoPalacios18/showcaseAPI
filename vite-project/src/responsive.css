@@ -1,0 +1,522 @@
+/* Solo tablet y celular. El escritorio no cambia. */
+
+@media (max-width: 1024px) {
+  .title-container {
+    padding: 12px 16px 0;
+    box-sizing: border-box;
+    max-width: 100%;
+  }
+
+  .title-container a {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .title-container img {
+    display: block;
+    width: min(460px, 70vw);
+    max-width: 100%;
+    height: auto;
+  }
+
+  img,
+  svg,
+  video {
+    max-width: 100%;
+  }
+
+  .main-nav {
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .main-nav > li {
+    min-width: 0;
+  }
+
+  .main-nav > li a {
+    display: block;
+    text-align: center;
+  }
+
+  .main-nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px 22px;
+    padding: 0.7rem 1rem;
+  }
+
+  .session-management {
+    position: static !important;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 10px 12px 0;
+  }
+
+  .img-carrusel-cine {
+    width: 72%;
+    height: 340px;
+  }
+
+  .etiqueta-novedades {
+    padding: 5px 28px;
+  }
+
+  .recomendados-content {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0 12px;
+    box-sizing: border-box;
+  }
+
+  .btn-cartelera {
+    font-size: 22px;
+    max-width: 100%;
+  }
+
+  .contenedor-peliculas {
+    justify-content: center;
+    padding: 0 8px;
+  }
+
+  .tarjeta-wrapper {
+    width: 46%;
+    max-width: 46%;
+  }
+
+  .tarjeta-wrapper:hover .tarjeta-pelicula::after {
+    font-size: 5rem;
+  }
+
+  .titulo {
+    font-size: 26px;
+    height: auto;
+    max-height: none;
+  }
+
+  .organizar-sorteo {
+    width: 46%;
+    margin: 2%;
+  }
+
+  .tarjeta-sorteo h2 {
+    text-wrap: wrap;
+  }
+
+  .imagen:hover::after {
+    font-size: 3.2rem;
+  }
+
+  .sorteo {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    grid-template-areas:
+      "details details"
+      "premios participar"
+      "boton boton";
+    padding: 0 8px;
+  }
+
+  .premios h2 {
+    height: auto;
+    font-size: 2.2rem;
+  }
+
+  .details p {
+    max-height: none;
+    font-size: 1.1rem;
+  }
+
+  .premio {
+    text-wrap: wrap;
+    max-height: none;
+    height: auto;
+  }
+
+  #peliculaInfoDiv {
+    align-items: center;
+    gap: 16px;
+    padding: 0 16px;
+    box-sizing: border-box;
+  }
+
+  #peliculaInfoDiv > img {
+    width: 36%;
+    max-width: 300px;
+    height: auto;
+    object-fit: cover;
+  }
+
+  #peliculaInfoDivDiv {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+  }
+
+  #peliculaInfoDivDiv > * {
+    font-size: 1.05rem;
+    overflow-wrap: anywhere;
+  }
+
+  #divFunciones {
+    padding: 0 12px;
+    gap: 12px;
+    box-sizing: border-box;
+  }
+
+  #divFunciones > div {
+    width: min(280px, 46%);
+    box-sizing: border-box;
+  }
+
+  #divReserva,
+  #divReserva form {
+    width: min(480px, 94vw);
+    box-sizing: border-box;
+  }
+
+  .form-container {
+    margin-top: 36px;
+    margin-bottom: 80px;
+    padding: 0 16px;
+  }
+
+  .submit-form {
+    width: min(50rem, 100%);
+    padding: 24px 16px;
+    box-sizing: border-box;
+  }
+
+  .submit-form input,
+  .submit-form button {
+    width: 100%;
+  }
+
+  .submit-form label {
+    margin-left: 0;
+    align-self: flex-start;
+  }
+
+  .submit-form button {
+    margin-top: 28px;
+  }
+
+  #recuperarCuentaDiv {
+    width: 100%;
+  }
+
+  #recuperarCuentaBoton {
+    width: auto;
+    padding: 6px 10px;
+  }
+
+  .main-content {
+    width: min(480px, 92vw);
+    margin: 24px auto;
+  }
+
+  .main-content form {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .main-content input,
+  .main-content button {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+  }
+
+  .profile-container {
+    flex-direction: column;
+    height: auto;
+    width: 92%;
+    padding: 28px 18px;
+    gap: 20px;
+    margin: 16px auto;
+    box-sizing: border-box;
+  }
+
+  .photo {
+    width: 100%;
+  }
+
+  .pfp img {
+    width: min(240px, 56vw);
+  }
+
+  .profile-data-section {
+    width: 100%;
+    padding: 28px 16px;
+    box-sizing: border-box;
+    align-items: stretch;
+  }
+
+  .profile-data-section span,
+  .profile-data-section input {
+    overflow-wrap: anywhere;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .pfp-panel,
+  .cp-panel {
+    width: min(460px, 92vw);
+  }
+
+  .confirm-panel {
+    width: min(420px, 92vw);
+    padding: 28px 16px;
+    box-sizing: border-box;
+  }
+
+  .footer-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .footer-col:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .footer-col {
+    min-width: 0;
+  }
+
+  .site-footer .footer-col ul {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 8px;
+    background: transparent;
+    box-shadow: none;
+    padding: 0;
+  }
+
+  .site-footer .footer-col li {
+    display: block;
+  }
+
+  .admin-workspace {
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  .admin-output,
+  .sql-terminal {
+    width: min(700px, 94vw) !important;
+    max-width: 94vw !important;
+    box-sizing: border-box !important;
+  }
+
+  .admin-controls {
+    width: min(320px, 94vw) !important;
+  }
+
+  .admin-crud-buttons {
+    width: 100%;
+    height: auto;
+  }
+
+  .sql-screen {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 12px !important;
+  }
+
+  .confiteria img {
+    width: min(640px, 92vw);
+    height: auto;
+  }
+
+  .eventos-wrapper {
+    padding: 24px 12px;
+  }
+
+  select,
+  input,
+  textarea {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 680px) {
+  .title-container img {
+    width: min(340px, 88vw);
+  }
+
+  .main-nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    padding: 0;
+  }
+
+  .main-nav > li {
+    justify-content: center;
+    padding: 12px 8px;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .main-nav > li a {
+    font-size: 15px;
+  }
+
+  .main-nav > li:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .img-carrusel-cine {
+    width: 92%;
+    height: 230px;
+  }
+
+  .recomendados {
+    padding: 10px 12px 18px;
+  }
+
+  .recomendados-content {
+    grid-template-columns: 1fr;
+    max-width: 420px;
+  }
+
+  .btn-cartelera {
+    width: 100%;
+    font-size: 18px;
+    padding: 10px 16px;
+  }
+
+  .tarjeta-wrapper {
+    width: 92%;
+    max-width: 92%;
+    margin-inline: auto;
+  }
+
+  .tarjeta-wrapper:hover .tarjeta-pelicula {
+    transform: none;
+  }
+
+  .tarjeta-wrapper:hover .tarjeta-pelicula::after {
+    font-size: 4rem;
+    padding-top: 35%;
+  }
+
+  .organizar-sorteo {
+    width: 92%;
+    margin: 14px auto;
+  }
+
+  .imagen:hover::after {
+    font-size: 3rem;
+  }
+
+  .tarjeta-sorteo:has(.imagen:hover) {
+    transform: none;
+  }
+
+  .sorteo {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "details"
+      "premios"
+      "participar"
+      "boton";
+  }
+
+  .premios h2 {
+    font-size: 1.8rem;
+  }
+
+  .boton-s {
+    width: 100%;
+  }
+
+  #peliculaInfoDiv {
+    flex-direction: column;
+  }
+
+  #peliculaInfoDiv > img {
+    width: 78%;
+    max-width: 340px;
+  }
+
+  #divFunciones {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  #divFunciones > div {
+    width: 100%;
+  }
+
+  .profile-container {
+    width: 100%;
+    margin: 8px 0;
+    padding: 16px 12px;
+    border-radius: 0;
+  }
+
+  .profile-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .edit-button,
+  .photo button {
+    width: 100%;
+  }
+
+  .confirm-panel button {
+    width: min(200px, 100%);
+  }
+
+  #btn-cerrar {
+    width: 48px;
+  }
+
+  .footer-container {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .site-footer .footer-col ul {
+    align-items: center;
+  }
+
+  .site-footer {
+    margin-top: 48px;
+    padding: 28px 16px 16px;
+  }
+
+  .admin-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .admin-sql-btn {
+    position: static !important;
+    margin: 0 auto 8px !important;
+  }
+
+  .admin-output,
+  .sql-terminal {
+    height: 320px !important;
+  }
+
+  .eventos-wrapper .e {
+    padding: 18px 14px;
+  }
+
+  .eventos-wrapper .eventos-header h1 {
+    font-size: 28px;
+  }
+
+  #texto {
+    margin: 16px;
+  }
+}

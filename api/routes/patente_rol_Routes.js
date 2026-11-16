@@ -8,12 +8,13 @@ const {
     modifyPatenteRol,
     deletePatenteRol
 } = require('../controllers/patente_rol__Controller.js');
+const {checkPatent} = require('../middlewares/auth__Middleware.js')
 
-router.get('/', getPatentesRoles);
-router.get('/getByPk/:id_Rol/:id_Patente', getPatenteRolByPk);
-router.get('/getByPk/:id_Rol', getPatentesByRolId);
-router.post('/', createPatenteRol);
-router.patch('/edit/:id_Rol/:id_Patente', modifyPatenteRol);
-router.delete('/:id_Rol/:id_Patente', deletePatenteRol);
+router.get('/', checkPatent("GET_REGISTERS"), getPatentesRoles);
+router.get('/getByPk/:id_Rol/:id_Patente', checkPatent("GET_REGISTER_BY_ID"), getPatenteRolByPk);
+router.get('/getByPk/:id_Rol', checkPatent("GET_REGISTERS"), getPatentesByRolId);
+router.post('/', checkPatent("POST_REGISTER"), createPatenteRol);
+router.patch('/edit/:id_Rol/:id_Patente', checkPatent("PATCH_REGISTER"), modifyPatenteRol);
+router.delete('/:id_Rol/:id_Patente', checkPatent("DELETE_REGISTER"), deletePatenteRol);
 
 module.exports = router;

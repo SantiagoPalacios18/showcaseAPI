@@ -1,7 +1,7 @@
 const { Usuario, Transaccion, CompraTicket, Asiento, Funcion, Pelicula } = require('../models/index.js');
 const bcrypt = require("bcrypt")
 const { Op } = require("sequelize")
-const {default_foto} = require('../SRC/default-foto.js')
+
 
 // Obtener todos los useres
 const getUsers = async (req, res) => {
@@ -70,7 +70,7 @@ const createUser = async (req, res) => {
             fechaNacimiento: data.fechaNacimiento,
             telefono: data.telefono,
             email: data.email,
-            foto: default_foto,
+            foto: null,
             DVH: data.DVH,
             contraseña: await bcrypt.hash(data.contraseña, 10),
         });

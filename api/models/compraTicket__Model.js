@@ -14,7 +14,7 @@ const CompraTicket = sequelize.define(
             type: DataTypes.INTEGER.UNSIGNED,
             primaryKey: true,
         },
-        id_FuncionAsiento: {
+        id_Asiento: {
             type: DataTypes.SMALLINT.UNSIGNED,
             primaryKey: true,
         },

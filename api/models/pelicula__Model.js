@@ -1,6 +1,7 @@
 const { sequelize } = require('../config/db.js');
 const { DataTypes } = require('sequelize');
 
+
 const Pelicula = sequelize.define(
     'Pelicula',
     {
@@ -19,11 +20,8 @@ const Pelicula = sequelize.define(
             validate: {
             },
         },
-        id_Director: {
-            type: DataTypes.STRING(20),
-            validate: {
-                contains: [" "]
-            },
+        director: {
+            type: DataTypes.STRING(15),
         },
         calificacion: {
             type: DataTypes.TINYINT(2).UNSIGNED,

@@ -8,12 +8,13 @@ const {
     modifyActorPelicula,
     deleteActorPelicula
 } = require('../controllers/actor_pelicula_controller.js');
+const {checkPatent} = require('../middlewares/auth__Middleware.js')
 
-router.get('/', getActoresPeliculas);
-router.get('/getByPk/:id_Actor/:id_Pelicula', getActorPeliculaByPk);
-router.get('/getByPk/:id_Pelicula', getActoresByPeliculaId);
-router.post('/', createActorPelicula);
-router.patch('/edit/:id_Actor/:id_Pelicula', modifyActorPelicula);
-router.delete('/:id_Actor/:id_Pelicula', deleteActorPelicula);
+router.get('/', checkPatent("GET_REGISTERS"), getActoresPeliculas);
+router.get('/getByPk/:id_Actor/:id_Pelicula', checkPatent("GET_REGISTER_BY_ID"), getActorPeliculaByPk);
+router.get('/getByPk/:id_Pelicula', checkPatent("GET_REGISTERS"), getActoresByPeliculaId);
+router.post('/', checkPatent("POST_REGISTER"), createActorPelicula);
+router.patch('/edit/:id_Actor/:id_Pelicula', checkPatent("PATCH_REGISTER"), modifyActorPelicula);
+router.delete('/:id_Actor/:id_Pelicula', checkPatent("DELETE_REGISTER"), deleteActorPelicula);
 
 module.exports = router;
