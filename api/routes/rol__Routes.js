@@ -7,11 +7,12 @@ const {
     modifyRolById,
     deleteRolById
 } = require('../controllers/rol__Controller.js');
+const {checkPatent} = require('../middlewares/auth__Middleware.js')
 
-router.get('/', getRoles);
-router.get('/getByPk/:id', getRolById);
-router.post('/', createRol);
-router.patch('/edit/:id', modifyRolById);
-router.delete('/:id', deleteRolById);
+router.get('/', checkPatent("GET_REGISTERS"), getRoles);
+router.get('/getByPk/:id', checkPatent("GET_REGISTER_BY_ID"), getRolById);
+router.post('/', checkPatent("POST_REGISTER"), createRol);
+router.patch('/edit/:id', checkPatent("PATCH_REGISTER"), modifyRolById);
+router.delete('/:id', checkPatent("DELETE_REGISTER"), deleteRolById);
 
 module.exports = router;

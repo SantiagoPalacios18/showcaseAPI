@@ -42,13 +42,14 @@ export default function TerminalSQL() {
   };
 
   return (
-    <div style={{
+    <div className="sql-screen" style={{
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
       width: '100vw',
     }}>
       <div 
+        className="sql-terminal"
         onClick={enfocarInput}
         style={{ 
           display: 'block', 

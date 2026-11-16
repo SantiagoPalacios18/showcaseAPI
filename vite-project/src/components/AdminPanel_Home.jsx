@@ -23,14 +23,6 @@ function AdminHome(props) {
     const navigate = useNavigate()
 
 
-    const getMessage = async () => {
-        try {
-            const response = await api.get("/admin/")
-            setMessage(response.data.message)
-        } catch (error) {
-            setMessage("upsis")
-        }
-    }
     
     const getTables = async() =>{
         try{
@@ -46,7 +38,6 @@ function AdminHome(props) {
     
     // Apenas carga la página, el useEffect ejecuta todo lo que tenga adentro
     useEffect(() => {
-        getMessage()
         getTables()
     }, [])
 
@@ -231,11 +222,9 @@ function AdminHome(props) {
 
     return(
         <div>
-            <div style={{position: "relative"}}>
+            <div className="admin-header" style={{position: "relative"}}>
                 <h2>PANEL ADMINISTRADOR :Vvv:V</h2>
-                <h3>Mensaje dado por el back-end</h3>
-                <p style={{ color: "whitesmoke" }}>{message}</p>
-                <button style={{
+                <button className="admin-sql-btn" style={{
                 position: "absolute",
                 top: "1rem",
                 right: "3rem",
@@ -276,7 +265,7 @@ function AdminHome(props) {
                         </option>
                     ))}
                 </select>
-                <div style={{
+                <div className="admin-workspace" style={{
                     display: "flex", 
                     flexDirection: "row",
                     alignItems: "flex-start",
@@ -286,7 +275,7 @@ function AdminHome(props) {
                     boxSizing: "border-box"
                     }}>
 
-                    <div style={{ 
+                    <div className="admin-output" style={{ 
                         display: "flex", 
                         flexDirection: "column",
                         width: "700px", 
@@ -325,6 +314,7 @@ function AdminHome(props) {
                     </div>
 
                     <div
+                        className="admin-controls"
                         style={{
                             display: "flex", 
                             flexDirection: "column",

@@ -116,16 +116,38 @@ function Home(props) {
                     effect={'coverflow'}
                     grabCursor={true}
                     centeredSlides={true} // La del medio siempre centrada
-                    slidesPerView={2}     // Define cuántas imágenes se asoman a los costados
+                    slidesPerView={1}
                     loop={true}           // Carrusel infinito
                     navigation={true}     // Activa las flechas de atrás y adelante
                     modules={[EffectCoverflow, Navigation]}
                     coverflowEffect={{
-                        rotate: 0,        // No queremos que las de los lados giren en 3D
-                        stretch: 200,      // Qué tan encimadas se van a ver (ajusta este número)
-                        depth: 500,       // Qué tan "atrás" (pequeñas) se ven las de los costados
-                        modifier: 1,      // Multiplicador del efecto
-                        slideShadows: false, // Podés ponerlo en true si querés sombra en las de los lados
+                        rotate: 0,
+                        stretch: 0,
+                        depth: 80,
+                        modifier: 1,
+                        slideShadows: false,
+                    }}
+                    breakpoints={{
+                        768: {
+                            slidesPerView: 1.3,
+                            coverflowEffect: {
+                                rotate: 0,
+                                stretch: 40,
+                                depth: 180,
+                                modifier: 1,
+                                slideShadows: false,
+                            },
+                        },
+                        1025: {
+                            slidesPerView: 2,
+                            coverflowEffect: {
+                                rotate: 0,
+                                stretch: 200,
+                                depth: 500,
+                                modifier: 1,
+                                slideShadows: false,
+                            },
+                        },
                     }}
                     className="mi-swiper-cine"
                 >

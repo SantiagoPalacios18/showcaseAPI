@@ -7,11 +7,12 @@ const {
     modifyCineById,
     deleteCineById
 } = require('../controllers/cine__Controller.js');
+const {checkPatent} = require('../middlewares/auth__Middleware.js')
 
-router.get('/', getCines);
-router.get('/getByPk/:id', getCineById);
-router.post('/', createCine);
-router.patch('/edit/:id', modifyCineById);
-router.delete('/:id', deleteCineById);
+router.get('/', checkPatent("GET_REGISTERS"), getCines);
+router.get('/getByPk/:id', checkPatent("GET_REGISTER_BY_ID"), getCineById);
+router.post('/', checkPatent("POST_REGISTER"), createCine);
+router.patch('/edit/:id', checkPatent("PATCH_REGISTER"), modifyCineById);
+router.delete('/:id', checkPatent("DELETE_REGISTER"), deleteCineById);
 
 module.exports = router;
