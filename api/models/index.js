@@ -33,6 +33,7 @@ const { Usuario_sorteo } = require('./usuario_sorteo__Model.js');
 const { Code } = require('./code__model.js')
 
 const { DVV } = require('./DVV__Model.js');
+const { Bitacora } = require('./bitacora__Model.js');
 
 
 
@@ -152,9 +153,8 @@ Proyeccion_pelicula.belongsTo(Pelicula, { foreignKey: 'id_pelicula' });
 Proyeccion.hasMany(Proyeccion_pelicula, { foreignKey: 'id_proyeccion' });
 Proyeccion_pelicula.belongsTo(Proyeccion, { foreignKey: 'id_proyeccion' });
 
-
-
-
+const { engancharIntegridad } = require('../services/integridad__Service.js');
+engancharIntegridad();
 
 module.exports = {
     Actor,
@@ -181,5 +181,7 @@ module.exports = {
     Usuario,
     Patente_Usuario,
     Sesion,
-    Code
+    Code,
+    Bitacora,
+    DVV
 };

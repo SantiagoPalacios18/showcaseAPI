@@ -31,9 +31,9 @@ const createRol = async (req, res) => {
     try {
         const data = req.body;
 
-        if (!data.nombre || !data.DVH) {
+        if (!data.nombre) {
             return res.status(400).json({
-                message: "Faltan datos obligatorios (nombre o DVH)"
+                message: "Faltan datos obligatorios (nombre)"
             });
         }
 
@@ -44,7 +44,6 @@ const createRol = async (req, res) => {
 
         const nuevoRol = await Rol.create({
             nombre: data.nombre,
-            DVH: data.DVH
         });
 
         res.status(200).json({ message: "Se ha creado el rol correctamente." + extra, rol: nuevoRol });
@@ -61,7 +60,6 @@ const modifyRolById = async (req, res) => {
         let datosCambiar = {};
 
         if ("nombre" in data) datosCambiar.nombre = data.nombre;
-        if ("DVH" in data) datosCambiar.DVH = data.DVH;
 
         if (Object.keys(datosCambiar).length === 0) {
             return res.status(400).json({ message: "No se ha encontrado ningún dato para modificar" });

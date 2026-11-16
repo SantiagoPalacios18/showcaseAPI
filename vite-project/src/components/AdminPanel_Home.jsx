@@ -66,6 +66,24 @@ function AdminHome(props) {
             console.error("Error al traer registros:", error);
         }
     }
+
+    const verBitacora = async () => {
+        try {
+            const { data } = await api.get("bitacora")
+            setResponse({ message: data })
+        } catch (error) {
+            alert(error.response?.data?.message || "No se pudo leer la bitácora")
+        }
+    }
+
+    const verificarIntegridad = async () => {
+        try {
+            const { data } = await api.get("integridad/verificar")
+            setResponse({ message: data })
+        } catch (error) {
+            alert(error.response?.data?.message || "No se pudo verificar la integridad")
+        }
+    }
     // Los 4 de abajo necesitan la id
     const getRegisterByPk = async () => {
         try{
@@ -161,6 +179,7 @@ function AdminHome(props) {
 
         const body = {}
         for (const campo of campos) {
+            if (campo.name === "DVH") continue
             const v = data[campo.name]
             const tipo = inputFor(campo)
 
@@ -336,6 +355,10 @@ function AdminHome(props) {
                             <button className="btn-admin-crud" onClick={getRegisterByPk}>GET BY PK</button>
 
                         </div>
+                        <div className="admin-auditoria">
+                            <button type="button" className="btn-admin-crud" onClick={verBitacora}>BITÁCORA</button>
+                            <button type="button" className="btn-admin-crud" onClick={verificarIntegridad}>VERIFICAR DVV</button>
+                        </div>
                     </div>
                 </div>
                 
@@ -351,6 +374,16 @@ function AdminHome(props) {
 
                         <form onSubmit={submitForm}>
                             {campos.map((campo) => {
+                                if (campo.name === "DVH") {
+                                    return (
+                                        <div key={campo.name} className="form-field">
+                                            <label>
+                                                DVH <small>(lo calcula el servidorr)</small>
+                                            </label>
+                                            <input value={data[campo.name] ?? ""} disabled />
+                                        </div>
+                                    )
+                                }
                                 const tipo = inputFor(campo)
                                 // Al editar, la contraseña es opcional (vacía = no se cambia)
                                 const requerido = campo.required && !(showCRUDForm === "edit" && tipo === "password")

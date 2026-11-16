@@ -31,9 +31,9 @@ const createSala = async (req, res) => {
     try {
         const data = req.body;
 
-        if (!data.id_Cine || !data.nombre || !data.capacidad || !data.DVH) {
+        if (!data.id_Cine || !data.nombre || !data.capacidad) {
             return res.status(400).json({
-                message: "Faltan datos obligatorios (id_Cine, nombre, capacidad o DVH)"
+                message: "Faltan datos obligatorios (id_Cine, nombre, capacidad)"
             });
         }
 
@@ -46,7 +46,6 @@ const createSala = async (req, res) => {
             id_Cine: data.id_Cine,
             nombre: data.nombre,
             capacidad: data.capacidad,
-            DVH: data.DVH
         });
 
         res.status(200).json({ message: "Se ha creado la sala correctamente." + extra, sala: nuevaSala });
@@ -65,7 +64,6 @@ const modifySalaById = async (req, res) => {
         if ("id_Cine" in data) datosCambiar.id_Cine = data.id_Cine;
         if ("nombre" in data) datosCambiar.nombre = data.nombre;
         if ("capacidad" in data) datosCambiar.capacidad = data.capacidad;
-        if ("DVH" in data) datosCambiar.DVH = data.DVH;
 
         if (Object.keys(datosCambiar).length === 0) {
             return res.status(400).json({ message: "No se ha encontrado ningún dato para modificar" });

@@ -8,6 +8,10 @@ const tableRoutes = require("./table__Routes.js")
 const pagoRoutes = require("./pagos_Routes.js");
 
 const {authMiddleware} = require("../middlewares/auth__Middleware.js")
+const { bitacoraHttp } = require("../middlewares/bitacora.js")
+
+// Anota altas, modificaciones y bajas que terminan bien. Un fallo de la bitácora no corta la petición.
+router.use(bitacoraHttp)
 
 // Aplicadas al server
 router.use(authRoutes);
@@ -21,6 +25,9 @@ router.use('/sorteos', require('./sorteo__Routes.js'));
 router.use('/clientes-sorteos', require('./cliente_sorteo_Routes.js'));
 
 router.use(authMiddleware) // en cada endpoint (de los routes de abajo) se va a usar el middleware auth, que busca el token y guarda el usuario en req.user (necesario para el middleware checkPatent)
+
+router.use('/bitacora', require('./bitacora__Routes.js'));
+router.use('/integridad', require('./integridad__Routes.js'));
 
 // ==========================================================
 

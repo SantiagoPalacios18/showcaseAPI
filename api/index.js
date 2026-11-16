@@ -4,6 +4,7 @@ const { sequelize, crearBDSiNoExiste } = require('./config/db.js'); // Importamo
 
 // TABLAS
 const { Usuario, Rol, Patente, Pelicula, Sala, Funcion, Cine, Tecnologia, Sorteo, Asiento, Transaccion, CompraTicket } = require('./models/index.js');
+const { recalcularTodo } = require('./services/integridad__Service.js');
 
 // CORS
 const cors = require ("cors")

@@ -1,19 +1,22 @@
 const { sequelize } = require('../config/db.js');
 const { DataTypes } = require('sequelize');
 
-
 const DVV = sequelize.define(
     'DVV',
     {
         tabla: {
-            type: DataTypes.STRING(15)
+            type: DataTypes.STRING(50),
+            primaryKey: true
         },
-        // falta la tabla del dvv que dsp la hago
+        dvv: {
+            type: DataTypes.STRING(64),
+            allowNull: false
+        }
     },
     {
-        timestamps: false,
+        tableName: 'dvv',
+        timestamps: false
     }
-)
+);
 
-
-module.exports = { DVV }
+module.exports = { DVV };

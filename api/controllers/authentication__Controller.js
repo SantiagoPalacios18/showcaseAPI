@@ -2,6 +2,7 @@ const express = require("express")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const {Usuario, Rol, Patente, Sesion} = require("../models/index.js")
+const { registrar } = require("../middlewares/bitacora.js")
 
 const { SECRET_KEY } = require("../middlewares/auth__Middleware")
 const DEFAULT_FOTO =
@@ -20,11 +21,13 @@ const login = async (req, res) => {
 
         const user = await Usuario.findOne({ where: { email } })
         if (!user) {
+            await registrar({ accion: 'LOGIN_FALLIDO', tabla: 'Usuario', id_Usuario: null, id_Registro: null })
             return res.status(400).json({ message: "Datos invalidos: EMAIL" })
         }
         // console.log("Usuario encontrado:", user.toJSON())
         const validPassword = await bcrypt.compare(contraseña, user.contraseña)
         if (!validPassword) {
+            await registrar({ accion: 'LOGIN_FALLIDO', tabla: 'Usuario', id_Usuario: user.id_Usuario, id_Registro: user.id_Usuario })
             return res.status(400).json({ message: "Datos invalidos: CONTRASEÑA" })
         }
 
@@ -48,9 +51,11 @@ const login = async (req, res) => {
             token: refreshToken,
             expires_at: expiresAt
         })
+        // PARA QUE LO VEA LA BITÁCORA, pq esta url no contiene la id del usuario
+        res.locals.id_Usuario = user.id_Usuario
+        res.locals.id_Registro = user.id_Usuario
 
-
-        // Seteás la cookie httpOnly
+        // Seteo de la cookie httpOnly
         res.cookie("refreshToken", refreshToken, {
             httpOnly: true, // JavaScript no puede leerla
             secure: false, // en local false, en producción true (debido a https)
@@ -77,6 +82,12 @@ const logout = async (req, res) => {
       const refreshToken = req.cookies.refreshToken
 
       if (refreshToken) {
+        const sesion = await Sesion.findOne({ where: { token: refreshToken } })
+        if (sesion) {
+        // PARA QUE LO VEA LA BITÁCORA, pq esta url no contiene la id del usuario
+          res.locals.id_Usuario = sesion.id_Usuario
+          res.locals.id_Registro = sesion.id_Usuario
+        }
         await Sesion.destroy({ where: { token: refreshToken } })
       }
 
@@ -92,7 +103,7 @@ const logout = async (req, res) => {
       console.log(error)
       res.status(500).json({ message: "Error del servidor" })
     }
-  }
+}
 
 // POST: Crear un usuario
 /*const register = async (req, res) => {
@@ -199,6 +210,8 @@ const refresh = async (req, res) => {
             SECRET_KEY, // Clave secreta para firmar el token
             { expiresIn: "1h" } // Expiración (jwt calcula la fecha automaticamente)
         )
+        res.locals.id_Usuario = user.id_Usuario
+        res.locals.id_Registro = user.id_Usuario
         res.status(200).json({ accessToken })
 
     }catch(error){

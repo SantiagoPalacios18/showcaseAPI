@@ -42,10 +42,9 @@ const createSorteo = async (req, res) => {
     try {
         const data = req.body;
 
-
-        if (!data.descripcion || !data.fecha_inicio || !data.fecha_fin || !data.DVH) {
+        if (!data.descripcion || !data.fecha_inicio || !data.fecha_fin) {
             return res.status(400).json({
-                message: "Faltan datos obligatorios (descripcion, fecha_inicio, fecha_fin o DVH)"
+                message: "Faltan datos obligatorios (descripcion, fecha_inicio, fecha_fin)"
             });
         }
 
@@ -61,7 +60,6 @@ const createSorteo = async (req, res) => {
             premio: data.premio || "Sin especificar",
             fecha_inicio: data.fecha_inicio,
             fecha_fin: data.fecha_fin,
-            DVH: data.DVH
         });
 
 
@@ -87,8 +85,6 @@ const modifySorteoById = async (req, res) => {
         if ("premio" in data) datosCambiar.premio = data.premio;
         if ("fecha_inicio" in data) datosCambiar.fecha_inicio = data.fecha_inicio;
         if ("fecha_fin" in data) datosCambiar.fecha_fin = data.fecha_fin;
-        if ("DVH" in data) datosCambiar.DVH = data.DVH;
-
 
         if (Object.keys(datosCambiar).length === 0) {
             return res.status(400).json({ message: "No se ha encontrado ningún dato para modificar" });

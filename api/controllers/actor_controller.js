@@ -31,9 +31,9 @@ const createActor = async (req, res) => {
     try {
         const data = req.body;
 
-        if (!data.nombre || !data.apellido || !data.DVH) {
+        if (!data.nombre || !data.apellido) {
             return res.status(400).json({
-                message: "Faltan datos obligatorios (nombre, apellido o DVH)"
+                message: "Faltan datos obligatorios (nombre, apellido)"
             });
         }
 
@@ -44,8 +44,7 @@ const createActor = async (req, res) => {
 
         const nuevoActor = await Actor.create({
             nombre: data.nombre,
-            apellido: data.apellido,
-            DVH: data.DVH
+            apellido: data.apellido
         });
 
         res.status(200).json({ message: "Se ha creado el actor correctamente." + extra, actor: nuevoActor });
@@ -63,7 +62,6 @@ const modifyActorById = async (req, res) => {
 
         if ("nombre" in data) datosCambiar.nombre = data.nombre;
         if ("apellido" in data) datosCambiar.apellido = data.apellido;
-        if ("DVH" in data) datosCambiar.DVH = data.DVH;
 
         if (Object.keys(datosCambiar).length === 0) {
             return res.status(400).json({ message: "No se ha encontrado ningún dato para modificar" });

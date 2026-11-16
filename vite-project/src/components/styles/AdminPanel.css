@@ -19,6 +19,17 @@
     height: 60px;
 }
 
+.admin-auditoria{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.admin-auditoria .btn-admin-crud{
+    width: 100%;
+}
+
 .modal-overlay {
     position: fixed;
     inset: 0;                         /* cubre toda la pantalla */

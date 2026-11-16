@@ -34,7 +34,7 @@ const Sorteo = sequelize.define(
         },
         DVH: {
             type: DataTypes.STRING(6),
-            allowNull: true, // Se cambia a false una vez tengamos el sistema de dvv/dvh programado
+            allowNull: false,
             validate: {
                 isAlphanumeric: true
             }

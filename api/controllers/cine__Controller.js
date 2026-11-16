@@ -31,9 +31,9 @@ const createCine = async (req, res) => {
     try {
         const data = req.body;
 
-        if (!data.nombre || !data.ubicacion || !data.DVH) {
+        if (!data.nombre || !data.ubicacion) {
             return res.status(400).json({
-                message: "Faltan datos obligatorios (nombre, ubicacion o DVH)"
+                message: "Faltan datos obligatorios (nombre, ubicacion)"
             });
         }
 
@@ -45,7 +45,6 @@ const createCine = async (req, res) => {
         const nuevoCine = await Cine.create({
             nombre: data.nombre,
             ubicacion: data.ubicacion,
-            DVH: data.DVH
         });
 
         res.status(200).json({ message: "Se ha creado el cine correctamente." + extra, cine: nuevoCine });
@@ -66,9 +65,6 @@ const modifyCineById = async (req, res) => {
         }
         if ("ubicacion" in data) {
             datosCambiar.ubicacion = data.ubicacion;
-        }
-        if ("DVH" in data) {
-            datosCambiar.DVH = data.DVH;
         }
 
         if (Object.keys(datosCambiar).length === 0) {
