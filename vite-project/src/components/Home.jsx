@@ -14,16 +14,16 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 
-import peli1 from '../../../api/SRC/whalefall.jpg'
-import peli2 from '../../../api/SRC/Madre Siniestra.webp'
-import peli3 from '../../../api/SRC/Street Fighter.webp'
-import peli4 from '../../../api/SRC/Verity.jpg'
-import peli5 from '../../../api/SRC/Coyote vs Acme.webp'
-import peli6 from '../../../api/SRC/Resident Evil Noche Cero.jpg'
-import peli7 from '../../../api/SRC/El corazón de la Bestia.jpg'
-import peli8 from '../../../api/SRC/La Odisea.webp'
-import peli9 from '../../../api/SRC/Quiero tu sexo.jpg'
-import peli10 from '../../../api/SRC/La casa.jpg'
+import peli1 from '../../../api/media/posters/poster-movie-1.jpg'
+import peli2 from '../../../api/media/posters/poster-movie-2.webp'
+import peli3 from '../../../api/media/posters/poster-movie-3.webp'
+import peli4 from '../../../api/media/posters/poster-movie-4.jpg'
+import peli5 from '../../../api/media/posters/poster-movie-5.webp'
+import peli6 from '../../../api/media/posters/poster-movie-6.jpg'
+import peli7 from '../../../api/media/posters/poster-movie-7.jpg'
+import peli8 from '../../../api/media/posters/poster-movie-8.webp'
+import peli9 from '../../../api/media/posters/poster-movie-9.jpg'
+import peli10 from '../../../api/media/posters/poster-movie-10.jpg'
 
 const imagenes = {
     'whalefall.jpg': peli1,
@@ -40,7 +40,7 @@ const imagenes = {
 
 const getImagen = (nombre) => imagenes[nombre] ?? imagenTest
 
-// ../../../api/SRC/
+// ../../../api/media/posters/
 import imagenTest from "../media/unnamed.jpg"
 
 const getMinutos = (tiempo = '') => {
