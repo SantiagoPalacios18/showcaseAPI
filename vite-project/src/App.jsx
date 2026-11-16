@@ -13,6 +13,7 @@ import SessionManagement from './components/SessionManagement'
 import AdminHome from './components/AdminPanel_Home'
 import AdminSQL from './components/AdminPanel_SQL'
 import AdminPelis from './components/AdminPanel_pelis'
+import AdminSorteos from './components/AdminPanel_sorteos'
 
 import Cartelera from './components/Cartelera'
 import PeliculaInfo from './components/peliculaInfo'
@@ -140,7 +141,14 @@ function App() {
               <PatentChecker user={user} patente="ADMIN_HOME">
                 <AdminPelis user={user} />
               </PatentChecker>
-            }></Route>
+            }/>
+            <Route path='/admin/sorteos' element={
+              <PatentChecker user={user} patente="ADMIN_HOME">
+                <AdminSorteos user={user} />
+              </PatentChecker>
+            }/>
+
+            
 
             <Route path='/cartelera' element={<Cartelera></Cartelera>}></Route>
             <Route path='/peliculaInfo/:id' element={<PeliculaInfo user={user} />}></Route>

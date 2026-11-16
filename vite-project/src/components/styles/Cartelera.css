@@ -73,13 +73,12 @@
 }
 
 .tarjeta-pelicula img{
+    object-fit: cover;
+    width: 100%;
+    height: 80%;
     padding-inline: 1rem;
     padding-top: 1rem;
     border-radius: 2rem;
-}
-
-.tarjeta-pelicula img:hover{
-    filter: brightness(100%);
 }
 
 .tarjeta-pelicula > *{

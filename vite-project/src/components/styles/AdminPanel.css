@@ -6,7 +6,6 @@
     gap: 16px;
     width: 280px; 
     height: 200px;
-
 }
 
 .btn-admin-crud{
@@ -61,7 +60,8 @@
 
 
 
-/*Subir Pelis*/
+/*------------------------Subir Pelis------------------------*/
+
 .img-form{
     display: flex;
     flex-direction: column;
@@ -89,7 +89,8 @@
 }
 
 .minput:focus{
-
+    transform: scale(110%);
+    box-shadow: 0rem 0rem 2rem .1rem whitesmoke;
 }
 
 .mselect{
@@ -138,6 +139,10 @@
 #poster{
     display: none;
 }
+#img{
+    display: none;
+}
+
 .mbtn{
     border-radius: 1rem;
     background-color: rgb(229, 226, 232);

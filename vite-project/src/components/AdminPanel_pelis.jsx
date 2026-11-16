@@ -38,8 +38,6 @@ function AdminPelis(props){
         fd.append('duracion', hr + ':' + min + ':00');
         fd.append('poster', poster)
 
-        console.log(fd)
-
         try{
             setMsg('Cargando . . .')
             const response = await api.post('/peliculas/', fd, {
@@ -59,7 +57,7 @@ function AdminPelis(props){
 
     return(<>
         <form action="" onSubmit={cargarImg} className="img-form">
-            <input type="text" placeholder="titulo" className="minput" required={true} onChange={(e)=>setTitulo(e.target.value)}/>
+            <input type="text" placeholder="Titulo" className="minput" required={true} onChange={(e)=>setTitulo(e.target.value)}/>
             <select name="genero" id="genero" className="mselect" required={true} onChange={(e)=>setGenero(e.target.value)}>
                 <option value="" selected disabled>Género</option>
                 <option value="Acción">Acción</option>
@@ -95,7 +93,7 @@ function AdminPelis(props){
                 <option value="Thriller">Thriller</option>
                 <option value="Western">Western</option>
             </select>
-            <select name="origen" id="origen" className="mselect" onChange={(e)=>setOrigen(e.target.value)}>
+            <select name="origen" id="origen" className="mselect" required={true} onChange={(e)=>setOrigen(e.target.value)}>
                 <option value="" selected disabled>Origen</option>
                 <option value="Afganistán">Afganistán</option>
                 <option value="Albania">Albania</option>
@@ -295,15 +293,15 @@ function AdminPelis(props){
                 <option value="Zambia">Zambia</option>
                 <option value="Zimbabue">Zimbabue</option>
             </select>
-            <input type="text" placeholder="Director" className="minput" onChange={(e)=>setDirector(e.target.value)}/>
-            <input type="number" placeholder="Calificacion" className="minput" min={1} max={10} onChange={(e)=>setCalificacion(e.target.value)}/>
+            <input type="text" placeholder="Director" className="minput" required={true} onChange={(e)=>setDirector(e.target.value)}/>
+            <input type="number" placeholder="Calificacion" className="minput" required={true} min={1} max={10} onChange={(e)=>setCalificacion(e.target.value)}/>
             <label htmlFor="" id="label-duracion">Duracion</label>
             <section id="section-duracion">
-                <input type="number" placeholder="hs" className="minput" min={0} max={12} onChange={(e)=>setHr(e.target.value)}/>
-                <input type="number" placeholder="min" className="minput" min={0} max={59} onChange={(e)=>setMin(e.target.value)}/>
+                <input type="number" placeholder="hs" className="minput" required={true} min={0} max={12} onChange={(e)=>setHr(e.target.value)}/>
+                <input type="number" placeholder="min" className="minput" required={true} min={0} max={59} onChange={(e)=>setMin(e.target.value)}/>
             </section>
-            <input type="file" name="poster" id="poster" onChange={(e) => cambiarImg(e.target.files[0])} accept="image/png, image/jpg, image/jpeg" />
-            <label htmlFor="poster" className="mbtn">{poster ? poster.name : 'Cargar poster'}</label>
+            <input type="file" name="poster" id="poster" required={true} onChange={(e) => cambiarImg(e.target.files[0])} accept="image/png, image/jpg, image/jpeg" />
+            <label htmlFor="poster" className="mbtn" required={true}>{poster ? poster.name : 'Cargar poster'}</label>
             <button type="submit" className="mbtn">Subir</button>
             {msg && <p className="mensaje">~{msg}❗</p>}
         </form>
