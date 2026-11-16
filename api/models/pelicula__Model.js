@@ -20,7 +20,7 @@ const Pelicula = sequelize.define(
             validate: {
             },
         },
-        Director: {
+        director: {
             type: DataTypes.STRING(15),
         },
         calificacion: {

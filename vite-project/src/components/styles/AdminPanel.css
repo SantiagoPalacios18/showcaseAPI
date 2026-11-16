@@ -80,9 +80,19 @@
     transition: 250ms;
     width: 30%;
     margin-block-end: 1rem;
+    border: none;
 }
 
-#genero{
+.minput:hover{
+    transform: scale(110%);
+
+}
+
+.minput:focus{
+
+}
+
+.mselect{
     border-radius: 1rem;
     background-color: rgb(229, 226, 232);
     color: black;
@@ -95,8 +105,34 @@
     margin-block-end: 1rem;
 }
 
-#genero option{
+.mselect:hover{
+    transform: scale(110%);
+}
+
+.mselect:focus{
+    transform: scale(115%);
+}
+
+.mselect option{
     background-color: rgb(227, 198, 236);
+}
+
+#label-duracion{
+    font-size: 2rem;
+    font-weight: 700;
+    width: 30%;
+    text-align: left;
+}
+
+#section-duracion{
+    display: flex;
+    flex-direction: row;
+    width: 30%;
+}
+
+#section-duracion .minput{
+    width: 46%;
+    margin-inline: 2%;
 }
 
 #poster{
@@ -113,6 +149,7 @@
     transition: 250ms;
     width: 30%;
     margin-block-end: 1rem;
+    border: none;
 }
 
 .mbtn[type='submit']{
@@ -122,8 +159,15 @@
 
 .mbtn:hover{
     filter: brightness(70%);
+    transform: scale(110%);
     transition: 250ms;
     cursor: pointer;
+    box-shadow: 0rem 0rem .5rem .1rem whitesmoke;
+}
+
+.mbtn:active{
+    transform: scale(90%);
+    box-shadow: 0rem 0rem 2rem .1rem whitesmoke;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');

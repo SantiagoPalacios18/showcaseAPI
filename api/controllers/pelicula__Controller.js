@@ -1,4 +1,6 @@
 const { Pelicula } = require('../models/index.js');
+const path = require('path')
+const fs = require('fs')
 
 const getPeliculas = async (req, res) => {
     try {
@@ -22,10 +24,29 @@ const getPeliculaById = async (req, res) => {
 
 const createPelicula = async (req, res) => {
     try {
+        if(!req.file){
+            res.status(400).json({error: 'No se subio una imagen a cartelera'})
+        }
+        const poster = req.file;
+
+        const oldPath = poster.path
+        
         const nuevaPelicula = await Pelicula.create(req.body);
-        res.status(201).json(nuevaPelicula);
+
+        const newName = `poster-movie-${nuevaPelicula.id_Pelicula}${path.extname(poster.originalname)}`
+        console.log(newName)
+
+        const newPath = path.join('./media/posters/', newName)
+
+        fs.renameSync(oldPath, newPath)
+
+        const baseUrl = `${req.protocol}://${req.get('host')}`
+        const peliFinal = await nuevaPelicula.update({imagen: `${baseUrl}/posters/${newName}`})
+
+        console.log(peliFinal)
+        res.status(201).json(peliFinal);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ error: error });
     }
 };
 
