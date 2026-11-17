@@ -84,7 +84,7 @@ function sorteoinfo(props) {
             console.log(sort.id_sorteo)
             const usu_sort = await api.post("/clientes-sorteos/",{
                 id_sorteo: sort.id_sorteo,
-                id_Cliente: props.user.id_Usuario,
+                id_Usuario: props.user.id_Usuario,
                 DVH: sort.DVH,
             })
             setusuario_sort(usu_sort.data.clienteSorteo)

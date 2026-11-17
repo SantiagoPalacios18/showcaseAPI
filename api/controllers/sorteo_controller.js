@@ -2,6 +2,7 @@ const { Sorteo } = require('../models/index.js');
 const crypto = require("crypto");
 const { Usuario_sorteo } = require('../models/index.js');
 const { Op } = require('sequelize');
+const cron = require('node-cron');
 
 
 
@@ -136,8 +137,7 @@ const SorteoTermino = async ()=> {
             where: {
                 fecha_sor:{
                     [Op.lte]: ahora
-                },
-                finalizado: false
+                }
             }
         })
         if (sorteoTerminado.length === 0 ) {
@@ -146,8 +146,7 @@ const SorteoTermino = async ()=> {
        
         for (const sorteo of sorteoTerminado) {
             console.log(`Ejecutando sorteo: ${sorteo.nombre} (ID: ${sorteo.id_sorteo})`);
-            //aca ejecutar elegir ganador
-            await sorteo.update({finalizado: true})
+            await getElegirGanador(sorteo.id_sorteo)
         }
 
 
@@ -161,10 +160,7 @@ const SorteoTermino = async ()=> {
 
 const getElegirGanador = async (req, res) => {
     try {
-        const { id } = req.params;
-        console.log("aaa" + id)
         const lista_u = await Usuario_sorteo.findAll({
-            where: { id_sorteo:id }
         });
 
 
@@ -175,8 +171,8 @@ const getElegirGanador = async (req, res) => {
         const ganador = lista_u[indice];
         console.log({ ganador });  
 
-
-        res.status(200).json({ message:"se eligio un ganador"})
+        console.log("Se eligió un ganador:", ganador)
+        //res.status(200).json({ message:"se eligio un ganador"})
     }
     catch (error) {
         console.log(error)
@@ -184,7 +180,7 @@ const getElegirGanador = async (req, res) => {
 }
 
 
-//cron.schedule(' 3 * * * *', SorteoTermino);
+cron.schedule(' 0 * * * *', SorteoTermino);
 
 
 module.exports = {
