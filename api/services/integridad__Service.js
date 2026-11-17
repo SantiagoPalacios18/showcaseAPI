@@ -8,7 +8,7 @@ const TIPOS_NUMERICOS = new Set([
     'INTEGER', 'BIGINT', 'FLOAT', 'REAL', 'DOUBLE', 'DECIMAL',
     'TINYINT', 'SMALLINT', 'MEDIUMINT'
 ]);
-
+// hasheao en uft8
 function hashTexto(texto) {
     return crypto.createHash('sha256').update(String(texto), 'utf8').digest('hex');
 }
@@ -16,14 +16,14 @@ function hashTexto(texto) {
 function dvhCorto(texto) { // Pq pusimos el dvg de 6 dig
     return hashTexto(texto).slice(0, 6);
 }
-
+// identificar el tipo de dato del atributo
 function claveTipo(attr) {
     const type = attr && attr.type;
     if (!type) return '';
     return type.key || (type.constructor && type.constructor.key) || '';
 }
 
-function ordenarJson(valor) {
+/*function ordenarJson(valor) {
     if (Array.isArray(valor)) return valor.map(ordenarJson);
     if (valor && typeof valor === 'object' && !(valor instanceof Date) && !Buffer.isBuffer(valor)) {
         const salida = {};
@@ -33,13 +33,12 @@ function ordenarJson(valor) {
         return salida;
     }
     return valor;
-}
+}*/
 
 function serializar(valor, attr) {
-    if (valor === null || valor === undefined) return '';
-
     const clave = claveTipo(attr);
 
+    // Estandarizar para que todos digan lo mismo sin importar qué
     if (clave === 'BOOLEAN') {
         return valor === true || valor === 1 || valor === '1' ? '1' : '0';
     }
@@ -74,7 +73,7 @@ function serializar(valor, attr) {
         return Number.isFinite(numero) ? String(numero) : String(valor);
     }
 
-    if (clave === 'JSON') {
+    /*if (clave === 'JSON') {
         let dato = valor;
         if (typeof dato === 'string') {
             try {
@@ -84,18 +83,17 @@ function serializar(valor, attr) {
             }
         }
         return JSON.stringify(ordenarJson(dato));
-    }
-
+    }*/
+    // para guardar los archivos blob
     if (Buffer.isBuffer(valor)) return valor.toString('base64');
 
-    if (typeof valor === 'object') {
+    /*if (typeof valor === 'object') {
         try {
             return JSON.stringify(ordenarJson(valor));
         } catch {
             return String(valor);
         }
-    }
-
+    }*/
     return String(valor);
 }
 
