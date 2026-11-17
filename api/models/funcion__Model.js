@@ -22,6 +22,10 @@ const Funcion = sequelize.define(
         idioma: DataTypes.STRING(10),
         proyeccion: DataTypes.STRING(10),
         horarioInicio: DataTypes.DATE,
+        precio: {
+            type: DataTypes.SMALLINT.UNSIGNED,
+            allowNull: false
+        },
         DVH: {
             type: DataTypes.STRING(6),
             allowNull: false,

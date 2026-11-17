@@ -112,3 +112,7 @@ button {
     background-color: #777;
     cursor: not-allowed;
 }
+
+#tablaAsientos .seleccionado {
+    background-color: #fa5c12;
+}

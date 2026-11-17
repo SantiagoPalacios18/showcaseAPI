@@ -1,6 +1,8 @@
 const { Usuario, Transaccion, CompraTicket, Asiento, Funcion, Pelicula } = require('../models/index.js');
 const bcrypt = require("bcrypt")
 const { Op } = require("sequelize")
+const { sequelize } = require('../config/db.js'); // Importamos el sequelize, el cual ya fue importado dentro de config/db.js
+
 //const {default_foto} = require('../SRC/default-foto.js')
 
 
@@ -279,30 +281,34 @@ const getBuscarUsuarioPelicula = async (req, res) => {
 
 const registrarUsuarioEnPelicula = async (req, res) => {
     try {
-        const {idCliente, datosReserva, id_Funcion, Numero, Fila, Precio} = req.body
-        const {Total, MetodoPago} = datosReserva
+        const {idCliente, MetodoPago, id_Funcion, asientos, Total, precioUnidad} = req.body
         const result = await sequelize.transaction( //Usamos transaction pq sino puede modificarse una parte de la bd, dar error desues y no rollbackearse
             async (t) => {
-                const transactionNueva = Transaccion.create({
-                    id_ClienteLogueado: idCliente,
+                const transactionNueva = await Transaccion.create({
+                    id_Usuario: idCliente,
                     Total,
                     MetodoPago
                 },{transaction: t})
-               
-                const asientoNuevo = Asiento.create({
-                    id_Funcion,
-                    Numero,
-                    Fila
-                },{transaction: t})
-               
-                const compraTicketNuevo = CompraTicket.create({
-                    id_Transaccion: transactionNueva.id_Transaccion,
-                    id_Asiento: asientoNuevo.id_Asiento,
-                    Precio
-                },{transaction: t})
+                for (let i=0; i<asientos.length; i++){
+                    let asi = asientos[i].split("-")
+                    console.log(asi)
+                    const asientoNuevo = await Asiento.create({
+                        id_Funcion,
+                        fila: asi[0]*100,
+                        columna: asi[1]
+                    },{transaction: t})
+                
+                    const compraTicketNuevo = await CompraTicket.create({
+                        id_transaccion: transactionNueva.id_transaccion,
+                        id_Asiento: asientoNuevo.id_Asiento,
+                        Precio: precioUnidad
+                    },{transaction: t})
+                }
             }
         );
+        res.status(200).json({message: "Reservado"})
     } catch (error) {
+        res.status(500).json({error})
         console.log({error})
     }
 }
@@ -319,5 +325,6 @@ module.exports = {
     modifyuserById,
     deleteuserById,
     createTestUser,
-    getBuscarUsuarioPelicula
+    getBuscarUsuarioPelicula,
+    registrarUsuarioEnPelicula
 }

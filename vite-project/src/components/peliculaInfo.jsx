@@ -13,22 +13,17 @@ import './styles/peliculaInfo.css'
 function peliculaInfo(props) {
     const [pelicula, setPelicula] = useState([])
     const [asientos, setAsientos] = useState([])
+    const [stagedAsientos, setStagedAsientos] = useState([])
     const [peliculaKeys, setPeliculaKeys] = useState([])
     const [funciones, setFunciones] = useState([])
     const [funcion, setFuncion] = useState({})
     const [mostrarReservar, setMostrarReservar] = useState(false)
-    const [datosReserva, setDatosReserva] = useState({
-        Total: null,
-        MetodoPago: null,
-
-    })
+    const [metodoPago, setMetodoPago] = useState()
     const { id } = useParams(); // Acá extraés el ID directamente de la URL
 
     const getPeliculaById = async () => {
         try {
             const peli = await api.get(`/peliculas/getByPk/${id}`);
-            console.log(peli)
-            console.log(peli.data)
             setPelicula(peli.data);
         } catch (error) {
             console.log({ error });
@@ -62,14 +57,32 @@ function peliculaInfo(props) {
     const reservar = async (e) => {
         e.preventDefault()
         try {
-            const reserva = api.post('', {
-                idCliente: props.user.id_Cliente
+            if (stagedAsientos.length == 0) return alert("No seleccionaste asientos")
+            if (!metodoPago) return alert("No seleccionaste metodo de pago")
+
+            console.log(
+                props.user.id_Usuario, 
+                funcion.id_Funcion, 
+                stagedAsientos,
+                funcion.precio,
+                funcion.precio * stagedAsientos.length,
+                metodoPago
+            )
+            
+            const reserva = await api.post('/usuarios/registrarse', {
+                idCliente: props.user.id_Usuario, 
+                id_Funcion: funcion.id_Funcion, 
+                asientos: stagedAsientos,
+                precioUnidad: funcion.precio,
+                Total: funcion.precio * stagedAsientos.length,
+                MetodoPago: metodoPago
             })
         } catch (error) {
             console.log({ error })
         }
         setMostrarReservar(false)
         setFuncion({})
+        setStagedAsientos([])
     }
 
     const consultarAsientos = async () => {
@@ -87,8 +100,20 @@ function peliculaInfo(props) {
                     }
                 }
                 setAsientos(asieTemp)
-                // console.log(asientosFuncion)
             }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const añadirStagedAsiento = (fila, columna, e) => {
+        try {
+            let temp = [...stagedAsientos] //Usamos los ... para crear un NUEVO array, sin los puntitos temp apunta al mismo array y al setearlo no nota un cambio, por ende no rerenderiza los botones y no los cambia a naranja
+
+            if (temp.includes(`${fila}-${columna}`)) temp = temp.filter(asiento => asiento !== `${fila}-${columna}`);
+            else temp.push(fila+ "-" + columna)
+
+            setStagedAsientos(temp)
         } catch (error) {
             console.log(error)
         }
@@ -105,6 +130,7 @@ function peliculaInfo(props) {
 
     return (
         <>
+        <button onClick={()=>{console.log(metodoPago)}}>sakdjfa</button>
             <div id="peliculaInfoDiv">
                 <img src={imagenTest} alt={pelicula.titulo} />
                 <div id="peliculaInfoDivDiv">
@@ -131,7 +157,7 @@ function peliculaInfo(props) {
             )}
             {mostrarReservar == true && (
                 <div id="divReserva">
-                    <button onClick={() => {setMostrarReservar(false), setFuncion({})}}>⬅️</button>
+                    <button onClick={() => {setFuncion({}), setMostrarReservar(false), setStagedAsientos([])}}>⬅️</button>
                     <legend>Reservar para la funcion {funcion.id_Funcion} </legend>
                     <form onSubmit={reservar}>
                         <label> PANTALLA </label>
@@ -148,13 +174,15 @@ function peliculaInfo(props) {
                             <tbody>
                                 {asientos?.map((fila, i) => (
                                         <tr>
-                                            <td>{i + 1}</td>
+                                            <td>{(i + 1) * 100}</td>
                                             {fila.map((asiento, j) => ( 
                                                 <td>
                                                     <button
+                                                        type="button"
                                                         disabled = {asiento == "OCUPADO"}
-                                                        className = {asiento == "OCUPADO"? "ocupado":"libre"}
-                                                    >{i+1}.{j+1}  {asiento === "OCUPADO" ? "X" : "✓"}</button>
+                                                        className = { stagedAsientos.includes(`${i}-${j}`)? "seleccionado" : asiento == "OCUPADO"? "ocupado":"libre"}
+                                                        onClick={()=>{añadirStagedAsiento(i, j), setMostrarReservar(false), setMostrarReservar(true)}}
+                                                    >{i+1}.{j+1}  {asiento === "LIBRE" ? "✓" : "X"}</button>
                                                 </td>
                                             ))}
                                         </tr>
@@ -163,7 +191,7 @@ function peliculaInfo(props) {
                         </table>
 
                         <label> Seleccione su metodo de pago</label>
-                        <select>
+                        <select onChange={(e) => setMetodoPago(e.target.value)}>
                             <option value="" disabled selected hidden>Seleccionar Metodo de Pago</option>
                             <option value="Mercado Pago">Mercado Pago</option>
                             <option value="Debito">Debito</option>

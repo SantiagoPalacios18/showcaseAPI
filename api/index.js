@@ -238,9 +238,9 @@ server.listen(3000, async () => {
     });
 
     const funciones = [
-        { id_sala: 1, id_pelicula: 1, id_tecnologia: tecnologiaPrueba.id_tecnologia, idioma: 'Español', proyeccion: '2D', horarioInicio: new Date('2026-06-15T18:00:00'), DVH: "ABC123" },
-        { id_sala: 2, id_pelicula: 2, id_tecnologia: tecnologiaPrueba.id_tecnologia, idioma: 'Subtitulad', proyeccion: '3D', horarioInicio: new Date('2026-06-15T21:30:00'), DVH: "ABC123" },
-        { id_sala: 3, id_pelicula: 3, id_tecnologia: tecnologiaPrueba.id_tecnologia, idioma: 'Español', proyeccion: '2D', horarioInicio: new Date('2026-06-16T19:00:00'), DVH: "ABC123" },
+        { id_sala: 1, id_pelicula: 1, id_tecnologia: tecnologiaPrueba.id_tecnologia, idioma: 'Español', proyeccion: '2D', horarioInicio: new Date('2026-06-15T18:00:00'), precio: 2400, DVH: "ABC123" },
+        { id_sala: 2, id_pelicula: 1, id_tecnologia: tecnologiaPrueba.id_tecnologia, idioma: 'Subtitulad', proyeccion: '3D', horarioInicio: new Date('2026-06-15T21:30:00'), precio: 4000, DVH: "ABC123" },
+        { id_sala: 3, id_pelicula: 1, id_tecnologia: tecnologiaPrueba.id_tecnologia, idioma: 'Español', proyeccion: '2D', horarioInicio: new Date('2026-06-16T19:00:00'), precio: 4500, DVH: "ABC123" },
     ];
 
     for (const funcionData of funciones) {
@@ -339,6 +339,7 @@ const insertDatosCompletos = async () => {
               idioma: "Subtitulado",
               proyeccion: "2D",
               horarioInicio: new Date("2026-11-10T18:30:00"),
+              precio: 1000,
               DVH: "FUN001"
           },
           {
@@ -348,6 +349,7 @@ const insertDatosCompletos = async () => {
               idioma: "Español",
               proyeccion: "3D",
               horarioInicio: new Date("2026-11-10T21:00:00"),
+              precio: 2000,
               DVH: "FUN002"
           }
       ];

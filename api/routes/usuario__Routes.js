@@ -7,7 +7,8 @@ const {
     modifyuserById,
     deleteuserById,
     createTestUser,
-    getBuscarUsuarioPelicula
+    getBuscarUsuarioPelicula,
+    registrarUsuarioEnPelicula
 } = require('../controllers/usuario__Controller.js');
 const {checkPatent} = require('../middlewares/auth__Middleware.js')
 
@@ -23,5 +24,6 @@ router.post('/', checkPatent("POST_REGISTER"), createUser);
 router.patch('/edit/:id',checkPatent("PATCH_REGISTER"), modifyuserById);
 router.delete('/:id',checkPatent("DELETE_REGISTER"), deleteuserById);
 router.post('/test',checkPatent("POST_USER_TEST"), createTestUser)
+router.post('/registrarse', registrarUsuarioEnPelicula)
 
 module.exports = router;
