@@ -189,5 +189,5 @@ module.exports = {
     createSorteo,
     modifySorteoById,
     deleteSorteoById,
-    getElegirGanador
+    ElegirGanador
 };

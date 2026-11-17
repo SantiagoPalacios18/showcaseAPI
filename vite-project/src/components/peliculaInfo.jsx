@@ -74,7 +74,7 @@ function peliculaInfo(props) {
                 id_Funcion: funcion.id_Funcion, 
                 asientos: stagedAsientos,
                 precioUnidad: funcion.precio,
-                Total: funcion.precio * stagedAsientos.length,
+                total: funcion.precio * stagedAsientos.length,
                 MetodoPago: metodoPago
             })
         } catch (error) {

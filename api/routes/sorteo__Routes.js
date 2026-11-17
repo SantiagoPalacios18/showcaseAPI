@@ -6,9 +6,9 @@ const {
     createSorteo,
     modifySorteoById,
     deleteSorteoById,
-    getElegirGanador
+    ElegirGanador
 } = require('../controllers/sorteo_controller.js');
-router.get('/getGanador/:id', getElegirGanador)
+router.get('/getGanador/:id', ElegirGanador)
 router.get('/', getSorteos);
 router.get('/getByPk/:id', getSorteoById);
 router.post('/', createSorteo);

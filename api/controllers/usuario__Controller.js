@@ -281,17 +281,16 @@ const getBuscarUsuarioPelicula = async (req, res) => {
 
 const registrarUsuarioEnPelicula = async (req, res) => {
     try {
-        const {idCliente, MetodoPago, id_Funcion, asientos, Total, precioUnidad} = req.body
+        const {idCliente, MetodoPago, id_Funcion, asientos, total, precioUnidad} = req.body
         const result = await sequelize.transaction( //Usamos transaction pq sino puede modificarse una parte de la bd, dar error desues y no rollbackearse
             async (t) => {
                 const transactionNueva = await Transaccion.create({
                     id_Usuario: idCliente,
-                    Total,
-                    MetodoPago
+                    total,
+                    metodoDePago: MetodoPago
                 },{transaction: t})
                 for (let i=0; i<asientos.length; i++){
                     let asi = asientos[i].split("-")
-                    console.log(asi)
                     const asientoNuevo = await Asiento.create({
                         id_Funcion,
                         fila: asi[0]*100,
@@ -301,7 +300,7 @@ const registrarUsuarioEnPelicula = async (req, res) => {
                     const compraTicketNuevo = await CompraTicket.create({
                         id_transaccion: transactionNueva.id_transaccion,
                         id_Asiento: asientoNuevo.id_Asiento,
-                        Precio: precioUnidad
+                        precio: precioUnidad
                     },{transaction: t})
                 }
             }
