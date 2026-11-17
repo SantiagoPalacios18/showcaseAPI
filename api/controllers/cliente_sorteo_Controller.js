@@ -47,14 +47,15 @@ const getUnClienteSorteo = async (req, res) =>{
 const createClienteSorteo = async (req, res) => {
     try {
         const data = req.body;
-        console.log(req.body)
+        console.log("holahaola",req.body)
+        console.log("papapap",data)
+        
 
 
 
-
-        if (!data.id_Cliente || !data.id_sorteo) {
+        if (!data.id_Usuario || !data.id_sorteo) {
             return res.status(400).json({
-                message: "Faltan datos obligatorios (id_Cliente, id_sorteo)"
+                message: "Faltan datos obligatorios (id_Cliente, id_sorteo)",data
             });
         }
 
