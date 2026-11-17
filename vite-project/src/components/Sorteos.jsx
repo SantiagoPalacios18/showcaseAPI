@@ -6,9 +6,6 @@ import api from "../api"
 import imagenTest from "../media/unnamed.jpg"
 import './styles/sorteo.css'
 
-
-const getImagen = (nombre) => imagenTest
-
 function Sorteos(props) {
     const [message, setMessage] = useState("")
     const [sorteos, setSorteos] = useState([])
@@ -56,6 +53,7 @@ function Sorteos(props) {
         try {
             const sort = await api.get('/sorteos')
             setSorteos(sort.data)
+            console.log(sort.data)
         } catch (error) {
             console.log({error})
         }
@@ -79,7 +77,7 @@ return(
                         <div className="tarjeta-sorteo" style={styleVar}>
                             <h2>{sor.nombre}</h2>
                             <div className="imagen" onMouseMove={(e)=>{handleMousemove(e)}}>
-                                <img onClick={()=> Navigate(`/sorteoinfo/${sor.id_sorteo}`) } src={getImagen(sor.imagen)} alt={sor.nombre}/>
+                                <img onClick={()=> Navigate(`/sorteoinfo/${sor.id_sorteo}`) } src={sor.imagen} alt={sor.nombre}/>
                             </div>
                         </div>
                     </li>

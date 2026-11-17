@@ -380,7 +380,7 @@
 }
 
 .minput:focus{
-    transform: scale(110%);
+    transform: scale(115%);
     box-shadow: 0rem 0rem 2rem .1rem whitesmoke;
 }
 
@@ -403,6 +403,7 @@
 
 .mselect:focus{
     transform: scale(115%);
+    box-shadow: 0rem 0rem 2rem .1rem whitesmoke;
 }
 
 .mselect option{
@@ -442,7 +443,7 @@
     font-size: 1.4rem;
     padding-inline: 3rem;
     padding-block: 1rem;
-    transition: 250ms;
+    transition: 100ms;
     width: 30%;
     margin-block-end: 1rem;
     border: none;
@@ -456,7 +457,7 @@
 .mbtn:hover{
     filter: brightness(70%);
     transform: scale(110%);
-    transition: 250ms;
+    transition: 100ms;
     cursor: pointer;
     box-shadow: 0rem 0rem .5rem .1rem whitesmoke;
 }
@@ -478,4 +479,104 @@
     border-radius: 2rem;
     padding-inline: 1rem;
     -webkit-text-stroke: .4px #fa668e;
+}
+
+#info-gral{
+    width: 50%;
+    max-width: 50%;
+    height: 10rem;
+    max-height: 10rem;
+    resize: none;
+
+    &::-webkit-scrollbar{
+        width: 1rem;
+        height: 1rem;
+    }
+
+    &::-webkit-scrollbar-track{
+        background-color: rgb(133, 74, 163);
+        border-radius: 1rem;
+    }
+
+    &::-webkit-scrollbar-thumb{
+        background-color: rgba(154, 18, 222, 0.993);
+        border-color: #4a4f52;
+        border-style: solid;
+        border-radius: 1rem;
+    }
+}
+
+#fecha-label{
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.admin-premios{
+    width: 50%;
+    max-width: 50%;
+    background-color: #ffffff38;
+    border-radius: 2rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.admin-premios p{
+    color: whitesmoke;
+    font-size: 3rem;
+    font-weight: 700;
+}
+
+#lista-premios{
+    width: 100%;
+}
+
+#lista-premios li{
+    background-color: rgb(136, 0, 255);
+    border-radius: 1rem;
+    padding: .8rem;
+    height: 5rem;
+    margin: 1rem;
+}
+
+#lista-premios li input{
+    border-radius: 1rem;
+    background-color: whitesmoke;
+    color: #1e1e1e;
+    font-size: 2rem;
+    border: none;
+    width: 90%;
+}
+
+#eliminar-p{
+    background-color: white;
+    background-image: url(https://www.startpage.com/av/proxy-image?piurl=https%3A%2F%2Fcdn-icons-png.flaticon.com%2F512%2F323%2F323811.png&sp=1794922375T51b8e4bce8e806193f8f5af6371a48b072a5f9c73c640e1d464c2b38cebb0192);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center;
+    width: 10%;
+    height: 100%;
+    border-radius: 100%;
+    transition: .1s;
+}
+
+#eliminar-p:hover{
+    filter: brightness(80%);
+    transition: .1s;
+}
+
+#agregar-p{
+    color: whitesmoke;
+    font-size: 2rem;
+    font-weight: 700;
+    background-color: rgb(136, 0, 255);
+    padding: .6rem;
+    border-radius: 2rem;
+}
+
+#agregar-p:hover{
+    filter: brightness(80%);
+    transition: .1s;
 }

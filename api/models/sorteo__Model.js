@@ -14,6 +14,10 @@ const Sorteo = sequelize.define(
             type: DataTypes.TINYINT.UNSIGNED,
             allowNull: true,
         },
+        id_ganador:{
+            type: DataTypes.TINYINT.UNSIGNED,
+            allowNull: true
+        },
         nombre: {
             type: DataTypes.STRING(30),
             allowNull: false

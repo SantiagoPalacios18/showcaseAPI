@@ -17,6 +17,7 @@ function sorteoinfo(props) {
     const { id } = useParams(); // Acá extraés el ID directamente de la URL
     const [usuario_sort, setusuario_sort ] = useState({})
     const [ganador, setGanador] = useState("")
+    const [user_win, setUser_win] = useState("")
     const [usu_peli, setUsu_peli] = useState("")
 
     const navigate = useNavigate()
@@ -95,36 +96,47 @@ function sorteoinfo(props) {
         } 
     }
 
-    const getElegirGanador = async () => {
+    const getBuscarGanador = async () => {
         try {
             const ganador = await api.get(`sorteos/getGanador/${id}`)
             setGanador(ganador.data)
+            console.log("ayudaaaa",ganador.data)
+            {!ganador.data.id_ganador && console.log("no hay ganador")}
+            const user_win = await api.get(`/usuarios/getByPk/${ganador.data.id_ganador}`)
+            setUser_win(user_win.data)
+            console.log("aaaaa:", user_win.data.nombre)
         } catch (error) {
             console.log({error})
         }
     }
 
+
     useEffect(() => {
         setMessage(),
         getSorteoById(id),
         getUnClienteSorteo(),
-        getBuscarUsuarioPelicula()
-        getUnClienteSorteo(),
+        getBuscarGanador(),
         getBuscarUsuarioPelicula()
     }, [])
-
     return(
     <div className="sorteo">
+        <button onClick={() => {console.log(user_win)}}>aksdhflkjsdfhakljsdf</button>
         <section className="details">
             <h1>{sort.nombre}</h1>
             <img src={imagenTest} alt="Foto sorteo" />
             <p className="info-gral">{sort.infoGral}</p>
+            {!user_win?.nombre &&(
+                <h1>gandor: no hay</h1>
+            )}
+            {user_win?.nombre &&(
+                <h1>gandor: {user_win.nombre}</h1>
+            )}
         </section>
         <section className="premios">
             <h2>Premios</h2>
             <ul className="premios-l">
                 {premios.map(premio => {
-                document.documentElement.style.setProperty('--alto-items-lista', (100 / premios.length + '%')); console.log(' FUNCAAAA: ' + 100 / premios.length + '%');
+                document.documentElement.style.setProperty('--alto-items-lista', (100 / premios.length + '%')); console.log(' FUNCAAAA: ' + 100 / premios.length + '%' + 'premios: ' + premios);
                 return(
                     <li className="premio">
                         {premio}
