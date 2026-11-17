@@ -146,7 +146,7 @@ const SorteoTermino = async ()=> {
        
         for (const sorteo of sorteoTerminado) {
             console.log(`Ejecutando sorteo: ${sorteo.nombre} (ID: ${sorteo.id_sorteo})`);
-            await getElegirGanador(sorteo.id_sorteo)
+            await ElegirGanador(sorteo.id_sorteo)
         }
 
 
@@ -158,7 +158,7 @@ const SorteoTermino = async ()=> {
 
 
 
-const getElegirGanador = async (req, res) => {
+const ElegirGanador = async (req, res) => {
     try {
         const lista_u = await Usuario_sorteo.findAll({
         });
