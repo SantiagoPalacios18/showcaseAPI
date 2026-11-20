@@ -166,18 +166,27 @@ function Profile(props){
         setShowPfp(false)
     }
 
-    const cambiarCont = async (e, cont, newCont) => {
+    const cambiarCont = async (e) => {
         e.preventDefault()
+        setError("")
+        setMessage("")
+        if (!password || !Mpassword) {
+            setError("Completá la contraseña actual y la nueva")
+            return
+        }
         try {
-            console.log("LA CHUCHA WEON FUNCA")
-            const response = await api.patch(`usuarios/cambiar-contraseña${id}`,{
-                contraseña: cont,
-                nuevaContraseña: newCont
+            const response = await api.patch(`usuarios/cambiar-contraseña/${id}`,{
+                contraseña: password,
+                nuevaContraseña: Mpassword
             })
-            await timeout(3000)
-            console.log(response)
+            setPassword("")
+            setmPassword("")
+            setMuyLargo(false)
+            setMessage(response.data.message || "Contraseña modificada correctamente")
+            await timeout(2500)
+            setMessage("")
         } catch (error) {
-            console.log(error)
+            setError(error.response?.data?.message || error.response?.data?.error || "No se pudo cambiar la contraseña")
         }
     }
 
@@ -247,7 +256,8 @@ function Profile(props){
                         ):(
                             // Modo editar
                             <>
-                                {error && <p style={{position: "fixed", top: "10px", left: "10px", color: "red", backgroundColor: "#590C0C", padding: "10px", borderRadius: "5px" }}>{error}</p>}
+                                {message && <p style={{position: "fixed", top: "10px", left: "10px", color: "green", backgroundColor: "lightgreen", padding: "10px", borderRadius: "5px" }}>{message}</p>}
+                                {error && !showChangePassword && <p style={{position: "fixed", top: "10px", left: "10px", color: "red", backgroundColor: "#590C0C", padding: "10px", borderRadius: "5px" }}>{error}</p>}
 
                                 <form className="profile-data-section" onSubmit={handleSubmit}>
 
@@ -312,7 +322,7 @@ function Profile(props){
                                             onChange={(e) => setmTelefono(e.target.value)} 
                                         />
                                     </div>
-                                    <button className="edit-button" type="button" onClick={()=>setMuyLargo(true)}>
+                                    <button className="edit-button" type="button" onClick={()=>{ setError(""); setMuyLargo(true) }}>
                                         Cambiar Contraseña
                                     </button>
                                     <div className="profile-buttons">
@@ -393,14 +403,15 @@ function Profile(props){
                                             <img src="https://i.postimg.cc/1tgHsdPp/flecha-volver-atras.png" alt="volver atras" />
                                     </button>
                                 </div>
-                                <form>
+                                <form onSubmit={cambiarCont}>
+                                    {error && <p style={{color: "#ffb4b4"}}>{error}</p>}
                                     <label htmlFor="password">Contraseña actual</label>
                                     <input 
                                     type="password"
                                     id="password"
                                     name="password"
-                                    onChange={(e)=>setPassword(e.target.value)
-                                    }
+                                    value={password}
+                                    onChange={(e)=>setPassword(e.target.value)}
                                     />
 
                                     <label htmlFor="Mpassword">Nueva contraseña</label>
@@ -408,10 +419,11 @@ function Profile(props){
                                     type="password"
                                     id="Mpassword"
                                     name="Mpassword"
+                                    value={Mpassword}
                                     onChange={(e)=>setmPassword(e.target.value)}
                                     />
 
-                                    <button onClick={()=>cambiarCont(password, Mpassword)}>Cambiar Contraseña</button>
+                                    <button type="submit">Cambiar Contraseña</button>
                                 </form>
                             </div>
                         </div>

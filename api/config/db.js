@@ -13,7 +13,7 @@ const sequelize = new Sequelize(DB_NAME /* nombre DB */, DB_USER /* nombre de mi
     host: DB_HOST,
     dialect: 'mysql',
     root: 3306,
-    logging: false // NO muestra todo lo que se hace en la base de datos
+    logging: true // NO muestra todo lo que se hace en la base de datos
 });
 
 async function crearBDSiNoExiste() {

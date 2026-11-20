@@ -59,9 +59,9 @@ const createUser = async (req, res) => {
     try {
         const data = req.body;
 
-        if (!data.id_Rol || !data.nombre || !data.apellido || !data.DNI || !data.telefono || !data.email || !data.fechaNacimiento) {
+        if (!data.id_Rol || !data.nombre || !data.apellido || !data.DNI || !data.telefono || !data.email || !data.fechaNacimiento || !data.contraseña) {
             return res.status(400).json({
-                message: "Faltan datos obligatorios (id_Rol, nombre, apellido, DNI, telefono, email, fechaNacimiento)"
+                message: "Faltan datos obligatorios (id_Rol, nombre, apellido, DNI, telefono, email, fechaNacimiento, contraseña)"
             });
         }
         let extra = "";
@@ -83,7 +83,6 @@ const createUser = async (req, res) => {
             fechaNacimiento: data.fechaNacimiento,
             telefono: data.telefono,
             email: data.email,
-            foto: default_foto,
             contraseña: await bcrypt.hash(data.contraseña, 10),
         });
 
@@ -218,20 +217,32 @@ const changePassword = async(req,res) => {
     try{
         const {contraseña, nuevaContraseña} = req.body
         const {id} = req.params
-        const user = Usuario.findByPk(id)
-        const validPassword = await bcrypt.compare(contraseña, user.contraseña)
-       
-        if (!validPassword){
-            res.status(400).json({message: 'La contraseña actual no es esa'})
+
+        if (!contraseña || !nuevaContraseña) {
+            return res.status(400).json({ message: 'Falta la contraseña actual o la nueva' })
         }
-         
-        user.update({'contraseña' :  nuevaContraseña})
 
+        if (Number(req.user?.id_Usuario) !== Number(id)) {
+            return res.status(403).json({ message: 'No podés cambiar la contraseña de otro usuario' })
+        }
 
-        res.status(200).json({message: 'CONTRASE;A MODOFICADA CORRECTAMENTE'})
+        const user = await Usuario.findByPk(id)
+        if (!user) {
+            return res.status(404).json({ message: `Usuario con el id: ${id} no encontrado` })
+        }
+
+        const validPassword = await bcrypt.compare(contraseña, user.contraseña)
+        if (!validPassword){
+            return res.status(400).json({message: 'La contraseña actual no es esa'})
+        }
+
+        await user.update({ contraseña: await bcrypt.hash(nuevaContraseña, 10) })
+
+        res.status(200).json({message: 'Contraseña modificada correctamente'})
        
     }catch(error){
-       
+        console.log(error)
+        res.status(500).json({ error: error.message })
     }
 }  
 
@@ -324,6 +335,7 @@ module.exports = {
     modifyuserById,
     deleteuserById,
     createTestUser,
+    changePassword,
     getBuscarUsuarioPelicula,
     registrarUsuarioEnPelicula
 }

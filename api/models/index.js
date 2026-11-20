@@ -35,6 +35,8 @@ const { Code } = require('./code__model.js')
 const { DVV } = require('./DVV__Model.js');
 const { Bitacora } = require('./bitacora__Model.js');
 
+Usuario.hasMany(Sorteo, {foreignkey: 'id_sorteo'})
+Sorteo.belongsTo(Usuario, {foreignkey: 'id_ganador'})
 
 
 //const { Patente_Usuario } = require('./patente_usuario__Model.js');

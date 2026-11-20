@@ -21,6 +21,7 @@ const { limpiarCodigosVencidos } = require('./controllers/code__controller.js');
 // ==========================================
 
 server.use('/posters', express.static(path.join(__dirname, './media/posters')))
+server.use('/sorteosimg', express.static(path.join(__dirname, './media/sorteos'), { redirect: false }))
 server.use(express.json()); // Lenguaje utilizado para enviar y recibir la información
 server.use(cookieParser())
 

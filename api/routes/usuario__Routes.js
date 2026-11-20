@@ -7,6 +7,7 @@ const {
     modifyuserById,
     deleteuserById,
     createTestUser,
+    changePassword,
     getBuscarUsuarioPelicula,
     registrarUsuarioEnPelicula
 } = require('../controllers/usuario__Controller.js');
@@ -22,6 +23,7 @@ router.get('/getByPk/:id', (req, res, next) =>{
 router.get('/:id', getBuscarUsuarioPelicula)
 router.post('/', checkPatent("POST_REGISTER"), createUser);
 router.patch('/edit/:id',checkPatent("PATCH_REGISTER"), modifyuserById);
+router.patch('/cambiar-contraseña/:id', changePassword);
 router.delete('/:id',checkPatent("DELETE_REGISTER"), deleteuserById);
 router.post('/test',checkPatent("POST_USER_TEST"), createTestUser)
 router.post('/registrarse', registrarUsuarioEnPelicula)
