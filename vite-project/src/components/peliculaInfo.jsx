@@ -130,11 +130,10 @@ function peliculaInfo(props) {
 
     return (
         <>
-        <button onClick={()=>{console.log(metodoPago)}}>sakdjfa</button>
             <div id="peliculaInfoDiv">
                 <img src={imagenTest} alt={pelicula.titulo} />
                 <div id="peliculaInfoDivDiv">
-                    {Object.keys(pelicula).filter((key) => key != "imagen").map((key) => (
+                    {Object.keys(pelicula).filter((key) => key != "imagen" && key != "DVH" && key != "id_Pelicula").map((key) => (
                         <h1>{pelicula[key]}</h1>
                     ))}
                 </div>
