@@ -46,6 +46,8 @@ function clasificar(req, res, pathOriginal) {
     }
     // La terminal anota solo las consultas que modifican datos. Un SELECT no es un alta.
     if (metodo === 'POST' && path === '/sql') return null;
+    // Backup, restore y rectificar anotan su propia acción.
+    if (path === '/integridad/backup' || path === '/integridad/restore' || path === '/integridad/rectificar') return null;
 
     const partes = path.split('/').filter(Boolean);
     if (partes.length === 0) return null;

@@ -1,0 +1,705 @@
+{
+  "creado": "2026-11-21T21:38:03.583Z",
+  "tablas": {
+    "Actor": [],
+    "Actor_Pelicula": [],
+    "Asiento": [
+      {
+        "id_Asiento": 1,
+        "id_Funcion": 1,
+        "columna": 1,
+        "fila": 100,
+        "DVH": "1b1e1e"
+      },
+      {
+        "id_Asiento": 2,
+        "id_Funcion": 1,
+        "columna": 2,
+        "fila": 100,
+        "DVH": "f9c323"
+      },
+      {
+        "id_Asiento": 3,
+        "id_Funcion": 1,
+        "columna": 3,
+        "fila": 100,
+        "DVH": "924721"
+      }
+    ],
+    "Bitacora": [
+      {
+        "id_Bitacora": 1,
+        "id_Usuario": 1,
+        "accion": "LOGIN",
+        "tabla": "Usuario",
+        "id_Registro": 1,
+        "fecha": "2026-11-21T21:36:46.000Z",
+        "DVH": "9d475c"
+      },
+      {
+        "id_Bitacora": 2,
+        "id_Usuario": 1,
+        "accion": "LOGIN",
+        "tabla": "Usuario",
+        "id_Registro": 1,
+        "fecha": "2026-11-21T21:36:55.000Z",
+        "DVH": "557313"
+      },
+      {
+        "id_Bitacora": 3,
+        "id_Usuario": 2,
+        "accion": "LOGIN",
+        "tabla": "Usuario",
+        "id_Registro": 2,
+        "fecha": "2026-11-21T21:36:55.000Z",
+        "DVH": "3321dc"
+      },
+      {
+        "id_Bitacora": 4,
+        "id_Usuario": 2,
+        "accion": "BACKUP",
+        "tabla": "DVV",
+        "id_Registro": null,
+        "fecha": "2026-11-21T21:36:55.000Z",
+        "DVH": "30fdaa"
+      },
+      {
+        "id_Bitacora": 9,
+        "id_Usuario": 1,
+        "accion": "RESTORE",
+        "tabla": "DVV",
+        "id_Registro": null,
+        "fecha": "2026-11-21T21:36:55.000Z",
+        "DVH": "f877d3"
+      },
+      {
+        "id_Bitacora": 10,
+        "id_Usuario": 1,
+        "accion": "VERIFICACION_INTEGRIDAD",
+        "tabla": "DVV",
+        "id_Registro": null,
+        "fecha": "2026-11-21T21:36:56.000Z",
+        "DVH": "bced41"
+      },
+      {
+        "id_Bitacora": 11,
+        "id_Usuario": 1,
+        "accion": "LOGIN",
+        "tabla": "Usuario",
+        "id_Registro": 1,
+        "fecha": "2026-11-21T21:37:34.000Z",
+        "DVH": "938e37"
+      },
+      {
+        "id_Bitacora": 12,
+        "id_Usuario": 1,
+        "accion": "LOGIN",
+        "tabla": "Usuario",
+        "id_Registro": 1,
+        "fecha": "2026-11-21T21:37:49.000Z",
+        "DVH": "d566de"
+      }
+    ],
+    "Cine": [
+      {
+        "id_Cine": 1,
+        "nombre": "Mega Cine",
+        "ubicacion": "Centro 1",
+        "DVH": "af48cd"
+      },
+      {
+        "id_Cine": 2,
+        "nombre": "Hoyts Abasto",
+        "ubicacion": "Av Corrientes 3247",
+        "DVH": "32d13c"
+      },
+      {
+        "id_Cine": 3,
+        "nombre": "Village Recolet",
+        "ubicacion": "Vicente Lopez 2050",
+        "DVH": "5eabff"
+      }
+    ],
+    "Code": [],
+    "CompraEvento": [],
+    "compraTicket": [
+      {
+        "id_compraTicket": 1,
+        "id_transaccion": 1,
+        "id_Asiento": 1,
+        "precio": 2500,
+        "DVH": "2972cf"
+      }
+    ],
+    "DVV": [
+      {
+        "tabla": "Actor",
+        "dvv": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "tabla": "Actor_Pelicula",
+        "dvv": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "tabla": "Asiento",
+        "dvv": "f7fc940a56c75a558c3971fa73cea3ecca0bfe6d6081a77fa70a3cc765dc021d"
+      },
+      {
+        "tabla": "Bitacora",
+        "dvv": "ff5a450102c77c6922f4fec5b23e5d6820b0ca28df11072b08bb019facc98ed6"
+      },
+      {
+        "tabla": "Cine",
+        "dvv": "702ffbffe27ff8f504a12d00df66ce0f537ffa0993bb7345b2b1fca19432e451"
+      },
+      {
+        "tabla": "Code",
+        "dvv": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "tabla": "CompraEvento",
+        "dvv": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "tabla": "compraTicket",
+        "dvv": "4f58832ef51dcb31cf3546c2a43e5e46ef0666f63f7d3a8b4806129449dd09b9"
+      },
+      {
+        "tabla": "funcion",
+        "dvv": "25c1714865c27833597aa69619e2e5583f24a8625d4c1ec5ebfcc8461d9a35c9"
+      },
+      {
+        "tabla": "idioma",
+        "dvv": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "tabla": "idioma_pelicula",
+        "dvv": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "tabla": "Patente",
+        "dvv": "6ce9de22be8d12e4b4713622d5e0d136f07703c3ad9bb7890d74b366d532a16c"
+      },
+      {
+        "tabla": "Patente_Rol",
+        "dvv": "2f757b2326619639f82b927a49f29f7eaf76a3e2ad20b282b0e03025cd99ae83"
+      },
+      {
+        "tabla": "Patente_Usuario",
+        "dvv": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "tabla": "Pelicula",
+        "dvv": "c68b212c970fa90e06159bf0f4b52704e696bddb2345edbed7fd72f86d96b17b"
+      },
+      {
+        "tabla": "pelicula_cine",
+        "dvv": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "tabla": "Proyeccion",
+        "dvv": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "tabla": "proyeccion_pelicula",
+        "dvv": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "tabla": "Rol",
+        "dvv": "8f7274e00a685f40fb55e15e35e350240615bb13c2235f950b05bac62f16c4e2"
+      },
+      {
+        "tabla": "Sala",
+        "dvv": "61a35af221cbee719a684093c92aa3d8bce289d13a363c501acf8a4b49c16bf1"
+      },
+      {
+        "tabla": "Sesion",
+        "dvv": "71dc698680164d92ae59738e6a7c135f2579f7f5e9efa0c154fcc344b4b2327d"
+      },
+      {
+        "tabla": "sorteo",
+        "dvv": "e4316b2a8d2f867f7eedd881b14e73b96ab49eb6da4987c80fe29f7b48b713af"
+      },
+      {
+        "tabla": "tecnologia",
+        "dvv": "66933636255004f23d1a018217d58a622481205da1c3395440c5f81d76a681f9"
+      },
+      {
+        "tabla": "transaccion",
+        "dvv": "e6d59b12f3b28d8a63712a401d5405b7405fdc0ce64c80a3cd749c0f381d9a35"
+      },
+      {
+        "tabla": "Usuario",
+        "dvv": "5f268a09cad56c2468eadc54190127854bea4000f6fa19b1a90dcbf8fd4ac490"
+      },
+      {
+        "tabla": "Usuario_sorteo",
+        "dvv": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "funcion": [
+      {
+        "id_Funcion": 1,
+        "id_sala": 1,
+        "id_pelicula": 1,
+        "id_tecnologia": 1,
+        "idioma": "Español",
+        "proyeccion": "2D",
+        "horarioInicio": "2026-06-15T21:00:00.000Z",
+        "precio": 2400,
+        "DVH": "f838d6"
+      },
+      {
+        "id_Funcion": 2,
+        "id_sala": 2,
+        "id_pelicula": 1,
+        "id_tecnologia": 1,
+        "idioma": "Subtitulad",
+        "proyeccion": "3D",
+        "horarioInicio": "2026-06-16T00:30:00.000Z",
+        "precio": 4000,
+        "DVH": "45fb52"
+      },
+      {
+        "id_Funcion": 3,
+        "id_sala": 3,
+        "id_pelicula": 1,
+        "id_tecnologia": 1,
+        "idioma": "Español",
+        "proyeccion": "2D",
+        "horarioInicio": "2026-06-16T22:00:00.000Z",
+        "precio": 4500,
+        "DVH": "68e14d"
+      },
+      {
+        "id_Funcion": 4,
+        "id_sala": 1,
+        "id_pelicula": 3,
+        "id_tecnologia": 1,
+        "idioma": "Subtitulad",
+        "proyeccion": "2D",
+        "horarioInicio": "2026-11-10T21:30:00.000Z",
+        "precio": 1000,
+        "DVH": "d8cb17"
+      },
+      {
+        "id_Funcion": 5,
+        "id_sala": 2,
+        "id_pelicula": 6,
+        "id_tecnologia": 2,
+        "idioma": "Español",
+        "proyeccion": "3D",
+        "horarioInicio": "2026-11-11T00:00:00.000Z",
+        "precio": 2000,
+        "DVH": "d8d43f"
+      }
+    ],
+    "idioma": [],
+    "idioma_pelicula": [],
+    "Patente": [
+      {
+        "id_Patente": 1,
+        "nombre": "ADMIN_HOME",
+        "descripcion": null,
+        "DVH": "6d97ec"
+      },
+      {
+        "id_Patente": 2,
+        "nombre": "ADMIN_SQL",
+        "descripcion": null,
+        "DVH": "9e2133"
+      },
+      {
+        "id_Patente": 3,
+        "nombre": "GET_REGISTERS",
+        "descripcion": null,
+        "DVH": "646beb"
+      },
+      {
+        "id_Patente": 4,
+        "nombre": "GET_REGISTERS_B",
+        "descripcion": null,
+        "DVH": "5ef367"
+      },
+      {
+        "id_Patente": 5,
+        "nombre": "POST_REGISTER",
+        "descripcion": null,
+        "DVH": "aabe9d"
+      },
+      {
+        "id_Patente": 6,
+        "nombre": "PATCH_REGISTER",
+        "descripcion": null,
+        "DVH": "e76241"
+      },
+      {
+        "id_Patente": 7,
+        "nombre": "DELETE_REGISTER",
+        "descripcion": null,
+        "DVH": "a55e05"
+      },
+      {
+        "id_Patente": 8,
+        "nombre": "POST_USER_TEST",
+        "descripcion": null,
+        "DVH": "c55733"
+      },
+      {
+        "id_Patente": 9,
+        "nombre": "GET_REGISTER_BY",
+        "descripcion": null,
+        "DVH": "78e48c"
+      }
+    ],
+    "Patente_Rol": [
+      {
+        "id_Rol": 1,
+        "id_Patente": 1,
+        "DVH": "3f22d6"
+      },
+      {
+        "id_Rol": 1,
+        "id_Patente": 2,
+        "DVH": "ab8acb"
+      },
+      {
+        "id_Rol": 1,
+        "id_Patente": 3,
+        "DVH": "81e96b"
+      },
+      {
+        "id_Rol": 1,
+        "id_Patente": 4,
+        "DVH": "b6d716"
+      },
+      {
+        "id_Rol": 1,
+        "id_Patente": 5,
+        "DVH": "cac33d"
+      },
+      {
+        "id_Rol": 1,
+        "id_Patente": 6,
+        "DVH": "a7aaa5"
+      },
+      {
+        "id_Rol": 1,
+        "id_Patente": 7,
+        "DVH": "ce5ee7"
+      },
+      {
+        "id_Rol": 1,
+        "id_Patente": 8,
+        "DVH": "50a940"
+      },
+      {
+        "id_Rol": 1,
+        "id_Patente": 9,
+        "DVH": "0541c8"
+      },
+      {
+        "id_Rol": 2,
+        "id_Patente": 1,
+        "DVH": "220742"
+      }
+    ],
+    "Patente_Usuario": [],
+    "Pelicula": [
+      {
+        "id_Pelicula": 1,
+        "titulo": "Whalefall",
+        "genero": "Suspenso",
+        "origen": "EEUU",
+        "director": "Brian Duffield",
+        "calificacion": 7,
+        "calificaciones": 1,
+        "imagen": "http://localhost:3000/posters/poster-movie-1.jpg",
+        "duracion": "01:46:00",
+        "DVH": "5d7742"
+      },
+      {
+        "id_Pelicula": 2,
+        "titulo": "Madre Siniestra",
+        "genero": "Terror",
+        "origen": "EEUU",
+        "director": "Rob Savage",
+        "calificacion": 6,
+        "calificaciones": 8,
+        "imagen": "http://localhost:3000/posters/poster-movie-2.webp",
+        "duracion": "01:33:00",
+        "DVH": "d81f5a"
+      },
+      {
+        "id_Pelicula": 3,
+        "titulo": "Street Fighter",
+        "genero": "Accion",
+        "origen": "EEUU",
+        "director": "Kitao Sakurai",
+        "calificacion": 6,
+        "calificaciones": 2,
+        "imagen": "http://localhost:3000/posters/poster-movie-3.webp",
+        "duracion": "02:05:00",
+        "DVH": "55f05a"
+      },
+      {
+        "id_Pelicula": 4,
+        "titulo": "Verity",
+        "genero": "Suspenso",
+        "origen": "EEUU",
+        "director": "Michael Showalt",
+        "calificacion": 7,
+        "calificaciones": 3,
+        "imagen": "http://localhost:3000/posters/poster-movie-4.jpg",
+        "duracion": "01:50:00",
+        "DVH": "86a9ef"
+      },
+      {
+        "id_Pelicula": 5,
+        "titulo": "Coyote vs Acme",
+        "genero": "Comedia",
+        "origen": "EEUU",
+        "director": "Dave Green",
+        "calificacion": 7,
+        "calificaciones": 8,
+        "imagen": "http://localhost:3000/posters/poster-movie-5.webp",
+        "duracion": "01:30:00",
+        "DVH": "652390"
+      },
+      {
+        "id_Pelicula": 6,
+        "titulo": "Resident Evil: Noche Cero",
+        "genero": "Terror",
+        "origen": "EEUU",
+        "director": "Zach Cregger",
+        "calificacion": 6,
+        "calificaciones": 3,
+        "imagen": "http://localhost:3000/posters/poster-movie-6.jpg",
+        "duracion": "01:45:00",
+        "DVH": "fb0721"
+      },
+      {
+        "id_Pelicula": 7,
+        "titulo": "El Corazón de la Bestia",
+        "genero": "Aventura",
+        "origen": "EEUU",
+        "director": "David Ayer",
+        "calificacion": 8,
+        "calificaciones": 6,
+        "imagen": "http://localhost:3000/posters/poster-movie-7.jpg",
+        "duracion": "01:41:00",
+        "DVH": "3cfa7d"
+      },
+      {
+        "id_Pelicula": 8,
+        "titulo": "La odisea",
+        "genero": "Aventura",
+        "origen": "EEUU",
+        "director": "Christopher Nol",
+        "calificacion": 8,
+        "calificaciones": 1,
+        "imagen": "http://localhost:3000/posters/poster-movie-8.webp",
+        "duracion": "02:30:00",
+        "DVH": "033d0e"
+      },
+      {
+        "id_Pelicula": 9,
+        "titulo": "Quiero Tu Sexo",
+        "genero": "Comedia",
+        "origen": "EEUU",
+        "director": "Gregg Araki",
+        "calificacion": 5,
+        "calificaciones": 2,
+        "imagen": "http://localhost:3000/posters/poster-movie-9.jpg",
+        "duracion": "01:30:00",
+        "DVH": "f9a5d0"
+      },
+      {
+        "id_Pelicula": 10,
+        "titulo": "La Casa",
+        "genero": "Drama",
+        "origen": "Espana",
+        "director": "Alex Montoya",
+        "calificacion": 7,
+        "calificaciones": 7,
+        "imagen": "http://localhost:3000/posters/poster-movie-10.jpg",
+        "duracion": "01:38:00",
+        "DVH": "90a662"
+      }
+    ],
+    "pelicula_cine": [],
+    "Proyeccion": [],
+    "proyeccion_pelicula": [],
+    "Rol": [
+      {
+        "id_Rol": 1,
+        "nombre": "Admin",
+        "DVH": "b38187"
+      },
+      {
+        "id_Rol": 2,
+        "nombre": "SemiAdmin",
+        "DVH": "ffc57f"
+      },
+      {
+        "id_Rol": 3,
+        "nombre": "Usuario",
+        "DVH": "53b355"
+      }
+    ],
+    "Sala": [
+      {
+        "id_Sala": 1,
+        "id_Cine": 1,
+        "numero": 1,
+        "columnas": 15,
+        "filas": 27,
+        "DVH": "09af33"
+      },
+      {
+        "id_Sala": 2,
+        "id_Cine": 1,
+        "numero": 2,
+        "columnas": 16,
+        "filas": 27,
+        "DVH": "28e364"
+      },
+      {
+        "id_Sala": 3,
+        "id_Cine": 1,
+        "numero": 3,
+        "columnas": 26,
+        "filas": 17,
+        "DVH": "d828e9"
+      }
+    ],
+    "Sesion": [
+      {
+        "id_Sesion": 1,
+        "id_Usuario": 1,
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF9Vc3VhcmlvIjoxLCJpYXQiOjE3OTUyOTcwMDYsImV4cCI6MTc5NTkwMTgwNn0.cd_tfGDK4B7gMYqEEFuMPWiwxtksV8Lls2TrT8VFmAU",
+        "expires_at": "2026-11-28T21:36:46.000Z",
+        "DVH": "6661c1"
+      },
+      {
+        "id_Sesion": 2,
+        "id_Usuario": 1,
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF9Vc3VhcmlvIjoxLCJpYXQiOjE3OTUyOTcwMTUsImV4cCI6MTc5NTkwMTgxNX0.BDIQK775Ut7Y-zYtDRe4qp6IBKoujaIMbVNNwzb3Tss",
+        "expires_at": "2026-11-28T21:36:55.000Z",
+        "DVH": "d358ca"
+      },
+      {
+        "id_Sesion": 3,
+        "id_Usuario": 2,
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF9Vc3VhcmlvIjoyLCJpYXQiOjE3OTUyOTcwMTUsImV4cCI6MTc5NTkwMTgxNX0.vrTyL_v-kQC30PkKlkcwU1G_Wg3dL0iuDNWHLHmI0AE",
+        "expires_at": "2026-11-28T21:36:55.000Z",
+        "DVH": "4faec2"
+      },
+      {
+        "id_Sesion": 4,
+        "id_Usuario": 1,
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF9Vc3VhcmlvIjoxLCJpYXQiOjE3OTUyOTcwNTQsImV4cCI6MTc5NTkwMTg1NH0._xjRxi_rkhgapMjge714PlHQuQIOeLz3PfuwWkeTUJo",
+        "expires_at": "2026-11-28T21:37:34.000Z",
+        "DVH": "92f857"
+      },
+      {
+        "id_Sesion": 5,
+        "id_Usuario": 1,
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF9Vc3VhcmlvIjoxLCJpYXQiOjE3OTUyOTcwNjksImV4cCI6MTc5NTkwMTg2OX0.2ORpZxCdsxjWDpYRLpfhjbTIVOjWu9gIceTWKtq2eoI",
+        "expires_at": "2026-11-28T21:37:49.000Z",
+        "DVH": "8a9519"
+      }
+    ],
+    "sorteo": [
+      {
+        "id_sorteo": 1,
+        "id_Pelicula": 3,
+        "id_ganador": null,
+        "nombre": "Ready, watch!",
+        "fecha_sor": null,
+        "infoGral": "Para los fans mas acerrimos de la franquicia, mira la peli y gana grandes premios!",
+        "imagen": null,
+        "premio": "{\"premio1\":\"Vaso Ryu\",\"premio2\":\"Pochoclera Street Fighter\"}",
+        "DVH": "4c7cc7",
+        "UsuarioIdUsuario": null
+      },
+      {
+        "id_sorteo": 2,
+        "id_Pelicula": 6,
+        "id_ganador": null,
+        "nombre": "De vuelta a Racoon City",
+        "fecha_sor": null,
+        "infoGral": "Adentrate en los misterios de Resident Evil: Noche Cero ",
+        "imagen": null,
+        "premio": "{\"premio1\":\"Vaso Resident Evil: Noche Cero\",\"premio2\":\"Pochoclera Resident Evil: Noche Cero\",\"premio3\":\"Resident Evil Requiem para Steam\"}",
+        "DVH": "94b68c",
+        "UsuarioIdUsuario": null
+      }
+    ],
+    "tecnologia": [
+      {
+        "id_tecnologia": 1,
+        "nombre": "2D Estándar",
+        "descripcion": "Proyección digital",
+        "DVH": "21e681"
+      },
+      {
+        "id_tecnologia": 2,
+        "nombre": "IMAX 3D",
+        "descripcion": "Pantalla gigante",
+        "DVH": "114510"
+      },
+      {
+        "id_tecnologia": 3,
+        "nombre": "2D Standard",
+        "descripcion": "Proyección clásica",
+        "DVH": "ad5168"
+      }
+    ],
+    "transaccion": [
+      {
+        "id_transaccion": 1,
+        "id_Usuario": 1,
+        "total": 5000,
+        "fechaDeEmision": "2026-11-21T21:36:42.000Z",
+        "metodoDePago": "MercadoPago",
+        "DVH": "918a13"
+      }
+    ],
+    "Usuario": [
+      {
+        "id_Usuario": 1,
+        "id_Rol": 1,
+        "nombre": "Santiago",
+        "apellido": "Palacios",
+        "fechaNacimiento": "2010-10-10",
+        "DNI": "1",
+        "telefono": "12345678",
+        "alias": "Santi",
+        "email": "test@a.com",
+        "contraseña": "$2b$10$q.aSbpMzbTEOl/xsL6GhHOZMVV4V.YM8O8MEUJgTEnxHT7bXHncZ.",
+        "isActive": null,
+        "isLogged": true,
+        "foto": "",
+        "DVH": "f92bd7"
+      },
+      {
+        "id_Usuario": 2,
+        "id_Rol": 2,
+        "nombre": "Polo",
+        "apellido": "Rivera",
+        "fechaNacimiento": "2010-10-10",
+        "DNI": null,
+        "telefono": "87654321",
+        "alias": null,
+        "email": "test2@a.com",
+        "contraseña": "$2b$10$2hIelhEzRYSMSWF/kcFcXOmsH45vXy0Vz6j0XWxdQ8TjgOmTFhTuC",
+        "isActive": null,
+        "isLogged": true,
+        "foto": "",
+        "DVH": "d2289a"
+      }
+    ],
+    "Usuario_sorteo": []
+  }
+}

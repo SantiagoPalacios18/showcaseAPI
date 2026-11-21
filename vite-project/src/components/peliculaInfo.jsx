@@ -16,6 +16,7 @@ function peliculaInfo(props) {
     const [stagedAsientos, setStagedAsientos] = useState([])
     const [peliculaKeys, setPeliculaKeys] = useState([])
     const [funciones, setFunciones] = useState([])
+    const [puntu, setPuntu] = useState(0)
     const [funcion, setFuncion] = useState({})
     const [mostrarReservar, setMostrarReservar] = useState(false)
     const [metodoPago, setMetodoPago] = useState()
@@ -119,6 +120,18 @@ function peliculaInfo(props) {
         }
     }
 
+    const puntuar = async () => {
+        try {
+            if (puntu > 10 || puntu < 0) {
+                return alert("Puntaje fuera del rango 0-10")
+            }
+            const a = await api.patch(`/peliculas/puntuar/${id}/${puntu}`)
+            console.log(a)
+        } catch (error) {
+            console.log({error})
+        }
+    }
+
     useEffect(() => {
         getPeliculaById(),
         getFuncionesPelicula()
@@ -130,11 +143,10 @@ function peliculaInfo(props) {
 
     return (
         <>
-        <button onClick={()=>{console.log(metodoPago)}}>sakdjfa</button>
             <div id="peliculaInfoDiv">
                 <img src={imagenTest} alt={pelicula.titulo} />
                 <div id="peliculaInfoDivDiv">
-                    {Object.keys(pelicula).filter((key) => key != "imagen").map((key) => (
+                    {Object.keys(pelicula).filter((key) => key != "imagen" && key != "DVH" && key != "id_Pelicula").map((key) => (
                         <h1>{pelicula[key]}</h1>
                     ))}
                 </div>
@@ -153,6 +165,9 @@ function peliculaInfo(props) {
                             </div>
                         })}
                     </div>
+                    <label htmlFor="">Puntúe esta pelicula!</label>
+                    <input type="number" name="" id="inputPuntuacion" min={0} max={10} placeholder="PUNTUACIÓN 0-10" onChange={(e) => {setPuntu(e.target.value)}} />
+                    <button onClick={puntuar}>Enviar puntuación</button>
                 </div>
             )}
             {mostrarReservar == true && (

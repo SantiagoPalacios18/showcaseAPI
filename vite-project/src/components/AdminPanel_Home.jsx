@@ -20,6 +20,8 @@ function AdminHome(props) {
     const [originalData, setOriginalData] = useState({})// Version antigua de los datos
     const [editId, setEditId] = useState("") //PK del registro que se edita
     const [errorForm, setErrorForm] = useState("")
+    const [backups, setBackups] = useState([])
+    const [backupElegido, setBackupElegido] = useState("")
     const navigate = useNavigate()
 
 
@@ -37,8 +39,18 @@ function AdminHome(props) {
     }
     
     // Apenas carga la página, el useEffect ejecuta todo lo que tenga adentro
+    const cargarBackups = async () => {
+        try {
+            const { data } = await api.get("integridad/backups")
+            setBackups(Array.isArray(data.archivos) ? data.archivos : [])
+        } catch (error) {
+            console.error("Error al traer backups:", error)
+        }
+    }
+
     useEffect(() => {
         getTables()
+        cargarBackups()
     }, [])
 
     const [tablaElegida, setTablaElegida] = useState("");
@@ -82,6 +94,38 @@ function AdminHome(props) {
             setResponse({ message: data })
         } catch (error) {
             alert(error.response?.data?.message || "No se pudo verificar la integridad")
+        }
+    }
+
+    const hacerBackup = async () => {
+        try {
+            const { data } = await api.post("integridad/backup")
+            setBackupElegido(data.archivo || "")
+            await cargarBackups()
+            setResponse({ message: data })
+        } catch (error) {
+            alert(error.response?.data?.error || "No se pudo crear el backup")
+        }
+    }
+
+    const hacerRestore = async () => {
+        if (!backupElegido) return alert("Elegí un backup")
+        if (!window.confirm(`Se van a pisar los datos actuales con ${backupElegido}. ¿Seguro?`)) return
+        try {
+            const { data } = await api.post("integridad/restore", { archivo: backupElegido })
+            setResponse({ message: data })
+        } catch (error) {
+            alert(error.response?.data?.error || "No se pudo restaurar el backup")
+        }
+    }
+
+    const rectificar = async () => {
+        if (!window.confirm("Se van a reescribir los DVH y el DVV con los datos actuales. Los registros no cambian. ¿Seguir?")) return
+        try {
+            const { data } = await api.post("integridad/rectificar")
+            setResponse({ message: data })
+        } catch (error) {
+            alert(error.response?.data?.error || "No se pudo rectificar")
         }
     }
     // Los 4 de abajo necesitan la id
@@ -319,6 +363,19 @@ function AdminHome(props) {
 
                         </div>
                         <div className="admin-auditoria">
+                            <select
+                                className="admin-backup-select"
+                                value={backupElegido}
+                                onChange={(e) => setBackupElegido(e.target.value)}
+                            >
+                                <option value="">Elegí un backup</option>
+                                {backups.map((archivo) => (
+                                    <option key={archivo} value={archivo}>{archivo}</option>
+                                ))}
+                            </select>
+                            <button type="button" className="btn-admin-crud" onClick={hacerBackup}>BACKUP</button>
+                            <button type="button" className="btn-admin-crud" onClick={hacerRestore}>RESTORE</button>
+                            <button type="button" className="btn-admin-crud" onClick={rectificar}>RECTIFICAR</button>
                             <button type="button" className="btn-admin-crud" onClick={verBitacora}>BITÁCORA</button>
                             <button type="button" className="btn-admin-crud" onClick={verificarIntegridad}>VERIFICAR DVV</button>
                         </div>
