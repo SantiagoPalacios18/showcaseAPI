@@ -32,6 +32,13 @@ const Bitacora = sequelize.define(
             type: DataTypes.DATE,
             allowNull: false,
             defaultValue: DataTypes.NOW
+        },
+        DVH: {
+            type: DataTypes.STRING(6),
+            allowNull: false,
+            validate: {
+                isAlphanumeric: true
+            }
         }
     },
     {
