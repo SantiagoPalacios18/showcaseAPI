@@ -36,6 +36,10 @@ const Sorteo = sequelize.define(
             type: DataTypes.JSON, //cambiado a JSON para almacenar una lista de premios organizada: premio: {premio1: X, premio2: Y}
             allowNull: false
         },
+        isActive: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: 1
+        },
         DVH: {
             type: DataTypes.STRING(6),
             allowNull: false,
