@@ -72,7 +72,7 @@ return(
         </div>
         <div className="sorteosLista">
             <ul className="contenedor-sorteos">
-                {sorteos.map(sor => 
+                {/* {sorteos.map(sor => 
                     <li key={sor.id} className="organizar-sorteo">
                         <div className="tarjeta-sorteo" style={styleVar}>
                             <h2>{sor.nombre}</h2>
@@ -81,7 +81,7 @@ return(
                             </div>
                         </div>
                     </li>
-                )}
+                )} */}
             </ul>
         </div>
         {/* <div className="contenedor-sorteos">

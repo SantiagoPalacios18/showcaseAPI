@@ -38,7 +38,8 @@ const { Bitacora } = require('./bitacora__Model.js');
 Usuario.hasMany(Sorteo, {foreignkey: 'id_sorteo'})
 Sorteo.belongsTo(Usuario, {foreignkey: 'id_ganador'})
 
-
+Bitacora.hasOne(Usuario, {foreignKey: 'id_Usuario'})
+Usuario.belongsTo(Bitacora, {foreignKey: 'id_Usuario'})
 //const { Patente_Usuario } = require('./patente_usuario__Model.js');
 
 // ==========================================

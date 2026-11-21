@@ -5,7 +5,6 @@ const { sequelize } = require('../config/db.js'); // Importamos el sequelize, el
 
 //const {default_foto} = require('../SRC/default-foto.js')
 
-
 // Obtener todos los useres
 const getUsers = async (req, res) => {
     try {
@@ -19,15 +18,6 @@ const getUsers = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 }
-
-
-
-
-
-
-
-
-
 
 // Obtener un usuario por ID
 const getUserById = async (req, res) => {
@@ -150,9 +140,6 @@ const modifyuserById = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 }
-
-
-
 
 // Eliminar el registro de un user en base a su ID
 const deleteuserById = async (req, res) => {
@@ -288,8 +275,6 @@ const getBuscarUsuarioPelicula = async (req, res) => {
     }
 }
    
-
-
 const registrarUsuarioEnPelicula = async (req, res) => {
     try {
         const {idCliente, MetodoPago, id_Funcion, asientos, total, precioUnidad} = req.body

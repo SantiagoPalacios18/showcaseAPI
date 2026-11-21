@@ -1,7 +1,5 @@
 const { sequelize } = require('../config/db.js');
 const { DataTypes } = require('sequelize');
-
-
 const CompraTicket = sequelize.define(
     'compraTicket',
     {
