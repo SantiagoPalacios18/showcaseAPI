@@ -77,10 +77,30 @@ const deletePeliculaById = async (req, res) => {
     }
 };
 
+const puntuar = async (req, res) => {
+    try {
+        let { punt, id } = req.params;
+        punt = Number(punt)
+        const puntu = await Pelicula.findByPk(id)
+        const {calificacion, calificaciones} = puntu.dataValues
+        console.log(((calificaciones * calificacion) + punt) / (calificaciones + 1))
+        await Pelicula.update(
+            { calificacion:  ((calificaciones * calificacion) + punt) / (calificaciones + 1), calificaciones: calificaciones + 1},
+            { where: {
+                id_Pelicula: id,
+            }}
+        )
+        res.status(200).json("Cambiado")
+    } catch (error) {
+        res.status(500).json(error)
+    }
+}
+
 module.exports = {
     getPeliculas,
     getPeliculaById,
     createPelicula,
     modifyPeliculaById,
-    deletePeliculaById
+    deletePeliculaById,
+    puntuar
 };

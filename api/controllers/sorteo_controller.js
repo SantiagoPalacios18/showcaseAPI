@@ -133,7 +133,7 @@ const deleteSorteoById = async (req, res) => {
 };
 
 
-const SorteoTermino = async ()=> {
+const SorteoTermino = async (req, res)=> {
     try {
         const ahora = new Date()
 
@@ -146,7 +146,7 @@ const SorteoTermino = async ()=> {
             }
         })
         if (sorteoTerminado.length === 0 ) {
-            return  res.status(400).json({ message: "No se han encontrado sorteos para activar" });
+            return res.status(400).json({ message: "No se han encontrado sorteos para activar" });
         }
        
         for (const sorteo of sorteoTerminado) {
