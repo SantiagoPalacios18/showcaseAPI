@@ -1,6 +1,11 @@
 const crypto = require('crypto');
+const fs = require('fs/promises');
+const path = require('path');
 const { sequelize } = require('../config/db.js');
 const { DVV } = require('../models/DVV__Model.js');
+
+const CARPETA_BACKUPS = path.join(__dirname, '..', 'backups');
+const NOMBRE_BACKUP = /^backup-\d{4}-\d{2}-\d{2}T\d{2}-\d{2}-\d{2}(?:-\d+)?\.json$/;
 
 // La columna DVH del proyecto es STRING(6) y valida isAlphanumeric.
 // Se guarda el prefijo de 6 caracteres del sha256. El DVV sí guarda el sha256 completo.
@@ -166,6 +171,152 @@ async function recalcularTodo() {
     }
 }
 
+function modelosBackup() {
+    return Object.values(sequelize.models).sort((a, b) => a.name.localeCompare(b.name));
+}
+
+function nombreTabla(modelo) {
+    const nombre = modelo.getTableName();
+    return typeof nombre === 'object' ? nombre.tableName : nombre;
+}
+
+function valorParaArchivo(attr, valor) {
+    if (valor === null || valor === undefined) return valor;
+    if (Buffer.isBuffer(valor)) return { __base64: valor.toString('base64') };
+    if (!(valor instanceof Date) || Number.isNaN(valor.getTime())) return valor;
+
+    const clave = claveTipo(attr);
+    if (clave === 'DATEONLY') {
+        const mes = String(valor.getMonth() + 1).padStart(2, '0');
+        const dia = String(valor.getDate()).padStart(2, '0');
+        return `${valor.getFullYear()}-${mes}-${dia}`;
+    }
+    if (clave === 'TIME') return valor.toISOString().slice(11, 19);
+    return valor.toISOString();
+}
+
+function filaParaArchivo(modelo, plain) {
+    const salida = {};
+    for (const attr of Object.values(modelo.rawAttributes)) {
+        if (claveTipo(attr) === 'VIRTUAL') continue;
+        salida[attr.fieldName] = valorParaArchivo(attr, plain[attr.fieldName]);
+    }
+    return salida;
+}
+
+function filaParaCargar(modelo, fila) {
+    const salida = {};
+    for (const [clave, valor] of Object.entries(fila)) {
+        if (valor && typeof valor === 'object' && typeof valor.__base64 === 'string') {
+            salida[clave] = Buffer.from(valor.__base64, 'base64');
+            continue;
+        }
+        // Sequelize vuelve a serializar las columnas JSON. Si el archivo ya trae el texto, hay que parsearlo para no guardarlo dos veces.
+        const attr = modelo.rawAttributes[clave];
+        if (attr && claveTipo(attr) === 'JSON' && typeof valor === 'string') {
+            try {
+                salida[clave] = JSON.parse(valor);
+            } catch {
+                salida[clave] = valor;
+            }
+            continue;
+        }
+        salida[clave] = valor;
+    }
+    return salida;
+}
+
+function nombreDeBackup(fecha = new Date()) {
+    const parte = (numero) => String(numero).padStart(2, '0');
+    return `backup-${fecha.getFullYear()}-${parte(fecha.getMonth() + 1)}-${parte(fecha.getDate())}T${parte(fecha.getHours())}-${parte(fecha.getMinutes())}-${parte(fecha.getSeconds())}-${fecha.getMilliseconds()}.json`;
+}
+
+function archivoBackup(nombre) {
+    if (!NOMBRE_BACKUP.test(nombre)) {
+        throw new Error('El backup pedido no es un archivo válido');
+    }
+    return path.join(CARPETA_BACKUPS, nombre);
+}
+
+async function listarBackups() {
+    await fs.mkdir(CARPETA_BACKUPS, { recursive: true });
+    const nombres = await fs.readdir(CARPETA_BACKUPS);
+    return nombres.filter((nombre) => NOMBRE_BACKUP.test(nombre)).sort().reverse();
+}
+
+async function crearBackup(idUsuario) {
+    const { registrar } = require('../middlewares/bitacora.js');
+    const tablas = {};
+    for (const modelo of modelosBackup()) {
+        const filas = await modelo.findAll();
+        tablas[modelo.name] = filas.map((fila) => filaParaArchivo(modelo, fila.get({ plain: true })));
+    }
+
+    await fs.mkdir(CARPETA_BACKUPS, { recursive: true });
+    const archivo = nombreDeBackup();
+    await fs.writeFile(
+        path.join(CARPETA_BACKUPS, archivo),
+        JSON.stringify({ creado: new Date().toISOString(), tablas }, null, 2),
+        'utf8'
+    );
+    await registrar({
+        accion: 'BACKUP',
+        tabla: 'DVV',
+        id_Usuario: idUsuario,
+        id_Registro: null
+    });
+    return { archivo, tablas: Object.keys(tablas).length };
+}
+
+async function restaurarBackup(nombre, idUsuario) {
+    const { registrar } = require('../middlewares/bitacora.js');
+    const contenido = await fs.readFile(archivoBackup(nombre), 'utf8');
+    const data = JSON.parse(contenido);
+    if (!data || typeof data.tablas !== 'object' || Array.isArray(data.tablas)) {
+        throw new Error('El backup no tiene el formato esperado');
+    }
+
+    const modelos = modelosBackup();
+    await sequelize.transaction(async (transaction) => {
+        await sequelize.query('SET FOREIGN_KEY_CHECKS = 0', { transaction });
+        for (const modelo of modelos) {
+            const tabla = nombreTabla(modelo).replace(/`/g, '``');
+            await sequelize.query(`DELETE FROM \`${tabla}\``, { transaction });
+        }
+        for (const modelo of modelos) {
+            const filas = Array.isArray(data.tablas[modelo.name]) ? data.tablas[modelo.name] : [];
+            for (let i = 0; i < filas.length; i += 200) {
+                await modelo.bulkCreate(filas.slice(i, i + 200).map((fila) => filaParaCargar(modelo, fila)), {
+                    hooks: false,
+                    validate: false,
+                    individualHooks: false,
+                    transaction
+                });
+            }
+        }
+        await sequelize.query('SET FOREIGN_KEY_CHECKS = 1', { transaction });
+    });
+
+    await registrar({
+        accion: 'RESTORE',
+        tabla: 'DVV',
+        id_Usuario: idUsuario,
+        id_Registro: null
+    });
+    return { archivo: nombre };
+}
+
+async function rectificar(idUsuario) {
+    const { registrar } = require('../middlewares/bitacora.js');
+    await recalcularTodo();
+    await registrar({
+        accion: 'RECTIFICACION',
+        tabla: 'DVV',
+        id_Usuario: idUsuario,
+        id_Registro: null
+    });
+}
+
 async function verificarIntegridad(idUsuario) {
     const { registrar } = require('../middlewares/bitacora.js');
     const errores = [];
@@ -265,5 +416,9 @@ module.exports = {
     recalcularTabla,
     recalcularTodo,
     verificarIntegridad,
-    engancharIntegridad
+    engancharIntegridad,
+    listarBackups,
+    crearBackup,
+    restaurarBackup,
+    rectificar
 };
