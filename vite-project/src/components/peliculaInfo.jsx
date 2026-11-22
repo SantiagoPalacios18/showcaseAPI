@@ -16,7 +16,6 @@ function peliculaInfo(props) {
     const [stagedAsientos, setStagedAsientos] = useState([])
     const [peliculaKeys, setPeliculaKeys] = useState([])
     const [funciones, setFunciones] = useState([])
-    const [puntu, setPuntu] = useState(0)
     const [funcion, setFuncion] = useState({})
     const [mostrarReservar, setMostrarReservar] = useState(false)
     const [metodoPago, setMetodoPago] = useState()
@@ -120,18 +119,6 @@ function peliculaInfo(props) {
         }
     }
 
-    const puntuar = async () => {
-        try {
-            if (puntu > 10 || puntu < 0) {
-                return alert("Puntaje fuera del rango 0-10")
-            }
-            const a = await api.patch(`/peliculas/puntuar/${id}/${puntu}`)
-            console.log(a)
-        } catch (error) {
-            console.log({error})
-        }
-    }
-
     useEffect(() => {
         getPeliculaById(),
         getFuncionesPelicula()
@@ -165,9 +152,6 @@ function peliculaInfo(props) {
                             </div>
                         })}
                     </div>
-                    <label htmlFor="">Puntúe esta pelicula!</label>
-                    <input type="number" name="" id="inputPuntuacion" min={0} max={10} placeholder="PUNTUACIÓN 0-10" onChange={(e) => {setPuntu(e.target.value)}} />
-                    <button onClick={puntuar}>Enviar puntuación</button>
                 </div>
             )}
             {mostrarReservar == true && (

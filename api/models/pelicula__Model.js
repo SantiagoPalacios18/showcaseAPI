@@ -33,10 +33,6 @@ const Pelicula = sequelize.define(
                 min: 0
             },
         },
-        calificaciones:{
-            type: DataTypes.MEDIUMINT.UNSIGNED,
-            defaultValue: 0
-        },
         imagen: {
             type: DataTypes.STRING(200), 
         },

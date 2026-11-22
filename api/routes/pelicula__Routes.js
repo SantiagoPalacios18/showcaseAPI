@@ -20,14 +20,12 @@ const {
     getPeliculaById,
     createPelicula,
     modifyPeliculaById,
-    deletePeliculaById,
-    puntuar
+    deletePeliculaById
 } = require('../controllers/pelicula__Controller.js');
 router.get('/', getPeliculas);
 router.get('/getByPk/:id', getPeliculaById);
 router.post('/', upload.single('poster'), createPelicula);
 router.patch('/edit/:id', modifyPeliculaById);
-router.patch('/puntuar/:id/:punt', puntuar);
 router.delete('/:id', deletePeliculaById);
 
 module.exports = router;

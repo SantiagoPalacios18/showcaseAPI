@@ -1,4 +1,4 @@
-const { Actor }= require('./actor__Model.js');
+const { Actor } = require('./actor__Model.js');
 const { Actor_Pelicula } = require('./actor_pelicula__Model.js');
 const { Asiento } = require('./asiento__Model.js');
 const { Cine } = require('./cine__Model.js');
