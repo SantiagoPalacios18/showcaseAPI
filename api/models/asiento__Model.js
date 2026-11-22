@@ -23,13 +23,13 @@ const Asiento = sequelize.define(
             validate: {
                 esMultiploDeCien(value) {
                     if (value % 100 != 0) {
-                        throw new Error("Solo multiplos de 100 Permitidos") //throw devuelve una excepcion, que frena por completo la ejecucion del programa (salvo que esté en un try, catch, en ese caso salta al catch). Se lanza la excepcion new Error() para mayor claridad
+                        throw new Error("Solo multiplos de 100 Permitidos") 
                     }
                 },
             }
         },
         DVH: {
-            type: DataTypes.STRING(6),
+            type: DataTypes.STRING(64),
             allowNull: false,
             validate: {
                 isAlphanumeric: true

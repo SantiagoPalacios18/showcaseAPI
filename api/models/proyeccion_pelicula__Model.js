@@ -2,19 +2,19 @@ const { sequelize } = require('../config/db.js');
 const { DataTypes } = require('sequelize');
 
 
-const Proyeccion_pelicula = sequelize.define(
+const Proyeccion_Pelicula = sequelize.define(
     'proyeccion_pelicula',
     {
-        id_proyeccion: {
+        id_Proyeccion: {
             type: DataTypes.TINYINT.UNSIGNED,
             primaryKey: true,
         },
-        id_pelicula: {
+        id_Pelicula: {
             type: DataTypes.TINYINT.UNSIGNED,
             primaryKey: true,
         },
         DVH: {
-            type: DataTypes.STRING(6),
+            type: DataTypes.STRING(64),
             allowNull: false,
             validate: {
                 isAlphanumeric: true
@@ -27,4 +27,4 @@ const Proyeccion_pelicula = sequelize.define(
 )
 
 
-module.exports = { Proyeccion_pelicula }
+module.exports = { Proyeccion_Pelicula }

@@ -9,22 +9,24 @@ const Pelicula = sequelize.define(
             type: DataTypes.TINYINT.UNSIGNED,
             primaryKey: true,
             autoIncrement: true
-        },
+        }, 
         titulo:{
-            type: DataTypes.STRING(50),
+            type: DataTypes.STRING(60), 
             allowNull: false,
         },
-        genero: DataTypes.STRING(15),
+        genero: DataTypes.STRING(15), 
         origen: {
-            type: DataTypes.STRING(20),
-            validate: {
-            },
+            type: DataTypes.STRING(20) 
+        },
+        enCartelera: {
+            type: DataTypes.BOOLEAN, 
+            defaultValue: 1
         },
         director: {
-            type: DataTypes.STRING(15),
+            type: DataTypes.STRING(20), 
         },
         calificacion: {
-            type: DataTypes.TINYINT(2).UNSIGNED,
+            type: DataTypes.TINYINT(2).UNSIGNED, 
             default: 0,
             validate: {
                 max: 10,
@@ -36,11 +38,11 @@ const Pelicula = sequelize.define(
             defaultValue: 0
         },
         imagen: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(200), 
         },
-        duracion: DataTypes.TIME,
+        duracion: DataTypes.TIME, 
         DVH: {
-            type: DataTypes.STRING(6),
+            type: DataTypes.STRING(64),
             allowNull: true,
             validate: {
                 isAlphanumeric: true

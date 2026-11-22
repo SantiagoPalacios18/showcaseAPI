@@ -5,13 +5,16 @@ const { DataTypes } = require('sequelize');
 const Tecnologia = sequelize.define(
     'tecnologia',
     {
-        id_tecnologia: {
+        id_Tecnologia: {
             type: DataTypes.TINYINT.UNSIGNED,
             primaryKey: true,
             autoIncrement:true
         },
-        nombre: DataTypes.STRING(15),
-        descripcion: DataTypes.STRING(20),
+        nombre: {
+            type: DataTypes.STRING(15),
+            unique: true
+        },
+        descripcion: DataTypes.TEXT,
         DVH: {
             type: DataTypes.STRING(6),
             allowNull: false,

@@ -5,16 +5,16 @@ const { DataTypes } = require('sequelize');
 const Pelicula_cine = sequelize.define(
     'pelicula_cine',
     {
-        id_cine: {
+        id_Cine: {
             type: DataTypes.TINYINT.UNSIGNED,
             primaryKey: true,
         },
-        id_pelicula: {
+        id_Pelicula: {
             type: DataTypes.TINYINT.UNSIGNED,
             primaryKey: true,
         },
         DVH: {
-            type: DataTypes.STRING(6),
+            type: DataTypes.STRING(64),
             allowNull: false,
             validate: {
                 isAlphanumeric: true

@@ -5,7 +5,7 @@ const { DataTypes } = require('sequelize');
 const Sorteo = sequelize.define(
     'sorteo',
     {
-        id_sorteo: {
+        id_Sorteo: {
             type: DataTypes.SMALLINT.UNSIGNED,
             primaryKey: true,
             autoIncrement:true
@@ -14,8 +14,8 @@ const Sorteo = sequelize.define(
             type: DataTypes.TINYINT.UNSIGNED,
             allowNull: true,
         },
-        id_ganador:{
-            type: DataTypes.TINYINT.UNSIGNED,
+        id_Ganador:{
+            type: DataTypes.INTEGER.UNSIGNED,
             allowNull: true
         },
         nombre: {
@@ -26,18 +26,18 @@ const Sorteo = sequelize.define(
             type: DataTypes.DATE,
         },
         infoGral:{
-            type: DataTypes.STRING(120),
+            type: DataTypes.TEXT,
             allowNull: false
         },
         imagen: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(200),
         },
         premio: {
             type: DataTypes.JSON, //cambiado a JSON para almacenar una lista de premios organizada: premio: {premio1: X, premio2: Y}
             allowNull: false
         },
         DVH: {
-            type: DataTypes.STRING(6),
+            type: DataTypes.STRING(64),
             allowNull: false,
             validate: {
                 isAlphanumeric: true

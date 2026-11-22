@@ -25,14 +25,14 @@ const Sala = sequelize.define(
             }
         },
         filas: {
-            type: DataTypes.TINYINT.UNSIGNED,
-            validate : {
+            type: DataTypes.SMALLINT.UNSIGNED,
+            validate: {
                 min: 1,
                 max: 30
             }
         },
         DVH: {
-            type: DataTypes.STRING(6),
+            type: DataTypes.STRING(64),
             allowNull: false,
             validate: {
                 isAlphanumeric: true

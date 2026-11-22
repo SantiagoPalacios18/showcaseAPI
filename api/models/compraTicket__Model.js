@@ -5,12 +5,12 @@ const { DataTypes } = require('sequelize');
 const CompraTicket = sequelize.define(
     'compraTicket',
     {
-        id_compraTicket: {
+        id_CompraTicket: {
             type: DataTypes.INTEGER.UNSIGNED,
             primaryKey: true,
             autoIncrement:true
         },
-        id_transaccion: {
+        id_Transaccion: {
             type: DataTypes.INTEGER.UNSIGNED,
             primaryKey: true,
         },
@@ -18,9 +18,9 @@ const CompraTicket = sequelize.define(
             type: DataTypes.SMALLINT.UNSIGNED,
             primaryKey: true,
         },
-        precio: DataTypes.SMALLINT(5),
+        precio: DataTypes.SMALLINT.UNSIGNED,
         DVH: {
-            type: DataTypes.STRING(6),
+            type: DataTypes.STRING(64),
             allowNull: false,
             validate: {
                 isAlphanumeric: true

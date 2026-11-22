@@ -5,7 +5,7 @@ const { DataTypes } = require('sequelize');
 const Transaccion = sequelize.define(
     'transaccion',
     {
-        id_transaccion: {
+        id_Transaccion: {
             type: DataTypes.INTEGER.UNSIGNED,
             primaryKey: true,
             autoIncrement:true
@@ -14,14 +14,14 @@ const Transaccion = sequelize.define(
             type: DataTypes.INTEGER.UNSIGNED,
             primaryKey: true,
         },
-        total:DataTypes.INTEGER(8),
+        total:DataTypes.INTEGER,
         fechaDeEmision: {
             type: DataTypes.DATE,
             defaultValue: DataTypes.NOW()
         },
         metodoDePago: DataTypes.STRING(15),
         DVH: {
-            type: DataTypes.STRING(6),
+            type: DataTypes.STRING(64),
             allowNull: false,
             validate: {
                 isAlphanumeric: true

@@ -2,19 +2,19 @@ const { sequelize } = require('../config/db.js');
 const { DataTypes } = require('sequelize');
 
 
-const Idioma_pelicula = sequelize.define(
+const Idioma_Pelicula = sequelize.define(
     'idioma_pelicula',
     {
-        id_pelicula: {
+        id_Pelicula: {
             type: DataTypes.TINYINT.UNSIGNED,
             primaryKey: true,
         },
-        id_idioma: {
+        id_Idioma: {
             type: DataTypes.STRING(10),
             primaryKey: true
         },
         DVH: {
-            type: DataTypes.STRING(6),
+            type: DataTypes.STRING(64),
             allowNull: false,
             validate: {
                 isAlphanumeric: true
@@ -27,4 +27,4 @@ const Idioma_pelicula = sequelize.define(
 )
 
 
-module.exports = { Idioma_pelicula }
+module.exports = { Idioma_Pelicula }

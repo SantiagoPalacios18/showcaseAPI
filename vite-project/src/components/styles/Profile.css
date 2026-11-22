@@ -379,3 +379,25 @@ section h1{
     width: 80%;
 }
 
+
+#divFuncionesTicks {
+    margin-top: 10px;
+    display: flex;
+    justify-content:space-around;
+    flex-wrap: wrap;
+    > div{
+    margin: 10px;
+    padding: 4px;
+    border-color: black;
+    border-style: solid;
+    border-width: 3px;
+    border-radius: 10px;
+    background-color: black;
+    > button {
+        border-radius: 10px;
+        background-color: red;
+        color: white;
+        font-size: larger;
+    }
+    }
+}

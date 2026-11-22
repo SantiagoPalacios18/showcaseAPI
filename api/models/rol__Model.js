@@ -14,7 +14,7 @@ const Rol = sequelize.define(
             unique: true
         },
         DVH: {
-            type: DataTypes.STRING(6),
+            type: DataTypes.STRING(64),
             allowNull: true,
             validate: {
                 isAlphanumeric: true

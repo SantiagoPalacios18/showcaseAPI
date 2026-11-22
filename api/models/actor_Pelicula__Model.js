@@ -9,11 +9,11 @@ const Actor_Pelicula = sequelize.define(
             primaryKey: true,
         },
         id_Pelicula: {
-            type: DataTypes.SMALLINT.UNSIGNED,
+            type: DataTypes.TINYINT.UNSIGNED,
             primaryKey: true,
         },
         DVH: {
-            type: DataTypes.STRING(6),
+            type: DataTypes.STRING(64),
             allowNull: false,
             validate: {
                 isAlphanumeric: true

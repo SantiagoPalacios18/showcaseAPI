@@ -4,10 +4,11 @@ const { DataTypes } = require('sequelize');
 const Code = sequelize.define(
     'Code', {
         id_Code: {
-            type: DataTypes.BIGINT,
+            type: DataTypes.BIGINT.UNSIGNED,
             primaryKey: true,
             autoIncrement: true
         },
+        id_Usuario: DataTypes.INTEGER.UNSIGNED,
         code: {
             type: DataTypes.STRING(6),
             allowNull: false,
@@ -18,7 +19,7 @@ const Code = sequelize.define(
             defaultValue: () => new Date(Date.now() + 30 * 60 * 1000)
         },
         DVH: {
-            type: DataTypes.STRING(6),
+            type: DataTypes.STRING(64),
             allowNull: false,
             validate: {
                 isAlphanumeric: true

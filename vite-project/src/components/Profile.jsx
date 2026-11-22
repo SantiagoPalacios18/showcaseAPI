@@ -7,6 +7,7 @@ import api from '../api'
 import imagenDefault from "../assets/perfil-default.png" 
 
 import './styles/Profile.css'
+import './styles/PeliculaInfo.css'
 
 
 
@@ -29,6 +30,23 @@ function Profile(props){
     const [Malias, setmAlias] = useState("");
     const [Mdni, setmDni] = useState("");
     const [MfechaNacimiento, setmFechaNacimiento] = useState("")
+
+    const [proxTickets, setProxTickets] = useState([
+        {
+            Pelicula: "Verity",
+            fecha: "12/12/2026 12:00",
+            proyecc: "2D",
+            sala: "C",
+            asiento: "Asiento: 1-200"
+        }, 
+        {
+            Pelicula: "Coyote vs ACME",
+            fecha: "13/12/2026 14:00",
+            proyecc: "3D",
+            sala: "A",
+            asiento: "Asiento: 3-500"
+        }
+    ])
 
     const [Memail, setmEmail] = useState("");
     const [Mtelefono, setmTelefono] = useState("");
@@ -439,7 +457,17 @@ function Profile(props){
 
                 </div>
                     <h2>Tickets Proximos</h2>
-                
+                    <div id="divFuncionesTicks">
+                        {proxTickets.map( (tick) => {
+                            return <div>
+                                <h1>{tick.Pelicula}</h1>
+                                <h1>{tick.fecha}</h1>
+                                <h1>Sala {tick.sala}</h1>
+                                <h1>{tick.asiento}</h1>
+                                <button className="btnCancelar">CANCELAR RESERVA</button>
+                            </div>
+                        })}
+                    </div>
             </section>
         )
     }

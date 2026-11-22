@@ -10,24 +10,24 @@ const Funcion = sequelize.define(
             primaryKey: true,
             autoIncrement: true
         },
-        id_sala: {
+        id_Sala: {
             type: DataTypes.TINYINT.UNSIGNED,
         },
-        id_pelicula: {
+        id_Pelicula: {
             type: DataTypes.TINYINT.UNSIGNED,
         },
-        id_tecnologia: {
+        id_Tecnologia: {
             type: DataTypes.TINYINT.UNSIGNED,
         },
+        id_Proyeccion: DataTypes.TINYINT.UNSIGNED,
         idioma: DataTypes.STRING(10),
-        proyeccion: DataTypes.STRING(10),
         horarioInicio: DataTypes.DATE,
         precio: {
             type: DataTypes.SMALLINT.UNSIGNED,
             allowNull: false
         },
         DVH: {
-            type: DataTypes.STRING(6),
+            type: DataTypes.STRING(64),
             allowNull: false,
             validate: {
                 isAlphanumeric: true

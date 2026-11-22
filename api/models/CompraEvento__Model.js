@@ -25,7 +25,10 @@ const CompraEvento = sequelize.define(
         },
         tipo: {
             type: DataTypes.STRING(30), // Ampliado para soportar "Grupal", "Corporativo", "Cumpleaños"
-            allowNull: false
+            allowNull: false,
+            validate: {
+                isIn: ["Grupal", "Corporativo", "Cumpleaños"]
+            }
         },
         cantidad_personas: {
             type: DataTypes.SMALLINT.UNSIGNED,
@@ -46,14 +49,14 @@ const CompraEvento = sequelize.define(
         },
         aplicó_descuento: {
             type: DataTypes.BOOLEAN,
-            defaultValue: false // Maneja la regla de más de 25 personas
+            defaultValue: false
         },
         pendiente: {
             type: DataTypes.BOOLEAN,
             defaultValue: true
         },
         DVH: {
-            type: DataTypes.STRING(6),
+            type: DataTypes.STRING(64),
             allowNull: false,
             validate: {
                 isAlphanumeric: true

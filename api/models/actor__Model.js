@@ -22,7 +22,7 @@ const Actor = sequelize.define(
             }
         },
         DVH: {
-            type: DataTypes.STRING(6),
+            type: DataTypes.STRING(64),
             allowNull: false,
             validate: {
                 isAlphanumeric: true

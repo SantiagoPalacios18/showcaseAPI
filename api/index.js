@@ -3,7 +3,7 @@ const express = require("express"); // Framework para hacer servidores web y adm
 const { sequelize, crearBDSiNoExiste } = require('./config/db.js'); // Importamos el sequelize, el cual ya fue importado dentro de config/db.js
 
 // TABLAS
-const { Usuario, Rol, Patente, Pelicula, Sala, Funcion, Cine, Tecnologia, Sorteo, Asiento, Transaccion, CompraTicket } = require('./models/index.js');
+const { Usuario, Rol, Patente, Pelicula, Sala, Funcion, Cine, Tecnologia, Sorteo, Asiento, Transaccion, CompraTicket, Proyeccion } = require('./models/index.js');
 const { recalcularTodo } = require('./services/integridad__Service.js');
 
 // CORS
@@ -238,16 +238,27 @@ server.listen(3000, async () => {
         }
     });
 
+    const proyeccion2d = await Proyeccion.create(
+        {
+            formato: "2D"
+        }
+    )
+    const proyeccion3d = await Proyeccion.create(
+        {
+            formato: "3D"
+        }
+    )
+    
     const funciones = [
-        { id_sala: 1, id_pelicula: 1, id_tecnologia: tecnologiaPrueba.id_tecnologia, idioma: 'Español', proyeccion: '2D', horarioInicio: new Date('2026-06-15T18:00:00'), precio: 2400, DVH: "ABC123" },
-        { id_sala: 2, id_pelicula: 1, id_tecnologia: tecnologiaPrueba.id_tecnologia, idioma: 'Subtitulad', proyeccion: '3D', horarioInicio: new Date('2026-06-15T21:30:00'), precio: 4000, DVH: "ABC123" },
-        { id_sala: 3, id_pelicula: 1, id_tecnologia: tecnologiaPrueba.id_tecnologia, idioma: 'Español', proyeccion: '2D', horarioInicio: new Date('2026-06-16T19:00:00'), precio: 4500, DVH: "ABC123" },
+        { id_Sala: 1, id_Pelicula: 1, id_Tecnologia: tecnologiaPrueba.id_Tecnologia, idioma: 'Español', id_Proyeccion: proyeccion2d.id_Proyeccion, horarioInicio: new Date('2026-06-15T18:00:00'), precio: 2400, DVH: "ABC123" },
+        { id_Sala: 2, id_Pelicula: 1, id_Tecnologia: tecnologiaPrueba.id_Tecnologia, idioma: 'Subtitulad', id_Proyeccion: proyeccion3d.id_Proyeccion, horarioInicio: new Date('2026-06-15T21:30:00'), precio: 4000, DVH: "ABC123" },
+        { id_Sala: 3, id_Pelicula: 1, id_Tecnologia: tecnologiaPrueba.id_Tecnologia, idioma: 'Español', id_Proyeccion: proyeccion2d.id_Proyeccion, horarioInicio: new Date('2026-06-16T19:00:00'), precio: 4500, DVH: "ABC123" },
     ];
 
     for (const funcionData of funciones) {
         await Funcion.findOrCreate({
             where: { 
-                id_sala: funcionData.id_sala, 
+                id_Sala: funcionData.id_Sala, 
                 horarioInicio: funcionData.horarioInicio 
             },
             defaults: funcionData
@@ -334,21 +345,21 @@ const insertDatosCompletos = async () => {
       // 4. Funcion (Corregido: cargamos todas las FKs necesarias)
       const funciones = [
           {
-              id_sala: 1,
-              id_pelicula: 3,
-              id_tecnologia: 1,
+              id_Sala: 1,
+              id_Pelicula: 3,
+              id_Tecnologia: 1,
               idioma: "Subtitulado",
-              proyeccion: "2D",
+              id_Proyeccion: 1,
               horarioInicio: new Date("2026-11-10T18:30:00"),
               precio: 1000,
               DVH: "FUN001"
           },
           {
-              id_sala: 2,
-              id_pelicula: 6,
-              id_tecnologia: 2,
+              id_Sala: 2,
+              id_Pelicula: 6,
+              id_Tecnologia: 2,
               idioma: "Español",
-              proyeccion: "3D",
+              id_Proyeccion: 2,
               horarioInicio: new Date("2026-11-10T21:00:00"),
               precio: 2000,
               DVH: "FUN002"
@@ -357,7 +368,7 @@ const insertDatosCompletos = async () => {
       for (const funcion of funciones) {
           await Funcion.findOrCreate({
               where: {
-                  id_sala: funcion.id_sala,
+                  id_Sala: funcion.id_Sala,
                   horarioInicio: funcion.horarioInicio
               },
               defaults: funcion
@@ -390,7 +401,7 @@ const insertDatosCompletos = async () => {
       // 7. CompraTicket
       const tickets = [
           {
-              id_transaccion: 1,
+              id_Transaccion: 1,
               id_Asiento: 1,
               precio: 2500,
               DVH: "TCK001"
@@ -399,7 +410,7 @@ const insertDatosCompletos = async () => {
       for (const ticket of tickets) {
           await CompraTicket.findOrCreate({
               where: {
-                  id_transaccion: ticket.id_transaccion,
+                  id_Transaccion: ticket.id_Transaccion,
                   id_Asiento: ticket.id_Asiento
               },
               defaults: ticket

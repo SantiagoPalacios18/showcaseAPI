@@ -2,14 +2,14 @@ const { sequelize } = require('../config/db.js');
 const { DataTypes } = require('sequelize');
 
 
-const Usuario_sorteo = sequelize.define(
+const Usuario_Sorteo = sequelize.define(
     'Usuario_sorteo',
     {
-        id_sorteo: {
+        id_Usuario: {
             type: DataTypes.INTEGER.UNSIGNED,
             primaryKey: true,
         },
-        id_Usuario: {
+        id_Sorteo: {
             type: DataTypes.SMALLINT.UNSIGNED,
             primaryKey: true,
         },
@@ -31,4 +31,4 @@ const Usuario_sorteo = sequelize.define(
 )
 
 
-module.exports = { Usuario_sorteo }
+module.exports = { Usuario_Sorteo }

@@ -5,18 +5,19 @@ const { DataTypes } = require('sequelize');
 const Idioma = sequelize.define(
     'idioma',
     {
-        id_idioma: {
+        id_Idioma: {
             type: DataTypes.STRING(10),
             primaryKey: true
         },
         nombre: {
             type: DataTypes.STRING(15),
+            unique: true,
             validate: {
                 isAlpha: true
             }
         },
         DVH: {
-            type: DataTypes.STRING(6),
+            type: DataTypes.STRING(64),
             allowNull: false,
             validate: {
                 isAlphanumeric: true

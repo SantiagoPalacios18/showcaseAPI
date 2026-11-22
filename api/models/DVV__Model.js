@@ -8,9 +8,12 @@ const DVV = sequelize.define(
             type: DataTypes.STRING(50),
             primaryKey: true
         },
-        dvv: {
+        DVV: {
             type: DataTypes.STRING(64),
-            allowNull: false
+            allowNull: false,
+            validate: {
+                isAlphanumeric: true
+            }
         }
     },
     {

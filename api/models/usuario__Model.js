@@ -8,7 +8,7 @@ const Usuario = sequelize.define(
             type: DataTypes.INTEGER.UNSIGNED,
             primaryKey: true,
             autoIncrement: true
-        },
+        },  
         id_Rol: {
             type: DataTypes.TINYINT.UNSIGNED,
             // defaultValue: 1,
@@ -30,7 +30,7 @@ const Usuario = sequelize.define(
             
         },
         DNI: {
-            type: DataTypes.STRING(10),
+            type: DataTypes.STRING(8),
             unique: true,
             validate: {
                 isNumeric: true
@@ -61,7 +61,7 @@ const Usuario = sequelize.define(
         },
         isActive: {
             type: DataTypes.BOOLEAN,
-            //defaultValue: 1
+            defaultValue: 1
         },
         isLogged: {
             type: DataTypes.BOOLEAN,
@@ -72,7 +72,7 @@ const Usuario = sequelize.define(
             allowNull: true
         },
         DVH: {
-            type: DataTypes.STRING(6),
+            type: DataTypes.STRING(64),
             allowNull: false,
             validate: {
                 isAlphanumeric: true

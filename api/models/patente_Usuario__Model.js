@@ -13,7 +13,7 @@ const Patente_Usuario = sequelize.define(
             primaryKey: true
         },
         DVH: {
-            type: DataTypes.STRING(6),
+            type: DataTypes.STRING(64),
             allowNull: false,
             validate: {
                 isAlphanumeric: true
