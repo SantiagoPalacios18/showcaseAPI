@@ -116,3 +116,9 @@ button {
 #tablaAsientos .seleccionado {
     background-color: #fa5c12;
 }
+
+#inputPuntuacion {
+    width: 10%;
+    margin: 5px;
+    padding: 2px;
+}

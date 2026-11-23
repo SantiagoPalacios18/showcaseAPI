@@ -48,26 +48,16 @@ function Sorteos(props) {
             setMessage("upsis")
         }
     }
-    
-        const UN_DIA_MS = 24 * 60 * 60 * 1000;
-
-    // Función auxiliar: devuelve true si el sorteo todavía NO cumplió 1 día desde que terminó
-    const esSorteoVisible = (sor) => {
-        if (!sor.fecha_sor) return true;
-        const fechaFin = new Date(sor.fecha_sor).getTime();
-        return Date.now() < fechaFin + UN_DIA_MS;
-    };
 
     const getSorteos = async () => {
         try {
-        const sort = await api.get('/sorteos');
-        const sorteosVigentes = sort.data.filter(esSorteoVisible);
-        setSorteos(sorteosVigentes);
-        console.log(sorteosVigentes);
+            const sort = await api.get('/sorteos')
+            setSorteos(sort.data)
+            console.log(sort.data)
         } catch (error) {
-        console.log({ error });
+            console.log({error})
         }
-    };
+    }
 
     // Apenas carga la página, el useEffect ejecuta todo lo que tenga adentro
     useEffect(() => {
@@ -94,6 +84,28 @@ return(
                 )}
             </ul>
         </div>
+        {/* <div className="contenedor-sorteos">
+            <div className="organizar-sorteo" id="s-1">
+                <h2>sorteo1</h2>
+                <img src={imagenTest} alt="Elded" />
+                <button className="boton-s">participar ahora</button>
+            </div>            
+            <div className="organizar-sorteo" id="s-2">
+                <h2>sorteo2</h2>
+                <img src={imagenTest} alt="Elded" />
+                <button className="boton-s">participar ahora</button>
+            </div>
+            <div className="organizar-sorteo" id="s-3">
+                <h2>sorteo3</h2>
+                <img src={imagenTest} alt="Elded" />
+                <button className="boton-s">participar ahora</button>
+            </div>
+            <div className="organizar-sorteo" id="s-4">
+                <h2>sorteo4</h2>
+                <img src={imagenTest} alt="Elded" />
+                <button className="boton-s" >participar ahora</button>
+            </div>
+        </div> */}
     </div>
     )
 }

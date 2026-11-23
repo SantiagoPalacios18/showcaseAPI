@@ -6,6 +6,21 @@ const cron = require('node-cron');
 const path = require('path');
 const fs = require('fs');
 
+
+
+
+// GET: Obtener todos los sorteos
+const getSorteos = async (req, res) => {
+    try {
+        const sorteos = await Sorteo.findAll();
+        console.log({sorteos})
+        res.status(200).json(sorteos);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+
 // GET: Obtener sorteo por ID
 const getSorteoById = async (req, res) => {
     try {
@@ -117,6 +132,55 @@ const deleteSorteoById = async (req, res) => {
     }
 };
 
+
+const SorteoTermino = async (req, res)=> {
+    try {
+        const ahora = new Date()
+
+
+        const sorteoTerminado= await Sorteo.findAll({
+            where: {
+                fecha_sor:{
+                    [Op.lte]: ahora
+                }
+            }
+        })
+        if (sorteoTerminado.length === 0 ) {
+            return res.status(400).json({ message: "No se han encontrado sorteos para activar" });
+        }
+       
+        for (const sorteo of sorteoTerminado) {
+            console.log(`Ejecutando sorteo: ${sorteo.nombre} (ID: ${sorteo.id_sorteo})`);
+                const lista_u = await Usuario_sorteo.findAll({
+            });
+
+
+            if (lista_u.length === 0) {
+                return console.log(`No se encontraron clientes para el sorteo: ${sorteo.id_sorteo}` );
+                
+            }
+            const indice = crypto.randomInt(0, lista_u.length);
+            const ganador = lista_u[indice]; 
+            
+             console.log("suerte",ganador.id_Usuario)
+
+            const suerte2 = await Sorteo.update(
+                { id_ganador: ganador.id_Usuario },
+                { where: { id_sorteo: sorteo.id_sorteo } }
+            );
+
+            console.log("porfavor",{suerte2});
+            
+            console.log("Se eligió un ganador:", ganador)
+            //res.status(200).json({ message:"se eligio un ganador"})
+        }
+
+
+    } catch (error) {
+        console.log({error})
+    }
+}
+
 const getBuscarGanador = async (req, res) =>{
     try{
         const { id } = req.params;
@@ -134,127 +198,6 @@ const getBuscarGanador = async (req, res) =>{
     }
 }
 
-// GET: Obtener todos los sorteos vigentes (hasta 24h después de haber terminado)
-const getSorteos = async (req, res) => {
-  try {
-    const haceUnDia = new Date(Date.now() - 24 * 60 * 60 * 1000);
-
-    const sorteos = await Sorteo.findAll({
-      where: {
-        fecha_sor: {
-          [Op.gt]: haceUnDia, // Solo trae los que NO superaron 1 día desde fecha_sor
-        },
-      },
-    });
-
-    console.log({ sorteos });
-    res.status(200).json(sorteos);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-}
-
-const SorteoTermino = async () => {
-  try {
-    const ahora = new Date();
-
-    // 1. Buscar sorteos que ya terminaron y TODAVÍA NO tienen ganador
-    const sorteoTerminado = await Sorteo.findAll({
-      where: {
-        fecha_sor: {
-          [Op.lte]: ahora,
-        },
-        id_ganador: null,
-      },
-    });
-
-    if (sorteoTerminado.length === 0) {
-      console.log("Cron: No se encontraron sorteos nuevos para sortear.");
-      return;
-    }
-
-    for (const sorteo of sorteoTerminado) {
-      console.log(`Ejecutando sorteo: ${sorteo.nombre} (ID: ${sorteo.id_sorteo})`);
-
-      // Ojo: si Usuario_sorteo tiene id_sorteo, podés filtrar: { where: { id_sorteo: sorteo.id_sorteo } }
-      const lista_u = await Usuario_sorteo.findAll({});
-
-      if (lista_u.length === 0) {
-        console.log(`No se encontraron clientes para el sorteo: ${sorteo.id_sorteo}`);
-        continue; // Usamos continue en vez de return para que siga con los demás sorteos del bucle
-      }
-
-      const indice = crypto.randomInt(0, lista_u.length);
-      const ganador = lista_u[indice];
-
-      console.log("suerte", ganador.id_Usuario);
-
-      const suerte2 = await Sorteo.update(
-        { id_ganador: ganador.id_Usuario },
-        { where: { id_sorteo: sorteo.id_sorteo } }
-      );
-
-      console.log("porfavor", { suerte2 });
-      console.log("Se eligió un ganador:", ganador);
-    }
-  } catch (error) {
-    console.log("Error en SorteoTermino:", error);
-  }
-};
-
-// NUEVA FUNCIÓN: Eliminar sorteos 1 día (24 horas) después de haber terminado
-const eliminarSorteosVencidos = async () => {
-  try {
-    const haceUnDia = new Date(Date.now() - 24 * 60 * 60 * 1000);
-
-    // 1. Buscamos los sorteos cuya fecha_sor sea menor o igual a hace 24 horas
-    const sorteosParaBorrar = await Sorteo.findAll({
-      where: {
-        fecha_sor: {
-          [Op.lte]: haceUnDia,
-        },
-      },
-    });
-
-    if (sorteosParaBorrar.length === 0) {
-      return;
-    }
-
-    // 2. Borramos las imágenes físicas asociadas en ./media/sorteos/
-    for (const sorteo of sorteosParaBorrar) {
-      if (sorteo.imagen) {
-        const nombreArchivo = path.basename(sorteo.imagen); // Extrae "sorteo-img-X.ext" de la URL
-        const rutaImagen = path.join("./media/sorteos/", nombreArchivo);
-
-        if (fs.existsSync(rutaImagen)) {
-          fs.unlinkSync(rutaImagen);
-          console.log(`Imagen eliminada: ${rutaImagen}`);
-        }
-      }
-    }
-
-    // 3. Eliminamos los registros de la base de datos
-    const idsABorrar = sorteosParaBorrar.map((s) => s.id_sorteo);
-    const eliminados = await Sorteo.destroy({
-      where: {
-        id_sorteo: {
-          [Op.in]: idsABorrar,
-        },
-      },
-    });
-
-    console.log(`Se eliminaron ${eliminados} sorteos vencidos hace más de 1 día.`);
-  } catch (error) {
-    console.log("Error en eliminarSorteosVencidos:", error);
-  }
-};
-
-// Ejecuta cada hora (minuto 0): primero sortea los recién terminados, luego limpia los que ya cumplieron +24h
-cron.schedule("0 * * * *", async () => {
-  await SorteoTermino();
-  await eliminarSorteosVencidos();
-});
-
 cron.schedule(' 0 * * * *', SorteoTermino);
 
 
@@ -264,6 +207,5 @@ module.exports = {
     createSorteo,
     modifySorteoById,
     deleteSorteoById,
-    eliminarSorteosVencidos,
     getBuscarGanador
 };

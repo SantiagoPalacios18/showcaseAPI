@@ -71,28 +71,28 @@ server.listen(3000, async () => {
 
     // EL MEGA ADMIN: SANTIAGO PALACIOS
     const [Santiago] = await Usuario.findOrCreate({
-      where: { email: 'asd@a.com' },
+      where: { email: 'test@a.com' },
       defaults: {
         nombre: 'Santiago',
         apellido: 'Palacios',
         fechaNacimiento: '2010-10-10',
         alias: 'Santi',
         DNI: 1,
-        telefono: 666,
-        email: 'asd@a.com',
+        telefono: 12345678,
+        email: 'test@a.com',
         contraseña: await bcrypt.hash('123', 10),
         foto: ""
       }
       
     });
     const [Polo] = await Usuario.findOrCreate({
-      where: { email: 'asd@aa.com' },
+      where: { email: 'test2@a.com' },
       defaults: {
         nombre: 'Polo',
         apellido: 'Rivera',
         fechaNacimiento: '2010-10-10',
-        telefono: 666,
-        email: 'asd@aa.com',
+        telefono: 87654321,
+        email: 'test2@a.com',
         contraseña: await bcrypt.hash('123', 10),
         foto: ""
       }
@@ -151,16 +151,16 @@ server.listen(3000, async () => {
 
 
     const peliculas = [
-        { genero: 'Suspenso', titulo:"Whalefall" , origen: 'EEUU', director: 'Brian Duffield', calificacion: 7, imagen: 'http://localhost:3000/posters/poster-movie-1.jpg',                duracion: '01:46:00' },
-        { genero: 'Terror',   titulo:"Madre Siniestra" , origen: 'EEUU', director: 'Rob Savage', calificacion: 6, imagen: 'http://localhost:3000/posters/poster-movie-2.webp',         duracion: '01:33:00' },
-        { genero: 'Accion',   titulo:"Street Fighter" , origen: 'EEUU', director: 'Kitao Sakurai', calificacion: 6, imagen: 'http://localhost:3000/posters/poster-movie-3.webp', duracion: '02:05:00' },
-        { genero: 'Suspenso', titulo:"Verity" , origen: 'EEUU', director: 'Michael Showalter', calificacion: 7, imagen: 'http://localhost:3000/posters/poster-movie-4.jpg', duracion: '01:50:00' },
-        { genero: 'Comedia',  titulo:"Coyote vs Acme" , origen: 'EEUU', director: 'Dave Green', calificacion: 7, imagen: 'http://localhost:3000/posters/poster-movie-5.webp', duracion: '01:30:00' },
-        { genero: 'Terror',   titulo:"Resident Evil: Noche Cero" , origen: 'EEUU', director: 'Zach Cregger', calificacion: 6, imagen: 'http://localhost:3000/posters/poster-movie-6.jpg', duracion: '01:45:00' },
-        { genero: 'Aventura', titulo:"El Corazón de la Bestia" , origen: 'EEUU', director: 'David Ayer', calificacion: 8, imagen: 'http://localhost:3000/posters/poster-movie-7.jpg',  duracion: '01:41:00' },
-        { genero: 'Aventura', titulo:"La odisea" , origen: 'EEUU', director: 'Christopher Nolan', calificacion: 8, imagen: 'http://localhost:3000/posters/poster-movie-8.webp', duracion: '02:30:00' },
-        { genero: 'Comedia',  titulo:"Quiero Tu Sexo" , origen: 'EEUU', director: 'Gregg Araki', calificacion: 5, imagen: 'http://localhost:3000/posters/poster-movie-9.jpg', duracion: '01:30:00' },
-        { genero: 'Drama',    titulo:"La Casa" , origen: 'Espana',  director: 'Alex Montoya', calificacion: 7, imagen: 'http://localhost:3000/posters/poster-movie-10.jpg', duracion: '01:38:00' },
+        { genero: 'Suspenso', titulo:"Whalefall" , origen: 'EEUU', director: 'Brian Duffield', calificacion: 7, calificaciones: 1, imagen: 'http://localhost:3000/posters/poster-movie-1.jpg',                duracion: '01:46:00' },
+        { genero: 'Terror',   titulo:"Madre Siniestra" , origen: 'EEUU', director: 'Rob Savage', calificacion: 6, calificaciones: 8, imagen: 'http://localhost:3000/posters/poster-movie-2.webp',         duracion: '01:33:00' },
+        { genero: 'Accion',   titulo:"Street Fighter" , origen: 'EEUU', director: 'Kitao Sakurai', calificacion: 6, calificaciones: 2, imagen: 'http://localhost:3000/posters/poster-movie-3.webp', duracion: '02:05:00' },
+        { genero: 'Suspenso', titulo:"Verity" , origen: 'EEUU', director: 'Michael Showalter', calificacion: 7, calificaciones: 3, imagen: 'http://localhost:3000/posters/poster-movie-4.jpg', duracion: '01:50:00' },
+        { genero: 'Comedia',  titulo:"Coyote vs Acme" , origen: 'EEUU', director: 'Dave Green', calificacion: 7, calificaciones: 8, imagen: 'http://localhost:3000/posters/poster-movie-5.webp', duracion: '01:30:00' },
+        { genero: 'Terror',   titulo:"Resident Evil: Noche Cero" , origen: 'EEUU', director: 'Zach Cregger', calificacion: 6, calificaciones: 3, imagen: 'http://localhost:3000/posters/poster-movie-6.jpg', duracion: '01:45:00' },
+        { genero: 'Aventura', titulo:"El Corazón de la Bestia" , origen: 'EEUU', director: 'David Ayer', calificacion: 8, calificaciones: 6, imagen: 'http://localhost:3000/posters/poster-movie-7.jpg',  duracion: '01:41:00' },
+        { genero: 'Aventura', titulo:"La odisea" , origen: 'EEUU', director: 'Christopher Nolan', calificacion: 8, calificaciones: 1, imagen: 'http://localhost:3000/posters/poster-movie-8.webp', duracion: '02:30:00' },
+        { genero: 'Comedia',  titulo:"Quiero Tu Sexo" , origen: 'EEUU', director: 'Gregg Araki', calificacion: 5, calificaciones: 2, imagen: 'http://localhost:3000/posters/poster-movie-9.jpg', duracion: '01:30:00' },
+        { genero: 'Drama',    titulo:"La Casa" , origen: 'Espana',  director: 'Alex Montoya', calificacion: 7, calificaciones: 7, imagen: 'http://localhost:3000/posters/poster-movie-10.jpg', duracion: '01:38:00' },
     ]
     async function insertPeliculas() {
         try {

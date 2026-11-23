@@ -208,6 +208,14 @@ function Profile(props){
         }
     }
 
+    // const fetchTickets = async () => {
+    //     try {
+    //         api.get(`asiento/`)
+    //     } catch (error) {
+            
+    //     }
+    // }
+
     if(loading) return <p>Cargando...</p>
     if(!User) {
         return(
@@ -446,7 +454,6 @@ function Profile(props){
                             </div>
                         </div>
                     )}
-
 
                 </div>
                     <h2>Tickets Proximos</h2>
