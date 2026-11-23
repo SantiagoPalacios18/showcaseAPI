@@ -71,7 +71,7 @@ function Register(props) {
             setMessage("Login exitoso, redireccionando...")
             await timeout(300);
 
-            navigate("/")
+            navigate("/login")
         } catch (err) {
             if (err.response) {
                 setError(err.response.data.message) // Si hay un mensaje de error del backend (conexión establecida pero se dió un mensaje de error)
